@@ -144,9 +144,7 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 ## 👥 İletişim
 
-Proje Sahibi - [@kullanici_adi](https://twitter.com/kullanici_adi)
-
-Proje Linki: [https://github.com/kullanici_adi/ATLAS-Interaktif](https://github.com/kullanici_adi/ATLAS-Interaktif)
+Proje Linki: [https://github.com/metincatal/ATLAS-Interaktif](https://github.com/metincatal/ATLAS-Interaktif)
 
 ## 🙏 Teşekkürler
 
