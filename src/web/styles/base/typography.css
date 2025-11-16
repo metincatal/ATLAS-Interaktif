@@ -1,0 +1,27 @@
+/* Typography - ATLAS İnteraktif */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+}
+
+h1 {
+    font-size: var(--font-size-3xl);
+}
+
+h2 {
+    font-size: var(--font-size-2xl);
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+}
+
+p {
+    line-height: var(--line-height-normal);
+}
+
+strong, b {
+    font-weight: var(--font-weight-bold);
+}
+

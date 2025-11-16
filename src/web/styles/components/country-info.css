@@ -1,0 +1,29 @@
+/* Ülke Bilgi Kutusu - ATLAS İnteraktif */
+
+#country-info {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-dropdown);
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--primary-blue);
+    padding: 15px 30px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    min-width: 250px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+#country-info.active {
+    opacity: 1;
+}
+
+#country-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--secondary-blue);
+}
+

@@ -1,0 +1,25 @@
+/* 2D Düzlem Haritası - ATLAS İnteraktif */
+
+#flatmap-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at top, rgba(21, 64, 153, 0.65) 0%, rgba(5, 20, 55, 0.95) 65%) no-repeat;
+    overflow: hidden;
+}
+
+/* 2D Harita Tooltip */
+.map-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0,0,0,0.85);
+    color: var(--white);
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    z-index: var(--z-popover);
+    box-shadow: var(--shadow-md);
+    white-space: nowrap;
+}

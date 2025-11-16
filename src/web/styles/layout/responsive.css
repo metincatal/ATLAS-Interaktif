@@ -1,0 +1,21 @@
+/* Genel Responsive Tasarım - ATLAS İnteraktif */
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: var(--font-size-xl);
+    }
+    
+    header p {
+        font-size: var(--font-size-sm);
+    }
+    
+    #country-name {
+        font-size: 1.2rem;
+    }
+    
+    #country-info {
+        min-width: 200px;
+        padding: 10px 20px;
+    }
+}
+

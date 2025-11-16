@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATLAS İnteraktif - Daron Acemoğlu</title>
+    
+    <!-- Modüler CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Teori Sayfası -->
+    <div id="theory-page" class="page active">
+        <div class="theory-container">
+            <h1 class="theory-title">Daron Acemoğlu'nun Teorileri</h1>
+            
+            <div class="books-container">
+                <!-- Ulusların Düşüşü -->
+                <div class="book-section left">
+                    <div class="book-card">
+                        <h2>Ulusların Düşüşü</h2>
+                        <h3>(Why Nations Fail)</h3>
+                        <div class="book-content">
+                            <p class="book-intro">James A. Robinson ile birlikte yazılan bu çığır açıcı eser, toplumların ekonomik başarı ve başarısızlıklarının temelindeki kurumsal yapıları inceler.</p>
+                            
+                            <div class="theory-section">
+                                <h4>Ana Teori: Kapsayıcı vs Sömürücü Kurumlar</h4>
+                                <p><strong>Kapsayıcı Ekonomik Kurumlar:</strong> Mülkiyet haklarını güvence altına alan, adil rekabet ortamı sağlayan ve geniş kitlelerin ekonomik faaliyetlere katılımını teşvik eden sistemler. Bu kurumlar inovasyon ve ekonomik büyümeyi destekler.</p>
+                                
+                                <p><strong>Sömürücü Ekonomik Kurumlar:</strong> Kaynakların dar bir elit kesim tarafından kontrol edildiği, toplumun büyük çoğunluğunun sömürüldüğü sistemler. Bu yapılar uzun vadeli ekonomik gelişmeyi engeller.</p>
+                                
+                                <p class="key-insight">💡 <strong>Temel Argüman:</strong> Coğrafya, kültür veya liderlik değil, kurumlar ülkelerin zenginlik veya yoksulluk kaderini belirler. Kapsayıcı kurumlara sahip toplumlar zenginleşirken, sömürücü kurumlara sahip olanlar yoksul kalır.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dar Koridor -->
+                <div class="book-section right">
+                    <div class="book-card">
+                        <h2>Dar Koridor</h2>
+                        <h3>(The Narrow Corridor)</h3>
+                        <div class="book-content">
+                            <p class="book-intro">Yine James A. Robinson ile yazılan bu eser, özgürlük ve demokrasinin nasıl ortaya çıktığını ve sürdürülebilir kıldığını araştırır.</p>
+                            
+                            <div class="theory-section">
+                                <h4>Ana Teori: Devlet ve Toplum Arasındaki Denge</h4>
+                                <p><strong>Dar Koridor Kavramı:</strong> Özgürlüğün gelişebileceği hassas denge alanı. Bu koridorda devlet yeterince güçlüdür ama toplum da devleti kontrol edebilecek kapasitededir.</p>
+                                
+                                <p><strong>Üç Senaryo:</strong></p>
+                                <ul>
+                                    <li><strong>Despotik Leviathan:</strong> Devlet çok güçlü, toplum zayıf - otoriterlik</li>
+                                    <li><strong>Zincirlenmiş Leviathan:</strong> Denge durumu - özgürlük ve düzen bir arada</li>
+                                    <li><strong>Yokolan Leviathan:</strong> Devlet çok zayıf, toplum parçalanmış - kaos</li>
+                                </ul>
+                                
+                                <p class="key-insight">💡 <strong>Temel Argüman:</strong> Özgürlük ne çok güçlü devlette ne de çok zayıf devlette var olabilir. Toplum ve devlet arasındaki sürekli rekabet ve denge, özgürlüğün temel koşuludur. Bu denge "Dar Koridor"da sürdürülmelidir.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="go-to-main" class="nav-button">
+                <span>→</span> Ana Sayfaya Dön
+            </button>
+        </div>
+    </div>
+
+    <!-- Ana Sayfa (3D Harita) -->
+    <div id="main-page" class="page">
+        <!-- Blur Overlay -->
+        <div id="blur-overlay"></div>
+
+        <!-- Teoriler Butonu -->
+        <button id="theory-button" class="theory-nav-button">
+            <span>📚</span> Teoriler
+        </button>
+
+        <!-- Ana Sayfa Ülke Rengi Seçici -->
+        <div id="base-color-selector" class="base-color-selector">
+            <label for="base-color-select">Ülke Rengi:</label>
+            <select id="base-color-select">
+                <option value="#27bbd8" selected>Turkuaz</option>
+                <option value="#4a90e2">Mavi</option>
+                <option value="#7b68ee">Mor</option>
+                <option value="#50c878">Yeşil</option>
+                <option value="#ff6b6b">Kırmızı</option>
+                <option value="#ffa07a">Turuncu</option>
+                <option value="#ee82ee">Pembe</option>
+                <option value="#20b2aa">Deniz Mavisi</option>
+            </select>
+        </div>
+
+        <!-- WGI Üst Kontrolleri -->
+        <header id="wgi-header" style="display: none;">
+            <div class="wgi-controls">
+                <div class="wgi-btn-wrapper">
+                    <button id="wgi-button" class="wgi-btn">WGI</button>
+                    <div class="wgi-tooltip">Worldwide Governance Indicators - Ülkelerin yönetişim göstergelerini görselleştirin</div>
+                </div>
+                
+                <div class="indicator-group" id="indicator-group" style="display: none;">
+                    <label for="indicator-select">Gösterge:</label>
+                    <select id="indicator-select">
+                        <option value="va">Ses ve Hesap Verebilirlik</option>
+                        <option value="pv">Siyasal İstikrar ve Şiddetsizlik</option>
+                        <option value="ge">Hükümet Etkinliği</option>
+                        <option value="rq">Düzenleyici Kalite</option>
+                        <option value="rl">Hukukun Üstünlüğü</option>
+                        <option value="cc" selected>Yolsuzluğun Kontrolü</option>
+                    </select>
+                </div>
+                
+                <div class="scale-group" id="scale-group" style="display: none;">
+                    <label for="scale-select">Skala:</label>
+                    <select id="scale-select">
+                        <option value="RdYlGn" selected>Kırmızı-Sarı-Yeşil</option>
+                        <option value="Spectral">Spektral</option>
+                        <option value="RdBu">Kırmızı-Mavi</option>
+                        <option value="PiYG">Pembe-Yeşil</option>
+                        <option value="BrBG">Kahverengi-Yeşil</option>
+                        <option value="PRGn">Mor-Yeşil</option>
+                        <option value="PuOr">Mor-Turuncu</option>
+                        <option value="RdGy">Kırmızı-Gri</option>
+                    </select>
+                    <label style="margin-left: 6px;">
+                        <input type="checkbox" id="scale-reverse" /> Ters
+                    </label>
+                </div>
+                
+                <div class="projection-toggle" id="projection-toggle" style="display: none;">
+                    <button id="btn-globe" class="proj-btn active">Küre</button>
+                    <button id="btn-flat" class="proj-btn">Düzlem</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Seçili Ülke Bilgi Kutusu (Eski - Gizlenecek) -->
+        <div id="country-info" style="display: none;">
+            <div id="country-name">Bir ülkeye tıklayın</div>
+        </div>
+
+        <!-- 3D Harita Konteyneri -->
+        <div id="globe-container"></div>
+
+        <!-- 2D Düzlemsel Harita Konteyneri -->
+        <div id="flatmap-container" style="display: none;">
+            <svg width="0" height="0" style="position: absolute;">
+                <defs>
+                    <pattern id="map-nodata-pattern" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+                        <rect width="6" height="6" fill="#2d3748"/>
+                        <line x1="0" y1="0" x2="0" y2="6" stroke="#e5e7eb" stroke-width="2"/>
+                    </pattern>
+                </defs>
+            </svg>
+        </div>
+
+        <!-- Yıl Kaydırıcısı ve Legend (Alt Orta) -->
+        <div id="year-slider-container" style="display: none;">
+            <div class="legend" id="legend" style="display: none;">
+                <div class="legend-wrapper">
+                    <svg class="legend-svg" width="500" height="60" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="wgi-gradient" x1="0%" y1="0%" x2="100%" y2="0%"></linearGradient>
+                            <pattern id="nodata-pattern" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                                <rect width="8" height="8" fill="#4a5568"/>
+                                <line x1="0" y1="0" x2="0" y2="8" stroke="#e5e7eb" stroke-width="2.5"/>
+                            </pattern>
+                        </defs>
+                        <rect x="0" y="0" width="400" height="20" fill="url(#wgi-gradient)" rx="10" ry="10" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                        <rect class="legend-segment-svg" data-range="-2.5:-1.5" x="0" y="0" width="80" height="20" fill="transparent" style="cursor: pointer;"/>
+                        <rect class="legend-segment-svg" data-range="-1.5:-0.5" x="80" y="0" width="80" height="20" fill="transparent" style="cursor: pointer;"/>
+                        <rect class="legend-segment-svg" data-range="-0.5:0.5" x="160" y="0" width="80" height="20" fill="transparent" style="cursor: pointer;"/>
+                        <rect class="legend-segment-svg" data-range="0.5:1.5" x="240" y="0" width="80" height="20" fill="transparent" style="cursor: pointer;"/>
+                        <rect class="legend-segment-svg" data-range="1.5:2.5" x="320" y="0" width="80" height="20" fill="transparent" style="cursor: pointer;"/>
+                        <text x="0" y="40" font-size="11" fill="white" font-weight="600" text-anchor="start">-2.5</text>
+                        <text x="80" y="40" font-size="11" fill="white" font-weight="600" text-anchor="middle">-1.5</text>
+                        <text x="160" y="40" font-size="11" fill="white" font-weight="600" text-anchor="middle">-0.5</text>
+                        <text x="240" y="40" font-size="11" fill="white" font-weight="600" text-anchor="middle">0.5</text>
+                        <text x="320" y="40" font-size="11" fill="white" font-weight="600" text-anchor="middle">1.5</text>
+                        <text x="400" y="40" font-size="11" fill="white" font-weight="600" text-anchor="end">2.5</text>
+                        <g class="legend-nodata-svg" data-range="nodata" style="cursor: pointer;">
+                            <rect x="430" y="0" width="50" height="20" fill="url(#nodata-pattern)" rx="5" ry="5" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                            <text x="455" y="40" font-size="11" fill="white" font-weight="600" text-anchor="middle">Veri Yok</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="year-controls">
+                <input type="range" id="year-slider" min="1996" max="2023" step="1" value="2023" />
+                <div class="year-readout">
+                    <span>Yıl:</span> <strong id="year-label">2023</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2D Harita Tooltip -->
+        <div id="tooltip" class="map-tooltip" style="display: none;"></div>
+
+        <!-- Sağ Panel - Ülke Detayları -->
+        <div id="country-panel" class="country-panel">
+            <button id="close-panel" class="close-panel-btn">&times;</button>
+            
+            <div class="panel-header">
+                <img id="country-flag" class="country-flag" src="" alt="Bayrak">
+                <h2 id="panel-country-name">Ülke Adı</h2>
+            </div>
+
+            <div class="panel-content">
+                <div class="panel-section">
+                    <h3 class="panel-section-title">📖 Ulusların Düşüşü</h3>
+                    <div class="panel-section-content">
+                        <p id="nations-fail-text">Bu ülke için analiz yükleniyor...</p>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3 class="panel-section-title">🏛️ Dar Koridor</h3>
+                    <div class="panel-section-content">
+                        <div class="corridor-graphic" id="corridor-graphic-main">
+                            <div class="axis-label y-axis">Devletin Gücü</div>
+                            <div class="axis-label x-axis">Toplumun Gücü</div>
+                            <img src="assets/images/darKoridorGrafigiYazili.png" alt="Dar Koridor Grafiği">
+                            <div id="country-position-dot" class="position-dot"></div>
+                            <div id="corridor-tooltip" class="corridor-tooltip"></div>
+                        </div>
+                        
+                        <div class="corridor-info-bar" id="corridor-info-bar">
+                            <div class="info-item">
+                                <span class="info-label">Devlet Gücü:</span>
+                                <span class="info-value state-power">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Toplum Gücü:</span>
+                                <span class="info-value society-power">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Tip:</span>
+                                <span class="info-value leviathan-type">--</span>
+                            </div>
+                        </div>
+                        
+                        <div class="corridor-year-slider" id="corridor-year-slider">
+                            <input type="range" id="corridor-year-input" min="1996" max="2023" step="1" value="2023" />
+                            <div class="corridor-year-display">
+                                <span>Yıl:</span> <strong id="corridor-year-label">2023</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="corridor-interactive-toggle">
+                            <button id="toggle-interactive-map" class="interactive-map-btn">
+                                <span>📊</span> Bütün Ülkeleri Göster
+                            </button>
+                        </div>
+                        
+                        <div id="interactive-map-controls" class="interactive-map-controls" style="display: none;">
+                            <div class="corridor-stats-filters" id="corridor-stats-filters"></div>
+                        </div>
+                        
+                        <p id="corridor-text" class="corridor-analysis">Bu ülke için Dar Koridor analizi yükleniyor...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <button id="corridor-action-btn" class="corridor-action-btn">
+                    🚪 Dar Koridora Gir/Orada Kal
+                </button>
+            </div>
+        </div>
+
+        <!-- Sol Alt Mesaj Kutusu - AI Chat -->
+        <div id="ai-chat-box" class="ai-chat-box">
+            <div class="chat-trigger">
+                <span class="chat-text">AI'a Sor</span>
+            </div>
+
+            <div id="chat-area" class="chat-area">
+                <div class="chat-header">
+                    <h3>ATLAS AI Asistanı</h3>
+                    <button id="close-chat" class="close-chat-btn">&times;</button>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="ai-message">
+                        Merhaba! Ben ATLAS AI Asistanı. Daron Acemoğlu'nun teorileri, ülkelerin kurumsal yapıları ve Dar Koridor analizi hakkında size yardımcı olabilirim.
+                        
+                        Sorularınızı bekliyorum!
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Sorunuzu yazın..." />
+                    <button id="send-chat" class="send-chat-btn">📤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/globe.gl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    
+    <!-- Modüler JavaScript (ES6 Modules) -->
+    <script type="module" src="scripts/main.js"></script>
+    
+    <!-- NOT: Modüler yapı kademeli olarak tamamlanacaktır -->
+    <!-- Geçici olarak eski script.js yedekte tutulmuştur: script.js.backup -->
+</body>
+</html>
+

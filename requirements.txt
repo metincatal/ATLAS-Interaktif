@@ -1,0 +1,29 @@
+# ATLAS-Interaktif Proje Gereksinimleri
+# Kurulum: pip install -r requirements.txt
+
+# Veri analizi
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Görselleştirme
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# İstatistiksel analiz
+factor-analyzer>=0.4.1
+scikit-learn>=1.3.0
+
+# Coğrafi haritalar
+folium>=0.14.0
+geopandas>=0.13.0
+pycountry>=22.3.5
+
+# Jupyter notebook
+jupyter>=1.0.0
+ipywidgets>=8.0.0
+
+# Opsiyonel - Geoplotlib (OpenGL gerektirir)
+# geoplotlib>=0.3.6
+# pyglet>=2.0.0
+

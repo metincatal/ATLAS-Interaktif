@@ -1,0 +1,16 @@
+/* CSS Reset - ATLAS İnteraktif */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+    color: var(--white);
+    overflow: hidden;
+    height: 100vh;
+}
+

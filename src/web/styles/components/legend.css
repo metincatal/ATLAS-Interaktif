@@ -1,0 +1,39 @@
+/* Professional SVG Legend - ATLAS İnteraktif */
+
+.legend {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.legend-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.legend-svg {
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.4));
+}
+
+/* SVG Segment hover effects */
+.legend-segment-svg:hover {
+    stroke: rgba(255, 255, 255, 0.7);
+    stroke-width: 2;
+}
+
+.legend-segment-svg.active {
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 3;
+}
+
+.legend-nodata-svg:hover rect {
+    stroke: rgba(255, 255, 255, 0.7);
+    stroke-width: 2;
+}
+
+.legend-nodata-svg.active rect {
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 3;
+}

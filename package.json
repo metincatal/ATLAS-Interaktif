@@ -1,0 +1,37 @@
+{
+  "name": "atlas-interaktif",
+  "version": "2.0.0",
+  "description": "Daron Acemoğlu Teorileri İnteraktif Görselleştirme Platformu",
+  "main": "src/web/index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "start": "python3 -m http.server 8000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "daron-acemoglu",
+    "political-economy",
+    "data-visualization",
+    "interactive",
+    "globe",
+    "narrow-corridor",
+    "why-nations-fail"
+  ],
+  "author": "ATLAS Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kullanici_adi/ATLAS-Interaktif.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kullanici_adi/ATLAS-Interaktif/issues"
+  },
+  "homepage": "https://github.com/kullanici_adi/ATLAS-Interaktif#readme",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0",
+    "python": ">=3.8"
+  }
+}
+

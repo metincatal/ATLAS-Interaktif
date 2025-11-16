@@ -1,0 +1,18 @@
+/* Globe Konteyneri - ATLAS İnteraktif */
+
+#globe-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    margin-top: 0;
+    transition: filter var(--transition-normal);
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--font-size-xl);
+    z-index: var(--z-base);
+}

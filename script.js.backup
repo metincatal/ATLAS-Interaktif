@@ -1,0 +1,2197 @@
+/**
+ * 3D Dünya Haritası Uygulaması
+ * Globe.gl kütüphanesi kullanılarak oluşturulmuştur
+ */
+
+// Global değişkenler
+let globe;
+let autoRotate = true;
+let countriesData = null;
+let globeInitialized = false;
+let conversationHistory = []; // AI konuşma geçmişi
+// WGI durum ve veri yapıları
+let wgiEnabled = false;
+let wgiDataByIso3 = {}; // { ind: { year: { ISO3: value } } }
+let wgiYears = [];
+let currentIndicator = 'cc';
+let currentYear = null;
+let flatMapInitialized = false;
+let flatSvg = null;
+let flatProjection = null;
+let flatPath = null;
+let flatTopPadding = 0; // WGI başlığının yüksekliğine göre üst marj
+let currentCountryColor = 'rgba(39, 187, 216, 0.8)'; // Kullanıcı seçebilir
+let currentWgiScheme = 'RdYlGn'; // Kullanıcı seçebilir
+let currentWgiReverse = false; // Kullanıcı ters çevirebilir
+// Dar Koridor verileri
+let darKoridorData = null; // Faktör analizi sonuçları (2023)
+let darKoridorByYear = null; // Yıllara göre organize edilmiş veriler
+let darKoridorByCountry = null; // Ülkelere göre organize edilmiş veriler
+let selectedYear = 2023; // Seçili yıl
+let currentCountryName = null; // Şu anda panelde gösterilen ülke
+let currentCountryAvailableYears = []; // Şu anki ülkenin mevcut yılları
+
+// Ülke adı eşleme tablosu (GeoJSON -> Dar Koridor JSON)
+const COUNTRY_NAME_MAP = {
+    'United States': 'United States of America',
+    'United States of America': 'United States of America',
+    'Turkey': 'Türkiye',
+    'South Korea': 'Republic of Korea',
+    'North Korea': 'Democratic People\'s Republic of Korea',
+    'Venezuela': 'Bolivarian Republic of Venezuela',
+    'Yemen': 'Republic of Yemen',
+    'Congo': 'Republic of the Congo',
+    'Democratic Republic of the Congo': 'Democratic Republic of the Congo',
+    'Czech Republic': 'Czechia',
+    'Ivory Coast': 'Côte d\'Ivoire',
+    'Swaziland': 'Eswatini',
+    'Macedonia': 'North Macedonia',
+    'Burma': 'Myanmar',
+    'Laos': 'Lao PDR',
+    'Vietnam': 'Viet Nam',
+    'East Timor': 'Timor-Leste',
+    'São Tomé and Principe': 'São Tomé and Príncipe',
+    'Syria': 'Syrian Arab Republic'
+};
+
+// Renk paleti - ülkeler için
+const COUNTRY_COLOR = 'rgba(39, 187, 216, 0.8)';
+const HOVER_COLOR = 'rgba(255, 200, 50, 0.9)';
+const SELECTED_COLOR = 'rgba(255, 100, 100, 0.9)';
+
+// Panelde gösterilecek sabit analiz metinleri
+const COUNTRY_ANALYSES = {
+    'Turkey': {
+        nationsFail: 'Türkiye\'de 1980 sonrası açılan piyasa alanı girişimciliği desteklese de hukukun üstünlüğü ve hesap verebilirlik eksikleri kapsayıcı kurumların derinleşmesini engelliyor. Devlet kaynaklarının seçkinler arasında yeniden dağıtılması üretken yatırımların ve uzun vadeli büyümenin önünde bariyer oluşturuyor.',
+        corridor: 'Türkiye güçlü devlet kapasitesine rağmen toplumsal denetimi kurumsallaştırmakta zorlanan bir Zincirlenmiş Leviathan adayını temsil ediyor. Şeffaflık, yargı bağımsızlığı ve yerel örgütlenmeyi güçlendiren reformlar ülkeyi dar koridorda tutmak için kritik.'
+    },
+    'United States of America': {
+        nationsFail: 'Amerika Birleşik Devletleri’nde kapsayıcı ekonomik kurumlar inovasyon ve girişimciliği teşvik ederek uzun vadeli büyüme yarattı. Buna karşın siyasi sistemdeki çıkar gruplarının ağırlığı kapsayıcılığın tüm toplumsal kesimlere eşit yansımasını zorlaştırıyor.',
+        corridor: 'ABD, güçlü devlet kapasitesi ile örgütlü toplumsal denetim arasında süregelen rekabet sayesinde Zincirlenmiş Leviathan örneklerinden biri kabul ediliyor. Artan kutuplaşma ve temsil sorunları bu dengeyi dar koridorun dışına itebilecek riskler barındırıyor.'
+    },
+    'United Kingdom': {
+        nationsFail: 'Birleşik Krallık’ta Sanayi Devrimi ile pekişen kapsayıcı kurumlar mülkiyet haklarını ve rekabeti koruyarak ekonomik çeşitlenmeyi destekledi. Yüksek finansal yoğunlaşma ve bölgesel eşitsizlikler ise kapsayıcılığı zayıflatabilecek yapısal sorunlar olarak öne çıkıyor.',
+        corridor: 'Ülkede parlamenter denetim ve sivil toplumun güçlülüğü Zincirlenmiş Leviathan dengesini koruyor. Devlet kapasitesinin Brexit sonrası yeniden ölçeklenmesi bu koridor içinde kalmayı belirleyecek başlıca sınavlardan biri.'
+    },
+    'China': {
+        nationsFail: 'Çin’de reform dönemi piyasa açılımları üretkenliği artırsa da Parti kontrolündeki sömürücü kurumlar kapsayıcı düzenin oluşmasını engelliyor. Sermaye tahsisi ve yenilik kararlarının merkezi elde toplanması uzun vadeli verimliliği baskılıyor.',
+        corridor: 'Devlet kapasitesinin toplum üzerinde baskın olduğu Çin, Despotik Leviathan özellikleri taşıyor. Toplumsal denge mekanizmalarının sınırlılığı ülkenin dar koridor dışında kalmasına yol açıyor.'
+    },
+    'Norway': {
+        nationsFail: 'Norveç’te kapsayıcı kurumlar doğal kaynak gelirlerinin eşitlikçi dağıtılmasını sağlayarak yüksek refah seviyesi yarattı. Şeffaf kamu yönetimi ve güçlü sendikal yapı kapsayıcı ekonomik düzeni pekiştiriyor.',
+        corridor: 'Norveç, devlet kapasitesinin toplumla dengelendiği Zincirlenmiş Leviathan kategorisine yakın. Katılımcı bütçe süreçleri ve yerel demokrasi ülkede dar koridorun sürdürülebilmesini sağlıyor.'
+    },
+    'North Korea': {
+        nationsFail: 'Kuzey Kore’de siyasi elitin kontrolündeki sömürücü kurumlar kaynakları askeri ve ideolojik hedeflere yönlendiriyor. Mülkiyet haklarının yokluğu ve kapalı ekonomi, nüfusu sürekli yoksulluk içinde bırakıyor.',
+        corridor: 'Devlet gücünün toplumu tamamen bastırdığı bu yapı tipik bir Despotik Leviathan örneği. Toplumsal denetim mekanizmaları olmadığı için ülke dar koridorun çok dışında yer alıyor.'
+    },
+    'Sweden': {
+        nationsFail: 'İsveç’te kapsayıcı kurumlar yenilikçi sektörleri desteklerken sosyal devlet aracılığıyla fırsat eşitliğini koruyor. Esnek işgücü piyasası ile güçlü refah sistemi birlikte çalışabiliyor.',
+        corridor: 'Güçlü belediye yapıları ve sendikalar sayesinde İsveç Zincirlenmiş Leviathan dengesini sürdürüyor. Devlet ile toplum arasındaki sürekli müzakere dar koridorda kalmayı mümkün kılıyor.'
+    },
+    'Denmark': {
+        nationsFail: 'Danimarka’da kapsayıcı kurumlar yüksek sosyal güven ve düşük yolsuzluk düzeyi yaratarak üretken yatırım ortamı oluşturuyor. Eğitim ve inovasyon politikaları sermayeyi geniş tabanlı bir şekilde destekliyor.',
+        corridor: 'Devlet kapasitesi ile örgütlü toplum arasındaki güçlü kontrol mekanizmaları Danimarka’yı Zincirlenmiş Leviathan kategorisinde tutuyor. Şeffaflık ve katılımcılık dar koridorun korunmasında kilit rol oynuyor.'
+    },
+    'Switzerland': {
+        nationsFail: 'İsviçre’de federal yapı ve doğrudan demokrasi kapsayıcı kurumların yerel düzeyde pekişmesini sağlıyor. Finansal istikrar ve inovasyon politikaları geniş kesimlerin mülkiyet haklarına erişimini koruyor.',
+        corridor: 'Yoğun yerel referandumlar ve hesap verebilir kamu yönetimi İsviçre’yi Zincirlenmiş Leviathan’a örnek yapıyor. Devlet-toplum işbirliği dar koridorun sınırlarını genişletiyor.'
+    },
+    'Germany': {
+        nationsFail: 'Almanya’da sanayi sonrası dönemde kurumsal koordinasyon kapsayıcı ekonomik kurumları destekledi. Ko-determinasyon yapıları işçi ve sermaye arasında paylaşımı dengeleyerek inovasyonu teşvik ediyor.',
+        corridor: 'Güçlü federal devlet ile örgütlü sendika ve sivil toplum kapasitesi, Almanya’yı Zincirlenmiş Leviathan örneklerinden biri yapıyor. Koridor içindeki bu denge için dijitalleşme ve entegrasyon politikaları kritik.'
+    },
+    'France': {
+        nationsFail: 'Fransa’da merkeziyetçi devlet geleneği kapsayıcı refah düzenini finanse ederken yüksek düzenleme yoğunluğu rekabeti zaman zaman sınırlandırıyor. Reformların amacı bu dengeyi kapsayıcılığı bozmadan modernize etmek.',
+        corridor: 'Devletin güçlü olduğu Fransa’da toplumsal hareketler ve anayasal kontrol mekanizmaları sistemi Zincirlenmiş Leviathan içinde tutuyor. Plebisitçi eğilimler koridor dışına kayma riskini canlı tutuyor.'
+    },
+    'Japan': {
+        nationsFail: 'Japonya’da savaş sonrası dönemde kapsayıcı kurumlar teknolojiye dayalı kalkınmayı mümkün kıldı. Ancak yaşlanan nüfus ve bazı sektörlerdeki korumacılık kapsayıcılığın geleceğini sınayan başlıca etkenler.',
+        corridor: 'Devletin koordinasyon gücü ile şirket birlikleri ve yerel yönetimlerin denetimi Japonya’yı Zincirlenmiş Leviathan sınırlarında tutuyor. Reformlar toplumun sesini kurumsal süreçlere daha fazla dahil etmeye odaklanıyor.'
+    },
+    'South Korea': {
+        nationsFail: 'Güney Kore’de devlet güdümlü sanayileşme büyümeyi hızlandırdı ancak büyük gruplar lehine sömürücü eğilimler yarattı. Demokratikleşme sonrası kapsayıcı kurumlar güçlenmeye devam ediyor.',
+        corridor: 'Ülkede devlet kapasitesi yüksek olsa da toplumsal denetim kurumları genişleyerek Zincirlenmiş Leviathan’a yaklaşan bir denge oluşturuyor. Yolsuzlukla mücadele ve sosyal diyalog dar koridoru genişleten dinamikler.',
+    },
+    'India': {
+        nationsFail: 'Hindistan’da demokratik yapı kapsayıcı kurumların filizlenmesini sağlasa da hukuk ve altyapı eksikleri sömürücü ilişkilerin sürmesine neden oluyor. Kayıt dışı ekonomi potansiyelin tam kullanılmasının önünde engel.',
+        corridor: 'Federal yapı ve canlı sivil toplum Hindistan’ı dar koridorun kenarında tutuyor. Devlet kapasitesinin bölgesel olarak dengelenmesi Zincirlenmiş Leviathan’a yaklaşmak için kritik.'
+    },
+    'Brazil': {
+        nationsFail: 'Brezilya’da kaynakları elit gruplarda toplayan sömürücü kurumlar tarihsel olarak eşitsizliği derinleştirdi. Son yıllardaki sosyal programlar kapsayıcı kurumların zeminini genişletmeye çalışıyor.',
+        corridor: 'Devlet kapasitesi düzensiz ve toplum örgütlenmesi bölgesel olarak farklılık gösterdiği için Brezilya dar koridorda kırılgan bir konumda. Kapsayıcı temsil ve yolsuzlukla mücadele Zincirlenmiş Leviathan’a yaklaşmayı sağlayabilir.'
+    },
+    'Russia': {
+        nationsFail: 'Rusya’da siyasi gücün dar bir elit tarafından kontrol edilmesi sömürücü kurumları güçlendiriyor. Enerji gelirlerinin merkezi dağıtımı kapsayıcı ekonomik dönüşümü sınırlıyor.',
+        corridor: 'Güçlü devlet kapasitesine karşın toplumun denetim araçlarının zayıflığı Rusya’yı Despotik Leviathan kategorisine yaklaştırıyor. Sivil alanın genişlemesi olmadan dar koridora geri dönüş zor görünüyor.'
+    },
+    'Iran': {
+        nationsFail: 'İran’da devlet denetimli ekonomi ve siyasi kısıtlar kapsayıcı kurumların oluşmasını engelliyor. Ekonomik kaynakların devlete yakın aktörlere aktarılması üretken yatırımları baskılıyor.',
+        corridor: 'Toplum üzerinde yoğun baskı ve sınırlı hesap verebilirlik İran’ı Despotik Leviathan çizgisine yerleştiriyor. Dar koridora yaklaşmak için şeffaflık ve hukuki güvenceye dayalı reformlar şart.'
+    },
+    'Saudi Arabia': {
+        nationsFail: 'Suudi Arabistan’da petrol gelirlerinin hanedan ve yakın çevrede toplanması sömürücü kurumların tipik bir örneği. Son reform girişimleri ekonomik çeşitlenme arasa da siyasi kapsayıcılık sınırlı kalıyor.',
+        corridor: 'Devlet gücünün toplum üzerindeki baskınlığı ülkeyi Despotik Leviathan kategorisinde tutuyor. Toplumsal katılımın artması dar koridora girebilmenin ön koşulu olacak.'
+    },
+    'Venezuela': {
+        nationsFail: 'Venezuela’da kurumların siyasallaşması ve mülkiyet haklarının zayıflaması sömürücü yapıyı pekiştirdi. Makroekonomik istikrarsızlık kapsayıcı bir yatırım ortamı oluşmasını engelliyor.',
+        corridor: 'Devlet kapasitesi çökerken toplum örgütlenmesi de baskılanıyor ve ülke Yokolan Leviathan ile Despotik Leviathan arasında sıkışıyor. Dar koridora dönüş için kurumsal güvenin yeniden inşası gerekiyor.'
+    },
+    'Argentina': {
+        nationsFail: 'Arjantin’de periyodik krizler ve siyasal döngüler kurumların kapsayıcılığını zayıflatıyor. Popülist politikalar mülkiyet haklarında öngörülebilirliği azaltıyor.',
+        corridor: 'Devlet kapasitesinin dalgalandığı Arjantin dar koridorun kenarlarında seyrederken toplumun güçlü örgütlülüğü dengeyi korumaya çalışıyor. Mali disiplin ve kurumsal istikrar Zincirlenmiş Leviathan’a yaklaşmak için gerekli.'
+    },
+    'Mexico': {
+        nationsFail: 'Meksika’da federal reformlar kapsayıcı kurumları güçlendirse de yolsuzluk ve organize suç sömürücü ilişkileri canlı tutuyor. Bölgesel eşitsizlikler kapsayıcılığı zorluyor.',
+        corridor: 'Devlet kapasitesi ile toplum denetimi arasındaki dengesizlik Meksika’yı dar koridorun istikrarsız bir bölgesinde tutuyor. Güvenlik reformları ve hesap verebilirlik Zincirlenmiş Leviathan hedefi için kritik.'
+    },
+    'South Africa': {
+        nationsFail: 'Güney Afrika’da apartheid sonrası reformlar kapsayıcı kurumlara geçişi hızlandırdı ancak sosyoekonomik eşitsizlikler sömürücü kalıntıların sürdüğünü gösteriyor. Kurumsal kapasite farklılıkları büyümeyi sınırlıyor.',
+        corridor: 'Devlet kapasitesi ile canlı sivil toplum arasındaki gerilim ülkeyi dar koridorda kırılgan bir konumda tutuyor. Hizmet sunumu ve yolsuzlukla mücadelede ilerleme Zincirlenmiş Leviathan’a yaklaşmayı sağlayacak.'
+    },
+    'Egypt': {
+        nationsFail: 'Mısır’da askeri ve bürokratik elitlerin kontrol ettiği sömürücü kurumlar yenilik kapasitesini sınırlıyor. Özel sektörün büyümesi siyasi ayrıcalıklarla yakından ilişkili.',
+        corridor: 'Devletin toplum üzerindeki baskınlığı Mısır’ı Despotik Leviathan kategorisinde konumlandırıyor. Dar koridora yaklaşmak için bağımsız yargı ve sivil toplumun güçlenmesi gerekiyor.'
+    },
+    'Nigeria': {
+        nationsFail: 'Nijerya’da petrol gelirlerinin patronaj sistemi üzerinden dağıtılması sömürücü kurumların varlığını koruyor. Mülkiyet haklarının zayıflığı ve altyapı açıkları kapsayıcı büyümeyi yavaşlatıyor.',
+        corridor: 'Devlet kapasitesinin bölgeler arasında büyük farklılıklar göstermesi ve toplumun örgütlenme güçlüğü Nijerya’yı dar koridorun dışına itiyor. Hesap verebilirlik ve güvenlik reformları ülkeyi Zincirlenmiş Leviathan’a yaklaştırabilir.'
+    }
+};
+
+function getCountryAnalysesText(countryName) {
+    const analysis = COUNTRY_ANALYSES[countryName];
+    if (analysis) {
+        return analysis;
+    }
+    return {
+        nationsFail: `${countryName} için ayrıntılı veri sınırlı olsa da kapsayıcı kurumların güçlenmesi mülkiyet hakları, hukukun üstünlüğü ve rekabetçi piyasa düzenine bağlı. Sömürücü pratiklerin azaltılması uzun vadeli büyümenin temel koşulu olarak öne çıkıyor.`,
+        corridor: `${countryName} devlet ile toplum kapasitesi arasında sürdürülebilir bir denge arıyor. Katılımcı ve hesap verebilir kurumların güçlenmesi ülkeyi Zincirlenmiş Leviathan'a yaklaştırarak dar koridorda kalmasını sağlayabilir.`
+    };
+}
+
+/**
+ * Dar Koridor verilerini yükler (faktör analizi sonuçları)
+ * Versiyon 2.1 - Yıllara göre organize edilmiş veriler
+ */
+async function loadDarKoridorData() {
+    try {
+        // Yıllara göre organize edilmiş veri
+        const responseByYear = await fetch('Datasets/processed2_1/dar_koridor_all_years.json');
+        if (!responseByYear.ok) {
+            throw new Error('Dar Koridor verileri (yıllara göre) yüklenemedi');
+        }
+        darKoridorByYear = await responseByYear.json();
+        
+        // Ülkelere göre organize edilmiş veri
+        const responseByCountry = await fetch('Datasets/processed2_1/dar_koridor_by_country.json');
+        if (!responseByCountry.ok) {
+            throw new Error('Dar Koridor verileri (ülkelere göre) yüklenemedi');
+        }
+        darKoridorByCountry = await responseByCountry.json();
+        
+        // Varsayılan olarak 2023 yılı için darKoridorData'yı oluştur
+        updateDarKoridorDataForYear(2023);
+        
+        const yearCount = Object.keys(darKoridorByYear).length;
+        const countryCount = Object.keys(darKoridorByCountry).length;
+        console.log(`✓ Dar Koridor verileri yüklendi (v2.1)`);
+        console.log(`  Yıl aralığı: ${yearCount} yıl (1996-2023)`);
+        console.log(`  Ülke sayısı: ${countryCount} ülke`);
+        console.log('  Kullanılan göstergeler: RL, GE, CC, RQ, PS (WGI) + v2xcs_ccsi, v2x_cspart, v2x_freexp_altinf, v2psoppaut, v2csreprss (V-Dem)');
+    } catch (error) {
+        console.warn('Dar Koridor verileri yüklenemedi:', error);
+        darKoridorData = null;
+        darKoridorByYear = null;
+        darKoridorByCountry = null;
+    }
+}
+
+/**
+ * Belirli bir yıl için darKoridorData'yı günceller
+ */
+function updateDarKoridorDataForYear(year) {
+    if (!darKoridorByYear) return;
+    
+    const yearStr = String(year);
+    if (!darKoridorByYear[yearStr]) {
+        console.warn(`⚠ ${year} yılı için veri bulunamadı`);
+        return;
+    }
+    
+    // darKoridorData formatını oluştur
+    darKoridorData = {
+        countries: darKoridorByYear[yearStr].map(country => ({
+            name: country.country,
+            statePower: country.statePower,
+            societyPower: country.societyPower,
+            leviathanType: country.leviathanType,
+            cluster: country.cluster
+        }))
+    };
+    
+    console.log(`✓ ${year} yılı verileri yüklendi: ${darKoridorData.countries.length} ülke`);
+}
+
+/**
+ * Sayfa yüklendiğinde çalışacak ana fonksiyon
+ */
+window.addEventListener('DOMContentLoaded', () => {
+    setupPageNavigation();
+    // Globe sadece ana sayfaya geçildiğinde başlatılacak
+    
+    // Dar Koridor verilerini yükle
+    loadDarKoridorData();
+});
+
+// WGI gösterge adları (TR)
+const WGI_INDICATORS = {
+    va: 'Ses ve Hesap Verebilirlik',
+    pv: 'Siyasal İstikrar ve Şiddetsizlik',
+    ge: 'Hükümet Etkinliği',
+    rq: 'Düzenleyici Kalite',
+    rl: 'Hukukun Üstünlüğü',
+    cc: 'Yolsuzluğun Kontrolü'
+};
+
+// WGI renk skalası (-2.5 → 2.5), kullanıcı seçimine göre
+function getInterpolator() {
+    const name = currentWgiScheme;
+    const fn = d3['interpolate' + name];
+    return typeof fn === 'function' ? fn : d3.interpolateRdYlGn;
+}
+
+function wgiColorScale(value) {
+    if (value === null || value === undefined || Number.isNaN(value)) return '#9aa5b1';
+    const v = Math.max(-2.5, Math.min(2.5, value));
+    let t = (v + 2.5) / 5; // [0,1]
+    if (currentWgiReverse) t = 1 - t;
+    return getInterpolator()(t);
+}
+
+// Global değişken: seçili legend aralığı
+let selectedLegendRange = null;
+
+// Lejant renklerini güncelle (SVG gradient)
+function updateLegendGradient() {
+    const gradientDef = document.getElementById('wgi-gradient');
+    if (!gradientDef) return;
+    
+    // Clear existing stops
+    gradientDef.innerHTML = '';
+    
+    // Create gradient stops
+    const stops = 20;
+    for (let i = 0; i <= stops; i++) {
+        let t = i / stops;
+        const color = getInterpolator()(currentWgiReverse ? 1 - t : t);
+        const offset = (t * 100).toFixed(1);
+        
+        const stop = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        stop.setAttribute('offset', `${offset}%`);
+        stop.setAttribute('stop-color', color);
+        gradientDef.appendChild(stop);
+    }
+}
+
+// Legend etkileşimi için event listener'lar ekle (SVG)
+function setupLegendInteraction() {
+    const legendSegments = document.querySelectorAll('.legend-segment-svg');
+    const nodataBtn = document.querySelector('.legend-nodata-svg');
+    
+    // Segment tıklamaları
+    legendSegments.forEach(segment => {
+        segment.addEventListener('click', () => {
+            const range = segment.dataset.range;
+            
+            // Aynı aralığa tekrar tıklanırsa filtreyi kaldır
+            if (selectedLegendRange === range) {
+                selectedLegendRange = null;
+                segment.classList.remove('active');
+            } else {
+                // Önceki seçimi temizle
+                legendSegments.forEach(s => s.classList.remove('active'));
+                if (nodataBtn) nodataBtn.classList.remove('active');
+                // Yeni seçimi işaretle
+                selectedLegendRange = range;
+                segment.classList.add('active');
+            }
+            
+            // Haritayı güncelle
+            if (wgiEnabled) {
+                applyWgiToGlobe();
+                applyWgiToFlatMap();
+            }
+        });
+    });
+    
+    // "Veri Yok" butonu
+    if (nodataBtn) {
+        nodataBtn.addEventListener('click', () => {
+            // Aynı seçime tekrar tıklanırsa filtreyi kaldır
+            if (selectedLegendRange === 'nodata') {
+                selectedLegendRange = null;
+                nodataBtn.classList.remove('active');
+            } else {
+                // Önceki seçimi temizle
+                legendSegments.forEach(s => s.classList.remove('active'));
+                // Yeni seçimi işaretle
+                selectedLegendRange = 'nodata';
+                nodataBtn.classList.add('active');
+            }
+            
+            // Haritayı güncelle
+            if (wgiEnabled) {
+                applyWgiToGlobe();
+                applyWgiToFlatMap();
+            }
+        });
+    }
+}
+
+// Ana sayfa rengi hover/selected ile çakışmasın
+function ensureDistinctBaseColor(hexColor) {
+    const hover = d3.color(HOVER_COLOR);
+    const selected = d3.color(SELECTED_COLOR);
+    let base = d3.hsl(hexColor);
+    const minLightDiff = 0.18;
+    const minSatDiff = 0.15;
+    
+    function tooClose(a, b) {
+        const ah = d3.hsl(a);
+        const bh = d3.hsl(b);
+        return (Math.abs(ah.l - bh.l) < minLightDiff) && (Math.abs(ah.s - bh.s) < minSatDiff);
+    }
+    
+    let iterations = 0;
+    while ((tooClose(base, hover) || tooClose(base, selected)) && iterations < 10) {
+        base.l = Math.min(0.9, base.l + 0.08);
+        base.s = Math.max(0.2, base.s - 0.05);
+        iterations++;
+    }
+    return base.formatHex();
+}
+
+/**
+ * Globe.gl objesini başlatır ve temel ayarları yapar
+ */
+function initializeGlobe() {
+    const container = document.getElementById('globe-container');
+    
+    // Globe objesini oluştur
+    globe = Globe()
+        (container)
+        .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+        .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+        .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+        .width(window.innerWidth)
+        .height(window.innerHeight);
+    
+    // Otomatik dönüş kontrolü
+    globe.controls().autoRotate = true;
+    globe.controls().autoRotateSpeed = 0.5;
+    globe.controls().enableZoom = true;
+    
+    // Kullanıcı etkileşimi olduğunda otomatik dönüşü durdur
+    setupInteractionListeners();
+    
+    // Pencere boyutu değiştiğinde globe'u yeniden boyutlandır
+    window.addEventListener('resize', () => {
+        globe.width(window.innerWidth);
+        globe.height(window.innerHeight);
+    });
+
+    // WGI Kontrollerini kur (UI)
+    setupWgiControls();
+    
+    // Ana sayfa renk seçiciyi kur
+    setupBaseColorSelector();
+}
+
+/**
+ * GeoJSON verilerini yükler ve globe'a ekler
+ */
+async function loadCountriesData() {
+    try {
+        // Natural Earth'ün ülke sınırları GeoJSON verisi
+        const response = await fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson');
+        
+        if (!response.ok) {
+            throw new Error('GeoJSON verisi yüklenemedi');
+        }
+        
+        countriesData = await response.json();
+        
+        // Ülke poligonlarını globe'a ekle
+        globe
+            .polygonsData(countriesData.features)
+            .polygonAltitude(0.01)
+            .polygonCapColor(p => wgiEnabled ? getCountryFillColor(p) : currentCountryColor)
+            .polygonSideColor(() => 'rgba(50, 150, 220, 0.5)')
+            .polygonStrokeColor(() => '#ffffff')
+            .polygonLabel(p => getPolygonLabelHtml(p))
+            .onPolygonHover(handleCountryHover)
+            .onPolygonClick(handleCountryClick);
+        
+        console.log('Ülke verileri başarıyla yüklendi:', countriesData.features.length, 'ülke');
+        
+    } catch (error) {
+        console.error('Veri yükleme hatası:', error);
+        alert('Harita verileri yüklenirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edin.');
+    }
+}
+
+/**
+ * Fare ülke üzerinde gezindiğinde renk değişimi
+ */
+function handleCountryHover(polygon, prevPolygon) {
+    // WGI aktifken veya panel açıkken hover rengi değiştirmeyelim
+    const panel = document.getElementById('country-panel');
+    const isPanelOpen = panel && panel.classList.contains('active');
+    if (wgiEnabled || isPanelOpen) return;
+    
+    if (polygon) {
+        globe.polygonCapColor(p => p === polygon ? HOVER_COLOR : currentCountryColor);
+    } else {
+        globe.polygonCapColor(() => currentCountryColor);
+    }
+}
+
+/**
+ * Ülkeye tıklandığında sağ paneli aç ve içeriği doldur
+ */
+function handleCountryClick(polygon) {
+    if (!polygon) return;
+    
+    const countryName = polygon.properties.NAME || polygon.properties.ADMIN || 'Bilinmeyen Ülke';
+    const countryCode = polygon.properties.ISO_A2 || 'XX';
+    // WGI açık ise kapatıp küreye dön
+    if (wgiEnabled) {
+        disableWgiAndReturnHome();
+    }
+    
+    // Ülkeyi vurgula
+    globe.polygonCapColor(p => 
+        p === polygon ? SELECTED_COLOR : currentCountryColor
+    );
+    
+    // Kameraya ülkeyi odakla
+    const { lat, lng } = getPolygonCenter(polygon);
+    globe.pointOfView({ lat, lng, altitude: 1.5 }, 1000);
+    
+    // Otomatik dönüşü yeniden aktif et (panel açıkken dönmeye devam etsin)
+    setTimeout(() => {
+        if (!autoRotate) {
+            globe.controls().autoRotate = true;
+            autoRotate = true;
+            console.log('Otomatik dönüş panel için yeniden aktif edildi');
+        }
+    }, 1200);
+    
+    // Sağ paneli aç ve içeriği doldur
+    openCountryPanel(countryName, countryCode);
+    
+    // Blur efektini aktifleştir
+    document.getElementById('blur-overlay').classList.add('active');
+    
+    console.log('Seçilen ülke:', countryName, 'Kod:', countryCode);
+}
+
+/**
+ * Poligonun merkez koordinatlarını hesaplar
+ */
+function getPolygonCenter(polygon) {
+    // Basit merkez hesaplama - ilk koordinat çiftini kullan
+    const coordinates = polygon.geometry.coordinates[0];
+    
+    if (polygon.geometry.type === 'Polygon') {
+        const firstCoord = coordinates[0];
+        return { lng: firstCoord[0], lat: firstCoord[1] };
+    } else if (polygon.geometry.type === 'MultiPolygon') {
+        const firstCoord = coordinates[0][0];
+        return { lng: firstCoord[0], lat: firstCoord[1] };
+    }
+    
+    return { lng: 0, lat: 0 };
+}
+
+/**
+ * Kullanıcı etkileşim dinleyicilerini ayarlar
+ */
+function setupInteractionListeners() {
+    const container = document.getElementById('globe-container');
+    const blurOverlay = document.getElementById('blur-overlay');
+    
+    // Fare veya dokunmatik etkileşim başladığında (sadece manual kontrol)
+    const stopAutoRotate = (e) => {
+        // Eğer blur overlay aktifse (panel/chat açık), etkileşimi engelle
+        if (blurOverlay.classList.contains('active')) {
+            e.stopPropagation();
+            return;
+        }
+        
+        if (autoRotate) {
+            globe.controls().autoRotate = false;
+            autoRotate = false;
+            console.log('Otomatik dönüş durduruldu - kullanıcı kontrolü aktif');
+        }
+    };
+    
+    // Fare tıklaması (sadece globe kontrolü için)
+    container.addEventListener('mousedown', stopAutoRotate, true);
+    
+    // Dokunmatik ekran
+    container.addEventListener('touchstart', stopAutoRotate, true);
+    
+    // Fare tekerleği (zoom)
+    container.addEventListener('wheel', stopAutoRotate, true);
+}
+
+/**
+ * Sayfa navigasyon sistemini kurar
+ */
+function setupPageNavigation() {
+    const theoryPage = document.getElementById('theory-page');
+    const mainPage = document.getElementById('main-page');
+    const goToMainButton = document.getElementById('go-to-main');
+    const theoryButton = document.getElementById('theory-button');
+    
+    // Ana sayfaya geç butonu
+    goToMainButton.addEventListener('click', () => {
+        // Teori sayfasını gizle
+        theoryPage.classList.remove('active');
+        
+        // Ana sayfayı göster
+        mainPage.classList.add('active');
+        
+        // Globe henüz başlatılmamışsa başlat
+        if (!globeInitialized) {
+            setTimeout(() => {
+                initializeGlobe();
+                loadCountriesData();
+                globeInitialized = true;
+            }, 300);
+        }
+        
+        console.log('Ana sayfaya geçildi');
+    });
+    
+    // Teoriler butonuna dön
+    theoryButton.addEventListener('click', () => {
+        // Ana sayfayı gizle
+        mainPage.classList.remove('active');
+        
+        // Teori sayfasını göster
+        theoryPage.classList.add('active');
+        
+        console.log('Teori sayfasına geçildi');
+    });
+    
+    // Panel ve Chat yönetimi
+    setupPanelAndChat();
+    
+    console.log('Sayfa navigasyonu hazır');
+}
+
+/**
+ * Ana sayfa renk seçiciyi kur
+ */
+function setupBaseColorSelector() {
+    const baseColorSelect = document.getElementById('base-color-select');
+    if (!baseColorSelect) return;
+    
+    baseColorSelect.addEventListener('change', () => {
+        const picked = baseColorSelect.value;
+        const adjusted = ensureDistinctBaseColor(picked);
+        currentCountryColor = adjusted;
+        
+        if (!wgiEnabled && globe) {
+            globe.polygonCapColor(() => currentCountryColor);
+        }
+        if (!wgiEnabled && flatMapInitialized) {
+            flatSvg.selectAll('path.country').attr('fill', currentCountryColor);
+        }
+    });
+}
+
+/**
+ * WGI UI ve veri yükleme akışı
+ */
+function setupWgiControls() {
+    const wgiHeader = document.getElementById('wgi-header');
+    const wgiBtn = document.getElementById('wgi-button');
+    const indicatorGroup = document.getElementById('indicator-group');
+    const indicatorSelect = document.getElementById('indicator-select');
+    const scaleGroup = document.getElementById('scale-group');
+    const scaleSelect = document.getElementById('scale-select');
+    const scaleReverse = document.getElementById('scale-reverse');
+    const projectionToggle = document.getElementById('projection-toggle');
+    const btnGlobe = document.getElementById('btn-globe');
+    const btnFlat = document.getElementById('btn-flat');
+    const legend = document.getElementById('legend');
+    const yearSliderContainer = document.getElementById('year-slider-container');
+    const yearSlider = document.getElementById('year-slider');
+    const yearLabel = document.getElementById('year-label');
+
+    // Üst WGI barını göster
+    wgiHeader.style.display = 'block';
+
+    // WGI butonu: ilk tıkta veriyi yükle ve WGI modunu aç/kapat
+    wgiBtn.addEventListener('click', async () => {
+        if (!wgiEnabled) {
+            // Veri yüklenmemişse yükle
+            if (!wgiYears.length) {
+                await loadWgiCsv();
+                setupYearSlider(yearSlider, yearLabel);
+            }
+            wgiEnabled = true;
+            indicatorGroup.style.display = 'flex';
+            scaleGroup.style.display = 'flex';
+            projectionToggle.style.display = 'flex';
+            legend.style.display = 'flex';
+            yearSliderContainer.style.display = 'flex';
+            // WGI açıldığında her zaman Küre ile başla
+            btnGlobe.classList.add('active');
+            btnFlat.classList.remove('active');
+            document.getElementById('globe-container').style.display = 'block';
+            document.getElementById('flatmap-container').style.display = 'none';
+            // Teoriler ve Ülke Rengi seçicileri gizle
+            const theoryBtn = document.getElementById('theory-button');
+            const baseColorSelector = document.getElementById('base-color-selector');
+            if (theoryBtn) theoryBtn.style.display = 'none';
+            if (baseColorSelector) baseColorSelector.style.display = 'none';
+            // Tooltip'i gizle
+            const wgiTooltip = document.querySelector('.wgi-tooltip');
+            if (wgiTooltip) wgiTooltip.classList.add('hidden');
+            updateLegendGradient();
+            setupLegendInteraction();
+            applyWgiToGlobe();
+            applyWgiToFlatMap();
+        } else {
+            // Kapat
+            wgiEnabled = false;
+            indicatorGroup.style.display = 'none';
+            scaleGroup.style.display = 'none';
+            projectionToggle.style.display = 'none';
+            legend.style.display = 'none';
+            yearSliderContainer.style.display = 'none';
+            // Legend filtresini sıfırla
+            selectedLegendRange = null;
+            document.querySelectorAll('.legend-segment-svg').forEach(item => item.classList.remove('active'));
+            const nodataBtn = document.querySelector('.legend-nodata-svg');
+            if (nodataBtn) nodataBtn.classList.remove('active');
+            
+            // Düzlemdeyse küreye geç
+            const flatCont = document.getElementById('flatmap-container');
+            const globeCont = document.getElementById('globe-container');
+            if (flatCont.style.display !== 'none') {
+                flatCont.style.display = 'none';
+                globeCont.style.display = 'block';
+            }
+            
+            // Teoriler ve Ülke Rengi seçicileri tekrar göster
+            const theoryBtn = document.getElementById('theory-button');
+            const baseColorSelector = document.getElementById('base-color-selector');
+            if (theoryBtn) theoryBtn.style.display = 'flex';
+            if (baseColorSelector) baseColorSelector.style.display = 'flex';
+            // Tooltip'i tekrar göster
+            const wgiTooltip = document.querySelector('.wgi-tooltip');
+            if (wgiTooltip) wgiTooltip.classList.remove('hidden');
+            // Renkleri varsayılana (kullanıcı seçili) döndür
+            if (globe) {
+                globe.polygonCapColor(() => currentCountryColor);
+                globe.polygonLabel(({ properties: d }) => `
+                    <div style="background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px;">
+                        <b>${d.NAME || d.ADMIN}</b>
+                    </div>
+                `);
+            }
+            // 2D görünümdeyse yine de kullanıcı rengini uygula
+            if (flatMapInitialized) {
+                flatSvg.selectAll('path.country')
+                    .attr('fill', currentCountryColor)
+                    .attr('stroke', '#ffffff')
+                    .attr('stroke-width', 0.5)
+                    .attr('stroke-dasharray', null);
+            }
+        }
+    });
+
+    // Gösterge değişimi
+    indicatorSelect.addEventListener('change', () => {
+        currentIndicator = indicatorSelect.value;
+        if (wgiEnabled) {
+            applyWgiToGlobe();
+            applyWgiToFlatMap();
+        }
+    });
+    
+    // WGI renk skalası seçimi
+    scaleSelect.addEventListener('change', () => {
+        currentWgiScheme = scaleSelect.value;
+        updateLegendGradient();
+        if (wgiEnabled) {
+            applyWgiToGlobe();
+            applyWgiToFlatMap();
+        }
+    });
+    scaleReverse.addEventListener('change', () => {
+        currentWgiReverse = !!scaleReverse.checked;
+        updateLegendGradient();
+        if (wgiEnabled) {
+            applyWgiToGlobe();
+            applyWgiToFlatMap();
+        }
+    });
+
+    // Projeksiyon geçişi
+    btnGlobe.addEventListener('click', () => {
+        btnGlobe.classList.add('active');
+        btnFlat.classList.remove('active');
+        toggleProjection('globe');
+    });
+    btnFlat.addEventListener('click', () => {
+        btnFlat.classList.add('active');
+        btnGlobe.classList.remove('active');
+        toggleProjection('flat');
+    });
+
+    // Yıl kaydırıcısı
+    yearSlider.addEventListener('input', () => {
+        currentYear = parseInt(yearSlider.value, 10);
+        yearLabel.textContent = String(currentYear);
+        if (wgiEnabled) {
+            applyWgiToGlobe();
+            applyWgiToFlatMap();
+        }
+    });
+}
+
+async function loadWgiCsv() {
+    try {
+        const response = await fetch('Datasets/wgidataset.csv');
+        const csvText = await response.text();
+        const parsed = Papa.parse(csvText, { header: true, delimiter: ';', skipEmptyLines: true });
+        // Sıfırla
+        wgiDataByIso3 = { va: {}, pv: {}, ge: {}, rq: {}, rl: {}, cc: {} };
+        const yearsSet = new Set();
+        for (const row of parsed.data) {
+            const iso3 = (row.code || '').trim();
+            const yearStr = (row.year || '').trim();
+            const ind = (row.indicator || '').trim();
+            const estRaw = (row.estimate || '').trim();
+            if (!iso3 || !yearStr || !ind) continue;
+            if (!(ind in wgiDataByIso3)) continue;
+            // '..' eksik değer
+            if (estRaw === '..') continue;
+            // Avrupa ondalık virgülünü noktaya çevir
+            const est = parseFloat(estRaw.replace(',', '.'));
+            const year = parseInt(yearStr, 10);
+            if (Number.isNaN(est) || Number.isNaN(year)) continue;
+            if (!wgiDataByIso3[ind][year]) wgiDataByIso3[ind][year] = {};
+            wgiDataByIso3[ind][year][iso3] = est;
+            yearsSet.add(year);
+        }
+        wgiYears = Array.from(yearsSet).sort((a, b) => a - b);
+        currentYear = wgiYears[wgiYears.length - 1];
+        console.log('WGI verisi yüklendi. Yıl sayısı:', wgiYears.length);
+    } catch (e) {
+        console.error('WGI CSV yüklenemedi:', e);
+        alert('WGI verisi yüklenemedi. Lütfen dosyanın kök dizinde olduğundan emin olun: wgidataset.csv');
+    }
+}
+
+function setupYearSlider(yearSlider, yearLabel) {
+    if (!wgiYears.length) return;
+    yearSlider.min = String(wgiYears[0]);
+    yearSlider.max = String(wgiYears[wgiYears.length - 1]);
+    yearSlider.step = '1';
+    yearSlider.value = String(currentYear);
+    yearLabel.textContent = String(currentYear);
+}
+
+function getIso3(polygon) {
+    const props = polygon.properties || {};
+    return props.ISO_A3 || props.ADM0_A3 || props.ISO3 || null;
+}
+
+function getCountryWgiValue(polygon) {
+    const iso3 = getIso3(polygon);
+    const v = (wgiDataByIso3[currentIndicator] && wgiDataByIso3[currentIndicator][currentYear])
+        ? wgiDataByIso3[currentIndicator][currentYear][iso3]
+        : null;
+    return v;
+}
+
+// Bir değerin seçili legend aralığında olup olmadığını kontrol et
+function isInSelectedRange(value) {
+    if (!selectedLegendRange) return false;
+    
+    // "Veri Yok" seçiliyse
+    if (selectedLegendRange === 'nodata') {
+        return value === null || value === undefined;
+    }
+    
+    // Normal aralık seçiliyse
+    if (value === null || value === undefined) return false;
+    const [min, max] = selectedLegendRange.split(':').map(parseFloat);
+    return value >= min && value <= max;
+}
+
+function getCountryFillColor(polygon) {
+    const v = getCountryWgiValue(polygon);
+    return wgiColorScale(v);
+}
+
+function getPolygonLabelHtml(polygon) {
+    const d = polygon.properties || {};
+    const countryName = d.NAME || d.ADMIN || 'Bilinmeyen Ülke';
+    if (!wgiEnabled) {
+        return `
+            <div style="background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px;">
+                <b>${countryName}</b>
+            </div>
+        `;
+    }
+    const iso3 = getIso3(polygon);
+    const v = (wgiDataByIso3[currentIndicator] && wgiDataByIso3[currentIndicator][currentYear])
+        ? wgiDataByIso3[currentIndicator][currentYear][iso3]
+        : null;
+    const valueStr = (v === null || v === undefined) ? 'Veri yok' : v.toFixed(2);
+    const indName = WGI_INDICATORS[currentIndicator] || currentIndicator.toUpperCase();
+    return `
+        <div style="background: rgba(0,0,0,0.85); padding: 10px; border-radius: 5px; min-width: 160px;">
+            <div style="font-weight:700; margin-bottom:4px;">${countryName}</div>
+            <div style="font-size: 0.9rem; opacity: 0.95;">${indName} (${currentYear}): <b>${valueStr}</b></div>
+        </div>
+    `;
+}
+
+function applyWgiToGlobe() {
+    if (!globe || !wgiEnabled) return;
+    
+    globe
+        .polygonCapColor(p => {
+            const v = getCountryWgiValue(p);
+            
+            // Veri yok seçiliyse ve bu ülkede veri yoksa çok koyu renk
+            if (selectedLegendRange === 'nodata' && isInSelectedRange(v)) {
+                return '#2d3748'; // Çok koyu gri
+            }
+            
+            const color = getCountryFillColor(p);
+            
+            // Eğer bir legend aralığı seçilmişse ve bu ülke o aralıkta değilse rengini soluklaştır
+            if (selectedLegendRange) {
+                if (!isInSelectedRange(v)) {
+                    // Rengi daha fazla karart (%15 opacity)
+                    const d3Color = d3.color(color);
+                    if (d3Color) {
+                        d3Color.opacity = 0.15;
+                        return d3Color.toString();
+                    }
+                }
+            }
+            return color;
+        })
+        .polygonStrokeColor(p => {
+            // Seçili aralıktaysa sınırları hafifçe koyulaştır
+            if (selectedLegendRange) {
+                const v = getCountryWgiValue(p);
+                if (isInSelectedRange(v)) {
+                    return '#444444'; // Orta tonlarda gri
+                }
+            }
+            return '#ffffff'; // Normal beyaz sınır
+        })
+        .polygonLabel(p => getPolygonLabelHtml(p));
+}
+
+function toggleProjection(mode) {
+    const globeCont = document.getElementById('globe-container');
+    const flatCont = document.getElementById('flatmap-container');
+    if (mode === 'flat') {
+        globeCont.style.display = 'none';
+        flatCont.style.display = 'block';
+        if (!flatMapInitialized) {
+            renderFlatMapOnce();
+            flatMapInitialized = true;
+        }
+        applyWgiToFlatMap();
+    } else {
+        flatCont.style.display = 'none';
+        globeCont.style.display = 'block';
+    }
+}
+
+function renderFlatMapOnce() {
+    if (!countriesData) return;
+    const container = document.getElementById('flatmap-container');
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    // Üstteki WGI başlığını hesaba kat
+    const header = document.getElementById('wgi-header');
+    const headerRect = header ? header.getBoundingClientRect() : { height: 0 };
+    flatTopPadding = Math.ceil(headerRect.height) + 60;
+    const sidePadding = 16;
+    const bottomPadding = 20;
+
+    flatProjection = d3.geoNaturalEarth1();
+    flatPath = d3.geoPath(flatProjection);
+    flatProjection.fitExtent([[sidePadding, flatTopPadding], [width - sidePadding, height - bottomPadding]], countriesData);
+
+    flatSvg = d3.select(container)
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+    const tooltip = document.getElementById('tooltip');
+
+    flatSvg.selectAll('path.country')
+        .data(countriesData.features)
+        .enter()
+        .append('path')
+        .attr('class', 'country')
+        .attr('d', flatPath)
+        .attr('fill', '#9aa5b1')
+        .attr('stroke', '#ffffff')
+        .attr('stroke-width', 0.5)
+        .on('click', function (event, d) {
+            const props = d.properties || {};
+            const countryName = props.NAME || props.ADMIN || 'Bilinmeyen Ülke';
+            const countryCode = props.ISO_A2 || 'XX';
+            disableWgiAndReturnHome();
+            
+            // Kürede ülkeye odaklan (WGI kapandığında küreye dönmüştük)
+            if (globe && countriesData) {
+                const matchedFeature = countriesData.features.find(f => 
+                    (f.properties.NAME === countryName || f.properties.ADMIN === countryName)
+                );
+                if (matchedFeature) {
+                    // Ülkeyi vurgula
+                    globe.polygonCapColor(p => 
+                        p === matchedFeature ? SELECTED_COLOR : currentCountryColor
+                    );
+                    
+                    const { lat, lng } = getPolygonCenter(matchedFeature);
+                    globe.pointOfView({ lat, lng, altitude: 1.5 }, 1000);
+                    // Otomatik dönüşü tekrar aktif et
+                    setTimeout(() => {
+                        if (!autoRotate && globe) {
+                            globe.controls().autoRotate = true;
+                            autoRotate = true;
+                        }
+                    }, 1200);
+                }
+            }
+            
+            openCountryPanel(countryName, countryCode);
+            // Blur aktif
+            document.getElementById('blur-overlay').classList.add('active');
+        })
+        .on('mousemove', function (event, d) {
+            if (!wgiEnabled) {
+                tooltip.style.display = 'none';
+                return;
+            }
+            const fakePolygon = { properties: d.properties };
+            const html = getPolygonLabelHtml(fakePolygon);
+            tooltip.style.display = 'block';
+            tooltip.innerHTML = html;
+            // Tooltip ekran içinde kalsın
+            const margin = 12;
+            const rect = tooltip.getBoundingClientRect();
+            let x = event.clientX + 15;
+            let y = event.clientY + 15;
+            const maxX = window.innerWidth - rect.width - margin;
+            const maxY = window.innerHeight - rect.height - margin;
+            if (x > maxX) x = maxX;
+            if (y > maxY) y = maxY;
+            if (x < margin) x = margin;
+            if (y < margin) y = margin;
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+        })
+        .on('mouseleave', function () {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'none';
+        });
+
+    // Resize handling
+    window.addEventListener('resize', () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        const header2 = document.getElementById('wgi-header');
+        const headerRect2 = header2 ? header2.getBoundingClientRect() : { height: 0 };
+        flatTopPadding = Math.ceil(headerRect2.height) + 60;
+        const sidePadding2 = 16;
+        const bottomPadding2 = 20;
+        flatProjection.fitExtent([[sidePadding2, flatTopPadding], [w - sidePadding2, h - bottomPadding2]], countriesData);
+        flatSvg.attr('width', w).attr('height', h);
+        flatSvg.selectAll('path.country').attr('d', flatPath);
+    });
+}
+
+function applyWgiToFlatMap() {
+    if (!flatMapInitialized || !wgiEnabled) return;
+    flatSvg.selectAll('path.country')
+        .attr('fill', function(d) {
+            const fakePolygon = { properties: d.properties };
+            const v = getCountryWgiValue(fakePolygon);
+            
+            // Veri yok seçiliyse ve bu ülkede veri yoksa pattern kullan
+            if (selectedLegendRange === 'nodata' && isInSelectedRange(v)) {
+                return 'url(#map-nodata-pattern)';
+            }
+            
+            const color = getCountryFillColor(fakePolygon);
+            
+            // Eğer bir legend aralığı seçilmişse ve bu ülke o aralıkta değilse rengini soluklaştır
+            if (selectedLegendRange) {
+                if (!isInSelectedRange(v)) {
+                    const d3Color = d3.color(color);
+                    if (d3Color) {
+                        d3Color.opacity = 0.15;
+                        return d3Color.toString();
+                    }
+                }
+            }
+            return color;
+        })
+        .attr('stroke', function(d) {
+            // Seçili aralıktaysa sınırları hafifçe koyulaştır
+            if (selectedLegendRange) {
+                const fakePolygon = { properties: d.properties };
+                const v = getCountryWgiValue(fakePolygon);
+                if (isInSelectedRange(v)) {
+                    return '#000000'; // Orta tonlarda gri
+                }
+            }
+            return '#ffffff'; // Normal beyaz sınır
+        })
+        .attr('stroke-width', function(d) {
+            // Seçili aralıktaysa sınırları hafifçe kalınlaştır
+            if (selectedLegendRange) {
+                const fakePolygon = { properties: d.properties };
+                const v = getCountryWgiValue(fakePolygon);
+                if (isInSelectedRange(v)) {
+                    return 1.6; // Hafif kalınlaştırma
+                }
+            }
+            return 0.5;
+        })
+        .attr('stroke-dasharray', function(d) {
+            // Normal olarak kesikli çizgi kullanma
+            return null;
+        });
+}
+
+// WGI'ı kapat ve küre görünümüne dön
+function disableWgiAndReturnHome() {
+    const flatCont = document.getElementById('flatmap-container');
+    const globeCont = document.getElementById('globe-container');
+    if (!wgiEnabled) {
+        flatCont.style.display = 'none';
+        globeCont.style.display = 'block';
+        return;
+    }
+    const indicatorGroup = document.getElementById('indicator-group');
+    const scaleGroup = document.getElementById('scale-group');
+    const projectionToggle = document.getElementById('projection-toggle');
+    const legend = document.getElementById('legend');
+    const yearSliderContainer = document.getElementById('year-slider-container');
+    const wgiHomeBtn = document.getElementById('wgi-home-button');
+    wgiEnabled = false;
+    indicatorGroup.style.display = 'none';
+    scaleGroup.style.display = 'none';
+    projectionToggle.style.display = 'none';
+    legend.style.display = 'none';
+    yearSliderContainer.style.display = 'none';
+    wgiHomeBtn.style.display = 'none';
+    flatCont.style.display = 'none';
+    globeCont.style.display = 'block';
+    // Teoriler ve Ülke Rengi seçicileri tekrar göster
+    const theoryBtn = document.getElementById('theory-button');
+    const baseColorSelector = document.getElementById('base-color-selector');
+    if (theoryBtn) theoryBtn.style.display = 'flex';
+    if (baseColorSelector) baseColorSelector.style.display = 'flex';
+    // Tooltip'i tekrar göster
+    const wgiTooltip = document.querySelector('.wgi-tooltip');
+    if (wgiTooltip) wgiTooltip.classList.remove('hidden');
+    if (globe) {
+        globe.polygonCapColor(() => currentCountryColor);
+        globe.polygonLabel(({ properties: d }) => `
+            <div style="background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px;">
+                <b>${(d && (d.NAME || d.ADMIN)) || 'Bilinmeyen Ülke'}</b>
+            </div>
+        `);
+    }
+}
+
+/**
+ * Panel ve Chat sistemini kurar
+ */
+function setupPanelAndChat() {
+    const panel = document.getElementById('country-panel');
+    const closePanel = document.getElementById('close-panel');
+    const blurOverlay = document.getElementById('blur-overlay');
+    
+    const chatTrigger = document.querySelector('.chat-trigger');
+    const chatArea = document.getElementById('chat-area');
+    const closeChat = document.getElementById('close-chat');
+    const sendChat = document.getElementById('send-chat');
+    const chatInput = document.getElementById('chat-input');
+    
+    // Panel kapatma fonksiyonu
+    const closePanelFunc = () => {
+        panel.classList.remove('active');
+        // Mevcut ülkeyi temizle
+        currentCountryName = null;
+        // Chat açık değilse blur'u kaldır
+        if (!chatArea.classList.contains('active')) {
+            blurOverlay.classList.remove('active');
+        }
+        // Ülke renklerini normal haline döndür
+        if (globe && !wgiEnabled) {
+            globe.polygonCapColor(() => currentCountryColor);
+        }
+        // Koridor filtresini sıfırla
+        resetCorridorFilters();
+    };
+    
+    // Chat kapatma fonksiyonu
+    const closeChatFunc = () => {
+        chatArea.classList.remove('active');
+        chatTrigger.style.display = 'flex';
+        // Panel açık değilse blur'u kaldır
+        if (!panel.classList.contains('active')) {
+            blurOverlay.classList.remove('active');
+        }
+    };
+    
+    // Panel kapatma butonu
+    closePanel.addEventListener('click', closePanelFunc);
+    
+    // Chat tetikleme
+    chatTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        chatArea.classList.add('active');
+        chatTrigger.style.display = 'none';
+        blurOverlay.classList.add('active');
+        chatInput.focus();
+    });
+    
+    // Chat kapatma
+    closeChat.addEventListener('click', () => {
+        closeChatFunc();
+        // İsteğe bağlı: Chat kapatıldığında geçmişi temizle
+        // conversationHistory = [];
+    });
+    
+    // Blur overlay'e tıklandığında panel ve chat'i kapat
+    blurOverlay.addEventListener('click', (e) => {
+        // Panel açıksa kapat
+        if (panel.classList.contains('active')) {
+            closePanelFunc();
+        }
+        // Chat açıksa kapat
+        if (chatArea.classList.contains('active')) {
+            closeChatFunc();
+        }
+    });
+    
+    // Panel içine tıklandığında blur overlay'in click eventi tetiklenmemeli
+    panel.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    // Chat area içine tıklandığında blur overlay'in click eventi tetiklenmemeli
+    chatArea.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    // Mesaj gönderme
+    sendChat.addEventListener('click', () => sendMessage());
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+    
+    console.log('Panel ve Chat hazır');
+}
+
+/**
+ * AI yanıtını temizle - markdown, tablo ve gereksiz formatları kaldır
+ */
+function cleanAIResponse(text) {
+    // Markdown bold/italic işaretlerini kaldır
+    text = text.replace(/\*\*(.+?)\*\*/g, '$1');  // **bold** -> bold
+    text = text.replace(/\*(.+?)\*/g, '$1');      // *italic* -> italic
+    text = text.replace(/__(.+?)__/g, '$1');      // __bold__ -> bold
+    text = text.replace(/_(.+?)_/g, '$1');        // _italic_ -> italic
+    
+    // Markdown başlıkları temizle
+    text = text.replace(/^#+\s+/gm, '');          // # Başlık -> Başlık
+    
+    // Markdown listeler (tireleri koru ama fazladan işaretleri kaldır)
+    text = text.replace(/^\s*[\*\+]\s+/gm, '- '); // * liste -> - liste
+    
+    // Markdown kod bloklarını temizle
+    text = text.replace(/```[\s\S]*?```/g, '');   // ```kod``` -> 
+    text = text.replace(/`(.+?)`/g, '$1');        // `kod` -> kod
+    
+    // Tablo karakterlerini kaldır (|, +, -, = gibi tablo çizgileri)
+    text = text.replace(/^\s*[\|\+\-=]+\s*$/gm, ''); // Tablo çizgilerini kaldır
+    text = text.replace(/\|/g, ' ');              // | karakterini boşlukla değiştir
+    
+    // Çoklu boşlukları ve satırları temizle
+    text = text.replace(/\n{3,}/g, '\n\n');      // 3+ satır -> 2 satır
+    text = text.replace(/  +/g, ' ');             // Çoklu boşluk -> tek boşluk
+    
+    return text;
+}
+
+/**
+ * Chat mesajı gönderme
+ */
+async function sendMessage() {
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const sendButton = document.getElementById('send-chat');
+    const message = chatInput.value.trim();
+    
+    if (!message) return;
+    
+    // Kullanıcı mesajı ekle
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-message';
+    userMsg.textContent = message;
+    chatMessages.appendChild(userMsg);
+    
+    // Input ve butonu devre dışı bırak
+    chatInput.value = '';
+    chatInput.disabled = true;
+    sendButton.disabled = true;
+    
+    // AI mesajı için container oluştur
+    const aiMsg = document.createElement('div');
+    aiMsg.className = 'ai-message';
+    aiMsg.textContent = '';
+    chatMessages.appendChild(aiMsg);
+    
+    // "Yazıyor..." göstergesi
+    const typingIndicator = document.createElement('span');
+    typingIndicator.className = 'typing-indicator';
+    typingIndicator.textContent = '●●●';
+    aiMsg.appendChild(typingIndicator);
+    
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    
+    try {
+        // Konuşma geçmişini ekle (son 3 mesaj çifti)
+        let historyContext = '';
+        const recentHistory = conversationHistory.slice(-6); // Son 6 mesaj (3 çift)
+        if (recentHistory.length > 0) {
+            historyContext = '\n\nÖnceki Konuşma:\n';
+            for (const msg of recentHistory) {
+                historyContext += `${msg.role === 'user' ? 'Kullanıcı' : 'Sen'}: ${msg.content}\n`;
+            }
+        }
+        
+        // System prompt ve kullanıcı sorusunu birleştir
+        const systemPrompt = `Sen ATLAS AI Asistanısın. Görevin Daron Acemoğlu ve James A. Robinson'un teorileri hakkında sorulara yanıt vermek.
+
+ÖNEMLİ KURALLAR:
+1. SADECE şu konularda cevap ver:
+   - Daron Acemoğlu'nun teorileri
+   - "Ulusların Düşüşü" kitabı (Why Nations Fail)
+   - "Dar Koridor" kitabı (The Narrow Corridor)
+   - Kapsayıcı ve Sömürücü Kurumlar
+   - Devlet-Toplum dengesi
+   - Ekonomik kurumlar ve kalkınma
+   - Ülkelerin kurumsal analizleri
+
+2. YANIT FORMATI:
+   - Kısa ve öz cevaplar ver
+   - HİÇBİR ZAMAN tablo, grafik veya ASCII art kullanma
+   - Markdown formatı kullanma (bold, italic vs.)
+   - Sadece düz metin kullan
+
+3. KONU DIŞI SORULAR:
+   - Eğer soru yukarıdaki konularla ilgili DEĞİLSE:
+   "Üzgünüm, ben sadece Daron Acemoğlu'nun teorileri ve kurumsal ekonomi hakkında sorulara yanıt verebilirim. Size bu konularla ilgili nasıl yardımcı olabilirim?"
+
+4. DİL:
+   - Her zaman Türkçe yanıt ver
+   - Akademik ama anlaşılır bir dil kullan${historyContext}
+
+Kullanıcı Sorusu: ${message}
+
+Yanıtını kısa, öz ve konuyla ilgili tut:`;
+
+        // Ollama API'ye streaming request gönder
+        const response = await fetch('http://localhost:11434/api/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: 'gpt-oss:120b-cloud',
+                prompt: systemPrompt,
+                stream: true,
+                options: {
+                    temperature: 0.7,
+                    top_p: 0.9,
+                    num_predict: 400  // Maksimum 400 token (yaklaşık 300 kelime)
+                }
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Typing indicator'ı kaldır
+        typingIndicator.remove();
+        
+        // Kullanıcı mesajını geçmişe ekle
+        conversationHistory.push({
+            role: 'user',
+            content: message
+        });
+        
+        // Stream'i oku
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullResponse = ''; // Tüm yanıtı biriktir
+        
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            
+            // Chunk'ları decode et
+            const chunk = decoder.decode(value);
+            const lines = chunk.split('\n').filter(line => line.trim() !== '');
+            
+            for (const line of lines) {
+                try {
+                    const json = JSON.parse(line);
+                    if (json.response) {
+                        // Yanıtı temizle ve ekle
+                        const cleanedResponse = cleanAIResponse(json.response);
+                        aiMsg.textContent += cleanedResponse;
+                        fullResponse += cleanedResponse;
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                }
+            }
+        }
+        
+        // AI yanıtını geçmişe ekle
+        conversationHistory.push({
+            role: 'assistant',
+            content: fullResponse
+        });
+        
+        // Geçmişi sınırla (maksimum 10 mesaj çifti = 20 mesaj)
+        if (conversationHistory.length > 20) {
+            conversationHistory = conversationHistory.slice(-20);
+        }
+        
+    } catch (error) {
+        console.error('Ollama bağlantı hatası:', error);
+        typingIndicator.remove();
+        aiMsg.textContent = '⚠️ AI bağlantısı kurulamadı. Ollama\'nın çalıştığından ve "gpt-oss:120b-cloud" modelinin yüklü olduğundan emin olun.\n\nHata: ' + error.message;
+        aiMsg.style.background = 'rgba(255, 59, 48, 0.2)';
+    } finally {
+        // Input ve butonu tekrar aktif et
+        chatInput.disabled = false;
+        sendButton.disabled = false;
+        chatInput.focus();
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+}
+
+/**
+ * AI'dan ülke analizlerini al
+ */
+function generateCountryAnalyses(countryName, nationsFailElement, corridorElement) {
+    const { nationsFail, corridor } = getCountryAnalysesText(countryName);
+    nationsFailElement.textContent = nationsFail;
+    corridorElement.textContent = corridor;
+}
+
+/**
+ * Ülke için belirli bir yılın verilerini döndürür
+ */
+function getCountryDataForYear(countryName, year) {
+    if (!darKoridorByCountry) return null;
+    
+    // Ülke adı eşleştirmesi yap
+    const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
+    
+    // Hem eşleştirilmiş adı hem de orijinal adı dene
+    let countryYearData = darKoridorByCountry[mappedName];
+    if (!countryYearData) {
+        countryYearData = darKoridorByCountry[countryName];
+    }
+    
+    if (!countryYearData) return null;
+    
+    // O yılın verisini bul
+    const yearData = countryYearData.find(d => d.year === year);
+    return yearData;
+}
+
+/**
+ * Ülkenin mevcut olan yıllarını döndürür
+ */
+function getAvailableYearsForCountry(countryName) {
+    if (!darKoridorByCountry) return [];
+    
+    const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
+    let countryYearData = darKoridorByCountry[mappedName] || darKoridorByCountry[countryName];
+    
+    if (!countryYearData || countryYearData.length === 0) return [];
+    
+    // Tüm yılları döndür (sıralı)
+    return countryYearData.map(d => d.year).sort((a, b) => a - b);
+}
+
+/**
+ * Ülkenin mevcut olan en son yılını bulur
+ */
+function getLatestYearForCountry(countryName) {
+    const years = getAvailableYearsForCountry(countryName);
+    if (years.length === 0) return 2023;
+    return years[years.length - 1];
+}
+
+/**
+ * En yakın geçerli yıla yuvarlar (snap)
+ */
+function snapToNearestAvailableYear(targetYear, availableYears) {
+    if (availableYears.length === 0) return targetYear;
+    
+    // En yakın yılı bul
+    let closest = availableYears[0];
+    let minDiff = Math.abs(targetYear - closest);
+    
+    for (const year of availableYears) {
+        const diff = Math.abs(targetYear - year);
+        if (diff < minDiff) {
+            minDiff = diff;
+            closest = year;
+        }
+    }
+    
+    return closest;
+}
+
+/**
+ * Yıl kaydırıcısını ayarlar
+ */
+function setupCorridorYearSlider() {
+    const yearInput = document.getElementById('corridor-year-input');
+    const yearLabel = document.getElementById('corridor-year-label');
+    
+    if (!yearInput || !yearLabel) return;
+    
+    // Input event ile sürekli güncelleme (kaydırırken)
+    yearInput.addEventListener('input', () => {
+        const rawYear = parseInt(yearInput.value, 10);
+        
+        // İnteraktif harita modunda da seçili ülkenin yıllarına snap et
+        if (interactiveMapActive && currentCountryAvailableYears.length > 0) {
+            // Seçili ülkenin en yakın geçerli yılına snap et
+            const snappedYear = snapToNearestAvailableYear(rawYear, currentCountryAvailableYears);
+            selectedYear = snappedYear;
+            yearLabel.textContent = String(snappedYear);
+            yearInput.value = String(snappedYear);
+            
+            // Tüm ülkeler için o yılın verilerini yükle
+            updateDarKoridorDataForYear(snappedYear);
+            renderAllCountriesOnCorridorGraph();
+            renderCorridorStats();
+            filterCorridorCountries(); // Filtrelemeyi yeniden uygula
+            
+            // Seçili ülkenin kırmızı noktasını da güncelle
+            if (currentCountryName) {
+                updateCountryDataForYear(currentCountryName, snappedYear);
+            }
+        } else if (!interactiveMapActive) {
+            // Normal ülke modunda, sadece o ülkenin yıllarına snap et
+            const snappedYear = snapToNearestAvailableYear(rawYear, currentCountryAvailableYears);
+            selectedYear = snappedYear;
+            yearLabel.textContent = String(snappedYear);
+            
+            // Görsel olarak kaydırıcıyı snap edilen değere ayarla
+            yearInput.value = String(snappedYear);
+            
+            if (currentCountryName) {
+                updateCountryDataForYear(currentCountryName, snappedYear);
+            }
+        }
+    });
+    
+    // Change event ile son değeri onayla (fare bırakıldığında)
+    yearInput.addEventListener('change', () => {
+        if (currentCountryAvailableYears.length > 0) {
+            const rawYear = parseInt(yearInput.value, 10);
+            const snappedYear = snapToNearestAvailableYear(rawYear, currentCountryAvailableYears);
+            selectedYear = snappedYear;
+            yearInput.value = String(snappedYear);
+            yearLabel.textContent = String(snappedYear);
+            
+            if (interactiveMapActive) {
+                // İnteraktif harita modunda tüm ülkeleri de güncelle
+                updateDarKoridorDataForYear(snappedYear);
+                renderAllCountriesOnCorridorGraph();
+                renderCorridorStats();
+                filterCorridorCountries();
+            }
+            
+            if (currentCountryName) {
+                updateCountryDataForYear(currentCountryName, snappedYear);
+            }
+        }
+    });
+}
+
+/**
+ * Belirli bir yıl için ülke verilerini günceller
+ */
+function updateCountryDataForYear(countryName, year) {
+    const yearData = getCountryDataForYear(countryName, year);
+    
+    if (!yearData) {
+        console.warn(`⚠ ${countryName} için ${year} yılı verisi bulunamadı`);
+        return;
+    }
+    
+    // Bilgi çubuğunu güncelle (grafik altında)
+    updateCorridorInfoBar(yearData);
+    
+    // Koridor metnini güncelle (sadece açıklama metni)
+    const corridorText = document.getElementById('corridor-text');
+    const { corridor } = getCountryAnalysesText(countryName);
+    corridorText.innerHTML = `<p>${corridor}</p>`;
+    
+    // Grafikteki noktayı güncelle
+    const xPercent = ((yearData.societyPower + 3) / 6) * 100;
+    const yPercent = 100 - ((yearData.statePower + 3) / 6) * 100;
+    
+    const graphic = document.querySelector('.corridor-graphic');
+    const img = graphic.querySelector('img');
+    const positionDot = document.getElementById('country-position-dot');
+    
+    // Noktanın rengini Leviathan tipine göre ayarla
+    if (positionDot) {
+        // Önceki tip class'larını temizle
+        positionDot.classList.remove('shackled', 'despotic', 'paper', 'absent');
+        // Yeni tip class'ını ekle
+        const typeClass = yearData.leviathanType.toLowerCase();
+        positionDot.classList.add(typeClass);
+    }
+    
+    if (img && img.complete) {
+        updateDotPosition(graphic, img, positionDot, xPercent, yPercent);
+    }
+}
+
+/**
+ * Bilgi çubuğunu günceller (grafik altındaki kompakt bilgi)
+ */
+function updateCorridorInfoBar(yearData) {
+    const leviathanTypeText = {
+        'Shackled': 'Prangalanmış',
+        'Despotic': 'Despotik',
+        'Absent': 'Mevcut Olmayan',
+        'Paper': 'Kağıttan'
+    };
+    
+    // Küme renklerini belirle
+    const leviathanTypeColors = {
+        'Shackled': '#2ecc71',   // Yeşil
+        'Despotic': '#e74c3c',   // Kırmızı
+        'Paper': '#f39c12',      // Turuncu
+        'Absent': '#9b59b6'      // Mor
+    };
+    
+    const typeText = leviathanTypeText[yearData.leviathanType] || yearData.leviathanType;
+    const typeColor = leviathanTypeColors[yearData.leviathanType] || '#FF9800';
+    
+    // Info bar elementlerini güncelle
+    const statePowerEl = document.querySelector('.corridor-info-bar .state-power');
+    const societyPowerEl = document.querySelector('.corridor-info-bar .society-power');
+    const leviathanTypeEl = document.querySelector('.corridor-info-bar .leviathan-type');
+    
+    if (statePowerEl) statePowerEl.textContent = yearData.statePower.toFixed(2);
+    if (societyPowerEl) societyPowerEl.textContent = yearData.societyPower.toFixed(2);
+    if (leviathanTypeEl) {
+        leviathanTypeEl.textContent = typeText;
+        leviathanTypeEl.style.color = typeColor; // Dinamik renk atama
+    }
+}
+
+/**
+ * Nokta pozisyonunu günceller
+ */
+function updateDotPosition(graphic, img, dot, xPercent, yPercent) {
+    const computedStyle = window.getComputedStyle(graphic);
+    const paddingLeft = parseFloat(computedStyle.paddingLeft);
+    const paddingTop = parseFloat(computedStyle.paddingTop);
+    
+    const imgRect = img.getBoundingClientRect();
+    const imgWidth = imgRect.width;
+    const imgHeight = imgRect.height;
+    
+    const dotLeft = paddingLeft + (imgWidth * xPercent / 100);
+    const dotTop = paddingTop + (imgHeight * yPercent / 100);
+    
+    dot.style.left = `${dotLeft}px`;
+    dot.style.top = `${dotTop}px`;
+}
+
+/**
+ * Ülke panelini açar ve içeriği doldurur
+ */
+function openCountryPanel(countryName, countryCode) {
+    const panel = document.getElementById('country-panel');
+    const flagImg = document.getElementById('country-flag');
+    const panelCountryName = document.getElementById('panel-country-name');
+    const nationsFailText = document.getElementById('nations-fail-text');
+    const corridorText = document.getElementById('corridor-text');
+    const positionDot = document.getElementById('country-position-dot');
+    
+    // Mevcut ülkeyi kaydet
+    currentCountryName = countryName;
+    
+    // Ülkenin mevcut yıllarını al
+    currentCountryAvailableYears = getAvailableYearsForCountry(countryName);
+    
+    // Dar Koridor bölümlerini kontrol et
+    const corridorGraphic = document.getElementById('corridor-graphic-main');
+    const corridorYearSlider = document.getElementById('corridor-year-slider');
+    const corridorInteractiveToggle = document.querySelector('.corridor-interactive-toggle');
+    const corridorInfoBar = document.getElementById('corridor-info-bar');
+    
+    // Eğer ülkenin hiç verisi yoksa, bu bölümleri gizle
+    if (currentCountryAvailableYears.length === 0) {
+        console.warn(`⚠ ${countryName} için hiç Dar Koridor verisi yok`);
+        if (corridorGraphic) corridorGraphic.style.display = 'none';
+        if (corridorYearSlider) corridorYearSlider.style.display = 'none';
+        if (corridorInteractiveToggle) corridorInteractiveToggle.style.display = 'none';
+        if (corridorInfoBar) corridorInfoBar.style.display = 'none';
+        
+        // Sadece "Ulusların Düşüşü" metnini göster
+        generateCountryAnalyses(countryName, nationsFailText, corridorText);
+    } else {
+        // Verisi varsa göster
+        if (corridorGraphic) corridorGraphic.style.display = 'block';
+        if (corridorYearSlider) corridorYearSlider.style.display = 'flex';
+        if (corridorInteractiveToggle) corridorInteractiveToggle.style.display = 'block';
+        if (corridorInfoBar) corridorInfoBar.style.display = 'flex';
+        
+        // Ülkenin en son yılını bul ve kaydırıcıyı ayarla
+        const latestYear = currentCountryAvailableYears[currentCountryAvailableYears.length - 1];
+        selectedYear = latestYear;
+        
+        const yearInput = document.getElementById('corridor-year-input');
+        const yearLabel = document.getElementById('corridor-year-label');
+        if (yearInput && yearLabel) {
+            // Kaydırıcının min/max değerlerini ülkenin yıllarına göre ayarla
+            yearInput.min = String(currentCountryAvailableYears[0]);
+            yearInput.max = String(currentCountryAvailableYears[currentCountryAvailableYears.length - 1]);
+            yearInput.value = String(latestYear);
+            yearLabel.textContent = String(latestYear);
+        }
+    }
+    
+    // Bayrak URL'si (Flagpedia API kullanarak)
+    flagImg.src = `https://flagcdn.com/w320/${countryCode.toLowerCase()}.png`;
+    flagImg.onerror = () => {
+        flagImg.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="213"><rect width="320" height="213" fill="%23cccccc"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="%23666666" font-size="20">Bayrak Yok</text></svg>';
+    };
+    
+    // Ülke adı
+    panelCountryName.textContent = countryName;
+    
+    // Sabit analiz metinlerini panel öğelerine yaz
+    generateCountryAnalyses(countryName, nationsFailText, corridorText);
+
+    // Paneli göster
+    panel.classList.add('active');
+    
+    // Eğer ülkenin verisi yoksa, erken çık
+    if (currentCountryAvailableYears.length === 0) {
+        return;
+    }
+    
+    // Seçili yıl için veriyi al ve güncelle
+    const yearData = getCountryDataForYear(countryName, selectedYear);
+    
+    if (yearData) {
+        const leviathanTypeText = {
+            'Shackled': 'Zincirlenmiş Leviathan',
+            'Despotic': 'Despotik Leviathan',
+            'Absent': 'Mevcut Olmayan Leviathan',
+            'Paper': 'Kağıt Leviathan'
+        };
+        
+        // Bilgi çubuğunu güncelle (grafik altında)
+        updateCorridorInfoBar(yearData);
+        
+        // Koridor açıklamasını güncelle (sadece metin)
+        const { corridor } = getCountryAnalysesText(countryName);
+        corridorText.innerHTML = `<p>${corridor}</p>`;
+        
+        // Nokta pozisyonunu hesapla
+        const xPercent = ((yearData.societyPower + 3) / 6) * 100;
+        const yPercent = 100 - ((yearData.statePower + 3) / 6) * 100;
+    
+    // Container'ı al
+    const graphic = document.querySelector('.corridor-graphic');
+    const img = graphic.querySelector('img');
+    
+    // Noktanın rengini Leviathan tipine göre ayarla
+    if (positionDot) {
+        // Önceki tip class'larını temizle
+        positionDot.classList.remove('shackled', 'despotic', 'paper', 'absent');
+        // Yeni tip class'ını ekle
+        const typeClass = yearData.leviathanType.toLowerCase();
+        positionDot.classList.add(typeClass);
+    }
+    
+    // Resmin yüklenmesini bekle ve sonra pozisyonla
+    if (img.complete) {
+            updateDotPosition(graphic, img, positionDot, xPercent, yPercent);
+        renderAllCountriesOnCorridorGraph();
+        setupInteractiveMapToggle();
+    } else {
+        img.onload = () => {
+                updateDotPosition(graphic, img, positionDot, xPercent, yPercent);
+            renderAllCountriesOnCorridorGraph();
+            setupInteractiveMapToggle();
+        };
+        }
+    } else {
+        // Veri yoksa varsayılan pozisyon kullan
+        const countryData = getCountryData(countryName);
+        const xPercent = countryData.corridorPosition.x;
+        const yPercent = countryData.corridorPosition.y;
+        
+        const graphic = document.querySelector('.corridor-graphic');
+        const img = graphic.querySelector('img');
+        
+        if (img.complete) {
+            updateDotPosition(graphic, img, positionDot, xPercent, yPercent);
+            renderAllCountriesOnCorridorGraph();
+            setupInteractiveMapToggle();
+        } else {
+            img.onload = () => {
+                updateDotPosition(graphic, img, positionDot, xPercent, yPercent);
+                renderAllCountriesOnCorridorGraph();
+                setupInteractiveMapToggle();
+            };
+        }
+    }
+    
+    // Toggle butonu için event listener
+    function setupInteractiveMapToggle() {
+        const toggleBtn = document.getElementById('toggle-interactive-map');
+        if (toggleBtn && !toggleBtn.hasAttribute('data-initialized')) {
+            toggleBtn.setAttribute('data-initialized', 'true');
+            toggleBtn.addEventListener('click', toggleInteractiveMap);
+        }
+    }
+    
+    // Yıl kaydırıcısını başlat (sadece bir kez)
+    if (!document.getElementById('corridor-year-input').hasAttribute('data-initialized')) {
+        document.getElementById('corridor-year-input').setAttribute('data-initialized', 'true');
+        setupCorridorYearSlider();
+    }
+}
+
+/**
+ * Tüm ülkeleri Dar Koridor grafiğine ekler (seçili yıl için)
+ */
+function renderAllCountriesOnCorridorGraph() {
+    if (!darKoridorData || !darKoridorData.countries) {
+        // Eğer darKoridorData yoksa, seçili yıl için güncelle
+        if (darKoridorByYear) {
+            updateDarKoridorDataForYear(selectedYear);
+        }
+    }
+    
+    if (!darKoridorData || !darKoridorData.countries) return;
+    
+    const graphic = document.getElementById('corridor-graphic-main');
+    if (!graphic) return;
+    
+    // Önceki noktaları temizle (seçili ülke noktası hariç)
+    const existingDots = graphic.querySelectorAll('.corridor-country-dot');
+    existingDots.forEach(dot => dot.remove());
+    
+    const img = graphic.querySelector('img');
+    if (!img) return;
+    
+    const computedStyle = window.getComputedStyle(graphic);
+    const paddingLeft = parseFloat(computedStyle.paddingLeft);
+    const paddingTop = parseFloat(computedStyle.paddingTop);
+    
+    const imgRect = img.getBoundingClientRect();
+    const imgWidth = imgRect.width;
+    const imgHeight = imgRect.height;
+    
+    // Her ülke için nokta oluştur
+    darKoridorData.countries.forEach(country => {
+        // Yatay eksende %2-98 arası kullan (sol-sağ kenarlardan %1'er boşluk)
+        const xPercent = 2 + ((country.societyPower + 3) / 6) * 96;
+        const yPercent = 100 - ((country.statePower + 3) / 6) * 100;
+        
+        const dotLeft = paddingLeft + (imgWidth * xPercent / 100);
+        const dotTop = paddingTop + (imgHeight * yPercent / 100);
+        
+        const dot = document.createElement('div');
+        dot.className = `corridor-country-dot ${country.leviathanType.toLowerCase()}`;
+        dot.style.left = `${dotLeft}px`;
+        dot.style.top = `${dotTop}px`;
+        dot.dataset.country = country.name;
+        dot.dataset.type = country.leviathanType.toLowerCase();
+        dot.dataset.statePower = country.statePower.toFixed(2);
+        dot.dataset.societyPower = country.societyPower.toFixed(2);
+        
+        // Eğer interaktif harita açıksa, noktayı görünür yap
+        if (interactiveMapActive) {
+            dot.classList.add('visible');
+        }
+        
+        // Tooltip event listeners
+        dot.addEventListener('mouseenter', (e) => showCorridorTooltip(e, country));
+        dot.addEventListener('mouseleave', hideCorridorTooltip);
+        
+        graphic.appendChild(dot);
+    });
+}
+
+/**
+ * Tooltip gösterir
+ */
+function showCorridorTooltip(event, country) {
+    const tooltip = document.getElementById('corridor-tooltip');
+    const dot = event.target;
+    const graphicDiv = document.getElementById('corridor-graphic-main');
+    const rect = graphicDiv.getBoundingClientRect();
+    
+    tooltip.innerHTML = `
+        <div class="tooltip-country">${country.name}</div>
+        <div class="tooltip-info">
+            Devlet Gücü: <span class="tooltip-value">${country.statePower.toFixed(2)}</span><br>
+            Toplum Gücü: <span class="tooltip-value">${country.societyPower.toFixed(2)}</span>
+        </div>
+    `;
+    
+    tooltip.style.display = 'block';
+    
+    // Tooltip pozisyonunu hesapla
+    const dotRect = dot.getBoundingClientRect();
+    
+    let left = dotRect.left - rect.left + 15;
+    let top = dotRect.top - rect.top - 50;
+    
+    // Ekran sınırlarını kontrol et
+    if (left + 200 > rect.width) {
+        left = dotRect.left - rect.left - 200;
+    }
+    
+    if (top < 0) {
+        top = dotRect.top - rect.top + 20;
+    }
+    
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+}
+
+/**
+ * Tooltip'i gizler
+ */
+function hideCorridorTooltip() {
+    const tooltip = document.getElementById('corridor-tooltip');
+    tooltip.style.display = 'none';
+}
+
+/**
+ * İnteraktif haritayı aç/kapat
+ */
+let interactiveMapActive = false;
+
+function toggleInteractiveMap() {
+    const btn = document.getElementById('toggle-interactive-map');
+    const controls = document.getElementById('interactive-map-controls');
+    const dots = document.querySelectorAll('.corridor-country-dot');
+    const yearInput = document.getElementById('corridor-year-input');
+    
+    interactiveMapActive = !interactiveMapActive;
+    
+    if (interactiveMapActive) {
+        // İnteraktif haritayı aç
+        btn.classList.add('active');
+        btn.innerHTML = '<span>📊</span> Bütün Ülkeleri Kapat';
+        controls.style.display = 'block';
+        
+        // Kaydırıcıyı seçili ülkenin yıllarına göre ayarla (tüm yıllar yerine)
+        if (yearInput && currentCountryAvailableYears.length > 0) {
+            yearInput.min = String(currentCountryAvailableYears[0]);
+            yearInput.max = String(currentCountryAvailableYears[currentCountryAvailableYears.length - 1]);
+            
+            // Mevcut seçili yılı ülkenin en yakın yılına snap et
+            const snappedYear = snapToNearestAvailableYear(selectedYear, currentCountryAvailableYears);
+            selectedYear = snappedYear;
+            yearInput.value = String(snappedYear);
+            document.getElementById('corridor-year-label').textContent = String(snappedYear);
+            
+            // O yıl için verileri güncelle
+            updateDarKoridorDataForYear(snappedYear);
+            if (currentCountryName) {
+                updateCountryDataForYear(currentCountryName, snappedYear);
+        }
+        }
+        
+        // Grafikteki noktaları yeniden çiz (seçili yıl için)
+        renderAllCountriesOnCorridorGraph();
+        
+        // Tüm ülke noktalarını göster
+        const updatedDots = document.querySelectorAll('.corridor-country-dot');
+        updatedDots.forEach(dot => {
+            dot.classList.add('visible');
+        });
+        
+        // İstatistikleri ve filtreleri render et
+        renderCorridorStats();
+    } else {
+        // İnteraktif haritayı kapat
+        btn.classList.remove('active');
+        btn.innerHTML = '<span>📊</span> Bütün Ülkeleri Göster';
+        controls.style.display = 'none';
+        
+        // Kaydırıcıyı ülkeye özel yıllara geri döndür
+        if (yearInput && currentCountryAvailableYears.length > 0) {
+            yearInput.min = String(currentCountryAvailableYears[0]);
+            yearInput.max = String(currentCountryAvailableYears[currentCountryAvailableYears.length - 1]);
+            
+            // Seçili yılı ülkenin en yakın yılına snap et
+            const snappedYear = snapToNearestAvailableYear(selectedYear, currentCountryAvailableYears);
+            selectedYear = snappedYear;
+            yearInput.value = String(snappedYear);
+            document.getElementById('corridor-year-label').textContent = String(snappedYear);
+            
+            if (currentCountryName) {
+                updateCountryDataForYear(currentCountryName, snappedYear);
+            }
+        }
+        
+        // Tüm ülke noktalarını gizle
+        dots.forEach(dot => {
+            dot.classList.remove('visible');
+        });
+        
+        // Filtreyi resetle
+        resetCorridorFilters();
+    }
+}
+
+/**
+ * İstatistikleri render eder (birleşik butonlar ile)
+ */
+function renderCorridorStats() {
+    if (!darKoridorData || !darKoridorData.countries) return;
+    
+    const statsDiv = document.getElementById('corridor-stats-filters');
+    const allCountries = darKoridorData.countries;
+    const total = allCountries.length;
+    
+    // Her tip için sayıyı hesapla
+    const typeCounts = {
+        all: total,
+        shackled: allCountries.filter(c => c.leviathanType.toLowerCase() === 'shackled').length,
+        despotic: allCountries.filter(c => c.leviathanType.toLowerCase() === 'despotic').length,
+        paper: allCountries.filter(c => c.leviathanType.toLowerCase() === 'paper').length,
+        absent: allCountries.filter(c => c.leviathanType.toLowerCase() === 'absent').length
+    };
+    
+    const typeLabels = {
+        all: 'Tümü',
+        shackled: 'Prangalanmış',
+        despotic: 'Despotik',
+        paper: 'Kağıttan',
+        absent: 'Mevcut Olmayan'
+    };
+    
+    // HTML oluştur
+    const buttons = Object.entries(typeLabels).map(([type, label]) => {
+        const count = typeCounts[type];
+        const percent = type === 'all' ? 100 : (total > 0 ? ((count / total) * 100).toFixed(1) : 0);
+        const isActive = selectedCorridorFilter === type ? 'active' : '';
+        
+        return `
+            <div class="stat-filter-btn ${isActive}" data-type="${type}">
+                <div class="stat-count">${count}</div>
+                <div class="stat-label">${label}</div>
+                <div class="stat-percent">%${percent}</div>
+            </div>
+        `;
+    }).join('');
+    
+    statsDiv.innerHTML = buttons;
+    
+    // Event listener'ları ekle
+    const filterBtns = statsDiv.querySelectorAll('.stat-filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filterType = btn.dataset.type;
+            
+            // Aktif butonu değiştir
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            selectedCorridorFilter = filterType;
+            
+            // Noktaları filtrele
+            filterCorridorCountries();
+        });
+    });
+}
+
+/**
+ * Koridor filtre değişkenleri
+ */
+let selectedCorridorFilter = 'all';
+
+function resetCorridorFilters() {
+    selectedCorridorFilter = 'all';
+    
+    // İnteraktif haritayı kapat
+    if (interactiveMapActive) {
+        interactiveMapActive = false;
+        const btn = document.getElementById('toggle-interactive-map');
+        const controls = document.getElementById('interactive-map-controls');
+        if (btn) {
+            btn.classList.remove('active');
+            btn.innerHTML = '<span>📊</span> İnteraktif Haritayı Göster';
+        }
+        if (controls) {
+            controls.style.display = 'none';
+        }
+    }
+    
+    filterCorridorCountries();
+}
+
+function filterCorridorCountries() {
+    const dots = document.querySelectorAll('.corridor-country-dot');
+    
+    dots.forEach(dot => {
+        if (selectedCorridorFilter === 'all') {
+            dot.classList.remove('hidden');
+        } else {
+            if (dot.dataset.type === selectedCorridorFilter) {
+                dot.classList.remove('hidden');
+            } else {
+                dot.classList.add('hidden');
+            }
+        }
+    });
+}
+
+/**
+ * Ülke verilerini döndürür (grafik pozisyon bilgisi)
+ */
+function getCountryData(countryName) {
+    // Varsayılan pozisyon (ortada)
+    const defaultPosition = { x: 50, y: 50 };
+    
+    // Eğer Dar Koridor verileri yüklüyse, faktör skorlarından pozisyon hesapla
+    if (darKoridorData && darKoridorData.countries) {
+        // Ülke adı eşleştirmesi yap
+        const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
+        
+        // Hem eşleştirilmiş adı hem de orijinal adı dene
+        let countryData = darKoridorData.countries.find(c => c.name === mappedName);
+        if (!countryData) {
+            countryData = darKoridorData.countries.find(c => c.name === countryName);
+        }
+        
+        if (countryData) {
+            // StatePower ve SocietyPower değerleri -3 ile +3 arasında
+            // Bunları 0-100 arası yüzdeye çeviriyoruz
+            // X ekseni: SocietyPower (Toplum Gücü) - soldan sağa
+            // Y ekseni: StatePower (Devlet Gücü) - yukarıdan aşağıya (ters)
+            
+            const xPercent = ((countryData.societyPower + 3) / 6) * 100;
+            // Y'yi ters çeviriyoruz çünkü grafik koordinatları üstten başlar
+            const yPercent = 100 - ((countryData.statePower + 3) / 6) * 100;
+            
+            console.log(`✓ ${countryName} için Dar Koridor verisi bulundu:`, {
+                statePower: countryData.statePower.toFixed(2),
+                societyPower: countryData.societyPower.toFixed(2),
+                leviathanType: countryData.leviathanType,
+                position: { x: xPercent.toFixed(1), y: yPercent.toFixed(1) }
+            });
+            
+            return {
+                corridorPosition: { x: xPercent, y: yPercent },
+                statePower: countryData.statePower,
+                societyPower: countryData.societyPower,
+                leviathanType: countryData.leviathanType
+            };
+        }
+        
+        console.warn(`⚠ ${countryName} için Dar Koridor verisi bulunamadı, varsayılan pozisyon kullanılıyor`);
+    }
+    
+    // Yedek: Manuel pozisyonlar (veri yoksa)
+    const countryPositions = {
+        'Turkey': { x: 55, y: 48 },
+        'United States': { x: 70, y: 25 },
+        'United Kingdom': { x: 68, y: 28 },
+        'China': { x: 30, y: 70 },
+        'Norway': { x: 75, y: 20 },
+        'North Korea': { x: 15, y: 85 },
+        'Sweden': { x: 73, y: 22 },
+        'Denmark': { x: 74, y: 21 },
+        'Switzerland': { x: 72, y: 23 },
+        'Germany': { x: 67, y: 27 },
+        'France': { x: 65, y: 30 },
+        'Japan': { x: 66, y: 32 },
+        'South Korea': { x: 64, y: 35 },
+        'India': { x: 52, y: 52 },
+        'Brazil': { x: 54, y: 50 },
+        'Russia': { x: 35, y: 65 },
+        'Iran': { x: 28, y: 72 },
+        'Saudi Arabia': { x: 25, y: 75 },
+        'Venezuela': { x: 32, y: 68 },
+        'Argentina': { x: 56, y: 46 },
+        'Mexico': { x: 58, y: 44 },
+        'South Africa': { x: 60, y: 42 },
+        'Egypt': { x: 40, y: 60 },
+        'Nigeria': { x: 45, y: 58 }
+    };
+    
+    return {
+        corridorPosition: countryPositions[countryName] || defaultPosition
+    };
+}
+
+/**
+ * Debug ve bilgilendirme için konsol mesajı
+ */
+console.log('%cATLAS İnteraktif - Daron Acemoğlu', 'color: #4CAF50; font-size: 20px; font-weight: bold;');
+console.log('Özellikler:');
+console.log('- Teori sayfası ile 3D harita arasında geçiş');
+console.log('- Otomatik dönüş (etkileşime kadar)');
+console.log('- Fare ile döndürme');
+console.log('- Tekerlek ile zoom');
+console.log('- Ülkelere tıklama');

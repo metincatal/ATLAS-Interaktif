@@ -1,0 +1,35 @@
+/* ATLAS İnteraktif - Ana CSS Dosyası
+ * Tüm CSS modüllerini import eder
+ * Daron Acemoğlu Teorileri İnteraktif Görselleştirme
+ */
+
+/* Base Styles */
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+
+/* Layout */
+@import './layout/page-navigation.css';
+@import './layout/header.css';
+@import './layout/responsive.css';
+
+/* Components */
+@import './components/globe.css';
+@import './components/flatmap.css';
+@import './components/legend.css';
+@import './components/country-info.css';
+@import './components/year-slider.css';
+@import './components/color-selector.css';
+@import './components/blur-overlay.css';
+
+/* Pages */
+@import './pages/theory-page.css';
+
+/* Modules */
+@import './modules/panel.css';
+@import './modules/corridor-graphic.css';
+@import './modules/chat.css';
+
+/* Animations */
+@import './animations/keyframes.css';
+

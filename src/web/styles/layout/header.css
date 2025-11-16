@@ -1,0 +1,184 @@
+/* Header ve WGI Kontrolleri - ATLAS İnteraktif */
+
+header {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-dropdown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    width: auto;
+}
+
+header.wgi-active {
+    background: rgba(4, 12, 36, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+    padding: 18px 28px;
+    width: min(92vw, 940px);
+    backdrop-filter: blur(16px);
+}
+
+/* WGI Üst Kontrolleri */
+#wgi-header .wgi-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+}
+
+#wgi-header.wgi-active .wgi-controls {
+    gap: 18px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.wgi-home-btn {
+    background: rgba(255,255,255,0.9);
+    color: var(--primary-blue);
+    border: none;
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+}
+
+.wgi-btn-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.wgi-btn {
+    background: linear-gradient(135deg, #fca26e 0%, #fd6f5e 100%);
+    color: #1e0b39;
+    border: none;
+    padding: 12px 22px;
+    font-size: 1.05rem;
+    border-radius: 22px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(252, 98, 98, 0.35);
+    font-weight: var(--font-weight-bold);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.wgi-btn.active {
+    background: linear-gradient(135deg, #7ff169 0%, #2e9f2b 100%);
+    color: #021e36;
+    box-shadow: 0 12px 30px rgba(62, 214, 92, 0.45);
+}
+
+.wgi-btn:active {
+    transform: translateY(1px);
+}
+
+.wgi-btn-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.wgi-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    background: rgba(0, 0, 0, 0.9);
+    color: var(--white);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+    z-index: var(--z-tooltip);
+    box-shadow: var(--shadow-md);
+}
+
+.wgi-tooltip.hidden {
+    display: none;
+}
+
+.wgi-btn-wrapper:hover .wgi-tooltip:not(.hidden) {
+    opacity: 1;
+}
+
+#wgi-header.wgi-active .wgi-tooltip {
+    display: none !important;
+}
+
+.indicator-group label {
+    margin-right: 6px;
+    font-weight: var(--font-weight-semibold);
+    color: rgba(255,255,255,0.85);
+}
+
+.indicator-group select {
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.92);
+    color: #0f2555;
+    font-weight: var(--font-weight-semibold);
+    box-shadow: 0 6px 14px rgba(5, 10, 30, 0.35);
+}
+
+.scale-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.85);
+}
+
+.scale-group label {
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.95rem;
+}
+
+.scale-group select {
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.92);
+    color: #0f2555;
+    font-weight: var(--font-weight-semibold);
+    box-shadow: 0 6px 14px rgba(5, 10, 30, 0.35);
+}
+
+.projection-toggle {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    background: rgba(11, 24, 62, 0.85);
+    border-radius: 26px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.proj-btn {
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: var(--font-weight-semibold);
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.proj-btn.active {
+    background: linear-gradient(135deg, #5a62f5 0%, #8a5afc 100%);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(84, 92, 255, 0.35);
+}

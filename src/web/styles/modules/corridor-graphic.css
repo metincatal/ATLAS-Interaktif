@@ -1,0 +1,496 @@
+/* Dar Koridor Grafiği ve İnteraktif Harita - ATLAS İnteraktif */
+
+/* Corridor Graphic */
+.corridor-graphic {
+    position: relative;
+    width: 100%;
+    margin: var(--spacing-md) 0;
+    background: var(--gray-light);
+    border-radius: var(--radius-md);
+    padding: 40px 40px 40px 65px;
+    box-shadow: var(--shadow-sm);
+    transition: opacity var(--transition-normal), max-height var(--transition-normal);
+    overflow: hidden;
+}
+
+.corridor-graphic[style*="display: none"] {
+    opacity: 0;
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.corridor-graphic img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-xs);
+}
+
+/* Eksen Etiketleri */
+.axis-label {
+    position: absolute;
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-blue);
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.axis-label.y-axis {
+    top: 50%;
+    left: -5px;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center;
+}
+
+.axis-label.x-axis {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.position-dot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #ff3b30;
+    border: 3px solid var(--white);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(255, 59, 48, 0.6);
+    animation: pulse 2s infinite;
+    z-index: var(--z-dropdown);
+    margin: -8px 0 0 -8px;
+}
+
+/* Tüm ülke noktaları */
+.corridor-country-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: var(--z-base);
+    pointer-events: none;
+}
+
+.corridor-country-dot.visible {
+    opacity: 0.7;
+    pointer-events: auto;
+}
+
+.corridor-country-dot.visible:hover {
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+    opacity: 1;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.corridor-country-dot.shackled {
+    background-color: var(--shackled-green);
+}
+
+.corridor-country-dot.despotic {
+    background-color: var(--despotic-red);
+}
+
+.corridor-country-dot.paper {
+    background-color: var(--paper-orange);
+}
+
+.corridor-country-dot.absent {
+    background-color: var(--absent-purple);
+}
+
+.corridor-country-dot.hidden {
+    display: none;
+}
+
+/* Seçili ülke noktası daha büyük ve parlak */
+#country-position-dot {
+    z-index: var(--z-dropdown);
+}
+
+/* Seçili ülke noktası renkleri (Leviathan tipine göre) */
+#country-position-dot.shackled {
+    background-color: var(--shackled-green);
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 1);
+    animation: pulse-green 1s infinite;
+}
+
+#country-position-dot.despotic {
+    background-color: var(--despotic-red);
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 1);
+    animation: pulse-red 1s infinite;
+}
+
+#country-position-dot.paper {
+    background-color: var(--paper-orange);
+    box-shadow: 0 0 0 0 rgba(243, 156, 18, 1);
+    animation: pulse-orange 1s infinite;
+}
+
+#country-position-dot.absent {
+    background-color: var(--absent-purple);
+    box-shadow: 0 0 0 0 rgba(155, 89, 182, 1);
+    animation: pulse-purple 1s infinite;
+}
+
+/* Corridor Tooltip */
+.corridor-tooltip {
+    position: absolute;
+    background: rgba(30, 60, 114, 0.95);
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: var(--radius-xs);
+    font-size: 0.85rem;
+    pointer-events: none;
+    z-index: var(--z-modal);
+    display: none;
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(5px);
+}
+
+.corridor-tooltip .tooltip-country {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+    color: var(--white);
+}
+
+.corridor-tooltip .tooltip-info {
+    font-size: var(--font-size-sm);
+    opacity: 0.95;
+    line-height: var(--line-height-tight);
+}
+
+.corridor-tooltip .tooltip-value {
+    font-weight: var(--font-weight-semibold);
+}
+
+.corridor-tooltip .tooltip-value.state-power {
+    color: #60a5fa;
+}
+
+.corridor-tooltip .tooltip-value.society-power {
+    color: #fbbf24;
+}
+
+.corridor-tooltip .tooltip-value.leviathan-type {
+    font-weight: var(--font-weight-bold);
+}
+
+/* Bilgi Çubuğu - Grafik Altında Kompakt */
+.corridor-info-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    gap: var(--spacing-md);
+}
+
+.corridor-info-bar .info-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+}
+
+.corridor-info-bar .info-label {
+    color: rgb(30, 60, 114);
+    font-weight: var(--font-weight-semibold);
+}
+
+.corridor-info-bar .info-value {
+    font-weight: var(--font-weight-bold);
+    font-size: 0.9rem;
+}
+
+.corridor-info-bar .info-value.state-power {
+    color: #60a5fa;
+}
+
+.corridor-info-bar .info-value.society-power {
+    color: #fbbf24;
+}
+
+.corridor-info-bar .info-value.leviathan-type {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-bold);
+}
+
+/* Yıl Kaydırıcısı - Minimal */
+.corridor-year-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px 0;
+    margin: 15px 0;
+    background: rgba(42, 82, 152, 0.05);
+    border-radius: var(--radius-md);
+}
+
+#corridor-year-input {
+    width: 60%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    border-radius: var(--radius-md);
+    outline: none;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+}
+
+#corridor-year-input:hover {
+    opacity: 1;
+}
+
+#corridor-year-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--white);
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all var(--transition-fast);
+}
+
+#corridor-year-input::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.4);
+}
+
+#corridor-year-input::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--white);
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all var(--transition-fast);
+}
+
+#corridor-year-input::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.4);
+}
+
+.corridor-year-display {
+    font-size: var(--font-size-base);
+    color: var(--primary-blue);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+
+.corridor-year-display span {
+    opacity: 0.7;
+}
+
+.corridor-year-display strong {
+    font-size: 1.2rem;
+    color: #667eea;
+}
+
+/* İnteraktif Harita Toggle Butonu */
+.corridor-interactive-toggle {
+    text-align: center;
+    margin: var(--spacing-md) 0;
+}
+
+.interactive-map-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.interactive-map-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.interactive-map-btn span {
+    font-size: 1.2rem;
+}
+
+.interactive-map-btn.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffebe8;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    box-shadow: none;
+}
+
+.interactive-map-btn.active:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* İnteraktif Harita Kontrolleri */
+.interactive-map-controls {
+    animation: slideDown 0.4s ease;
+}
+
+/* Corridor İstatistikler & Filtreler (Birleşik - Kompakt) */
+.corridor-stats-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+    padding: 10px;
+    background: rgba(42, 82, 152, 0.05);
+    border-radius: var(--radius-md);
+}
+
+.stat-filter-btn {
+    text-align: center;
+    padding: 8px 12px;
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    min-width: 75px;
+}
+
+.stat-filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.stat-filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.stat-filter-btn:hover::before {
+    opacity: 1;
+}
+
+.stat-filter-btn.active {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%);
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.4);
+    transform: translateY(-1px);
+}
+
+.stat-filter-btn.active::before {
+    opacity: 1;
+}
+
+.stat-filter-btn[data-type="shackled"]::before {
+    background: var(--shackled-green);
+}
+
+.stat-filter-btn[data-type="despotic"]::before {
+    background: var(--despotic-red);
+}
+
+.stat-filter-btn[data-type="paper"]::before {
+    background: var(--paper-orange);
+}
+
+.stat-filter-btn[data-type="absent"]::before {
+    background: var(--absent-purple);
+}
+
+.stat-filter-btn .stat-count {
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-blue);
+    margin-bottom: 3px;
+    line-height: 1;
+}
+
+.stat-filter-btn .stat-label {
+    font-size: var(--font-size-xs);
+    color: #666;
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 2px;
+    white-space: nowrap;
+}
+
+.stat-filter-btn .stat-percent {
+    font-size: var(--font-size-xs);
+    color: #999;
+    font-weight: var(--font-weight-semibold);
+}
+
+.stat-filter-btn.active .stat-count {
+    color: #667eea;
+}
+
+.stat-filter-btn.active .stat-label {
+    color: var(--primary-blue);
+}
+
+.stat-filter-btn.active .stat-percent {
+    color: #667eea;
+}
+
+.corridor-analysis {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(42, 82, 152, 0.08);
+    border-left: 4px solid var(--secondary-blue);
+    border-radius: var(--radius-xs);
+    font-style: italic;
+}
+
+/* Responsive - Grafik */
+@media (max-width: 768px) {
+    .corridor-graphic {
+        padding: 35px 30px 30px 55px;
+    }
+    
+    .axis-label {
+        font-size: 0.85rem;
+    }
+    
+    .axis-label.y-axis {
+        left: 0px;
+    }
+    
+    .axis-label.x-axis {
+        bottom: 8px;
+        font-size: var(--font-size-sm);
+    }
+}
