@@ -1,6 +1,6 @@
-/* Header ve WGI Kontrolleri - ATLAS İnteraktif */
+/* Header ve Veri Seti Kontrolleri - ATLAS İnteraktif */
 
-header {
+#dataset-header {
     position: absolute;
     top: 24px;
     left: 50%;
@@ -8,8 +8,9 @@ header {
     z-index: var(--z-dropdown);
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
+    justify-content: flex-start;
+    gap: 18px;
+    flex-wrap: wrap;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -17,29 +18,39 @@ header {
     width: auto;
 }
 
-header.wgi-active {
+#dataset-header.dataset-active {
     background: rgba(4, 12, 36, 0.78);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 28px;
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
-    padding: 18px 28px;
-    width: min(92vw, 940px);
+    padding: 16px 24px;
+    width: auto;
+    max-width: min(95vw, 1180px);
     backdrop-filter: blur(16px);
 }
 
-/* WGI Üst Kontrolleri */
-#wgi-header .wgi-controls {
+/* Veri seti butonları */
+.dataset-toggle-group {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 12px;
-    justify-content: center;
+    flex-wrap: wrap;
+    min-width: 190px;
 }
 
-#wgi-header.wgi-active .wgi-controls {
-    gap: 18px;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+/* WGI Üst Kontrolleri */
+#dataset-header .wgi-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+#dataset-header.dataset-active .wgi-controls {
+    flex-wrap: nowrap;
 }
 
 .wgi-home-btn {
@@ -113,7 +124,7 @@ header.wgi-active {
     opacity: 1;
 }
 
-#wgi-header.wgi-active .wgi-tooltip {
+#dataset-header.dataset-active .wgi-tooltip {
     display: none !important;
 }
 
@@ -166,6 +177,11 @@ header.wgi-active {
     border: 1px solid rgba(255,255,255,0.08);
 }
 
+.wgi-controls .projection-toggle,
+.vdem-controls .projection-toggle {
+    margin-left: 12px;
+}
+
 .proj-btn {
     background: transparent;
     color: rgba(255,255,255,0.75);
@@ -181,4 +197,73 @@ header.wgi-active {
     background: linear-gradient(135deg, #5a62f5 0%, #8a5afc 100%);
     color: #fff;
     box-shadow: 0 8px 18px rgba(84, 92, 255, 0.35);
+}
+#dataset-header .vdem-controls,
+.vdem-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.vdem-indicator-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(10, 30, 60, 0.4);
+    padding: 10px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    flex: 1 1 420px;
+}
+
+.vdem-indicator-meta label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.vdem-indicator-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.vdem-selected-path {
+    flex: 1;
+    font-weight: var(--font-weight-semibold);
+    color: #d3e4ff;
+    white-space: normal;
+    max-width: clamp(220px, 30vw, 520px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+.mindmap-return-btn {
+    background: rgba(255,255,255,0.95);
+    border: none;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-weight: var(--font-weight-bold);
+    color: #0a2740;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.mindmap-return-btn:hover {
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+    transform: translateY(-1px);
+}
+
+.wgi-btn.vdem-btn {
+    background: linear-gradient(135deg, #5de0e6 0%, #004aad 100%);
+    color: #041130;
+}
+
+.wgi-btn.vdem-btn.active {
+    background: linear-gradient(135deg, #9d7bff 0%, #533ffa 100%);
+    color: #fff;
 }

@@ -14,6 +14,7 @@ import { setupChat } from './modules/chat/chat-manager.js';
 
 // Dar Koridor
 import { loadDarKoridorData } from './modules/corridor/corridor-data.js';
+import { setupVdemExperience } from './modules/vdem/vdem-manager.js';
 
 /**
  * Uygulama başlatma
@@ -39,6 +40,9 @@ window.addEventListener('DOMContentLoaded', async () => {
         setupPanelAndChat();
         setupChat();
         
+        console.log('4️⃣ V-Dem deneyimi hazırlanıyor...');
+        setupVdemExperience();
+        
         console.log('✓ ATLAS İnteraktif başlatıldı');
         console.log('⚠️ Not: WGI ve bazı özellikler kademeli olarak eklenecek');
         
@@ -63,4 +67,3 @@ window.addEventListener('DOMContentLoaded', async () => {
  * Geçici çözüm: Eski script.js dosyası yedek olarak saklanacak
  * ve eksik özellikler oradan çekilebilir.
  */
-

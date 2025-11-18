@@ -21,8 +21,10 @@ let disableWgiModeHandler = null;
 let enableWgiModeHandler = null;
 
 export function setupWgiControls() {
-    const wgiHeader = document.getElementById('wgi-header');
+    const wgiHeader = document.getElementById('dataset-header');
     const wgiBtn = document.getElementById('wgi-button');
+    const vdemControls = document.getElementById('vdem-controls');
+    const wgiControlsContainer = document.getElementById('wgi-controls');
     const indicatorGroup = document.getElementById('indicator-group');
     const scaleGroup = document.getElementById('scale-group');
     const projectionToggle = document.getElementById('projection-toggle');
@@ -35,16 +37,20 @@ export function setupWgiControls() {
     
     // Üst WGI barını sadece buton görünür olacak şekilde aç
     wgiHeader.style.display = 'flex';
-    wgiHeader.classList.remove('wgi-active');
+    wgiHeader.classList.remove('dataset-active', 'dataset-mode-wgi');
     
-    const disableWgiMode = () => {
+    const disableWgiMode = (options = {}) => {
         if (!state.wgiEnabled) return false;
+        const { nextMode = null } = options;
         
         setState('wgiEnabled', false);
-        wgiBtn.textContent = 'WGI';
         wgiBtn.classList.remove('active');
-        wgiHeader.classList.remove('wgi-active');
-        
+        wgiHeader.classList.remove('dataset-mode-wgi');
+        if (!state.vdemEnabled && nextMode !== 'vdem') {
+            wgiHeader.classList.remove('dataset-active');
+        }
+        if (vdemControls) vdemControls.style.display = 'none';
+        if (wgiControlsContainer) wgiControlsContainer.style.display = 'none';
         if (indicatorGroup) indicatorGroup.style.display = 'none';
         if (scaleGroup) scaleGroup.style.display = 'none';
         if (projectionToggle) projectionToggle.style.display = 'none';
@@ -54,8 +60,10 @@ export function setupWgiControls() {
         
         const baseColorSelector = document.getElementById('base-color-selector');
         const theoryButton = document.getElementById('theory-button');
-        if (baseColorSelector) baseColorSelector.style.display = 'flex';
-        if (theoryButton) theoryButton.style.display = 'flex';
+        if (!state.vdemEnabled && nextMode !== 'vdem') {
+            if (baseColorSelector) baseColorSelector.style.display = 'flex';
+            if (theoryButton) theoryButton.style.display = 'flex';
+        }
         
         setState('selectedLegendRange', null);
         updateLegendSelectionStyles();
@@ -84,13 +92,20 @@ export function setupWgiControls() {
     const enableWgiMode = () => {
         if (state.wgiEnabled) return false;
         
+        if (window.vdemControls && typeof window.vdemControls.disable === 'function') {
+            window.vdemControls.disable({ nextMode: 'wgi' });
+        }
+        
         setState('wgiEnabled', true);
-        wgiBtn.textContent = 'WGI Açık';
         wgiBtn.classList.add('active');
-        wgiHeader.classList.add('wgi-active');
+        wgiHeader.classList.add('dataset-active', 'dataset-mode-wgi');
+        if (vdemControls) {
+            vdemControls.style.display = 'none';
+        }
         setState('selectedLegendRange', null);
         updateLegendSelectionStyles();
         
+        if (wgiControlsContainer) wgiControlsContainer.style.display = 'flex';
         if (indicatorGroup) indicatorGroup.style.display = 'flex';
         if (scaleGroup) scaleGroup.style.display = 'flex';
         if (projectionToggle) projectionToggle.style.display = 'flex';
@@ -102,6 +117,10 @@ export function setupWgiControls() {
         const theoryButton = document.getElementById('theory-button');
         if (baseColorSelector) baseColorSelector.style.display = 'none';
         if (theoryButton) theoryButton.style.display = 'none';
+        if (state.globe && state.countriesData) {
+            state.globe.polygonCapColor(pol => getWgiPolygonColor(pol));
+            state.globe.polygonStrokeColor(pol => getWgiPolygonStrokeColor(pol));
+        }
         
         console.log('✓ WGI açıldı');
         
@@ -128,8 +147,9 @@ export function setupWgiControls() {
     disableWgiModeHandler = disableWgiMode;
     enableWgiModeHandler = enableWgiMode;
     
-    document.addEventListener('wgi:disable', () => {
-        disableWgiMode();
+    document.addEventListener('wgi:disable', (event) => {
+        const detail = event?.detail || {};
+        disableWgiMode(detail);
     });
     
     wgiBtn.addEventListener('click', () => {
@@ -351,15 +371,14 @@ function updateWgiLegend() {
             const d3 = window.d3;
             let colorScale;
             switch (scheme) {
-                case 'RdYlGn': colorScale = d3.scaleSequential(d3.interpolateRdYlGn); break;
-                case 'Spectral': colorScale = d3.scaleSequential(d3.interpolateSpectral); break;
-                case 'RdBu': colorScale = d3.scaleSequential(d3.interpolateRdBu); break;
-                case 'PiYG': colorScale = d3.scaleSequential(d3.interpolatePiYG); break;
-                case 'BrBG': colorScale = d3.scaleSequential(d3.interpolateBrBG); break;
-                case 'PRGn': colorScale = d3.scaleSequential(d3.interpolatePRGn); break;
-                case 'PuOr': colorScale = d3.scaleSequential(d3.interpolatePuOr); break;
-                case 'RdGy': colorScale = d3.scaleSequential(d3.interpolateRdGy); break;
-                default: colorScale = d3.scaleSequential(d3.interpolateRdYlGn);
+                case 'Turbo': colorScale = d3.scaleSequential(d3.interpolateTurbo); break;
+                case 'Viridis': colorScale = d3.scaleSequential(d3.interpolateViridis); break;
+                case 'Plasma': colorScale = d3.scaleSequential(d3.interpolatePlasma); break;
+                case 'Magma': colorScale = d3.scaleSequential(d3.interpolateMagma); break;
+                case 'Warm': colorScale = d3.scaleSequential(d3.interpolateWarm); break;
+                case 'Cool': colorScale = d3.scaleSequential(d3.interpolateCool); break;
+                case 'Cividis': colorScale = d3.scaleSequential(d3.interpolateCividis); break;
+                default: colorScale = d3.scaleSequential(d3.interpolateTurbo);
             }
             
             if (reverse) {

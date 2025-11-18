@@ -62,32 +62,29 @@ export function getWgiColor(iso3, indicator, year) {
     let colorScale;
     
     switch (scheme) {
-        case 'RdYlGn':
-            colorScale = d3.scaleSequential(d3.interpolateRdYlGn);
+        case 'Turbo':
+            colorScale = d3.scaleSequential(d3.interpolateTurbo);
             break;
-        case 'Spectral':
-            colorScale = d3.scaleSequential(d3.interpolateSpectral);
+        case 'Viridis':
+            colorScale = d3.scaleSequential(d3.interpolateViridis);
             break;
-        case 'RdBu':
-            colorScale = d3.scaleSequential(d3.interpolateRdBu);
+        case 'Plasma':
+            colorScale = d3.scaleSequential(d3.interpolatePlasma);
             break;
-        case 'PiYG':
-            colorScale = d3.scaleSequential(d3.interpolatePiYG);
+        case 'Magma':
+            colorScale = d3.scaleSequential(d3.interpolateMagma);
             break;
-        case 'BrBG':
-            colorScale = d3.scaleSequential(d3.interpolateBrBG);
+        case 'Warm':
+            colorScale = d3.scaleSequential(d3.interpolateWarm);
             break;
-        case 'PRGn':
-            colorScale = d3.scaleSequential(d3.interpolatePRGn);
+        case 'Cool':
+            colorScale = d3.scaleSequential(d3.interpolateCool);
             break;
-        case 'PuOr':
-            colorScale = d3.scaleSequential(d3.interpolatePuOr);
-            break;
-        case 'RdGy':
-            colorScale = d3.scaleSequential(d3.interpolateRdGy);
+        case 'Cividis':
+            colorScale = d3.scaleSequential(d3.interpolateCividis);
             break;
         default:
-            colorScale = d3.scaleSequential(d3.interpolateRdYlGn);
+            colorScale = d3.scaleSequential(d3.interpolateTurbo);
     }
     
     // Domain ayarla (ters çevrilmişse)

@@ -3,12 +3,13 @@
  * Globe poligon etkileşimleri
  */
 
-import { state, setState } from './state.js';
+import { state } from './state.js';
 import { setupGlobePolygons, getPolygonCenter, focusOnLocation } from './globe.js';
 import { resumeAutoRotate } from './interaction.js';
 import { HOVER_COLOR, SELECTED_COLOR, ANIMATION_DURATIONS } from '../config/constants.js';
 import { openCountryPanel } from '../modules/panel/panel-manager.js';
 import { getPolygonLabelHtml } from './polygon-labels.js';
+import { getWgiPolygonColor } from '../modules/wgi/wgi-colors.js';
 
 /**
  * Globe event handler'larını kurar
@@ -27,8 +28,10 @@ export function setupGlobeEventHandlers() {
  */
 function getPolygonColor(p) {
     if (state.wgiEnabled) {
-        // WGI modülünden renk al
-        return getWgiCountryColor(p);
+        return getWgiPolygonColor(p);
+    }
+    if (state.vdemEnabled) {
+        return state.currentCountryColor;
     }
     return state.currentCountryColor;
 }
@@ -65,10 +68,12 @@ function handleCountryClick(polygon) {
     const countryName = polygon.properties.NAME || polygon.properties.ADMIN || 'Bilinmeyen Ülke';
     const countryCode = polygon.properties.ISO_A2 || 'XX';
     
-    // WGI açık ise kapatıp küreye dön
+    // Eğer veri modları açıksa panel görünümüne geç
     if (state.wgiEnabled) {
-        // WGI disable fonksiyonu buradan çağrılacak
-        console.log('WGI kapatılıyor...');
+        document.dispatchEvent(new CustomEvent('wgi:disable', { detail: { nextMode: 'panel' } }));
+    }
+    if (state.vdemEnabled && window.vdemControls && typeof window.vdemControls.disable === 'function') {
+        window.vdemControls.disable({ nextMode: 'panel' });
     }
     
     // Ülkeyi vurgula
@@ -91,10 +96,3 @@ function handleCountryClick(polygon) {
     
     console.log('Seçilen ülke:', countryName, 'Kod:', countryCode);
 }
-
-// WGI renk fonksiyonu (placeholder - gerçek implementasyon WGI modülünde)
-function getWgiCountryColor(polygon) {
-    // Bu fonksiyon WGI modülünden import edilecek
-    return state.currentCountryColor;
-}
-

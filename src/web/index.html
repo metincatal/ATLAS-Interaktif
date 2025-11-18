@@ -92,14 +92,19 @@
             </select>
         </div>
 
-        <!-- WGI Üst Kontrolleri -->
-        <header id="wgi-header" style="display: none;">
-            <div class="wgi-controls">
+        <!-- Veri Seti Üst Kontrolleri -->
+        <header id="dataset-header" style="display: none;">
+            <div class="dataset-toggle-group">
                 <div class="wgi-btn-wrapper">
                     <button id="wgi-button" class="wgi-btn">WGI</button>
                     <div class="wgi-tooltip">Worldwide Governance Indicators - Ülkelerin yönetişim göstergelerini görselleştirin</div>
                 </div>
-                
+                <div class="wgi-btn-wrapper">
+                    <button id="vdem-button" class="wgi-btn vdem-btn">V-Dem</button>
+                    <div class="wgi-tooltip">Varieties of Democracy - Mind map ve gösterge atlası</div>
+                </div>
+            </div>
+            <div class="wgi-controls" id="wgi-controls">
                 <div class="indicator-group" id="indicator-group" style="display: none;">
                     <label for="indicator-select">Gösterge:</label>
                     <select id="indicator-select">
@@ -115,14 +120,13 @@
                 <div class="scale-group" id="scale-group" style="display: none;">
                     <label for="scale-select">Skala:</label>
                     <select id="scale-select">
-                        <option value="RdYlGn" selected>Kırmızı-Sarı-Yeşil</option>
-                        <option value="Spectral">Spektral</option>
-                        <option value="RdBu">Kırmızı-Mavi</option>
-                        <option value="PiYG">Pembe-Yeşil</option>
-                        <option value="BrBG">Kahverengi-Yeşil</option>
-                        <option value="PRGn">Mor-Yeşil</option>
-                        <option value="PuOr">Mor-Turuncu</option>
-                        <option value="RdGy">Kırmızı-Gri</option>
+                        <option value="Turbo" selected>Turbo</option>
+                        <option value="Viridis">Viridis</option>
+                        <option value="Plasma">Plasma</option>
+                        <option value="Magma">Magma</option>
+                        <option value="Warm">Warm</option>
+                        <option value="Cool">Cool</option>
+                        <option value="Cividis">Cividis</option>
                     </select>
                     <label style="margin-left: 6px;">
                         <input type="checkbox" id="scale-reverse" /> Ters
@@ -132,6 +136,36 @@
                 <div class="projection-toggle" id="projection-toggle" style="display: none;">
                     <button id="btn-globe" class="proj-btn active">Küre</button>
                     <button id="btn-flat" class="proj-btn">Düzlem</button>
+                </div>
+            </div>
+
+            <div class="vdem-controls" id="vdem-controls" style="display: none;">
+                <div class="vdem-indicator-group">
+                    <div class="vdem-indicator-meta">
+                        <label>Seçili Gösterge:</label>
+                        <div id="vdem-selected-path" class="vdem-selected-path">Mind map üzerinden seçin</div>
+                    </div>
+                    <button id="open-vdem-mindmap" class="mindmap-return-btn">Mind Map</button>
+                </div>
+                <div class="scale-group" id="vdem-scale-group">
+                    <label for="vdem-scale-select">Skala:</label>
+                    <select id="vdem-scale-select">
+                        <option value="Turbo" selected>Turbo</option>
+                        <option value="Viridis">Viridis</option>
+                        <option value="Plasma">Plasma</option>
+                        <option value="Magma">Magma</option>
+                        <option value="Warm">Warm</option>
+                        <option value="Cool">Cool</option>
+                        <option value="Cividis">Cividis</option>
+                    </select>
+                    <label style="margin-left: 6px;">
+                        <input type="checkbox" id="vdem-scale-reverse" /> Ters
+                    </label>
+                </div>
+                
+                <div class="projection-toggle" id="vdem-projection-toggle">
+                    <button id="vdem-btn-globe" class="proj-btn active">Küre</button>
+                    <button id="vdem-btn-flat" class="proj-btn">Düzlem</button>
                 </div>
             </div>
         </header>
@@ -192,6 +226,38 @@
                 <input type="range" id="year-slider" min="1996" max="2023" step="1" value="2023" />
                 <div class="year-readout">
                     <span>Yıl:</span> <strong id="year-label">2023</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- V-Dem Yıl Kaydırıcısı ve Legend -->
+        <div id="vdem-year-slider-container" style="display: none;">
+            <div class="legend" id="vdem-legend" style="display: none;">
+                <div class="legend-wrapper">
+                    <svg class="legend-svg" width="500" height="60" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="vdem-gradient" x1="0%" y1="0%" x2="100%" y2="0%"></linearGradient>
+                            <pattern id="vdem-nodata-pattern" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                                <rect width="8" height="8" fill="#2d2d3a"/>
+                                <line x1="0" y1="0" x2="0" y2="8" stroke="#c1c7d6" stroke-width="2.5"/>
+                            </pattern>
+                        </defs>
+                        <rect x="0" y="0" width="400" height="20" fill="url(#vdem-gradient)" rx="10" ry="10" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                        <text id="vdem-legend-min" x="0" y="40" font-size="11" fill="white" font-weight="600" text-anchor="start">0</text>
+                        <text id="vdem-legend-mid" x="200" y="40" font-size="11" fill="white" font-weight="600" text-anchor="middle">0.5</text>
+                        <text id="vdem-legend-max" x="400" y="40" font-size="11" fill="white" font-weight="600" text-anchor="end">1</text>
+                        <g class="legend-nodata-svg" data-range="nodata" style="cursor: default;">
+                            <rect x="430" y="0" width="50" height="20" fill="url(#vdem-nodata-pattern)" rx="5" ry="5" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                            <text x="455" y="40" font-size="11" fill="white" font-weight="600" text-anchor="middle">Veri Yok</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="year-controls">
+                <input type="range" id="vdem-year-slider" min="1900" max="2023" step="1" value="2023" />
+                <div class="year-readout">
+                    <span>Yıl:</span> <strong id="vdem-year-label">2023</strong>
                 </div>
             </div>
         </div>
@@ -297,6 +363,29 @@
         </div>
     </div>
 
+    <!-- V-Dem Mind Map Overlay -->
+    <div id="vdem-overlay" class="vdem-overlay" aria-hidden="true">
+        <div class="vdem-overlay-panel">
+            <div class="vdem-overlay-header">
+                <div>
+                    <h2>V-Dem Mind Map</h2>
+                    <p>Yukarıdan aşağıya açılan çok seviyeli ağaç. Dalları tek tıkla aç/kapatın, göstergeleri çift tıklayarak küre üzerinde görün.</p>
+                </div>
+                <div class="overlay-actions">
+                    <button id="vdem-overlay-close" class="mindmap-close-btn">Kapat</button>
+                </div>
+            </div>
+            <div class="vdem-mindmap-stage" id="vdem-mindmap-stage">
+                <div id="vdem-mindmap" class="vdem-mindmap">
+                    <div class="vdem-loading">Mind map yükleniyor...</div>
+                </div>
+            </div>
+            <div class="vdem-overlay-footer">
+                <span>🖱️ Sürükleyerek pan yapabilir, çift tıklayarak seçili göstergeyle haritaya geçebilirsiniz.</span>
+            </div>
+        </div>
+    </div>
+
     <!-- External Libraries -->
     <script src="https://unpkg.com/globe.gl"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
@@ -309,4 +398,3 @@
     <!-- Geçici olarak eski script.js yedekte tutulmuştur: script.js.backup -->
 </body>
 </html>
-
