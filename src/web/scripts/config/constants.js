@@ -84,8 +84,20 @@ export const GLOBE_BACKGROUND_URL = 'https://unpkg.com/three-globe/example/img/n
 export const DATA_PATHS = {
     darKoridorAllYears: '../../data/processed/v2_1/dar_koridor_all_years.json',
     darKoridorByCountry: '../../data/processed/v2_1/dar_koridor_by_country.json',
-    wgiDataset: '../../data/raw/wgidataset.csv'
+    wgiDataset: '../../data/raw/wgidataset.csv',
+    vdemDataset: '../../data/processed/v4/vdem_core_external_background.csv',
+    vdemMindmap: '../../data/processed/v4/vdem_mindmap_structure.json'
 };
+
+export const VDEM_COLOR_SCHEMES = [
+    { id: 'Turbo', label: 'Turbo' },
+    { id: 'Viridis', label: 'Viridis' },
+    { id: 'Plasma', label: 'Plasma' },
+    { id: 'Magma', label: 'Magma' },
+    { id: 'Warm', label: 'Warm' },
+    { id: 'Cool', label: 'Cool' },
+    { id: 'Cividis', label: 'Cividis' }
+];
 
 // Globe ayarları
 export const GLOBE_SETTINGS = {
@@ -114,4 +126,3 @@ export const Z_INDEX = {
     popover: 1001,
     tooltip: 10000
 };
-

@@ -1,6 +1,7 @@
 /* Yıl Kaydırıcısı (Alt Orta) - ATLAS İnteraktif */
 
-#year-slider-container {
+#year-slider-container,
+#vdem-year-slider-container {
     position: absolute;
     bottom: 28px;
     left: 50%;
@@ -44,7 +45,8 @@
     justify-content: center;
 }
 
-#year-slider {
+#year-slider,
+#vdem-year-slider {
     flex: 1;
     max-width: 420px;
     -webkit-appearance: none;
@@ -57,7 +59,8 @@
     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15), 0 12px 18px rgba(12, 29, 73, 0.4);
 }
 
-#year-slider::-webkit-slider-thumb {
+#year-slider::-webkit-slider-thumb,
+#vdem-year-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 26px;
@@ -69,7 +72,8 @@
     margin-top: -9px;
 }
 
-#year-slider::-moz-range-thumb {
+#year-slider::-moz-range-thumb,
+#vdem-year-slider::-moz-range-thumb {
     width: 26px;
     height: 26px;
     border-radius: 50%;
@@ -92,7 +96,8 @@
 }
 
 @media (max-width: 768px) {
-    #year-slider-container {
+    #year-slider-container,
+    #vdem-year-slider-container {
         width: calc(100vw - 32px);
         padding: 16px 18px;
     }

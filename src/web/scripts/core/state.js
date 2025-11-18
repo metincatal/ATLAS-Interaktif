@@ -19,11 +19,26 @@ export const state = {
     wgiYears: [],
     currentIndicator: 'cc',
     currentYear: null,
-    currentWgiScheme: 'RdYlGn',
+    currentWgiScheme: 'Turbo',
     currentWgiReverse: false,
     selectedLegendRange: null,
     wgiListenersBound: false,
     pendingCountryFocus: null,
+
+    // V-Dem
+    vdemEnabled: false,
+    vdemOverlayOpen: false,
+    vdemMindmapData: null,
+    vdemMindmapRendered: false,
+    vdemDataByIndicator: {},
+    vdemIndicatorsMeta: {},
+    vdemYears: [],
+    currentVdemIndicator: null,
+    currentVdemYear: null,
+    currentVdemScheme: 'Turbo',
+    currentVdemReverse: false,
+    currentVdemBreadcrumbs: [],
+    vdemListenersBound: false,
     
     // Flat Map
     flatMapInitialized: false,

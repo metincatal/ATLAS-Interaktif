@@ -5,6 +5,7 @@
 
 import { state, setState } from './state.js';
 import { getWgiPolygonStrokeColor, isPolygonInLegendSelection, getWgiFlatFill } from '../modules/wgi/wgi-colors.js';
+import { getVdemFlatFill, getVdemPolygonStrokeColor } from '../modules/vdem/vdem-colors.js';
 import { getPolygonLabelHtml } from './polygon-labels.js';
 import { openCountryPanel } from '../modules/panel/panel-manager.js';
 
@@ -50,11 +51,17 @@ export function initializeFlatMap() {
             if (state.wgiEnabled) {
                 return getWgiFlatFill(d);
             }
+            if (state.vdemEnabled) {
+                return getVdemFlatFill(d);
+            }
             return state.currentCountryColor;
         })
         .attr('stroke', (d) => {
             if (state.wgiEnabled) {
                 return getWgiPolygonStrokeColor(d);
+            }
+            if (state.vdemEnabled) {
+                return getVdemPolygonStrokeColor(d);
             }
             return '#fff';
         })
@@ -120,11 +127,17 @@ export function updateFlatMap() {
             if (state.wgiEnabled) {
                 return getWgiFlatFill(d);
             }
+            if (state.vdemEnabled) {
+                return getVdemFlatFill(d);
+            }
             return state.currentCountryColor;
         })
         .attr('stroke', (d) => {
             if (state.wgiEnabled) {
                 return getWgiPolygonStrokeColor(d);
+            }
+            if (state.vdemEnabled) {
+                return getVdemPolygonStrokeColor(d);
             }
             return '#fff';
         })
@@ -147,11 +160,15 @@ export function updateFlatMap() {
 /**
  * Flat map'i göster/gizle
  */
-export function toggleFlatMap(show) {
+export function toggleFlatMap(show, dataset = 'wgi') {
     const globeContainer = document.getElementById('globe-container');
     const flatContainer = document.getElementById('flatmap-container');
-    const btnGlobe = document.getElementById('btn-globe');
-    const btnFlat = document.getElementById('btn-flat');
+    const primaryGlobeBtn = document.getElementById('btn-globe');
+    const primaryFlatBtn = document.getElementById('btn-flat');
+    const vdemGlobeBtn = document.getElementById('vdem-btn-globe');
+    const vdemFlatBtn = document.getElementById('vdem-btn-flat');
+    const btnGlobe = dataset === 'vdem' ? vdemGlobeBtn : primaryGlobeBtn;
+    const btnFlat = dataset === 'vdem' ? vdemFlatBtn : primaryFlatBtn;
     
     if (show) {
         // Flat map göster
@@ -243,7 +260,10 @@ function handleFlatMapCountryClick(feature) {
     }
     
     if (state.wgiEnabled) {
-        document.dispatchEvent(new CustomEvent('wgi:disable', { detail: { reason: 'selection' } }));
+        document.dispatchEvent(new CustomEvent('wgi:disable', { detail: { reason: 'selection', nextMode: 'panel' } }));
+    }
+    if (state.vdemEnabled && window.vdemControls && typeof window.vdemControls.disable === 'function') {
+        window.vdemControls.disable({ nextMode: 'panel' });
     }
     
     const countryName = feature.properties.NAME || feature.properties.ADMIN || 'Bilinmeyen Ülke';
