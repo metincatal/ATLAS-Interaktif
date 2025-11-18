@@ -342,15 +342,17 @@
 }
 
 .interactive-map-btn.active {
-    background: rgba(255, 255, 255, 0.12);
-    color: #ffebe8;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 8px 16px;
-    box-shadow: none;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
 }
 
 .interactive-map-btn.active:hover {
-    background: rgba(255, 255, 255, 0.18);
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(231, 76, 60, 0.6);
 }
 
 /* İnteraktif Harita Kontrolleri */

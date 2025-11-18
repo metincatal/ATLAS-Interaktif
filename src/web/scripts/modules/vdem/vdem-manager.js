@@ -270,6 +270,12 @@ export function setupVdemExperience() {
     function openPanelFromPolygon(polygon) {
         const countryName = polygon.properties.NAME || polygon.properties.ADMIN || 'Bilinmeyen Ülke';
         const countryCode = polygon.properties.ISO_A2 || 'XX';
+
+        // Flat map'ten globe'a geçiş yap (WGI ile aynı davranış)
+        if (state.flatMapInitialized) {
+            toggleFlatMap(false, 'vdem');
+        }
+
         openCountryPanel(countryName, countryCode);
         const blurOverlay = document.getElementById('blur-overlay');
         if (blurOverlay) blurOverlay.classList.add('active');
