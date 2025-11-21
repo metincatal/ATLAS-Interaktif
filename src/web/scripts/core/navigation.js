@@ -16,7 +16,7 @@ export function setupNavigation() {
     const mainPage = document.getElementById('main-page');
     const goToMainButton = document.getElementById('go-to-main');
     const theoryButton = document.getElementById('theory-button');
-    
+
     // Elementlerin varlığını kontrol et
     if (!theoryPage || !mainPage || !goToMainButton || !theoryButton) {
         console.error('❌ Navigasyon elementleri bulunamadı:', {
@@ -27,15 +27,15 @@ export function setupNavigation() {
         });
         return;
     }
-    
+
     // Ana sayfaya geç butonu
     goToMainButton.addEventListener('click', async () => {
         // Teori sayfasını gizle
         theoryPage.classList.remove('active');
-        
+
         // Ana sayfayı göster
         mainPage.classList.add('active');
-        
+
         // Globe henüz başlatılmamışsa başlat
         if (!state.globeInitialized) {
             setTimeout(async () => {
@@ -45,21 +45,21 @@ export function setupNavigation() {
                 setState('globeInitialized', true);
             }, 300);
         }
-        
+
         console.log('Ana sayfaya geçildi');
     });
-    
+
     // Teoriler butonuna dön
     theoryButton.addEventListener('click', () => {
         // Ana sayfayı gizle
         mainPage.classList.remove('active');
-        
+
         // Teori sayfasını göster
         theoryPage.classList.add('active');
-        
+
         console.log('Teori sayfasına geçildi');
     });
-    
+
     console.log('✓ Sayfa navigasyonu hazır');
 }
 

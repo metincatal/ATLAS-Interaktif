@@ -1,0 +1,376 @@
+/* V-Dem Dashboard Styles */
+
+.vdem-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+}
+
+/* Top Bar */
+.vdem-top-bar {
+    height: 60px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+.vdem-search-container input {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    width: 300px;
+}
+
+.vdem-year-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.vdem-year-slider-container input[type=range] {
+    flex: 1;
+}
+
+.vdem-mode-switch {
+    display: flex;
+    background: #e2e8f0;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.mode-btn {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.mode-btn.active {
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+}
+
+/* Content Area */
+.vdem-content-area {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.vdem-sidebar {
+    width: 300px;
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.vdem-nav-header {
+    padding: 15px;
+    font-weight: 700;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.vdem-accordion {
+    padding: 10px 0;
+}
+
+.vdem-nav-item {
+    cursor: pointer;
+}
+
+.vdem-nav-header-row {
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.vdem-nav-header-row:hover {
+    background: #e2e8f0;
+}
+
+.vdem-nav-item.leaf {
+    padding: 6px 15px 6px 35px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.vdem-nav-item.leaf:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.vdem-nav-item.leaf.active {
+    background: #e0f2fe;
+    color: #0369a1;
+    border-right: 3px solid #0369a1;
+}
+
+.toggle-icon {
+    font-size: 10px;
+    width: 12px;
+    transition: transform 0.2s;
+}
+
+.toggle-icon.open {
+    transform: rotate(90deg);
+}
+
+/* Main Visualization Area */
+.vdem-visualization-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #fff;
+}
+
+.vdem-chart-container h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1e293b;
+}
+
+.chart-note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Right Metadata Panel */
+.vdem-metadata-panel {
+    width: 280px;
+    background: #fff;
+    border-left: 1px solid #e2e8f0;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.metadata-card h3 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+
+.meta-item {
+    margin-bottom: 15px;
+}
+
+.meta-item label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge.type-C {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.badge.type-D {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.badge.type-A {
+    background: #f0fdf4;
+    color: #15803d;
+}
+
+.question-text {
+    font-style: italic;
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.desc-text {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.responses-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+}
+
+.responses-list li {
+    padding: 4px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.formula {
+    background: #f8fafc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    display: block;
+}
+
+/* Chart Controls */
+.chart-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chart-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.country-selector {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.country-selector:hover {
+    border-color: #94a3b8;
+}
+
+.country-selector:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.ci-toggle-btn {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ci-toggle-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.ci-toggle-btn:active {
+    transform: scale(0.98);
+}
+
+/* Chart Wrapper */
+.chart-wrapper {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+.no-data {
+    padding: 40px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.loading {
+    padding: 40px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* Year slider styling */
+.vdem-year-slider-container .range-slider {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.vdem-year-slider-container input[type=range] {
+    width: 100%;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.vdem-year-slider-container input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #2563eb;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+.vdem-year-slider-container input[type=range]::-webkit-slider-thumb:hover {
+    background: #1d4ed8;
+    transform: scale(1.1);
+}
+
+.vdem-year-slider-container input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #2563eb;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+.vdem-year-slider-container input[type=range]::-moz-range-thumb:hover {
+    background: #1d4ed8;
+    transform: scale(1.1);
+}
+
+.year-label {
+    font-weight: 600;
+    color: #475569;
+    min-width: 40px;
+    text-align: center;
+}
+
+#year-current-label {
+    color: #2563eb;
+    font-weight: 700;
+}

@@ -32,11 +32,11 @@ export async function loadVdemData() {
     if (state.vdemYears && state.vdemYears.length && Object.keys(state.vdemDataByIndicator).length) {
         return state.vdemDataByIndicator;
     }
-    
+
     if (!vdemDataPromise) {
         vdemDataPromise = fetchVdem();
     }
-    
+
     return vdemDataPromise;
 }
 
@@ -45,73 +45,49 @@ async function fetchVdem() {
         console.log('📚 V-Dem veri kümesi yükleniyor...');
         const response = await fetch(DATA_PATHS.vdemDataset);
         if (!response.ok) {
-            throw new Error('V-Dem CSV dosyası yüklenemedi');
+            throw new Error('V-Dem veri dosyası yüklenemedi');
         }
-        const csvText = await response.text();
-        const parsed = window.Papa ? window.Papa.parse(csvText, {
-            header: true,
-            dynamicTyping: false,
-            skipEmptyLines: true
-        }) : { data: [], meta: { fields: [] } };
-        
-        const rows = parsed.data || [];
-        const fields = parsed.meta?.fields || [];
-        const indicatorColumns = fields.filter(col => !['country_name', 'country_text_id', 'year', 'project', 'historical_date'].includes(col));
-        
+        const data = await response.json();
+
         const indicators = {};
-        const yearSet = new Set();
-        
-        rows.forEach((row, idx) => {
-            const iso3 = (row.country_text_id || row.country_id || '').trim();
-            const yearVal = parseInt(row.year, 10);
-            if (!iso3 || Number.isNaN(yearVal)) {
-                return;
-            }
-            const yearKey = String(yearVal);
-            yearSet.add(yearVal);
-            
-            indicatorColumns.forEach((col) => {
-                const meta = ensureIndicatorEntry(indicators, col);
-                meta.years.add(yearVal);
-                if (!meta.values[yearKey]) {
-                    meta.values[yearKey] = {};
-                }
-                const raw = row[col];
-                const value = sanitizeNumber(raw);
-                meta.values[yearKey][iso3] = value;
-                if (value !== null) {
-                    if (value < meta.min) meta.min = value;
-                    if (value > meta.max) meta.max = value;
-                }
-            });
-            
-            if (idx === 0) {
-                console.log('📚 V-Dem örnek satır:', { iso3, year: yearVal });
-            }
+        const allYears = new Set();
+
+        // Transform data to match application state structure
+        Object.entries(data).forEach(([key, info]) => {
+            const years = Object.keys(info.values).map(y => parseInt(y, 10));
+            years.forEach(y => allYears.add(y));
+
+            indicators[key] = {
+                years: new Set(years),
+                values: info.values,
+                min: info.min,
+                max: info.max
+            };
         });
-        
+
+        const sortedYears = Array.from(allYears).sort((a, b) => a - b);
+
         // Set state values
-        const sortedYears = Array.from(yearSet).sort((a, b) => a - b);
+        setState('vdemDataByIndicator', indicators);
+
+        // Create meta info for easy access
         const indicatorMeta = {};
         Object.entries(indicators).forEach(([key, info]) => {
             indicatorMeta[key] = {
                 years: Array.from(info.years).sort((a, b) => a - b),
-                min: info.min === Number.POSITIVE_INFINITY ? 0 : info.min,
-                max: info.max === Number.NEGATIVE_INFINITY ? 1 : info.max
+                min: info.min,
+                max: info.max
             };
-            info.years = indicatorMeta[key].years;
-            if (!Number.isFinite(info.min)) info.min = 0;
-            if (!Number.isFinite(info.max)) info.max = 1;
         });
-        
-        setState('vdemDataByIndicator', indicators);
+
         setState('vdemIndicatorsMeta', indicatorMeta);
         setState('vdemYears', sortedYears);
+
         if (!state.currentVdemYear && sortedYears.length) {
             setState('currentVdemYear', sortedYears[sortedYears.length - 1]);
         }
-        
-        console.log(`✓ V-Dem verileri hazır (${rows.length} satır, ${indicatorColumns.length} gösterge, ${sortedYears[0]}-${sortedYears[sortedYears.length-1]})`);
+
+        console.log(`✓ V-Dem verileri hazır (${Object.keys(indicators).length} gösterge, ${sortedYears[0]}-${sortedYears[sortedYears.length - 1]})`);
         return indicators;
     } catch (error) {
         console.error('V-Dem veri yükleme hatası:', error);

@@ -8,14 +8,15 @@
     z-index: var(--z-dropdown);
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 18px;
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: nowrap;
     background: transparent;
     border: none;
     box-shadow: none;
     padding: 0;
     width: auto;
+    max-width: 98vw;
 }
 
 #dataset-header.dataset-active {
@@ -23,9 +24,9 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 28px;
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
-    padding: 8px 16px;
+    padding: 6px 12px;
     width: auto;
-    max-width: min(95vw, 1180px);
+    max-width: 98vw;
     backdrop-filter: blur(16px);
 }
 
@@ -34,9 +35,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 12px;
-    flex-wrap: wrap;
-    min-width: 190px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    min-width: auto;
+    flex-shrink: 0;
 }
 
 /* WGI Üst Kontrolleri */
@@ -72,13 +74,14 @@
     background: linear-gradient(135deg, #fca26e 0%, #fd6f5e 100%);
     color: #1e0b39;
     border: none;
-    padding: 10px 18px;
-    font-size: 1rem;
+    padding: 8px 16px;
+    font-size: 0.95rem;
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(252, 98, 98, 0.35);
     font-weight: var(--font-weight-bold);
     transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    white-space: nowrap;
 }
 
 .wgi-btn.active {
@@ -128,6 +131,12 @@
     display: none !important;
 }
 
+.indicator-group {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
 .indicator-group label {
     margin-right: 6px;
     font-weight: var(--font-weight-semibold);
@@ -135,7 +144,7 @@
 }
 
 .indicator-group select {
-    padding: 8px 10px;
+    padding: 6px 10px;
     border-radius: var(--radius-md);
     border: none;
     outline: none;
@@ -143,6 +152,7 @@
     color: #0f2555;
     font-weight: var(--font-weight-semibold);
     box-shadow: 0 6px 14px rgba(5, 10, 30, 0.35);
+    max-width: 200px;
 }
 
 .scale-group {
@@ -150,15 +160,16 @@
     align-items: center;
     gap: 6px;
     color: rgba(255,255,255,0.85);
+    white-space: nowrap;
 }
 
 .scale-group label {
     font-weight: var(--font-weight-semibold);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .scale-group select {
-    padding: 8px 10px;
+    padding: 6px 8px;
     border-radius: var(--radius-md);
     border: none;
     outline: none;
@@ -170,27 +181,29 @@
 
 .projection-toggle {
     display: flex;
-    gap: 6px;
-    padding: 6px;
+    gap: 4px;
+    padding: 4px;
     background: rgba(11, 24, 62, 0.85);
     border-radius: 26px;
     border: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
 }
 
 .wgi-controls .projection-toggle,
 .vdem-controls .projection-toggle {
-    margin-left: 12px;
+    margin-left: 8px;
 }
 
 .proj-btn {
     background: transparent;
     color: rgba(255,255,255,0.75);
     border: none;
-    padding: 8px 14px;
+    padding: 6px 12px;
     border-radius: 20px;
     cursor: pointer;
     font-weight: var(--font-weight-semibold);
     transition: background var(--transition-fast), color var(--transition-fast);
+    font-size: 0.9rem;
 }
 
 .proj-btn.active {
@@ -202,55 +215,63 @@
 .vdem-controls {
     display: flex;
     align-items: center;
-    gap: 14px;
-    flex: 0 1 auto;
+    gap: 12px;
+    flex: 1 1 auto;
     flex-wrap: nowrap;
     justify-content: flex-start;
+    min-width: 0; /* Flex item shrinking fix */
 }
 
 .vdem-indicator-group {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: rgba(10, 30, 60, 0.4);
-    padding: 8px 14px;
+    padding: 6px 12px;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    flex: 1 1 420px;
+    flex: 1 1 auto;
+    min-width: 0; /* Flex item shrinking fix */
+    max-width: 600px;
 }
 
 .vdem-indicator-meta label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: rgba(255,255,255,0.7);
+    white-space: nowrap;
 }
 
 .vdem-indicator-meta {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     flex: 1;
+    min-width: 0; /* Flex item shrinking fix */
 }
 
 .vdem-selected-path {
     flex: 1;
     font-weight: var(--font-weight-semibold);
     color: #d3e4ff;
-    white-space: normal;
-    max-width: clamp(220px, 30vw, 520px);
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.2;
+    font-size: 0.95rem;
 }
 
 .mindmap-return-btn {
     background: rgba(255,255,255,0.95);
     border: none;
     border-radius: 18px;
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-weight: var(--font-weight-bold);
     color: #0a2740;
     cursor: pointer;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    white-space: nowrap;
+    font-size: 0.85rem;
+    flex-shrink: 0;
 }
 
 .mindmap-return-btn:hover {

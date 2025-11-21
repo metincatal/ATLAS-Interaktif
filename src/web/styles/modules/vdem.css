@@ -14,12 +14,42 @@
 
 .vdem-overlay.active {
     display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.mindmap-return-btn {
+    background: rgba(60, 100, 180, 0.2);
+    border: 1px solid rgba(100, 150, 255, 0.4);
+    color: #b0c4de;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    margin-left: 12px;
+}
+
+.mindmap-return-btn:hover {
+    background: rgba(60, 100, 180, 0.4);
+    border-color: rgba(100, 150, 255, 0.8);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(60, 100, 255, 0.3);
 }
 
 .vdem-overlay-panel {
-    background: radial-gradient(circle at 18% 12%, rgba(49,68,130,0.85), rgba(6,9,18,0.95));
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+    background: radial-gradient(circle at 18% 12%, rgba(49, 68, 130, 0.85), rgba(6, 9, 18, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
     border-radius: 28px;
     width: 100%;
     height: 100%;
@@ -48,8 +78,8 @@
 }
 
 .mindmap-close-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     color: #fff;
     padding: 10px 18px;
     border-radius: 22px;
@@ -62,9 +92,9 @@
     margin: 0 0 12px;
     overflow: hidden;
     position: relative;
-    background: radial-gradient(circle at top, rgba(55,80,150,0.55), rgba(15,20,38,0.92));
+    background: radial-gradient(circle at top, rgba(55, 80, 150, 0.55), rgba(15, 20, 38, 0.92));
     border-radius: 22px;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .vdem-mindmap {
@@ -94,71 +124,99 @@
 
 .vdem-overlay-footer {
     padding: 10px 32px 24px;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 0.9rem;
 }
 
 .mindmap-node rect {
-    stroke: rgba(16,24,48,0.3);
-    stroke-width: 1;
-    rx: 18;
-    ry: 18;
-    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.45));
+    fill: rgba(13, 20, 40, 0.85);
+    stroke: rgba(60, 100, 180, 0.4);
+    stroke-width: 1.5;
+    rx: 12;
+    ry: 12;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.6));
+    transition: all 0.3s ease;
+}
+
+.mindmap-node:hover rect {
+    stroke: rgba(100, 200, 255, 0.8);
+    fill: rgba(20, 30, 60, 0.95);
+    filter: drop-shadow(0 0 15px rgba(60, 100, 255, 0.3));
 }
 
 .mindmap-node text {
-    fill: #07142e;
-    font-weight: var(--font-weight-semibold);
-    font-size: 0.92rem;
+    fill: #e0e6ff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .mindmap-node .node-caption {
-    fill: rgba(7,20,46,0.7);
-    font-size: 0.72rem;
+    fill: rgba(160, 180, 220, 0.7);
+    font-size: 0.75rem;
+    font-weight: 400;
 }
 
+/* Node Types - Neon Accents */
 .node-type-root rect {
-    fill: #ffe1b8;
+    stroke: #ffb86c;
+    /* Orange */
 }
 
 .node-type-pillar rect {
-    fill: #d7f0ff;
+    stroke: #8be9fd;
+    /* Cyan */
 }
 
 .node-type-index rect {
-    fill: #e3ddff;
+    stroke: #bd93f9;
+    /* Purple */
 }
 
 .node-type-collection rect {
-    fill: #f6f7ff;
+    stroke: #f1fa8c;
+    /* Yellow */
 }
 
 .node-type-component rect {
-    fill: #d0ffe7;
+    stroke: #50fa7b;
+    /* Green */
 }
 
 .node-type-indicator rect {
-    fill: #ffe1f2;
+    stroke: #ff79c6;
+    /* Pink */
+}
+
+.node-type-category rect {
+    stroke: #ff5555;
+    /* Red */
+}
+
+.node-type-subcategory rect {
+    stroke: #ffb86c;
+    /* Orange */
 }
 
 .mindmap-node.has-children rect {
-    stroke: rgba(255,255,255,0.35);
+    stroke-width: 2;
 }
 
 .mindmap-link {
     fill: none;
-    stroke: rgba(255,255,255,0.24);
+    stroke: rgba(255, 255, 255, 0.24);
     stroke-width: 1.8px;
 }
 
 .mindmap-link.active {
-    stroke: rgba(255,255,255,0.55);
+    stroke: rgba(255, 255, 255, 0.55);
     stroke-width: 2.4px;
 }
 
 .mindmap-node .node-toggle {
-    fill: rgba(8,12,25,0.75);
-    stroke: rgba(255,255,255,0.9);
+    fill: rgba(8, 12, 25, 0.75);
+    stroke: rgba(255, 255, 255, 0.9);
     stroke-width: 1;
 }
 
@@ -173,7 +231,7 @@
 }
 
 .vdem-overlay .hint {
-    color: rgba(255,255,255,0.65);
+    color: rgba(255, 255, 255, 0.65);
     font-size: 0.9rem;
 }
 
@@ -181,7 +239,7 @@
     .vdem-overlay {
         padding: 16px;
     }
-    
+
     .vdem-overlay-panel {
         border-radius: 20px;
     }
