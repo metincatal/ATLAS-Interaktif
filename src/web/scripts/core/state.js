@@ -12,7 +12,7 @@ export const state = {
     globeInitialized: false,  // Globe başlatıldı mı?
     autoRotate: true,
     countriesData: null,
-    
+
     // WGI
     wgiEnabled: false,
     wgiDataByIso3: {},
@@ -39,17 +39,17 @@ export const state = {
     currentVdemReverse: false,
     currentVdemBreadcrumbs: [],
     vdemListenersBound: false,
-    
+
     // Flat Map
     flatMapInitialized: false,
     flatSvg: null,
     flatProjection: null,
     flatPath: null,
     flatTopPadding: 0,
-    
+
     // Renk ayarları
     currentCountryColor: COUNTRY_COLOR,
-    
+
     // Dar Koridor
     darKoridorData: null,
     darKoridorByYear: null,
@@ -57,10 +57,10 @@ export const state = {
     selectedYear: 2023,
     currentCountryName: null,
     currentCountryAvailableYears: [],
-    
+
     // Panel ve Chat
     conversationHistory: [],
-    
+
     // Koridor İnteraktif Harita
     interactiveMapActive: false,
     interactiveMapSetup: false,

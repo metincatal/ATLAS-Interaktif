@@ -1,0 +1,806 @@
+### **BÖLÜM 2: V-Dem Demokrasi İndeksleri (V-Dem Democracy Indices)**
+
+#### **2.1 Yüksek Seviye Demokrasi İndeksleri (High-Level Indices)**
+* **v2x_polyarchy:** Electoral democracy index (Seçimsel demokrasi indeksi)
+* **v2x_libdem:** Liberal democracy index (Liberal demokrasi indeksi)
+* **v2x_partipdem:** Participatory democracy index (Katılımcı demokrasi indeksi)
+* **v2x_delibdem:** Deliberative democracy index (Müzakereci demokrasi indeksi)
+* **v2x_egaldem:** Egalitarian democracy index (Eşitlikçi demokrasi indeksi)
+
+#### **2.2 Orta Seviye İndeksler: Demokrasi Bileşenleri (Mid-Level Components)**
+* **v2x_api:** Additive polyarchy index
+* **v2x_mpi:** Multiplicative polyarchy index
+* **v2x_freexp_altinf:** Freedom of Expression and Alternative Sources of Information index
+* **v2x_frassoc_thick:** Freedom of association thick index
+* **v2x_suffr:** Share of population with suffrage
+* **v2xel_frefair:** Clean elections index
+* **v2x_elecoff:** Elected officials index
+* **v2x_liberal:** Liberal component index
+* **v2xcl_rol:** Equality before the law and individual liberty index
+* **v2x_jucon:** Judicial constraints on the executive index
+* **v2xlg_legcon:** Legislative constraints on the executive index
+* **v2x_partip:** Participatory component index
+* **v2x_cspart:** Civil society participation index
+* **v2xdd_dd:** Direct popular vote index
+* **v2xel_locelec:** Local government index
+* **v2xel_regelec:** Regional government index
+* **v2xdl_delib:** Deliberative component index
+* **v2x_egal:** Egalitarian component index
+* **v2xeg_eqprotec:** Equal protection index
+* **v2xeg_eqaccess:** Equal access index
+* **v2xeg_eqdr:** Equal distribution of resources index
+
+---
+
+### **BÖLÜM 3: V-Dem İndikatörleri (V-Dem Indicators)**
+
+#### **3.1 Seçimler (Elections)**
+**3.1.1 Genel:**
+* **v2eltype:** Election type
+**3.1.2 Oy Hakkı:**
+* **v2asuffrage:** Suffrage
+* **v2elage:** Minimum voting age
+* **v2elcomvot:** Compulsory voting
+* **v2elfemrst:** Female suffrage restricted
+* **v2elgvsuflvl:** Suffrage level
+* **v2elsuffrage:** Percentage of population with suffrage
+* **v2elwestmon:** Fraud allegations by Western monitors
+* **v2fsuffrage:** Female suffrage
+* **v2msuffrage:** Male suffrage
+**3.1.3 Seçim Kalitesi:**
+* **v2eldonate:** Disclosure of campaign donations
+* **v2elpubfin:** Public campaign finance
+* **v2elembaut:** EMB (Election Management Body) autonomy
+* **v2elembcap:** EMB capacity
+* **v2elmulpar:** Elections multiparty
+* **v2elrgstry:** Election voter registry
+* **v2elvotbuy:** Election vote buying
+* **v2elirreg:** Election other voting irregularities
+* **v2elintim:** Election government intimidation
+* **v2elpeace:** Election other electoral violence
+* **v2elboycot:** Election boycotts
+* **v2elfrcamp:** Election free campaign media
+* **v2elpdcamp:** Election paid campaign advertisements
+* **v2elpaidig:** Election paid interest group media
+* **v2elfrfair:** Election free and fair
+* **v2eldommon:** Election domestic election monitors
+* **v2elintmon:** Election international monitors
+* **v2elmonden:** Election international monitors denied
+* **v2elmonref:** Monitors refuse to be present
+* **v2elrstrct:** Candidate restriction by ethnicity, race, religion, or language
+**3.1.4 Seçim Sonuçları:**
+* **v2elaccept:** Election losers accept results
+* **v2elasmoff:** Election assume office
+* **v2eltrnout:** Election turnout
+* **v2elvaptrn:** Election VAP turnout
+* **v2lpname:** Name of largest party
+* **v2slpname:** Name of second largest party
+* **v2tlpname:** Name of third largest party
+**3.1.5 Yürütme Seçimleri:**
+* **v2elprescons:** Presidential elections consecutive
+* **v2elprescumul:** Presidential elections cumulative
+* **v2elrsthog:** HOG restriction by ethnicity, race, religion, or language
+* **v2elrsthos:** HOS restriction by ethnicity, race, religion, or language
+* **v2elturnhog:** Election HOG turnover ordinal
+* **v2elturnhos:** Election HOS turnover ordinal
+* **v2eltvrexo:** Election executive turnover ordinal
+* **v2elvotlrg:** Presidential election vote share of largest vote-getter
+* **v2elvotsml:** Presidential election vote share of second-largest vote-getter
+**3.1.6 Alt Meclis Özellikleri:**
+* **v2ellobadis:** Lower chamber 'base' tier electoral districts
+* **v2ellobaseat:** Lower chamber 'base' or 'nominal' tier seats
+* **v2ellocons:** Lower chamber election consecutive
+* **v2ellocumul:** Lower chamber election cumulative
+* **v2ellodiseff:** Lower chamber election district effective magnitude
+* **v2elloeldm:** Lower chamber election district magnitude
+* **v2elloelsy:** Lower chamber electoral system (13 categories)
+* **v2elloreseat:** Lower chamber hybrid system reserved seats
+* **v2elloseat:** Lower chamber election seats
+* **v2ellostlg:** Lower chamber election seats won by largest party
+* **v2ellostsl:** Lower chamber election seat share won by largest party
+* **v2ellostsm:** Lower chamber election seats won by second largest party
+* **v2ellostss:** Lower chamber election seat share won by second largest party
+* **v2ellosttm:** Lower chamber election seats won by third largest party
+* **v2ellostts:** Lower chamber election seat share won by third largest party
+* **v2elloupdis:** Lower chamber 'upper' tier electoral districts
+* **v2ellovtlg:** Lower chamber election vote share of largest vote-getter
+* **v2ellovtsm:** Lower chamber election vote share of second-largest vote-getter
+* **v2ellovttm:** Lower chamber election vote share of third-largest vote-getter
+* **v2elparlel:** Lower chamber electoral system
+* **v2elthresh:** Lower chamber election statutory threshold
+* **v2eltvrig:** Lower chamber election turnover
+**3.1.7 Yerel Yönetim (Subnational):**
+* **v2elreggov:** Regional government exists
+* **v2elregnam:** Regional government name
+* **v2elsrgel:** Regional government elected
+* **v2elrgpwr:** Regional offices relative power
+* **v2ellocgov:** Local government exists
+* **v2ellocnam:** Local government name
+* **v2ellocelc:** Local government elected
+* **v2ellocpwr:** Local offices relative power
+* **v2elffelr:** Subnational elections free and fair
+* **v2elffelrbin:** Subnational elections held
+* **v2elsnlsff:** Subnational election unevenness
+* **v2elsnless:** Subnational election area less free and fair name
+* **v2elsnlfc:** Subnational election area less free and fair characteristics
+* **v2elsnmore:** Subnational election area more free and fair name
+* **v2elsnmrfc:** Subnational election area more free and fair characteristics
+
+#### **3.2 Siyasi Partiler (Political Parties)**
+* **v2psbars:** Barriers to parties
+* **v2psparban:** Party ban
+* **v2psbantar:** Party ban target
+* **v2psoppaut:** Opposition parties autonomy
+* **v2psorgs:** Party organizations
+* **v2psprbrch:** Party branches
+* **v2psprlnks:** Party linkages
+* **v2psplats:** Distinct party platforms
+* **v2pscnslnl:** Candidate selection-national/local
+* **v2pscohesv:** Legislative party cohesion
+* **v2pscomprg:** Party competition across regions
+* **v2psnatpar:** National party control
+* **v2pssunpar:** Subnational party control
+
+#### **3.3 Doğrudan Demokrasi (Direct Democracy)**
+**3.3.1 Girişimler (Initiatives):**
+* **v2ddlexci:** Initiatives permitted
+* **v2ddsignci:** Initiatives signatures
+* **v2ddsigpci:** Initiatives signatures %
+* **v2ddsigdci:** Initiatives signature-gathering period
+* **v2ddsiglci:** Initiatives signature-gathering time limit
+* **v2ddpartci:** Initiatives participation threshold
+* **v2ddapprci:** Initiatives approval threshold
+* **v2ddadmci:** Initiatives administrative threshold
+* **v2ddspmci:** Initiatives super majority
+* **v2ddthreci:** Popular initiative credible threat
+**3.3.2 Referandumlar (Referendums):**
+* **v2ddlexrf:** Referendums permitted
+* **v2ddsignrf:** Referendums signatures
+* **v2ddsigprf:** Referendums signatures %
+* **v2ddsigdrf:** Referendums signature-gathering period
+* **v2ddsiglrf:** Referendums signature-gathering limit
+* **v2ddpartrf:** Referendums participation threshold
+* **v2ddapprrf:** Referendums approval threshold
+* **v2ddadmrf:** Referendums administrative threshold
+* **v2ddspmrf:** Referendums super majority
+* **v2ddthrerf:** Popular referendum credible threat
+**3.3.3 Zorunlu Referandumlar (Obligatory Referendums):**
+* **v2ddlexor:** Enforcement of Constitutional changes through popular vote
+* **v2ddpartor:** Obligatory referendum participation threshold
+* **v2ddappor:** Obligatory referendum approval threshold
+* **v2ddadmor:** Obligatory referendum administrative threshold
+* **v2ddspmor:** Obligatory referendum super majority
+* **v2ddthreor:** Obligatory referendum credible threat
+**3.3.4 Plebisitler (Plebiscites):**
+* **v2ddlexpl:** Plebiscites permitted
+* **v2ddpartpl:** Plebiscites participation threshold
+* **v2ddapprpl:** Plebiscites approval threshold
+* **v2ddadmpl:** Plebiscites administrative threshold
+* **v2ddspmpl:** Plebiscites super majority
+* **v2ddthrepl:** Plebiscites credible threat
+**3.3.5 Gerçekleşmeler (Occurrences):**
+* **v2ddyrci:** Occurrence of citizen-initiatives this year
+* **v2ddyrrf:** Occurrence of referendum this year
+* **v2ddyror:** Occurrence of obligatory referendum this year
+* **v2ddyrpl:** Occurrence of plebiscite this year
+* **v2ddyrall:** Number of popular votes this year
+* **v2ddcredal:** Occurrence of any type of popular vote this year credible
+
+#### **3.4 Yürütme (The Executive)**
+**3.4.1 Genel:**
+* **v2exrescon:** Executive respects constitution
+* **v2exbribe:** Executive bribery and corrupt exchanges
+* **v2exembez:** Executive embezzlement and theft
+* **v2excrptps:** Public sector corrupt exchanges
+* **v2exthftps:** Public sector theft
+* **v2exapup:** Chief executive appointment by upper chamber
+* **v2exapupap:** Chief executive appointment by upper chamber implicit approval
+**3.4.2 Devlet Başkanı (Head of State - HOS):**
+* **v2exnamhos:** HOS name
+* **v2extithos:** HOS title
+* **v2exremhsp:** HOS removal by legislature in practice
+* **v2exrmhsol:** HOS removal by other in practice
+* **v2exrmhsnl:** HOS other body remove HOS in practice
+* **v2exctlhs:** HOS control over
+* **v2exctlhos:** HOS other body controls
+* **v2exdfdshs:** HOS dissolution in practice
+* **v2exdfcbhs:** HOS appoints cabinet in practice
+* **v2exdfcbhs_rec:** HOS appoints cabinet in practice (recoded)
+* **v2exdfvths:** HOS veto power in practice
+* **v2exdfdmhs:** HOS dismisses ministers in practice
+* **v2exdfpphs:** HOS proposes legislation in practice
+* **v2exhoshog:** HOS = HOG
+* **v2exagehos:** HOS age
+* **v2exaphos:** HOS selection by legislature in practice
+* **v2ex_elechos:** HOS directly elected
+* **v2exfemhos:** HOS female
+* **v2exfxtmhs:** HOS term length by law
+* **v2expathhs:** HOS appointment in practice
+* **v2exdeathos:** HOS year of death
+* **v2exparhos:** HOS party affiliation
+**3.4.3 Hükümet Başkanı (Head of Government - HOG):**
+* **v2exnamhog:** HOG name
+* **v2extithog:** HOG title
+* **v2exremhog:** HOG removal by legislature in practice
+* **v2exrmhgnp:** HOG removal by other in practice
+* **v2exrmhgop:** HOG other body remove HOG in practice
+* **v2exctlhg:** HOG control over
+* **v2exctlhog:** HOG other body controls
+* **v2exdjdshg:** HOG dissolution in practice
+* **v2exdjcbhg:** HOG appoints cabinet in practice
+* **v2exdfdshg:** HOG dismisses ministers in practice
+* **v2exdfvthg:** HOG veto power in practice
+* **v2exdfpphg:** HOG proposes legislation in practice
+* **v2exagehog:** HOG age
+* **v2exaphogp:** HOG selection by legislature in practice
+* **v2ex_elechog:** HOG directly elected
+* **v2exfemhog:** HOG female
+* **v2exfxtmhg:** HOG term length by law
+* **v2ex_hogw:** Relative power of the HOG
+* **v2ex_hosconhog:** HOG appointed by HOS
+* **v2expathhg:** HOG appointment in practice
+* **v2exdeathog:** HOG year of death
+* **v2expothog:** HOG party affiliation
+
+#### **3.5 Rejim (Regime)**
+* **v2reginfo:** Regime information
+* **v2regendtype:** Regime end type
+* **v2regendtypems:** Regime end type, multiple selection version
+* **v2regint:** Regime interregnum
+* **v2regidnr:** Regime ID
+* **v2regdur:** Regime duration
+* **v2regsupgroups:** Regime support groups
+* **v2regimpgroup:** Regime most important support group
+* **v2regsupgroupssize:** Regime support groups size
+* **v2regsuploc:** Regime support location
+* **v2regoppgroups:** Regime opposition groups
+* **v2regoppgroupsact:** Explicit and active regime opposition groups
+* **v2regimpoppgroup:** Regime most important opposition group
+* **v2regoppgroupssize:** Regime opposition groups size
+* **v2regopploc:** Regime opposition location
+* **v2regproreg:** Strongest pro-regime preferences
+* **v2regantireg:** Strongest anti-regime preferences
+* **v2regpower:** Most powerful group in affecting regime duration and change
+
+#### **3.6 Yasama (The Legislature)**
+**3.6.1 Genel:**
+* **v2lgbicam:** Legislature bicameral
+* **v2lgdomchm:** Legislature dominant chamber
+* **v2lgqstexp:** Legislature questions officials in practice
+* **v2lginvstp:** Legislature investigates in practice
+* **v2lgotovst:** Executive oversight
+* **v2lgcrrpt:** Legislature corrupt activities
+* **v2lgoppart:** Legislature opposition parties
+* **v2lgfunds:** Legislature controls resources
+* **v2lgdsadlo:** Representation of disadvantaged social groups
+* **v2lgdsadlobin:** Representation of disadvantaged social groups binary
+* **v2ex_hosw:** Relative power of the HOS
+* **v2ex_legconhog:** HOG appointed by legislature
+* **v2ex_legconhos:** HOS appointed by legislature
+* **v2lgtreaty:** Legislature approval of treaties by law
+* **v2lgwarlaw:** Legislature declares war by law
+**3.6.2 Üst Meclis (Upper Chamber):**
+* **v2lgnameup:** Upper chamber name
+* **v2lglegpup:** Upper chamber legislates in practice
+* **v2lgelecup:** Upper chamber elected
+* **v2lginelup:** Percentage of indirectly elected legislators upper chamber
+* **v2lgintbup:** Upper chamber introduces bills
+**3.6.3 Alt Meclis (Lower Chamber/Unicameral):**
+* **v2lgnamelo:** Lower chamber legislature name
+* **v2lglegplo:** Lower chamber legislates in practice
+* **v2lgcomslo:** Lower chamber committees
+* **v2lgsrvlo:** Lower chamber members serve in government
+* **v2lgstafflo:** Lower chamber staff
+* **v2lgello:** Lower chamber elected
+* **v2lgfemleg:** Lower chamber female legislators
+* **v2lginello:** Percentage of indirectly elected legislators lower chamber
+* **v2lgintblo:** Lower chamber introduces bills
+* **v2lgqugen:** Lower chamber gender quota
+* **v2lgqugens:** Lower chamber gender quota placement mandate
+* **v2lgqugent:** Lower chamber gender quota threshold
+
+#### **3.7 Müzakere (Deliberation)**
+* **v2dlreason:** Reasoned justification
+* **v2dlcommon:** Common good
+* **v2dlcountr:** Respect counterarguments
+* **v2dlconslt:** Range of consultation
+* **v2dlengage:** Engaged society
+* **v2dlencmps:** Particularistic or public goods
+* **v2dlunivl:** Means-tested v. universalistic policy
+
+#### **3.8 Yargı (The Judiciary)**
+* **v2jureform:** Judicial reform
+* **v2jupurge:** Judicial purges
+* **v2jupoatck:** Government attacks on judiciary
+* **v2jupack:** Court packing
+* **v2juaccnt:** Judicial accountability
+* **v2jucorrdc:** Judicial corruption decision
+* **v2juhcname:** High court name
+* **v2juhcind:** High court independence
+* **v2juncind:** Lower court independence
+* **v2juhccomp:** Compliance with high court
+* **v2jucomp:** Compliance with judiciary
+* **v2jureview:** Judicial review
+* **v2jucodable:** Codeable (Constitutional event)
+* **v2juflow:** Corresponding flowchart
+* **v2julanguage:** Language
+* **v2juteamtr:** Team translated
+
+#### **3.9 Sivil Özgürlükler (Civil Liberty)**
+**3.9.1 Kişisel Bütünlük Hakları:**
+* **v2cltort:** Freedom from torture
+* **v2clkill:** Freedom from political killings
+* **v2clslavem:** Freedom from forced labor for men
+* **v2clslavef:** Freedom from forced labor for women
+**3.9.2 Tarafsız Uygulama:**
+* **v2cltrnslw:** Transparent laws with predictable enforcement
+* **v2clrspct:** Rigorous and impartial public administration
+* **v2clacjstm:** Access to justice for men
+* **v2clacjstw:** Access to justice for women
+* **v2clacjust:** Social class equality in respect for civil liberty
+* **v2clsocgrp:** Social group equality in respect for civil liberties
+* **v2clrgunev:** Subnational civil liberties unevenness
+* **v2clrgstch:** Stronger civil liberties characteristics
+* **v2clsnlpct:** Weaker civil liberties population
+* **v2clrgwkch:** Weaker civil liberties characteristics
+**3.9.3 Özel ve Siyasi Özgürlükler:**
+* **v2cldiscm:** Freedom of discussion for men
+* **v2cldiscw:** Freedom of discussion for women
+* **v2clacfree:** Freedom of academic and cultural expression
+* **v2clrelig:** Freedom of religion
+* **v2clfmove:** Freedom of foreign movement
+* **v2cldmovem:** Freedom of domestic movement for men
+* **v2cldmovew:** Freedom of domestic movement for women
+**3.9.4 Mülkiyet Hakları:**
+* **v2clstown:** State ownership of economy
+* **v2clprptym:** Property rights for men
+* **v2clprptyw:** Property rights for women
+
+#### **3.10 Egemenlik / Devlet (Sovereignty/State)**
+* **v2svdomaut:** Domestic autonomy
+* **v2svinlaut:** International autonomy
+* **v2svstterr:** State authority over territory
+* **v2stfisccap:** State fiscal source of revenue
+* **v2strenadm:** Bureaucratic remuneration
+* **v2stcritrecadm:** Criteria for appointment decisions in the state administration
+* **v2stcritapparm:** Criteria for appointment decisions in the armed forces
+* **v2strenarm:** Remuneration in the Armed Forces
+* **v2svindep:** Independent states
+
+#### **3.11 Sivil Toplum (Civil Society)**
+* **v2cseeorgs:** CSO entry and exit
+* **v2csreprss:** CSO repression
+* **v2cscnsult:** CSO consultation
+* **v2csstruc:** CSO structure
+* **v2csprtcpt:** CSO participatory environment
+* **v2csgender:** CSO women's participation
+* **v2csantimv:** CSO anti-system movements
+* **v2csanmvch:** CSO anti-system movement character
+* **v2csrlgrep:** Religious organization repression
+* **v2csrlgcon:** Religious organization consultation
+
+#### **3.12 Medya (The Media)**
+* **v2mecenefm:** Government censorship effort – Media
+* **v2mecenefi:** Internet censorship effort
+* **v2mecenefibin:** Internet binary
+* **v2mecrit:** Print/broadcast media critical
+* **v2merange:** Print/broadcast media perspectives
+* **v2mefemjrn:** Female journalists
+* **v2meharjrn:** Harassment of journalists
+* **v2meslfcen:** Media self-censorship
+* **v2mebias:** Media bias
+* **v2mecorrpt:** Media corrupt
+
+#### **3.13 Siyasi Eşitlik (Political Equality)**
+* **v2pepwrses:** Power distributed by socioeconomic position
+* **v2pepwrsoc:** Power distributed by social group
+* **v2pepwrgen:** Power distributed by gender
+* **v2pepwrort:** Power distributed by sexual orientation
+* **v2peedueq:** Educational equality
+* **v2pehealth:** Health equality
+* **v2peprisch:** Primary school enrolment
+* **v2pesecsch:** Secondary school enrolment
+* **v2petersch:** Tertiary school enrolment
+
+#### **3.14 Dışlanma (Exclusion)**
+**3.14.1 Sosyo-Ekonomik Grup:**
+* **v2peapsecon:** Access to public services distributed by socio-economic position
+* **v2peasjsoecon:** Access to state jobs by socio-economic position
+* **v2peasbecon:** Access to state business opportunities by socio-economic position
+**3.14.2 Cinsiyet:**
+* **v2clgencl:** Gender equality in respect for civil liberties
+* **v2peapsgen:** Access to public services distributed by gender
+* **v2peasjgen:** Access to state jobs by gender
+* **v2peasbgen:** Access to state business opportunities by gender
+**3.14.3 Kent-Kır:**
+* **v2pepwrgeo:** Power distributed by urban-rural location
+* **v2clgeocl:** Urban-rural location equality in respect for civil liberties
+* **v2peapsgeo:** Access to public services distributed by urban-rural location
+* **v2peasjgeo:** Access to state jobs by urban-rural location
+* **v2peasbegeo:** Access to state business opportunities by urban-rural location
+**3.14.4 Siyasi Grup:**
+* **v2clpolcl:** Political group equality in respect for civil liberties
+* **v2peapspol:** Access to public services distributed by political group
+* **v2peasjpol:** Access to state jobs by political group
+* **v2peasbepol:** Access to state business opportunities by political group
+**3.14.5 Sosyal Grup:**
+* **v2peapssoc:** Access to public services distributed by social group
+* **v2peasjsoc:** Access to state jobs by social group
+* **v2peasbsoc:** Access to state business opportunities by social group
+**3.14.6 Meşrulaştırma (Legitimation):**
+* **v2exl_legitideol:** Ideology
+* **v2exl_legitideolcr:** Ideology character
+* **v2exl_legitlead:** Person of the Leader
+* **v2exl_legitperf:** Performance legitimation
+* **v2exl_legitratio:** Rational-legal legitimation
+
+#### **3.15 Sivil ve Akademik Alan (Civic and Academic Space)**
+**3.15.1 Sivil Alan:**
+* **v2cacamps:** Political polarization
+* **v2caviol:** Political violence
+* **v2caassemb:** Freedom of peaceful assembly
+* **v2casoe:** State of emergency
+**3.15.2 Kitle Seferberliği (Mass Mobilization):**
+* **v2cagenmob:** Mass mobilization
+* **v2caconmob:** Mass mobilization concentration
+* **v2cademmob:** Mobilization for democracy
+* **v2caautmob:** Mobilization for autocracy
+**3.15.3 Vatandaş Katılımı:**
+* **v2castate:** Engagement in state-administered mass organizations
+* **v2catrauni:** Engagement in independent trade unions
+* **v2capolit:** Engagement in independent political associations
+* **v2canonpol:** Engagement in independent non-political associations
+**3.15.4 Akademik Alan:**
+* **v2cauni:** Existence of universities
+* **v2canuni:** Total number of universities
+* **v2caprotac:** Constitutional protection for academic freedom
+* **v2cafres:** Freedom to research and teach
+* **v2cafexch:** Freedom of academic exchange and dissemination
+* **v2cainsaut:** Institutional autonomy
+* **v2casurv:** Campus integrity
+* **v2cacritic:** Academics as critics
+* **v2caacadfree:** International legal commitment to academic freedom under ICESCR
+
+---
+
+### **BÖLÜM 4: Tarihsel V-Dem (Historical V-Dem) Değişkenleri**
+*(Bu değişkenler 'v3' öneki ile başlar ve genellikle 1789-1920 arasını kapsar, ancak modern serilerle birleştirilmiş versiyonlar v2 olarak yukarıda da bulunabilir)*
+
+* **v3canagelc:** Minimum candidate age lower chamber
+* **v3canageuc:** Minimum candidate age upper chamber
+* **v3elagepr:** Minimum voting age presidency
+* **v3elageuc:** Minimum voting age upper chamber
+* **v3elbalpap:** Voting, voice or ballot
+* **v3elbalstat:** Ballot printing
+* **v3elcomvot:** Compulsory voting (Historical)
+* **v3eldirelc:** Direct lower chamber (unicameral) elections
+* **v3eldirepr:** Direct presidential elections
+* **v3eldireuc:** Direct upper chamber elections
+* **v3elecsedf:** Secret ballot (de facto)
+* **v3elmalalc:** Malapportionment legislature/lower chamber
+* **v3elmalauc:** Malapportionment upper chamber
+* **v3elncbmaj:** Minority or majority government
+* **v3elreapplc:** Reapportionment legislature/lower chamber
+* **v3elreappuc:** Reapportionment upper chamber
+* **v3elrstrlc:** Candidate exclusions (de jure) lower (unicameral) chamber
+* **v3elrstrpr:** Candidate exclusions (de jure) presidential elections
+* **v3elrstrup:** Candidate exclusions (de jure) upper chamber
+* **v3elsec:** De jure ballot secrecy
+* **v3eltvriguc:** Upper chamber election turnover
+* **v3elupseat:** Upper chamber election seats
+* **v3elupstsl:** Upper chamber election seats won by largest party
+* **v3elupstsm:** Upper chamber election seats won by second largest party
+* **v3elupvtlg:** Upper chamber election vote share of largest vote-getter
+* **v3elupvtsm:** Upper chamber election vote share of second-largest vote-getter
+* **v3elvstrlc:** Suffrage exclusions (de jure) lower (unicameral) chamber
+* **v3elvstrpr:** Suffrage exclusions (de jure) presidential elections
+* **v3elvstruc:** Suffrage exclusions (de jure) upper chamber
+* **v3elwomcab:** Election women in the cabinet
+* **v3ttlvote:** Total votes
+* **v3partyid:** Party identification
+* **v3psagefirst:** Party age largest
+* **v3psagepm:** Party age executive
+* **v3psagesecond:** Party age second largest
+* **v3psagethird:** Party age third largest
+* **v3lgbudglo:** Lower chamber budget
+* **v3lgbudgup:** Upper chamber budget
+* **v3lgcamoth:** Legislature other than uni- or bicameral
+* **v3lginses:** Lower chamber in session
+* **v3lginsesup:** Upper chamber in session
+* **v3lgqumin:** Lower chamber quota for social groups
+* **v3juhcourt:** High court existence
+* **v3cllabrig:** Labor rights
+* **v3clslavery:** Slavery
+* **v3serfdeju:** Serfdom de jure/slavery de jure
+* **v3stcensus:** Census
+* **v3stcitlaw:** Citizenship laws
+* **v3stflag:** Flag
+* **v3stnatant:** National anthem
+* **v3stnatbank:** National bank
+* **v3struinvadm:** Rulers' involvement in the state administration
+* **v3ststatag:** Statistical agency
+* **v3ststeecap:** State steering capacity
+* **v3ststybcov:** Statistical yearbook covered
+* **v3ststybpub:** Statistical yearbook published
+* **v3equavolc:** Equal vote legislature/lower chamber
+* **v3equavouc:** Equal vote upper chamber
+* **v3pechilabl:** Child labor laws
+* **v3peminwage:** Minimum wage
+* **v3peminwagerestr:** Minimum wage restriction
+*(Aşağıdaki v3 değişkenleri v2 versiyonlarıyla birleştirilmiştir ancak historik veride ayrı tutulur)*
+* **v3elloelsy, v3elloseat, v3ellostlg, v3ellostsl, v3ellostsm, v3ellostss, v3ellovtlg, v3ellovtsm, v3elncbpr, v3elparlel, v3eltrnout, v3eltvrig, v3eltype, v3elvotlrg, v3elvotsml, v3lgbicam, v3lgcomslo, v3lgcrrpt, v3lgdomchm, v3lgelecup, v3lgello, v3lgfunds, v3lginello, v3lginelup, v3lginvstp, v3lglegplo, v3lglegpup, v3lgnamelo, v3lgnameup, v3lgoppart, v3lgotovst, v3lgqstexp, v3lgsrvlo**
+*(Uyuşmazlık -Overlap- değişkenleri)*
+* **v3ellocelc, v3ellocgov, v3ellocnam, v3elreggov, v3elregnam, v3elsrgel, v3exagehos, v3exhoshog, v3exnamhog, v3exnamhos, v3expathhs, v3extithog, v3extithos, v3juhcname, v3lgamend, v3lgamnsty, v3lgintblo, v3lglegllo, v3lgleglup**
+
+---
+
+### **BÖLÜM 5: V-Dem Verisi ile Oluşturulan Diğer İndeksler**
+* **v2x_regime:** Regimes of the World (RoW)
+* **v2x_regime_amb:** Regimes of the World (Ambiguous cases)
+* **v2x_accountability:** Accountability index
+* **v2x_veracc:** Vertical accountability index
+* **v2x_diagacc:** Diagonal accountability index
+* **v2x_horacc:** Horizontal accountability index
+* **v2x_ex_confidence:** Confidence dimension index
+* **v2x_ex_direlect:** Direct election dimension index
+* **v2x_ex_hereditary:** Hereditary dimension index
+* **v2x_ex_military:** Military dimension index
+* **v2x_ex_party:** Ruling party dimension index
+* **v2x_neopat:** Neopatrimonial Rule Index
+* **v2xnp_client:** Clientelism Index
+* **v2xnp_pres:** Presidentialism Index
+* **v2xnp_regcorr:** Regime corruption
+* **v2x_civlib:** Civil liberties index
+* **v2x_clphy:** Physical violence index
+* **v2x_clpol:** Political civil liberties index
+* **v2x_clpriv:** Private civil liberties index
+* **v2x_corr:** Political corruption index
+* **v2x_execorr:** Executive corruption index
+* **v2x_pubcorr:** Public sector corruption index
+* **v2x_gender:** Women political empowerment index
+* **v2x_gencl:** Women civil liberties index
+* **v2x_gencs:** Women civil society participation index
+* **v2x_genpp:** Women political participation index
+* **v2x_rule:** Rule of law index
+* **v2xcl_acjst:** Access to justice
+* **v2xcl_prpty:** Property rights
+* **v2xdd_i_ci:** Popular initiative index
+* **v2xdd_i_rf:** Popular referendum index
+* **v2xdd_i_or:** Obligatory referendum index
+* **v2xdd_i_pl:** Plebiscite index
+* **v2xdd_cic:** Citizen-initiated component of direct popular vote index
+* **v2xdd_toc:** Top-Down component of direct popular vote index
+* **v2xcs_ccsi:** Core civil society index
+* **v2x_elecreg:** Electoral regime index
+* **v2xex_elecreg:** Executive electoral regime index
+* **v2xlg_elecreg:** Legislative electoral regime index
+* **v2x_EDcomp_thick:** Electoral component index
+* **v2x_freexp:** Freedom of expression index
+* **v2x_hosabort:** Presidential election aborted
+* **v2x_hosinter:** Chief executive no longer elected
+* **v2x_legabort:** Legislative election aborted
+* **v2xcl_disc:** Freedom of discussion
+* **v2xcl_dmove:** Freedom of domestic movement
+* **v2xcl_slave:** Freedom from forced labor
+* **v2xel_elecparl:** Legislative election (Binary)
+* **v2xel_elecpres:** Presidential election (Binary)
+* **v2xex_elecleg:** Legislature directly elected
+* **v2xlg_leginter:** Legislature closed down or aborted
+* **v2xme_altinf:** Alternative sources of information index
+* **v2xps_party:** Party institutionalization index
+* **v2x_divparctrl:** Divided party control index
+* **v2x_feduni:** Division of power index
+* **v2xca_academ:** Academic Freedom Index
+
+---
+
+### **BÖLÜM 6: Parti Sistemleri (Party Systems)**
+* **v2xpas_democracy:** Party-System Democracy Index
+* **v2xpas_democracy_government:** Government Coalition Democracy Index
+* **v2xpas_democracy_opposition:** Opposition Parties Democracy Index
+* **v2xpas_religion:** Party-System Religion Index
+* **v2xpas_religion_government:** Government Coalition Religion Index
+* **v2xpas_religion_opposition:** Opposition Parties Religion Index
+* **v2xpas_exclusion:** Party-System Exclusion Index
+* **v2xpas_exclusion_government:** Government Coalition Party-System Exclusion Index
+* **v2xpas_exclusion_opposition:** Opposition Parties Party-System Exclusion Index
+* **v2xpas_economic:** Party-System Left-Right Index
+* **v2xpas_economic_government:** Government Coalition Left-Right Index
+* **v2xpas_economic_opposition:** Opposition Parties Left-Right Index
+
+---
+
+### **BÖLÜM 7: Dijital Toplum Anketi (Digital Society Survey)**
+**7.1 Koordineli Bilgi Operasyonları:**
+* **v2smgovdom:** Government dissemination of false information domestic
+* **v2smgovab:** Government dissemination of false information abroad
+* **v2smpardom:** Party dissemination of false information domestic
+* **v2smparab:** Party dissemination of false information abroad
+* **v2smfordom:** Foreign governments dissemination of false information
+* **v2smforads:** Foreign governments ads
+**7.2 Dijital Medya Özgürlüğü:**
+* **v2smgovfilcap:** Government Internet filtering capacity
+* **v2smgovfilprc:** Government Internet filtering in practice
+* **v2smgovshutcap:** Government Internet shut down capacity
+* **v2smgovshut:** Government Internet shut down in practice
+* **v2smgovsm:** Government social media shut down in practice
+* **v2smgovsmalt:** Government social media alternatives
+* **v2smgovsmmon:** Government social media monitoring
+* **v2smgovsmcenprc:** Government social media censorship in practice
+* **v2smgovcapsec:** Government cyber security capacity
+* **v2smpolcap:** Political parties cyber security capacity
+**7.3 Devlet İnternet Düzenlemesi:**
+* **v2smregcon:** Internet legal regulation content
+* **v2smprivex:** Privacy protection by law exists
+* **v2smprivcon:** Privacy protection by law content
+* **v2smregcap:** Government capacity to regulate online content
+* **v2smregapp:** Government online content regulation approach
+* **v2smlawpr:** Defamation protection
+* **v2smdefabu:** Abuse of defamation and copyright law by elites
+**7.4 Çevrimiçi Medya Kutuplaşması:**
+* **v2smonex:** Online media existence
+* **v2smonper:** Online media perspectives
+* **v2smmefra:** Online media fractionalization
+**7.5 Sosyal Bölünmeler:**
+* **v2smhargr:** Online harassment groups
+* **v2smhargrtxt:** Other online harassment groups
+* **v2smorgviol:** Use of social media to organize offline violence
+* **v2smorgavgact:** Average people’s use of social media to organize offline action
+* **v2smorgelitact:** Elites’ use of social media to organize offline action
+* **v2smorgtypes:** Types of organization through social media
+* **v2smorgtypestxt:** Other types of organization through social media
+* **v2smcamp:** Party/candidate use of social media in campaigns
+* **v2smarrest:** Arrests for political content
+* **v2smpolsoc:** Polarization of society
+* **v2smpolhate:** Political parties hate speech
+
+---
+
+### **BÖLÜM 8: Endoktrinasyon Çeşitleri (Varieties of Indoctrination)**
+* **v2xed_ed_inpt:** Indoctrination potential in education
+* **v2xed_ed_poed:** Political education effort in education
+* **v2xed_ed_inco:** Indoctrination coherence in education
+* **v2xed_ed_cent:** Centralization of the education system
+* **v2xed_ed_ctag:** Control over educational agents
+* **v2xed_ed_con:** Indoctrination content in education
+* **v2xed_ed_dmcon:** Democratic indoctrination content in education
+* **v2xed_ed_ptcon:** Patriotic indoctrination content in education
+* **v2xed_ptcon:** Patriotic indoctrination content in education and the media
+* **v2xedvd_inpt:** Indoctrination potential in education and the media
+* **v2xedvd_me_inco:** Indoctrination coherence (potential) in the media
+* **v2xedvd_me_cent:** Centralization of media control
+* **v2xedvd_me_ctag:** Control over media agents
+* **v2edcentcurrlm:** Centralized curriculum
+* **v2edcenttxbooks:** Centralized textbook approval
+* **v2edpoledprim:** Political education, primary school
+* **v2edpoledsec:** Political education, secondary school
+* **v2edpoledrights:** Political rights and duties in the curriculum
+* **v2edpatriot:** Patriotic education in the curriculum
+* **v2edideol:** Ideology in the curriculum
+* **v2edideolch:** Ideology character in the curriculum
+* **v2edideolch_rec:** Ideology character in the curriculum (Recoded)
+* **v2edplural:** Pluralism in the curriculum
+* **v2edcritical:** Critical engagement with education content
+* **v2edteautonomy:** Teacher autonomy in the classroom
+* **v2edtequal:** Education requirements for primary school teachers
+* **v2temonitor:** Teacher inspection
+* **v2edteunion:** Presence of teacher unions
+* **v2edteunionindp:** Independent teacher unions
+* **v2edtehire:** Political teacher hiring
+* **v2edtefire:** Political teacher firing
+* **v2edscpatriot:** Presence of patriotic symbols in schools
+* **v2edscpatriotcb:** Celebration of patriotic symbols
+* **v2edscextracurr:** Extracurricular activities
+* **v2medstateprint:** State-owned print media
+* **v2medstatebroad:** State-owned broadcast media
+* **v2medpolstate:** Political influence, state-owned media
+* **v2medpolnonstate:** Political influence, non state-owned media
+* **v2medpatriot:** Patriotism in the media
+* **v2medentrain:** Control of entertainment content
+
+---
+
+### **BÖLÜM 9: Diğer Demokrasi İndeksleri ve Göstergeleri (Type E)**
+*(Bunlar ordinal versiyonlar ve dış kaynaklı değişkenlerdir)*
+
+**9.1 Ordinal Versiyonlar:**
+* **e_v2x_api, e_v2x_civlib, e_v2x_clphy, e_v2x_clpol, e_v2x_clpriv, e_v2x_corr, e_v2x_cspart, e_v2x_delibdem, e_v2x_EDcomp_thick, e_v2x_egal, e_v2x_egaldem, e_v2x_elecoff, e_v2x_execorr, e_v2x_feduni, e_v2x_frassoc_thick, e_v2x_freexp, e_v2x_freexp_altinf, e_v2x_gencl, e_v2x_gencs, e_v2x_gender, e_v2x_genpp, e_v2x_jucon, e_v2x_libdem, e_v2x_liberal, e_v2x_mpi, e_v2x_partip, e_v2x_partipdem, e_v2x_polyarchy, e_v2x_pubcorr, e_v2x_suffr, e_v2xcl_rol, e_v2xcs_ccsi, e_v2xdd_dd, e_v2xdl_delib, e_v2xeg_eqdr, e_v2xeg_eqprotec, e_v2xel_frefair, e_v2xel_locelec, e_v2xel_regelec, e_v2xlg_legcon, e_v2xme_altinf, e_v2xps_party**
+
+**9.2 Siyasi Rejimler:**
+* **e_boix_regime:** Democracy (BMR)
+* **e_democracy_breakdowns:** Democratic breakdowns
+* **e_democracy_omitteddata:** Omitted data
+* **e_democracy_trans:** Democratic transition
+
+**9.3 Freedom House:**
+* **e_fh_cl:** Civil liberties
+* **e_fh_pr:** Political rights
+* **e_fh_rol:** Rule of law
+* **e_fh_status:** Status
+
+**9.4 World Bank (WGI):**
+* **e_wbgi_cce:** Control of corruption
+* **e_wbgi_gee:** Government effectiveness
+* **e_wbgi_pve:** Political stability
+* **e_wbgi_rle:** Rule of law
+* **e_wbgi_rqe:** Regulatory quality
+* **e_wbgi_vae:** Voice and accountability
+
+**9.5 Diğerleri:**
+* **e_lexical_index:** Lexical Index of Electoral Democracy
+* **e_uds:** Unified Democracy Score
+* **e_coups:** Coups
+* **e_legparty:** Number of Parties in legislature
+* **e_autoc:** Institutionalized autocracy (Polity 5)
+* **e_democ:** Institutionalized democracy (Polity 5)
+* **e_p_polity:** Polity combined score
+* **e_polcomp:** Political competition
+* **e_polity2:** Polity revised combined score
+* **e_bnr_dem:** Democratic breakdown
+* **e_chga_demo:** Democracy (Cheibub et al.)
+* **e_ti_cpi:** Corruption perception index (Transparency International)
+* **e_vanhanen:** Index of Democratization
+
+---
+
+### **BÖLÜM 10: Arka Plan Faktörleri (Background Factors)**
+**10.1 Eğitim:**
+* **e_peaveduc:** Education 15+
+* **e_peedgini:** Educational inequality, Gini
+**10.2 Coğrafya:**
+* **e_area:** Land area
+* **e_regiongeo:** Region (geographic)
+* **e_regionpol:** Region (politico-geographic)
+* **e_regionpol_6C:** Region (politico-geographic 6-category)
+* **e_regionpol_7C:** Region (politico-geographic 7-category)
+**10.3 Ekonomi:**
+* **e_cow_exports:** Exports
+* **e_cow_imports:** Imports
+* **e_gdp:** GDP
+* **e_gdppc:** GDP per capita
+* **e_miinflat:** Inflation
+* **e_pop:** Population (Fariss et al.)
+**10.4 Doğal Kaynaklar:**
+* **e_total_fuel_income_pc:** Petroleum, coal, and natural gas production per capita
+* **e_total_oil_income_pc:** Petroleum production per capita
+* **e_total_resources_income_pc:** Petroleum, coal, natural gas, and metals production per capita
+**10.5 Altyapı:**
+* **e_radio_n:** Radios
+**10.6 Demografi:**
+* **e_miferrat:** Fertility rate
+* **e_mipopula:** Population total (Clio-Infra)
+* **e_miurbani:** Urbanization
+* **e_miurbpop:** Urban population
+* **e_pechmor:** Child mortality rate
+* **e_pefeliex:** Life expectancy, female
+* **e_pelifeex:** Life expectancy
+* **e_pematmor:** Maternal mortality rate
+* **e_wb_pop:** Population (World Bank)
+**10.7 Çatışma:**
+* **e_civil_war:** Civil war
+* **e_miinteco:** Armed conflict, international
+* **e_miinterc:** Armed conflict, internal
+* **e_pt_coup:** Number of successful coup attempts
+* **e_pt_coup_attempts:** Number of coups attempts in a year
+
+---
+
+### **Tanımlayıcı Değişkenler (Identifier Variables)**
+* **country_name:** Country Name
+* **country_text_id:** Country Name Abbreviation
+* **country_id:** V-Dem Country ID
+* **year:** Year
+* **historical_date:** Historical Date
+* **project:** V-Dem Project
+* **historical:** Historical V-Dem coding
+* **histname:** Time-Specific Country Name
+* **codingstart:** Start of Coding Period
+* **codingend:** End of Coding Period
+* **codingstart_contemp:** Contemporary Start of Coding Period
+* **codingstart_hist:** Historical Start of Coding Period
+* **codingend_contemp:** Historical End of Coding Period
+* **codingend_hist:** Historical End of Coding Period
+* **gapstart:** Gap in Coding Period Starts
+* **gapend:** Gap in Coding Period Ends
+* **gap_index:** Gap index
+* **COWcode:** COW Code

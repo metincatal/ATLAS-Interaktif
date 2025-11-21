@@ -85,7 +85,7 @@ export const DATA_PATHS = {
     darKoridorAllYears: '../../data/processed/v2_1/dar_koridor_all_years.json',
     darKoridorByCountry: '../../data/processed/v2_1/dar_koridor_by_country.json',
     wgiDataset: '../../data/raw/wgidataset.csv',
-    vdemDataset: '../../data/processed/v4/vdem_core_external_background.csv',
+    vdemDataset: '../../data/processed/v4/vdem_data.json',
     vdemMindmap: '../../data/processed/v4/vdem_mindmap_structure.json'
 };
 
