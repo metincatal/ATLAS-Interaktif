@@ -2,9 +2,9 @@
 
 .ai-chat-box {
     position: fixed;
-    bottom: var(--spacing-lg);
-    left: var(--spacing-lg);
-    z-index: var(--z-modal-backdrop);
+    bottom: 24px;
+    left: 24px;
+    z-index: 96; /* Yıl kaydıracından (95) 1 fazla, böylece üstte kalır */
 }
 
 .chat-trigger {
@@ -38,8 +38,8 @@
 /* Chat Area */
 .chat-area {
     position: fixed;
-    bottom: var(--spacing-lg);
-    left: var(--spacing-lg);
+    bottom: 24px;
+    left: 24px;
     width: 550px;
     height: 650px;
     background: transparent;
@@ -51,6 +51,7 @@
     overflow: hidden;
     animation: slideInUp 0.4s ease;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 96; /* Yıl kaydıracından (95) 1 fazla */
 }
 
 .chat-area.active {

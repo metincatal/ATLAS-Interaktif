@@ -1,0 +1,798 @@
+{
+    "id": "vdem_root",
+    "title": "V-Dem Veri Seti",
+    "children": [
+        {
+            "id": "dashboard",
+            "title": "DASHBOARD: Ana Demokrasi İndeksleri",
+            "description": "Beş temel demokrasi ilkesini ve bunları oluşturan orta seviye bileşenleri içerir",
+            "type": "category",
+            "children": [
+                {
+                    "id": "high_level_indices",
+                    "title": "Yüksek Seviye Demokrasi İndeksleri",
+                    "type": "subcategory",
+                    "children": [
+                        {
+                            "id": "v2x_polyarchy",
+                            "title": "Seçimsel Demokrasi İndeksi",
+                            "type": "index",
+                            "var_type": "D",
+                            "question": "İdeal seçimsel demokrasi ne ölçüde sağlanmıştır?",
+                            "description": "Seçimsel demokrasi ilkesi, demokrasiyi sadece çok partili seçimlerin yapılması olarak değil, aynı zamanda bu seçimlerin özgür ve adil olması, ifade özgürlüğü, alternatif bilgi kaynaklarına erişim ve örgütlenme özgürlüğü gibi unsurlarla birlikte değerlendirir.",
+                            "components": ["v2x_freexp_altinf", "v2x_frassoc_thick", "v2xel_frefair", "v2x_elecoff", "v2x_suffr"],
+                            "formula": "0.5 * MPI + 0.5 * API",
+                            "scale": "0-1",
+                            "source": "V-Dem Codebook"
+                        },
+                        {
+                            "id": "v2x_libdem",
+                            "title": "Liberal Demokrasi İndeksi",
+                            "type": "index",
+                            "var_type": "D",
+                            "question": "İdeal liberal demokrasi ne ölçüde sağlanmıştır?",
+                            "description": "Liberal demokrasi ilkesi, çoğunluğun tiranlığına karşı bireysel özgürlüklerin ve azınlık haklarının korunmasını vurgular. Hukukun üstünlüğü, bağımsız yargı ve denge-denetleme mekanizmaları bu ilkenin temel taşlarıdır.",
+                            "components": ["v2x_liberal", "v2xcl_rol", "v2x_jucon", "v2xlg_legcon"],
+                            "formula": "0.25 * Polyarchy + 0.25 * Liberal + 0.5 * Interaction",
+                            "scale": "0-1",
+                            "source": "V-Dem Codebook"
+                        },
+                        {
+                            "id": "v2x_partipdem",
+                            "title": "Katılımcı Demokrasi İndeksi",
+                            "type": "index",
+                            "var_type": "D",
+                            "question": "İdeal katılımcı demokrasi ne ölçüde sağlanmıştır?",
+                            "description": "Katılımcı demokrasi ilkesi, vatandaşların siyasi süreçlere sadece seçimlerde oy vererek değil, sivil toplum örgütleri, yerel yönetimler ve doğrudan demokrasi araçları (referandum vb.) yoluyla aktif katılımını öngörür.",
+                            "components": ["v2x_partip", "v2x_cspart", "v2xdd_dd", "v2xel_locelec"],
+                            "scale": "0-1",
+                            "source": "V-Dem Codebook"
+                        },
+                        {
+                            "id": "v2x_delibdem",
+                            "title": "Müzakereci Demokrasi İndeksi",
+                            "type": "index",
+                            "var_type": "D",
+                            "question": "İdeal müzakereci demokrasi ne ölçüde sağlanmıştır?",
+                            "description": "Müzakereci demokrasi ilkesi, siyasi kararların kamu yararı odaklı, saygılı diyalog ve mantıklı gerekçelendirme süreçleriyle alınmasını hedefler.",
+                            "components": ["v2xdl_delib"],
+                            "scale": "0-1",
+                            "source": "V-Dem Codebook"
+                        },
+                        {
+                            "id": "v2x_egaldem",
+                            "title": "Eşitlikçi Demokrasi İndeksi",
+                            "type": "index",
+                            "var_type": "D",
+                            "question": "İdeal eşitlikçi demokrasi ne ölçüde sağlanmıştır?",
+                            "description": "Eşitlikçi demokrasi ilkesi, siyasi hakların ve özgürlüklerin kullanımında maddi ve manevi eşitsizliklerin (gelir dağılımı, eğitim vb.) etkisini en aza indirmeyi amaçlar.",
+                            "components": ["v2x_egal", "v2xeg_eqprotec", "v2xeg_eqaccess", "v2xeg_eqdr"],
+                            "scale": "0-1",
+                            "source": "V-Dem Codebook"
+                        }
+                    ]
+                },
+                {
+                    "id": "mid_level_components",
+                    "title": "Orta Seviye Bileşenler",
+                    "type": "subcategory",
+                    "description": "Ana demokrasi indekslerini oluşturan temel bileşenler",
+                    "children": [
+                        {
+                            "id": "v2x_freexp_altinf",
+                            "title": "İfade Özgürlüğü ve Alternatif Bilgi Kaynakları",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_polyarchy"
+                        },
+                        {
+                            "id": "v2x_frassoc_thick",
+                            "title": "Örgütlenme Özgürlüğü",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_polyarchy"
+                        },
+                        {
+                            "id": "v2xel_frefair",
+                            "title": "Temiz Seçimler",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_polyarchy"
+                        },
+                        {
+                            "id": "v2x_elecoff",
+                            "title": "Seçilmiş Yetkililer",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_polyarchy"
+                        },
+                        {
+                            "id": "v2x_suffr",
+                            "title": "Oy Hakkı",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_polyarchy"
+                        },
+                        {
+                            "id": "v2x_liberal",
+                            "title": "Liberal Bileşen (Hukukun Üstünlüğü)",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_libdem"
+                        },
+                        {
+                            "id": "v2xcl_rol",
+                            "title": "Yasa Önünde Eşitlik ve Bireysel Özgürlükler",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_libdem"
+                        },
+                        {
+                            "id": "v2x_jucon",
+                            "title": "Yargısal Denetim",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_libdem"
+                        },
+                        {
+                            "id": "v2xlg_legcon",
+                            "title": "Yasama Denetimi",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_libdem"
+                        },
+                        {
+                            "id": "v2x_partip",
+                            "title": "Katılımcı Bileşen",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_partipdem"
+                        },
+                        {
+                            "id": "v2x_cspart",
+                            "title": "Sivil Toplum Katılımı",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_partipdem"
+                        },
+                        {
+                            "id": "v2xdd_dd",
+                            "title": "Doğrudan Halk Oylaması Mekanizmaları",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_partipdem"
+                        },
+                        {
+                            "id": "v2xel_locelec",
+                            "title": "Yerel Yönetimler",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_partipdem"
+                        },
+                        {
+                            "id": "v2xdl_delib",
+                            "title": "Müzakereci Bileşen (Rasyonel Gerekçelendirme/Ortak İyi)",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_delibdem"
+                        },
+                        {
+                            "id": "v2x_egal",
+                            "title": "Eşitlikçi Bileşen",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_egaldem"
+                        },
+                        {
+                            "id": "v2xeg_eqprotec",
+                            "title": "Eşit Koruma",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_egaldem"
+                        },
+                        {
+                            "id": "v2xeg_eqaccess",
+                            "title": "Eşit Erişim",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_egaldem"
+                        },
+                        {
+                            "id": "v2xeg_eqdr",
+                            "title": "Kaynakların Eşit Dağılımı",
+                            "type": "component",
+                            "var_type": "D",
+                            "parent_index": "v2x_egaldem"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "thematic_indicators",
+            "title": "TEMATİK İNDİKATÖRLER (Detaylı Analiz)",
+            "description": "Kullanıcının derinlemesine analiz yapacağı ana veri havuzu - 15 kategori",
+            "type": "category",
+            "children": [
+                {
+                    "id": "3.1",
+                    "title": "3.1 Seçimler (Elections)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.1.1",
+                            "title": "Genel Seçim Verisi & Sistem Türü",
+                            "type": "subtheme",
+                            "variables": ["v2eltype"]
+                        },
+                        {
+                            "id": "3.1.2",
+                            "title": "Oy Hakkı (Suffrage - Yasal ve Uygulamada)",
+                            "type": "subtheme",
+                            "variables": ["v2asuffrage", "v2elage", "v2elcomvot", "v2elfemrst", "v2elgvsuflvl", "v2elsuffrage", "v2fsuffrage", "v2msuffrage"]
+                        },
+                        {
+                            "id": "3.1.3",
+                            "title": "Seçim Kalitesi (Yolsuzluk, Şiddet, Kurumsal Özerklik)",
+                            "type": "subtheme",
+                            "variables": ["v2eldonate", "v2elpubfin", "v2elembaut", "v2elembcap", "v2elmulpar", "v2elrgstry", "v2elvotbuy", "v2elirreg", "v2elintim", "v2elpeace", "v2elboycot", "v2elfrcamp", "v2elpdcamp", "v2elpaidig", "v2elfrfair", "v2eldommon", "v2elintmon", "v2elmonden", "v2elmonref", "v2elrstrct"]
+                        },
+                        {
+                            "id": "3.1.4",
+                            "title": "Seçim Sonuçları (Katılım Oranları, Kazananlar)",
+                            "type": "subtheme",
+                            "variables": ["v2elaccept", "v2elasmoff", "v2eltrnout", "v2elvaptrn", "v2lpname", "v2slpname", "v2tlpname"]
+                        },
+                        {
+                            "id": "3.1.5",
+                            "title": "Yürütme Seçimleri (Başkanlık)",
+                            "type": "subtheme",
+                            "variables": ["v2elprescons", "v2elprescumul", "v2elrsthog", "v2elrsthos", "v2elturnhog", "v2elturnhos", "v2eltvrexo", "v2elvotlrg", "v2elvotsml"]
+                        },
+                        {
+                            "id": "3.1.6",
+                            "title": "Alt Meclis Seçimleri (Parlamento)",
+                            "type": "subtheme",
+                            "variables": ["v2ellobadis", "v2ellobaseat", "v2ellocons", "v2ellocumul", "v2ellodiseff", "v2elloeldm", "v2elloelsy", "v2elloreseat", "v2elloseat", "v2ellostlg", "v2ellostsl", "v2ellostsm", "v2ellostss", "v2ellosttm", "v2ellostts", "v2elloupdis", "v2ellovtlg", "v2ellovtsm", "v2ellovttm", "v2elparlel", "v2elthresh", "v2eltvrig"]
+                        },
+                        {
+                            "id": "3.1.7",
+                            "title": "Yerel Yönetim Seçimleri",
+                            "type": "subtheme",
+                            "variables": ["v2elreggov", "v2elregnam", "v2elsrgel", "v2elrgpwr", "v2ellocgov", "v2ellocnam", "v2ellocelc", "v2ellocpwr", "v2elffelr", "v2elffelrbin", "v2elsnlsff", "v2elsnless", "v2elsnlfc", "v2elsnmore", "v2elsnmrfc"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.2",
+                    "title": "3.2 Siyasi Partiler",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.2.1",
+                            "title": "Parti Örgütlenmesi & Engeller",
+                            "type": "subtheme",
+                            "variables": ["v2psbars", "v2psparban", "v2psbantar", "v2psoppaut"]
+                        },
+                        {
+                            "id": "3.2.2",
+                            "title": "Parti Sisteminin Yapısı",
+                            "type": "subtheme",
+                            "variables": ["v2psorgs", "v2psprbrch", "v2psprlnks", "v2psplats", "v2pscnslnl", "v2pscohesv", "v2pscomprg", "v2psnatpar", "v2pssunpar"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.3",
+                    "title": "3.3 Doğrudan Demokrasi",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.3.1",
+                            "title": "Halk Girişimleri (Initiatives)",
+                            "type": "subtheme",
+                            "variables": ["v2ddlexci", "v2ddsignci", "v2ddsigpci", "v2ddsigdci", "v2ddsiglci", "v2ddpartci", "v2ddapprci", "v2ddadmci", "v2ddspmci", "v2ddthreci"]
+                        },
+                        {
+                            "id": "3.3.2",
+                            "title": "Referandumlar",
+                            "type": "subtheme",
+                            "variables": ["v2ddlexrf", "v2ddsignrf", "v2ddsigprf", "v2ddsigdrf", "v2ddsiglrf", "v2ddpartrf", "v2ddapprrf", "v2ddadmrf", "v2ddspmrf", "v2ddthrerf"]
+                        },
+                        {
+                            "id": "3.3.3",
+                            "title": "Zorunlu Referandumlar",
+                            "type": "subtheme",
+                            "variables": ["v2ddlexor", "v2ddpartor", "v2ddappor", "v2ddadmor", "v2ddspmor", "v2ddthreor"]
+                        },
+                        {
+                            "id": "3.3.4",
+                            "title": "Plebisitler",
+                            "type": "subtheme",
+                            "variables": ["v2ddlexpl", "v2ddpartpl", "v2ddapprpl", "v2ddadmpl", "v2ddspmpl", "v2ddthrepl"]
+                        },
+                        {
+                            "id": "3.3.5",
+                            "title": "Gerçekleşmeler",
+                            "type": "subtheme",
+                            "variables": ["v2ddyrci", "v2ddyrrf", "v2ddyror", "v2ddyrpl", "v2ddyrall", "v2ddcredal"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.4",
+                    "title": "3.4 Yürütme (The Executive)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.4.1",
+                            "title": "Genel Yetkiler & Yolsuzluk",
+                            "type": "subtheme",
+                            "variables": ["v2exrescon", "v2exbribe", "v2exembez", "v2excrptps", "v2exthftps", "v2exapup", "v2exapupap"]
+                        },
+                        {
+                            "id": "3.4.2",
+                            "title": "Devlet Başkanı (Head of State)",
+                            "type": "subtheme",
+                            "variables": ["v2exnamhos", "v2extithos", "v2exremhsp", "v2exrmhsol", "v2exrmhsnl", "v2exctlhs", "v2exctlhos", "v2exdfdshs", "v2exdfcbhs", "v2exdfvths", "v2exdfdmhs", "v2exdfpphs", "v2exhoshog", "v2exagehos", "v2exaphos", "v2ex_elechos", "v2exfemhos", "v2exfxtmhs", "v2expathhs", "v2exdeathos", "v2exparhos"]
+                        },
+                        {
+                            "id": "3.4.3",
+                            "title": "Hükümet Başkanı (Head of Government)",
+                            "type": "subtheme",
+                            "variables": ["v2exnamhog", "v2extithog", "v2exremhog", "v2exrmhgnp", "v2exrmhgop", "v2exctlhg", "v2exctlhog", "v2exdjdshg", "v2exdjcbhg", "v2exdfdshg", "v2exdfvthg", "v2exdfpphg", "v2exagehog", "v2exaphogp", "v2ex_elechog", "v2exfemhog", "v2exfxtmhg", "v2ex_hogw", "v2ex_hosconhog", "v2expathhg", "v2exdeathog", "v2expothog"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.5",
+                    "title": "3.5 Rejim (Regime)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.5.1",
+                            "title": "Rejim Sınıflandırması & Dayanıklılık",
+                            "type": "subtheme",
+                            "variables": ["v2reginfo", "v2regendtype", "v2regendtypems", "v2regint", "v2regidnr", "v2regdur"]
+                        },
+                        {
+                            "id": "3.5.2",
+                            "title": "Rejim Destek Grupları",
+                            "type": "subtheme",
+                            "variables": ["v2regsupgroups", "v2regimpgroup", "v2regsupgroupssize", "v2regsuploc"]
+                        },
+                        {
+                            "id": "3.5.3",
+                            "title": "Rejim Muhalefet Grupları",
+                            "type": "subtheme",
+                            "variables": ["v2regoppgroups", "v2regoppgroupsact", "v2regimpoppgroup", "v2regoppgroupssize", "v2regopploc", "v2regproreg", "v2regantireg", "v2regpower"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.6",
+                    "title": "3.6 Yasama (The Legislature)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.6.1",
+                            "title": "Genel Yapı (Soruşturma, Denetim)",
+                            "type": "subtheme",
+                            "variables": ["v2lgbicam", "v2lgdomchm", "v2lgqstexp", "v2lginvstp", "v2lgotovst", "v2lgcrrpt", "v2lgoppart", "v2lgfunds", "v2lgdsadlo", "v2lgdsadlobin", "v2ex_hosw", "v2ex_legconhog", "v2ex_legconhos", "v2lgtreaty", "v2lgwarlaw"]
+                        },
+                        {
+                            "id": "3.6.2",
+                            "title": "Üst Meclis (Senato vb.)",
+                            "type": "subtheme",
+                            "variables": ["v2lgnameup", "v2lglegpup", "v2lgelecup", "v2lginelup", "v2lgintbup"]
+                        },
+                        {
+                            "id": "3.6.3",
+                            "title": "Alt Meclis (Temsilciler Meclisi vb.)",
+                            "type": "subtheme",
+                            "variables": ["v2lgnamelo", "v2lglegplo", "v2lgcomslo", "v2lgsrvlo", "v2lgstafflo", "v2lgello", "v2lgfemleg", "v2lginello", "v2lgintblo", "v2lgqugen", "v2lgqugens", "v2lgqugent"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.7",
+                    "title": "3.7 Müzakere (Deliberation)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.7.1",
+                            "title": "Kamusal Tartışma Kalitesi & Gerekçelendirme",
+                            "type": "subtheme",
+                            "variables": ["v2dlreason", "v2dlcommon", "v2dlcountr", "v2dlconslt", "v2dlengage", "v2dlencmps", "v2dlunivl"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.8",
+                    "title": "3.8 Yargı (The Judiciary)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.8.1",
+                            "title": "Yargı Bağımsızlığı & Reformlar",
+                            "type": "subtheme",
+                            "variables": ["v2jureform", "v2jupurge", "v2jupoatck", "v2jupack", "v2juaccnt", "v2jucorrdc"]
+                        },
+                        {
+                            "id": "3.8.2",
+                            "title": "Yüksek Mahkemeler",
+                            "type": "subtheme",
+                            "variables": ["v2juhcname", "v2juhcind", "v2juhccomp", "v2jureview"]
+                        },
+                        {
+                            "id": "3.8.3",
+                            "title": "Alt Mahkemeler",
+                            "type": "subtheme",
+                            "variables": ["v2juncind", "v2jucomp"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.9",
+                    "title": "3.9 Sivil Özgürlükler",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.9.1",
+                            "title": "Kişisel Bütünlük Hakları (İşkence, Şiddet)",
+                            "type": "subtheme",
+                            "variables": ["v2cltort", "v2clkill", "v2clslavem", "v2clslavef"]
+                        },
+                        {
+                            "id": "3.9.2",
+                            "title": "Hukukun Tarafsız Uygulanması",
+                            "type": "subtheme",
+                            "variables": ["v2cltrnslw", "v2clrspct", "v2clacjstm", "v2clacjstw", "v2clacjust", "v2clsocgrp", "v2clrgunev", "v2clrgstch", "v2clsnlpct", "v2clrgwkch"]
+                        },
+                        {
+                            "id": "3.9.3",
+                            "title": "Özel ve Siyasi Özgürlükler (İfade, Din, Seyahat)",
+                            "type": "subtheme",
+                            "variables": ["v2cldiscm", "v2cldiscw", "v2clacfree", "v2clrelig", "v2clfmove", "v2cldmovem", "v2cldmovew"]
+                        },
+                        {
+                            "id": "3.9.4",
+                            "title": "Mülkiyet Hakları",
+                            "type": "subtheme",
+                            "variables": ["v2clstown", "v2clprptym", "v2clprptyw"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.10",
+                    "title": "3.10 Egemenlik ve Devlet",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.10.1",
+                            "title": "Devlet Otoritesi ve Kapasitesi",
+                            "type": "subtheme",
+                            "variables": ["v2svdomaut", "v2svinlaut", "v2svstterr", "v2stfisccap", "v2strenadm", "v2stcritrecadm", "v2stcritapparm", "v2strenarm", "v2svindep"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.11",
+                    "title": "3.11 Sivil Toplum",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.11.1",
+                            "title": "STK'ların Yapısı, Baskı ve Katılım",
+                            "type": "subtheme",
+                            "variables": ["v2cseeorgs", "v2csreprss", "v2cscnsult", "v2csstruc", "v2csprtcpt", "v2csgender", "v2csantimv", "v2csanmvch", "v2csrlgrep", "v2csrlgcon"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.12",
+                    "title": "3.12 Medya",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.12.1",
+                            "title": "Sansür, Taciz ve Medya Bağımsızlığı",
+                            "type": "subtheme",
+                            "variables": ["v2mecenefm", "v2mecenefi", "v2mecenefibin", "v2mecrit", "v2merange", "v2mefemjrn", "v2meharjrn", "v2meslfcen", "v2mebias", "v2mecorrpt"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.13",
+                    "title": "3.13 Siyasi Eşitlik",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.13.1",
+                            "title": "Sosyo-Ekonomik Grupların Güç Dağılımı",
+                            "type": "subtheme",
+                            "variables": ["v2pepwrses", "v2pepwrsoc", "v2pepwrgen", "v2pepwrort"]
+                        },
+                        {
+                            "id": "3.13.2",
+                            "title": "Eğitim ve Sağlık Eşitliği",
+                            "type": "subtheme",
+                            "variables": ["v2peedueq", "v2pehealth", "v2peprisch", "v2pesecsch", "v2petersch"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.14",
+                    "title": "3.14 Dışlanma (Exclusion)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.14.1",
+                            "title": "Sosyo-Ekonomik Gruba Göre",
+                            "type": "subtheme",
+                            "variables": ["v2peapsecon", "v2peasjsoecon", "v2peasbecon"]
+                        },
+                        {
+                            "id": "3.14.2",
+                            "title": "Cinsiyete Göre",
+                            "type": "subtheme",
+                            "variables": ["v2clgencl", "v2peapsgen", "v2peasjgen", "v2peasbgen"]
+                        },
+                        {
+                            "id": "3.14.3",
+                            "title": "Kent-Kır Ayrımına Göre",
+                            "type": "subtheme",
+                            "variables": ["v2pepwrgeo", "v2clgeocl", "v2peapsgeo", "v2peasjgeo", "v2peasbegeo"]
+                        },
+                        {
+                            "id": "3.14.4",
+                            "title": "Siyasi Gruba Göre",
+                            "type": "subtheme",
+                            "variables": ["v2clpolcl", "v2peapspol", "v2peasjpol", "v2peasbepol"]
+                        },
+                        {
+                            "id": "3.14.5",
+                            "title": "Sosyal Gruba Göre",
+                            "type": "subtheme",
+                            "variables": ["v2peapssoc", "v2peasjsoc", "v2peasbsoc"]
+                        },
+                        {
+                            "id": "3.14.6",
+                            "title": "Meşrulaştırma Stratejileri",
+                            "type": "subtheme",
+                            "variables": ["v2exl_legitideol", "v2exl_legitideolcr", "v2exl_legitlead", "v2exl_legitperf", "v2exl_legitratio"]
+                        }
+                    ]
+                },
+                {
+                    "id": "3.15",
+                    "title": "3.15 Sivil ve Akademik Alan",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "3.15.1",
+                            "title": "Sivil Alan (Kutuplaşma, Protesto)",
+                            "type": "subtheme",
+                            "variables": ["v2cacamps", "v2caviol", "v2caassemb", "v2casoe"]
+                        },
+                        {
+                            "id": "3.15.2",
+                            "title": "Kitle Seferberliği",
+                            "type": "subtheme",
+                            "variables": ["v2cagenmob", "v2caconmob", "v2cademmob", "v2caautmob"]
+                        },
+                        {
+                            "id": "3.15.3",
+                            "title": "Vatandaş Katılımı",
+                            "type": "subtheme",
+                            "variables": ["v2castate", "v2catrauni", "v2capolit", "v2canonpol"]
+                        },
+                        {
+                            "id": "3.15.4",
+                            "title": "Akademik Özgürlük ve Kampüs Bütünlüğü",
+                            "type": "subtheme",
+                            "variables": ["v2cauni", "v2canuni", "v2caprotac", "v2cafres", "v2cafexch", "v2cainsaut", "v2casurv", "v2cacritic", "v2caacadfree"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "special_modules",
+            "title": "ÖZEL MODÜLLER",
+            "description": "Belirli araştırma alanlarına yönelik spesifik veri setleri",
+            "type": "category",
+            "children": [
+                {
+                    "id": "digital_society",
+                    "title": "Dijital Toplum (Digital Society)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "7.1",
+                            "title": "Koordineli Bilgi Operasyonları (Dezenformasyon)",
+                            "type": "subtheme",
+                            "variables": ["v2smgovdom", "v2smgovab", "v2smpardom", "v2smparab", "v2smfordom", "v2smforads"]
+                        },
+                        {
+                            "id": "7.2",
+                            "title": "Dijital Medya Özgürlüğü (İnternet Kapatma, Sansür)",
+                            "type": "subtheme",
+                            "variables": ["v2smgovfilcap", "v2smgovfilprc", "v2smgovshutcap", "v2smgovshut", "v2smgovsm", "v2smgovsmalt", "v2smgovsmmon", "v2smgovsmcenprc", "v2smgovcapsec", "v2smpolcap"]
+                        },
+                        {
+                            "id": "7.3",
+                            "title": "Devletin İnternet Düzenlemeleri",
+                            "type": "subtheme",
+                            "variables": ["v2smregcon", "v2smprivex", "v2smprivcon", "v2smregcap", "v2smregapp", "v2smlawpr", "v2smdefabu"]
+                        },
+                        {
+                            "id": "7.4",
+                            "title": "Çevrimiçi Medya Kutuplaşması",
+                            "type": "subtheme",
+                            "variables": ["v2smonex", "v2smonper", "v2smmefra"]
+                        },
+                        {
+                            "id": "7.5",
+                            "title": "Sosyal Bölünmeler ve Taciz",
+                            "type": "subtheme",
+                            "variables": ["v2smhargr", "v2smhargrtxt", "v2smorgviol", "v2smorgavgact", "v2smorgelitact", "v2smorgtypes", "v2smorgtypestxt", "v2smcamp", "v2smarrest", "v2smpolsoc", "v2smpolhate"]
+                        }
+                    ]
+                },
+                {
+                    "id": "party_systems",
+                    "title": "Parti Sistemleri (Party Systems)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "6.1",
+                            "title": "Parti Sisteminin Demokrasi, Din ve Ekonomi Eksenleri",
+                            "type": "subtheme",
+                            "variables": ["v2xpas_democracy", "v2xpas_democracy_government", "v2xpas_democracy_opposition", "v2xpas_religion", "v2xpas_religion_government", "v2xpas_religion_opposition", "v2xpas_exclusion", "v2xpas_exclusion_government", "v2xpas_exclusion_opposition", "v2xpas_economic", "v2xpas_economic_government", "v2xpas_economic_opposition"]
+                        }
+                    ]
+                },
+                {
+                    "id": "indoctrination",
+                    "title": "Endoktrinasyon (Varieties of Indoctrination)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "8.1",
+                            "title": "Eğitimde Endoktrinasyon Potansiyeli",
+                            "type": "subtheme",
+                            "variables": ["v2xed_ed_inpt", "v2xed_ed_poed", "v2xed_ed_inco", "v2xed_ed_cent", "v2xed_ed_ctag", "v2xed_ed_con", "v2xed_ed_dmcon", "v2xed_ed_ptcon", "v2xed_ptcon", "v2xedvd_inpt"]
+                        },
+                        {
+                            "id": "8.2",
+                            "title": "Müfredat İçeriği (Genel ve Özel)",
+                            "type": "subtheme",
+                            "variables": ["v2edcentcurrlm", "v2edcenttxbooks", "v2edpoledprim", "v2edpoledsec", "v2edpoledrights", "v2edpatriot", "v2edideol", "v2edideolch", "v2edplural", "v2edcritical"]
+                        },
+                        {
+                            "id": "8.3",
+                            "title": "Öğretmenler ve Okullar",
+                            "type": "subtheme",
+                            "variables": ["v2edteautonomy", "v2edtequal", "v2temonitor", "v2edteunion", "v2edteunionindp", "v2edtehire", "v2edtefire", "v2edscpatriot", "v2edscpatriotcb", "v2edscextracurr"]
+                        },
+                        {
+                            "id": "8.4",
+                            "title": "Medya Üzerinden Endoktrinasyon",
+                            "type": "subtheme",
+                            "variables": ["v2xedvd_me_inco", "v2xedvd_me_cent", "v2xedvd_me_ctag", "v2medstateprint", "v2medstatebroad", "v2medpolstate", "v2medpolnonstate", "v2medpatriot", "v2medentrain"]
+                        }
+                    ]
+                },
+                {
+                    "id": "historical_vdem",
+                    "title": "Tarihsel V-Dem (1789-1920)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "4.1",
+                            "title": "Modern Öncesi Seçim, Yargı ve İdare Verileri",
+                            "type": "subtheme",
+                            "description": "v3 öneki ile başlayan değişkenler - 1789-1920 arası tarihsel veriler",
+                            "variables": ["v3canagelc", "v3canageuc", "v3elagepr", "v3elageuc", "v3elbalpap", "v3elbalstat", "v3elcomvot", "v3eldirelc", "v3eldirepr", "v3eldireuc", "v3elecsedf", "v3elmalalc", "v3elmalauc", "v3elncbmaj", "v3elreapplc", "v3elreappuc", "v3elrstrlc", "v3elrstrpr", "v3elrstrup", "v3elsec", "v3eltvriguc", "v3elupseat", "v3elupstsl", "v3elupstsm", "v3elupvtlg", "v3elupvtsm", "v3elvstrlc", "v3elvstrpr", "v3elvstruc", "v3elwomcab", "v3ttlvote", "v3partyid", "v3psagefirst", "v3psagepm", "v3psagesecond", "v3psagethird", "v3lgbudglo", "v3lgbudgup", "v3lgcamoth", "v3lginses", "v3lginsesup", "v3lgqumin", "v3juhcourt", "v3cllabrig", "v3clslavery", "v3serfdeju", "v3stcensus", "v3stcitlaw", "v3stflag", "v3stnatant", "v3stnatbank", "v3struinvadm", "v3ststatag", "v3ststeecap", "v3ststybcov", "v3ststybpub", "v3equavolc", "v3equavouc", "v3pechilabl", "v3peminwage", "v3peminwagerestr"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "context_external",
+            "title": "BAĞLAM ve DIŞ VERİLER",
+            "description": "Kullanıcının V-Dem verisini kıyaslaması veya bağlama oturtması için",
+            "type": "category",
+            "children": [
+                {
+                    "id": "other_indices",
+                    "title": "Diğer Demokrasi İndeksleri (Karşılaştırma)",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "5.1",
+                            "title": "Regimes of the World (RoW)",
+                            "type": "subtheme",
+                            "variables": ["v2x_regime", "v2x_regime_amb"]
+                        },
+                        {
+                            "id": "5.2",
+                            "title": "Accountability (Hesap Verebilirlik) İndeksleri",
+                            "type": "subtheme",
+                            "variables": ["v2x_accountability", "v2x_veracc", "v2x_diagacc", "v2x_horacc"]
+                        },
+                        {
+                            "id": "9.1",
+                            "title": "Freedom House Verileri",
+                            "type": "subtheme",
+                            "variables": ["e_fh_cl", "e_fh_pr", "e_fh_rol", "e_fh_status"]
+                        },
+                        {
+                            "id": "9.2",
+                            "title": "Polity IV Verileri",
+                            "type": "subtheme",
+                            "variables": ["e_autoc", "e_democ", "e_p_polity", "e_polcomp", "e_polity2"]
+                        },
+                        {
+                            "id": "9.3",
+                            "title": "Dünya Bankası (WGI) Göstergeleri",
+                            "type": "subtheme",
+                            "variables": ["e_wbgi_cce", "e_wbgi_gee", "e_wbgi_pve", "e_wbgi_rle", "e_wbgi_rqe", "e_wbgi_vae"]
+                        },
+                        {
+                            "id": "9.4",
+                            "title": "Diğer İndeksler",
+                            "type": "subtheme",
+                            "variables": ["e_boix_regime", "e_lexical_index", "e_uds", "e_ti_cpi", "e_vanhanen", "e_chga_demo", "e_bnr_dem"]
+                        }
+                    ]
+                },
+                {
+                    "id": "background_factors",
+                    "title": "Arka Plan Faktörleri",
+                    "type": "theme",
+                    "children": [
+                        {
+                            "id": "10.1",
+                            "title": "Ekonomi (GSYİH, Enflasyon, Ticaret)",
+                            "type": "subtheme",
+                            "variables": ["e_gdp", "e_gdppc", "e_miinflat", "e_cow_exports", "e_cow_imports"]
+                        },
+                        {
+                            "id": "10.2",
+                            "title": "Eğitim İstatistikleri",
+                            "type": "subtheme",
+                            "variables": ["e_peaveduc", "e_peedgini"]
+                        },
+                        {
+                            "id": "10.3",
+                            "title": "Demografi ve Nüfus",
+                            "type": "subtheme",
+                            "variables": ["e_pop", "e_wb_pop", "e_mipopula", "e_miferrat", "e_miurbani", "e_miurbpop", "e_pechmor", "e_pefeliex", "e_pelifeex", "e_pematmor"]
+                        },
+                        {
+                            "id": "10.4",
+                            "title": "Coğrafya",
+                            "type": "subtheme",
+                            "variables": ["e_area", "e_regiongeo", "e_regionpol", "e_regionpol_6C", "e_regionpol_7C"]
+                        },
+                        {
+                            "id": "10.5",
+                            "title": "Doğal Kaynaklar",
+                            "type": "subtheme",
+                            "variables": ["e_total_fuel_income_pc", "e_total_oil_income_pc", "e_total_resources_income_pc"]
+                        },
+                        {
+                            "id": "10.6",
+                            "title": "Çatışma ve Savaş Verileri",
+                            "type": "subtheme",
+                            "variables": ["e_civil_war", "e_miinteco", "e_miinterc", "e_pt_coup", "e_pt_coup_attempts"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -96,21 +96,6 @@
             <span>📚</span> Teoriler
         </button>
 
-        <!-- Ana Sayfa Ülke Rengi Seçici -->
-        <div id="base-color-selector" class="base-color-selector">
-            <label for="base-color-select">Ülke Rengi:</label>
-            <select id="base-color-select">
-                <option value="#27bbd8" selected>Turkuaz</option>
-                <option value="#4a90e2">Mavi</option>
-                <option value="#7b68ee">Mor</option>
-                <option value="#50c878">Yeşil</option>
-                <option value="#ff6b6b">Kırmızı</option>
-                <option value="#ffa07a">Turuncu</option>
-                <option value="#ee82ee">Pembe</option>
-                <option value="#20b2aa">Deniz Mavisi</option>
-            </select>
-        </div>
-
         <!-- Veri Seti Üst Kontrolleri -->
         <header id="dataset-header" style="display: none;">
             <div class="dataset-toggle-group">
@@ -300,6 +285,39 @@
                 <div class="year-readout">
                     <span>Yıl:</span> <strong id="vdem-year-label">2023</strong>
                 </div>
+            </div>
+        </div>
+
+        <!-- Historical Maps Preload Progress Bar -->
+        <div id="historical-preload-progress" class="historical-preload-progress">
+            <div class="preload-content">
+                <div class="preload-icon">🗺️</div>
+                <div class="preload-text">
+                    <div class="preload-title">Tarihi Haritalar Yükleniyor...</div>
+                    <div class="preload-status" id="preload-status">0 / 16 harita yüklendi</div>
+                </div>
+                <div class="preload-bar-container">
+                    <div class="preload-bar" id="preload-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Maps Yıl Kaydırıcısı - Compact (Başta gizli) -->
+        <div id="historical-year-slider-container" class="historical-slider-compact" style="display: none;">
+            <div class="slider-wrapper">
+                <div class="timeline-with-slider">
+                    <div class="timeline-milestone-markers" id="timeline-milestone-markers">
+                        <!-- Milestone işaretleri JavaScript tarafından eklenecek -->
+                    </div>
+                    <input type="range" id="historical-year-slider" min="1789" max="2023" step="1" value="2023" />
+                </div>
+            </div>
+            <div class="year-info-compact">
+                <span class="year-label-compact">Yıl:</span>
+                <strong id="historical-year-label" class="year-value-compact">2023</strong>
+                <span class="source-divider">|</span>
+                <span class="source-label-compact">Kaynak:</span>
+                <span id="current-milestone-source" class="source-value-compact">CShapes 2.0 (2019)</span>
             </div>
         </div>
 

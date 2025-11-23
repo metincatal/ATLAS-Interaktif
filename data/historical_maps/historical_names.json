@@ -1,0 +1,709 @@
+{
+  "metadata": {
+    "title": "Tarihi Ülke Adları Eşleştirme",
+    "description": "V-Dem modern ülke adlarını tarihi dönemlere göre eşleştirir",
+    "version": "1.0.0",
+    "created": "2025-11-21",
+    "note": "V-Dem coğrafi süreklilik ilkesini kullanır - aynı bölge için modern ad kullanılır. Bu mapping tarihi olarak doğru adları göstermek için kullanılır."
+  },
+  "mappings": [
+    {
+      "vdem_name": "Türkiye",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1922,
+          "display_name": "Osmanlı İmparatorluğu",
+          "display_name_en": "Ottoman Empire",
+          "notes": "Osmanlı İmparatorluğu dönemi"
+        },
+        {
+          "start_year": 1923,
+          "end_year": 2024,
+          "display_name": "Türkiye",
+          "display_name_en": "Turkey",
+          "notes": "Türkiye Cumhuriyeti'nin kuruluşu (29 Ekim 1923)"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Russia",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1917,
+          "display_name": "Rus İmparatorluğu",
+          "display_name_en": "Russian Empire",
+          "notes": "Çarlık Rusyası dönemi"
+        },
+        {
+          "start_year": 1918,
+          "end_year": 1922,
+          "display_name": "Rus SFSC",
+          "display_name_en": "Russian SFSR",
+          "notes": "Rus Sovyet Federatif Sosyalist Cumhuriyeti"
+        },
+        {
+          "start_year": 1923,
+          "end_year": 1991,
+          "display_name": "Sovyetler Birliği",
+          "display_name_en": "Soviet Union",
+          "notes": "SSCB dönemi"
+        },
+        {
+          "start_year": 1992,
+          "end_year": 2024,
+          "display_name": "Rusya Federasyonu",
+          "display_name_en": "Russian Federation",
+          "notes": "Modern Rusya"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Germany",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1870,
+          "display_name": "Prusya / Alman Konfederasyonu",
+          "display_name_en": "Prussia / German Confederation",
+          "notes": "Birleşik Almanya öncesi dönem"
+        },
+        {
+          "start_year": 1871,
+          "end_year": 1918,
+          "display_name": "Alman İmparatorluğu",
+          "display_name_en": "German Empire",
+          "notes": "Kaiserreich dönemi"
+        },
+        {
+          "start_year": 1919,
+          "end_year": 1933,
+          "display_name": "Weimar Cumhuriyeti",
+          "display_name_en": "Weimar Republic",
+          "notes": "Birinci Dünya Savaşı sonrası demokratik dönem"
+        },
+        {
+          "start_year": 1933,
+          "end_year": 1945,
+          "display_name": "Nazi Almanyası",
+          "display_name_en": "Nazi Germany",
+          "notes": "Üçüncü Reich"
+        },
+        {
+          "start_year": 1949,
+          "end_year": 1990,
+          "display_name": "Batı Almanya",
+          "display_name_en": "West Germany",
+          "notes": "Federal Almanya Cumhuriyeti (FRG)"
+        },
+        {
+          "start_year": 1991,
+          "end_year": 2024,
+          "display_name": "Almanya",
+          "display_name_en": "Germany",
+          "notes": "Birleşik Almanya"
+        }
+      ]
+    },
+    {
+      "vdem_name": "German Democratic Republic",
+      "historical_periods": [
+        {
+          "start_year": 1949,
+          "end_year": 1990,
+          "display_name": "Doğu Almanya",
+          "display_name_en": "East Germany",
+          "notes": "Alman Demokratik Cumhuriyeti (GDR)"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Austria",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1867,
+          "display_name": "Avusturya İmparatorluğu",
+          "display_name_en": "Austrian Empire",
+          "notes": "Habsburg İmparatorluğu"
+        },
+        {
+          "start_year": 1867,
+          "end_year": 1918,
+          "display_name": "Avusturya-Macaristan",
+          "display_name_en": "Austria-Hungary",
+          "notes": "İkili Monarşi"
+        },
+        {
+          "start_year": 1919,
+          "end_year": 2024,
+          "display_name": "Avusturya",
+          "display_name_en": "Austria",
+          "notes": "Modern Avusturya Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Hungary",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1866,
+          "display_name": "Macaristan Krallığı",
+          "display_name_en": "Kingdom of Hungary",
+          "notes": "Habsburg yönetimi altında"
+        },
+        {
+          "start_year": 1867,
+          "end_year": 1918,
+          "display_name": "Avusturya-Macaristan (Macaristan)",
+          "display_name_en": "Austria-Hungary (Hungary)",
+          "notes": "İkili Monarşi'nin Macar kısmı"
+        },
+        {
+          "start_year": 1919,
+          "end_year": 2024,
+          "display_name": "Macaristan",
+          "display_name_en": "Hungary",
+          "notes": "Modern Macaristan"
+        }
+      ]
+    },
+    {
+      "vdem_name": "India",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1857,
+          "display_name": "Britanya Doğu Hindistan Şirketi",
+          "display_name_en": "British East India Company",
+          "notes": "Şirket yönetimi dönemi"
+        },
+        {
+          "start_year": 1858,
+          "end_year": 1947,
+          "display_name": "Britanya Hindistanı",
+          "display_name_en": "British India",
+          "notes": "Britanya Kraliyet yönetimi"
+        },
+        {
+          "start_year": 1947,
+          "end_year": 2024,
+          "display_name": "Hindistan",
+          "display_name_en": "India",
+          "notes": "Bağımsız Hindistan Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Pakistan",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1947,
+          "display_name": "Britanya Hindistanı",
+          "display_name_en": "British India",
+          "notes": "Hindistan'ın parçası"
+        },
+        {
+          "start_year": 1947,
+          "end_year": 2024,
+          "display_name": "Pakistan",
+          "display_name_en": "Pakistan",
+          "notes": "Bağımsız Pakistan"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bangladesh",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1947,
+          "display_name": "Britanya Hindistanı (Bengal)",
+          "display_name_en": "British India (Bengal)",
+          "notes": "Bengal eyaleti"
+        },
+        {
+          "start_year": 1947,
+          "end_year": 1971,
+          "display_name": "Doğu Pakistan",
+          "display_name_en": "East Pakistan",
+          "notes": "Pakistan'ın doğu kısmı"
+        },
+        {
+          "start_year": 1971,
+          "end_year": 2024,
+          "display_name": "Bangladeş",
+          "display_name_en": "Bangladesh",
+          "notes": "Bağımsız Bangladeş"
+        }
+      ]
+    },
+    {
+      "vdem_name": "China",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1911,
+          "display_name": "Qing Hanedanlığı",
+          "display_name_en": "Qing Dynasty",
+          "notes": "Son Çin İmparatorluğu"
+        },
+        {
+          "start_year": 1912,
+          "end_year": 1949,
+          "display_name": "Çin Cumhuriyeti",
+          "display_name_en": "Republic of China",
+          "notes": "Milliyetçi Çin dönemi"
+        },
+        {
+          "start_year": 1949,
+          "end_year": 2024,
+          "display_name": "Çin Halk Cumhuriyeti",
+          "display_name_en": "People's Republic of China",
+          "notes": "Komünist Çin"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Taiwan",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1895,
+          "display_name": "Qing Hanedanlığı (Tayvan)",
+          "display_name_en": "Qing Dynasty (Taiwan)",
+          "notes": "Qing İmparatorluğu'nun parçası"
+        },
+        {
+          "start_year": 1895,
+          "end_year": 1945,
+          "display_name": "Japon Tayvanı",
+          "display_name_en": "Japanese Taiwan",
+          "notes": "Japon işgali"
+        },
+        {
+          "start_year": 1945,
+          "end_year": 2024,
+          "display_name": "Tayvan (Çin Cumhuriyeti)",
+          "display_name_en": "Taiwan (ROC)",
+          "notes": "Milliyetçi Çin hükümeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Vietnam",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1887,
+          "display_name": "Nguyễn Hanedanlığı",
+          "display_name_en": "Nguyễn Dynasty",
+          "notes": "Bağımsız Vietnam"
+        },
+        {
+          "start_year": 1887,
+          "end_year": 1954,
+          "display_name": "Fransız Hindiçinisi",
+          "display_name_en": "French Indochina",
+          "notes": "Fransız sömürgesi"
+        },
+        {
+          "start_year": 1954,
+          "end_year": 1975,
+          "display_name": "Kuzey Vietnam",
+          "display_name_en": "North Vietnam",
+          "notes": "17. paralel kuzeyindeki bölge"
+        },
+        {
+          "start_year": 1976,
+          "end_year": 2024,
+          "display_name": "Vietnam",
+          "display_name_en": "Vietnam",
+          "notes": "Birleşik Vietnam"
+        }
+      ]
+    },
+    {
+      "vdem_name": "South Vietnam",
+      "historical_periods": [
+        {
+          "start_year": 1954,
+          "end_year": 1975,
+          "display_name": "Güney Vietnam",
+          "display_name_en": "South Vietnam",
+          "notes": "17. paralel güneyindeki bölge"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Korea",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1897,
+          "display_name": "Joseon Hanedanlığı",
+          "display_name_en": "Joseon Dynasty",
+          "notes": "Kore Krallığı"
+        },
+        {
+          "start_year": 1897,
+          "end_year": 1910,
+          "display_name": "Kore İmparatorluğu",
+          "display_name_en": "Korean Empire",
+          "notes": "Bağımsız dönem"
+        },
+        {
+          "start_year": 1910,
+          "end_year": 1945,
+          "display_name": "Japon Koresi",
+          "display_name_en": "Japanese Korea",
+          "notes": "Japon işgali"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Republic of Korea",
+      "historical_periods": [
+        {
+          "start_year": 1948,
+          "end_year": 2024,
+          "display_name": "Güney Kore",
+          "display_name_en": "South Korea",
+          "notes": "Kore Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Democratic People's Republic of Korea",
+      "historical_periods": [
+        {
+          "start_year": 1948,
+          "end_year": 2024,
+          "display_name": "Kuzey Kore",
+          "display_name_en": "North Korea",
+          "notes": "Kore Demokratik Halk Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Czechia",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1918,
+          "display_name": "Avusturya-Macaristan (Bohemya)",
+          "display_name_en": "Austria-Hungary (Bohemia)",
+          "notes": "Habsburg yönetimi"
+        },
+        {
+          "start_year": 1918,
+          "end_year": 1992,
+          "display_name": "Çekoslovakya",
+          "display_name_en": "Czechoslovakia",
+          "notes": "Birleşik Çekoslovakya"
+        },
+        {
+          "start_year": 1993,
+          "end_year": 2024,
+          "display_name": "Çekya",
+          "display_name_en": "Czech Republic",
+          "notes": "Bağımsız Çek Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Slovakia",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1918,
+          "display_name": "Avusturya-Macaristan (Slovakya)",
+          "display_name_en": "Austria-Hungary (Slovakia)",
+          "notes": "Macar yönetimi"
+        },
+        {
+          "start_year": 1918,
+          "end_year": 1992,
+          "display_name": "Çekoslovakya",
+          "display_name_en": "Czechoslovakia",
+          "notes": "Birleşik Çekoslovakya"
+        },
+        {
+          "start_year": 1993,
+          "end_year": 2024,
+          "display_name": "Slovakya",
+          "display_name_en": "Slovakia",
+          "notes": "Bağımsız Slovakya"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Yugoslavia",
+      "historical_periods": [
+        {
+          "start_year": 1918,
+          "end_year": 1941,
+          "display_name": "Yugoslavya Krallığı",
+          "display_name_en": "Kingdom of Yugoslavia",
+          "notes": "Sırplar, Hırvatlar ve Slovenler Krallığı"
+        },
+        {
+          "start_year": 1945,
+          "end_year": 1992,
+          "display_name": "Yugoslavya",
+          "display_name_en": "Yugoslavia",
+          "notes": "Sosyalist Federal Yugoslavya Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Serbia",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1878,
+          "display_name": "Sırbistan Prensliği",
+          "display_name_en": "Principality of Serbia",
+          "notes": "Osmanlı vassalı"
+        },
+        {
+          "start_year": 1878,
+          "end_year": 1918,
+          "display_name": "Sırbistan Krallığı",
+          "display_name_en": "Kingdom of Serbia",
+          "notes": "Bağımsız krallık"
+        },
+        {
+          "start_year": 1918,
+          "end_year": 1992,
+          "display_name": "Yugoslavya (Sırbistan)",
+          "display_name_en": "Yugoslavia (Serbia)",
+          "notes": "Yugoslavya'nın parçası"
+        },
+        {
+          "start_year": 2006,
+          "end_year": 2024,
+          "display_name": "Sırbistan",
+          "display_name_en": "Serbia",
+          "notes": "Bağımsız Sırbistan"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Croatia",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1918,
+          "display_name": "Avusturya-Macaristan (Hırvatistan)",
+          "display_name_en": "Austria-Hungary (Croatia)",
+          "notes": "Habsburg yönetimi"
+        },
+        {
+          "start_year": 1918,
+          "end_year": 1991,
+          "display_name": "Yugoslavya (Hırvatistan)",
+          "display_name_en": "Yugoslavia (Croatia)",
+          "notes": "Yugoslavya'nın parçası"
+        },
+        {
+          "start_year": 1991,
+          "end_year": 2024,
+          "display_name": "Hırvatistan",
+          "display_name_en": "Croatia",
+          "notes": "Bağımsız Hırvatistan"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bosnia and Herzegovina",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1878,
+          "display_name": "Osmanlı İmparatorluğu (Bosna)",
+          "display_name_en": "Ottoman Empire (Bosnia)",
+          "notes": "Osmanlı eyaleti"
+        },
+        {
+          "start_year": 1878,
+          "end_year": 1918,
+          "display_name": "Avusturya-Macaristan (Bosna)",
+          "display_name_en": "Austria-Hungary (Bosnia)",
+          "notes": "Avusturya işgali"
+        },
+        {
+          "start_year": 1918,
+          "end_year": 1992,
+          "display_name": "Yugoslavya (Bosna-Hersek)",
+          "display_name_en": "Yugoslavia (Bosnia and Herzegovina)",
+          "notes": "Yugoslavya'nın parçası"
+        },
+        {
+          "start_year": 1992,
+          "end_year": 2024,
+          "display_name": "Bosna-Hersek",
+          "display_name_en": "Bosnia and Herzegovina",
+          "notes": "Bağımsız Bosna-Hersek"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Poland",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1795,
+          "display_name": "Polonya-Litvanya Birliği",
+          "display_name_en": "Polish-Lithuanian Commonwealth",
+          "notes": "Rzeczpospolita"
+        },
+        {
+          "start_year": 1795,
+          "end_year": 1918,
+          "display_name": "Bölünmüş Polonya",
+          "display_name_en": "Partitioned Poland",
+          "notes": "Rusya, Prusya ve Avusturya arasında bölünmüş"
+        },
+        {
+          "start_year": 1918,
+          "end_year": 2024,
+          "display_name": "Polonya",
+          "display_name_en": "Poland",
+          "notes": "Modern Polonya Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Italy",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1861,
+          "display_name": "İtalyan Devletleri",
+          "display_name_en": "Italian States",
+          "notes": "Birleşik İtalya öncesi - çeşitli krallıklar"
+        },
+        {
+          "start_year": 1861,
+          "end_year": 1946,
+          "display_name": "İtalya Krallığı",
+          "display_name_en": "Kingdom of Italy",
+          "notes": "Birleşik İtalya krallığı"
+        },
+        {
+          "start_year": 1946,
+          "end_year": 2024,
+          "display_name": "İtalya",
+          "display_name_en": "Italy",
+          "notes": "İtalyan Cumhuriyeti"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Ethiopia",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1974,
+          "display_name": "Etiyopya İmparatorluğu",
+          "display_name_en": "Ethiopian Empire",
+          "notes": "Sülalenin sonu 1974"
+        },
+        {
+          "start_year": 1974,
+          "end_year": 2024,
+          "display_name": "Etiyopya",
+          "display_name_en": "Ethiopia",
+          "notes": "Modern Etiyopya"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Iran",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1925,
+          "display_name": "Kaçar Hanedanlığı",
+          "display_name_en": "Qajar Dynasty",
+          "notes": "Kaçar İran'ı"
+        },
+        {
+          "start_year": 1925,
+          "end_year": 1979,
+          "display_name": "Pehle vi İran'ı",
+          "display_name_en": "Pahlavi Iran",
+          "notes": "Şahlık dönemi"
+        },
+        {
+          "start_year": 1979,
+          "end_year": 2024,
+          "display_name": "İran İslam Cumhuriyeti",
+          "display_name_en": "Islamic Republic of Iran",
+          "notes": "İslam Devrimi sonrası"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Japan",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1868,
+          "display_name": "Edo Dönemi Japonya",
+          "display_name_en": "Edo Period Japan",
+          "notes": "Tokugawa Şogunluğu"
+        },
+        {
+          "start_year": 1868,
+          "end_year": 1947,
+          "display_name": "Japon İmparatorluğu",
+          "display_name_en": "Empire of Japan",
+          "notes": "Meiji Restorasyonu sonrası"
+        },
+        {
+          "start_year": 1947,
+          "end_year": 2024,
+          "display_name": "Japonya",
+          "display_name_en": "Japan",
+          "notes": "Modern anayasal monarşi"
+        }
+      ]
+    },
+    {
+      "vdem_name": "Brazil",
+      "historical_periods": [
+        {
+          "start_year": 1789,
+          "end_year": 1822,
+          "display_name": "Portekiz Brezilya'sı",
+          "display_name_en": "Portuguese Brazil",
+          "notes": "Portekiz kolonisi"
+        },
+        {
+          "start_year": 1822,
+          "end_year": 1889,
+          "display_name": "Brezilya İmparatorluğu",
+          "display_name_en": "Empire of Brazil",
+          "notes": "Bağımsız imparatorluk"
+        },
+        {
+          "start_year": 1889,
+          "end_year": 2024,
+          "display_name": "Brezilya",
+          "display_name_en": "Brazil",
+          "notes": "Brezilya Cumhuriyeti"
+        }
+      ]
+    }
+  ],
+  "usage_instructions": {
+    "lookup": "Belirli bir yıl için bir ülkenin tarihi adını bulmak için vdem_name ile eşleştir ve yılın hangi period içinde olduğunu kontrol et",
+    "fallback": "Eğer mapping yoksa V-Dem'deki modern adı kullan",
+    "display": "UI'da display_name (Türkçe) veya display_name_en (İngilizce) göster"
+  }
+}

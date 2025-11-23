@@ -288,3 +288,15 @@
     background: linear-gradient(135deg, #9d7bff 0%, #533ffa 100%);
     color: #fff;
 }
+
+.wgi-btn.historical-btn {
+    background: linear-gradient(135deg, #d4a574 0%, #8b5a3c 100%);
+    color: #1a0e0a;
+    box-shadow: 0 8px 20px rgba(139, 90, 60, 0.35);
+}
+
+.wgi-btn.historical-btn.active {
+    background: linear-gradient(135deg, #f4d7a7 0%, #c69058 100%);
+    color: #1a0e0a;
+    box-shadow: 0 12px 30px rgba(198, 144, 88, 0.45);
+}

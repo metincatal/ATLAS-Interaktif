@@ -26,8 +26,8 @@ export const COUNTRY_NAME_MAP = {
     'Syria': 'Syrian Arab Republic'
 };
 
-// Renk paleti - ülkeler için
-export const COUNTRY_COLOR = 'rgba(39, 187, 216, 0.8)';
+// Renk paleti - ülkeler için (şeffaf - historical maps için)
+export const COUNTRY_COLOR = 'rgba(255, 255, 255, 0.1)';
 export const HOVER_COLOR = 'rgba(255, 200, 50, 0.9)';
 export const SELECTED_COLOR = 'rgba(255, 100, 100, 0.9)';
 
@@ -82,11 +82,14 @@ export const GLOBE_BACKGROUND_URL = 'https://unpkg.com/three-globe/example/img/n
 
 // Veri dosyası yolları
 export const DATA_PATHS = {
-    darKoridorAllYears: '../../data/processed/v2_1/dar_koridor_all_years.json',
-    darKoridorByCountry: '../../data/processed/v2_1/dar_koridor_by_country.json',
-    wgiDataset: '../../data/raw/wgidataset.csv',
-    vdemDataset: '../../data/processed/v4/vdem_data.json',
-    vdemMindmap: '../../data/processed/v4/vdem_mindmap_structure.json'
+    darKoridorAllYears: '/data/processed/wgi_vdem_modern/dar_koridor_all_years.json',
+    darKoridorByCountry: '/data/processed/wgi_vdem_modern/dar_koridor_by_country.json',
+    wgiDataset: '/data/raw/wgidataset.csv',
+    vdemDataset: '/data/processed/vdem_metadata/vdem_data.json',
+    vdemMindmap: '/data/processed/vdem_metadata/vdem_mindmap_structure.json',
+    historicalMapsIndex: '/data/historical_maps/index.json',
+    historicalNamesMapping: '/data/historical_maps/historical_names.json',
+    historicalMapsBaseDir: '/data/historical_maps/'
 };
 
 export const VDEM_COLOR_SCHEMES = [

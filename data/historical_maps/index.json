@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "title": "ATLAS İnteraktif - Tarihi Haritalar İndeksi",
+    "description": "1789-2024 arası tarihi sınır haritaları için kaynak indeksi",
+    "version": "1.0.0",
+    "created": "2025-11-21",
+    "coverage": {
+      "start_year": 1789,
+      "end_year": 2023,
+      "total_milestones": 16
+    },
+    "sources": [
+      {
+        "name": "Historical Basemaps",
+        "period": "1789-1886",
+        "url": "https://github.com/aourednik/historical-basemaps",
+        "license": "CC BY-SA 4.0",
+        "milestones": 4,
+        "description": "Açık kaynak tarihi sınır haritaları projesi"
+      },
+      {
+        "name": "CShapes 2.0",
+        "period": "1886-2019",
+        "url": "https://icr.ethz.ch/data/cshapes/",
+        "license": "Academic Use",
+        "milestones": 10,
+        "description": "ETH Zürich - Günlük hassasiyetli tarihi sınır veri seti"
+      }
+    ]
+  },
+  "milestones": [
+    {
+      "year": 1783,
+      "path": "processed/1789-1886/world_1783.geojson",
+      "source": "Historical Basemaps",
+      "country_count": 236,
+      "notes": "V-Dem verisinin başlangıcından önce (1789), ancak en yakın mevcut harita"
+    },
+    {
+      "year": 1800,
+      "path": "processed/1789-1886/world_1800.geojson",
+      "source": "Historical Basemaps",
+      "country_count": null
+    },
+    {
+      "year": 1815,
+      "path": "processed/1789-1886/world_1815.geojson",
+      "source": "Historical Basemaps",
+      "country_count": null,
+      "notes": "Napolyon Savaşları sonrası - Viyana Kongresi"
+    },
+    {
+      "year": 1880,
+      "path": "processed/1789-1886/world_1880.geojson",
+      "source": "Historical Basemaps",
+      "country_count": 236
+    },
+    {
+      "year": 1886,
+      "path": "processed/1886-2019/world_1886.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 128,
+      "notes": "CShapes veri setinin başlangıcı - günlük hassasiyet başlar"
+    },
+    {
+      "year": 1900,
+      "path": "processed/1886-2019/world_1900.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 151,
+      "notes": "20. yüzyılın başlangıcı"
+    },
+    {
+      "year": 1914,
+      "path": "processed/1886-2019/world_1914.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 150,
+      "notes": "Birinci Dünya Savaşı başlangıcı"
+    },
+    {
+      "year": 1920,
+      "path": "processed/1886-2019/world_1920.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 167,
+      "notes": "Birinci Dünya Savaşı sonrası - Osmanlı İmparatorluğu'nun sonu"
+    },
+    {
+      "year": 1923,
+      "path": "processed/1886-2019/world_1923.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 169,
+      "notes": "Türkiye Cumhuriyeti'nin kuruluşu (29 Ekim 1923)"
+    },
+    {
+      "year": 1938,
+      "path": "processed/1886-2019/world_1938.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 173,
+      "notes": "İkinci Dünya Savaşı öncesi"
+    },
+    {
+      "year": 1945,
+      "path": "processed/1886-2019/world_1945.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 170,
+      "notes": "İkinci Dünya Savaşı sonu - BM'nin kuruluşu"
+    },
+    {
+      "year": 1960,
+      "path": "processed/1886-2019/world_1960.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 164,
+      "notes": "Afrika'da dekolonizasyon dönemi"
+    },
+    {
+      "year": 1989,
+      "path": "processed/1886-2019/world_1989.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 159,
+      "notes": "Berlin Duvarı'nın yıkılması - Soğuk Savaş'ın sonu"
+    },
+    {
+      "year": 2000,
+      "path": "processed/1886-2019/world_2000.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 177,
+      "notes": "Yeni bin yıl"
+    },
+    {
+      "year": 2019,
+      "path": "processed/1886-2019/world_2019.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 181,
+      "notes": "CShapes veri setinin sonu"
+    },
+    {
+      "year": 2023,
+      "path": "processed/1886-2019/world_2019.geojson",
+      "source": "CShapes 2.0",
+      "country_count": 181,
+      "notes": "2023 için 2019 haritası kullanılıyor (en güncel CShapes verisi)"
+    }
+  ],
+  "year_ranges": {
+    "1789-1799": "1783",
+    "1800-1814": "1800",
+    "1815-1879": "1815",
+    "1880-1885": "1880",
+    "1886-1899": "1886",
+    "1900-1913": "1900",
+    "1914-1919": "1914",
+    "1920-1922": "1920",
+    "1923-1937": "1923",
+    "1938-1944": "1938",
+    "1945-1959": "1945",
+    "1960-1988": "1960",
+    "1989-1999": "1989",
+    "2000-2018": "2000",
+    "2019-2023": "2019"
+  },
+  "usage_notes": {
+    "interpolation": "Belirtilen yıl aralığı için en yakın milestone yılının haritası kullanılır",
+    "precision": {
+      "1789-1886": "Milestone yılları arası ~15-65 yıl",
+      "1886-2019": "Günlük hassasiyet - herhangi bir yıl için extract_year.py ile harita oluşturulabilir",
+      "2020-2023": "2019 haritası kullanılır (en güncel CShapes verisi)"
+    },
+    "custom_extraction": "CShapes için extract_year.py kullanarak 1886-2019 arası herhangi bir yıl için harita oluşturulabilir"
+  }
+}

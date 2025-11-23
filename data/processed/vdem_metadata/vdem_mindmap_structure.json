@@ -1,0 +1,749 @@
+{
+  "id": "vdem_root",
+  "label": "V-Dem Veri Seti (v15)",
+  "type": "root",
+  "children": [
+    {
+      "id": "dashboard",
+      "label": "DASHBOARD: Ana Demokrasi İndeksleri",
+      "type": "category",
+      "description": "Beş temel demokrasi ilkesini ve bunları oluşturan orta seviye bileşenleri içerir",
+      "children": [
+        {
+          "id": "high_level_indices",
+          "label": "Yüksek Seviye Demokrasi İndeksleri",
+          "type": "subcategory",
+          "children": [
+            {
+              "id": "v2x_polyarchy",
+              "label": "Seçimsel Demokrasi İndeksi",
+              "type": "indicator",
+              "columns": ["v2x_polyarchy"]
+            },
+            {
+              "id": "v2x_libdem",
+              "label": "Liberal Demokrasi İndeksi",
+              "type": "indicator",
+              "columns": ["v2x_libdem"]
+            },
+            {
+              "id": "v2x_partipdem",
+              "label": "Katılımcı Demokrasi İndeksi",
+              "type": "indicator",
+              "columns": ["v2x_partipdem"]
+            },
+            {
+              "id": "v2x_delibdem",
+              "label": "Müzakereci Demokrasi İndeksi",
+              "type": "indicator",
+              "columns": ["v2x_delibdem"]
+            },
+            {
+              "id": "v2x_egaldem",
+              "label": "Eşitlikçi Demokrasi İndeksi",
+              "type": "indicator",
+              "columns": ["v2x_egaldem"]
+            }
+          ]
+        },
+        {
+          "id": "mid_level_components",
+          "label": "Orta Seviye Bileşenler",
+          "type": "subcategory",
+          "children": [
+            {
+              "id": "v2x_freexp_altinf",
+              "label": "İfade Özgürlüğü ve Alternatif Bilgi Kaynakları",
+              "type": "indicator",
+              "columns": ["v2x_freexp_altinf"]
+            },
+            {
+              "id": "v2x_frassoc_thick",
+              "label": "Örgütlenme Özgürlüğü",
+              "type": "indicator",
+              "columns": ["v2x_frassoc_thick"]
+            },
+            {
+              "id": "v2xel_frefair",
+              "label": "Temiz Seçimler",
+              "type": "indicator",
+              "columns": ["v2xel_frefair"]
+            },
+            {
+              "id": "v2x_elecoff",
+              "label": "Seçilmiş Yetkililer",
+              "type": "indicator",
+              "columns": ["v2x_elecoff"]
+            },
+            {
+              "id": "v2x_suffr",
+              "label": "Oy Hakkı",
+              "type": "indicator",
+              "columns": ["v2x_suffr"]
+            },
+            {
+              "id": "v2x_liberal",
+              "label": "Liberal Bileşen (Hukukun Üstünlüğü)",
+              "type": "indicator",
+              "columns": ["v2x_liberal"]
+            },
+            {
+              "id": "v2xcl_rol",
+              "label": "Yasa Önünde Eşitlik ve Bireysel Özgürlükler",
+              "type": "indicator",
+              "columns": ["v2xcl_rol"]
+            },
+            {
+              "id": "v2x_jucon",
+              "label": "Yargısal Denetim",
+              "type": "indicator",
+              "columns": ["v2x_jucon"]
+            },
+            {
+              "id": "v2xlg_legcon",
+              "label": "Yasama Denetimi",
+              "type": "indicator",
+              "columns": ["v2xlg_legcon"]
+            },
+            {
+              "id": "v2x_partip",
+              "label": "Katılımcı Bileşen",
+              "type": "indicator",
+              "columns": ["v2x_partip"]
+            },
+            {
+              "id": "v2x_cspart",
+              "label": "Sivil Toplum Katılımı",
+              "type": "indicator",
+              "columns": ["v2x_cspart"]
+            },
+            {
+              "id": "v2xdd_dd",
+              "label": "Doğrudan Halk Oylaması",
+              "type": "indicator",
+              "columns": ["v2xdd_dd"]
+            },
+            {
+              "id": "v2xel_locelec",
+              "label": "Yerel Yönetimler",
+              "type": "indicator",
+              "columns": ["v2xel_locelec"]
+            },
+            {
+              "id": "v2xdl_delib",
+              "label": "Müzakereci Bileşen",
+              "type": "indicator",
+              "columns": ["v2xdl_delib"]
+            },
+            {
+              "id": "v2x_egal",
+              "label": "Eşitlikçi Bileşen",
+              "type": "indicator",
+              "columns": ["v2x_egal"]
+            },
+            {
+              "id": "v2xeg_eqprotec",
+              "label": "Eşit Koruma",
+              "type": "indicator",
+              "columns": ["v2xeg_eqprotec"]
+            },
+            {
+              "id": "v2xeg_eqaccess",
+              "label": "Eşit Erişim",
+              "type": "indicator",
+              "columns": ["v2xeg_eqaccess"]
+            },
+            {
+              "id": "v2xeg_eqdr",
+              "label": "Kaynakların Eşit Dağılımı",
+              "type": "indicator",
+              "columns": ["v2xeg_eqdr"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thematic_indicators",
+      "label": "TEMATİK İNDİKATÖRLER (Detaylı Analiz)",
+      "type": "category",
+      "description": "Kullanıcının derinlemesine analiz yapacağı ana veri havuzu - 15 kategori",
+      "children": [
+        {
+          "id": "3.1",
+          "label": "3.1 Seçimler (Elections)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "3.1.1",
+              "label": "Genel Seçim Verisi & Sistem Türü",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2eltype",
+                  "label": "Seçim Tipi",
+                  "type": "indicator",
+                  "columns": ["v2eltype"]
+                }
+              ]
+            },
+            {
+              "id": "3.1.2",
+              "label": "Oy Hakkı (Suffrage)",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2elsuffrage",
+                  "label": "Nüfusun Oy Hakkı Oranı",
+                  "type": "indicator",
+                  "columns": ["v2elsuffrage"]
+                },
+                {
+                  "id": "v2elage",
+                  "label": "Minimum Oy Kullanma Yaşı",
+                  "type": "indicator",
+                  "columns": ["v2elage"]
+                },
+                {
+                  "id": "v2fsuffrage",
+                  "label": "Kadınların Oy Hakkı",
+                  "type": "indicator",
+                  "columns": ["v2fsuffrage"]
+                },
+                {
+                  "id": "v2msuffrage",
+                  "label": "Erkeklerin Oy Hakkı",
+                  "type": "indicator",
+                  "columns": ["v2msuffrage"]
+                }
+              ]
+            },
+            {
+              "id": "3.1.3",
+              "label": "Seçim Kalitesi",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2elvotbuy",
+                  "label": "Oy Satın Alma",
+                  "type": "indicator",
+                  "columns": ["v2elvotbuy"]
+                },
+                {
+                  "id": "v2elpeace",
+                  "label": "Seçim Şiddeti",
+                  "type": "indicator",
+                  "columns": ["v2elpeace"]
+                },
+                {
+                  "id": "v2elembaut",
+                  "label": "Seçim Kurulu (EMB) Özerkliği",
+                  "type": "indicator",
+                  "columns": ["v2elembaut"]
+                },
+                {
+                  "id": "v2elfrfair",
+                  "label": "Özgür ve Adil Seçim",
+                  "type": "indicator",
+                  "columns": ["v2elfrfair"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3.2",
+          "label": "3.2 Siyasi Partiler",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2psbars",
+              "label": "Partilere Engeller",
+              "type": "indicator",
+              "columns": ["v2psbars"]
+            },
+            {
+              "id": "v2psparban",
+              "label": "Parti Yasakları",
+              "type": "indicator",
+              "columns": ["v2psparban"]
+            },
+            {
+              "id": "v2psoppaut",
+              "label": "Muhalefet Özerkliği",
+              "type": "indicator",
+              "columns": ["v2psoppaut"]
+            }
+          ]
+        },
+        {
+          "id": "3.3",
+          "label": "3.3 Doğrudan Demokrasi",
+          "type": "theme",
+          "children": [
+            {
+              "id": "3.3.1",
+              "label": "Halk Girişimleri (Initiatives)",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2ddlexci",
+                  "label": "Girişimlere İzin Verilmesi",
+                  "type": "indicator",
+                  "columns": ["v2ddlexci"]
+                }
+              ]
+            },
+            {
+              "id": "3.3.2",
+              "label": "Referandumlar",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2ddlexrf",
+                  "label": "Referandumlara İzin",
+                  "type": "indicator",
+                  "columns": ["v2ddlexrf"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3.4",
+          "label": "3.4 Yürütme (Executive)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2exrescon",
+              "label": "Yürütme Anayasaya Saygı",
+              "type": "indicator",
+              "columns": ["v2exrescon"]
+            },
+            {
+              "id": "v2exbribe",
+              "label": "Yürütme Rüşvet",
+              "type": "indicator",
+              "columns": ["v2exbribe"]
+            },
+            {
+              "id": "v2exembez",
+              "label": "Yürütme Zimmet",
+              "type": "indicator",
+              "columns": ["v2exembez"]
+            }
+          ]
+        },
+        {
+          "id": "3.5",
+          "label": "3.5 Rejim (Regime)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2regdur",
+              "label": "Rejim Süresi",
+              "type": "indicator",
+              "columns": ["v2regdur"]
+            }
+          ]
+        },
+        {
+          "id": "3.6",
+          "label": "3.6 Yasama (Legislature)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2lgbicam",
+              "label": "İki Meclisli Yasama",
+              "type": "indicator",
+              "columns": ["v2lgbicam"]
+            },
+            {
+              "id": "v2lgqstexp",
+              "label": "Yasama Sorgulaması",
+              "type": "indicator",
+              "columns": ["v2lgqstexp"]
+            },
+            {
+              "id": "v2lginvstp",
+              "label": "Yasama Soruşturması",
+              "type": "indicator",
+              "columns": ["v2lginvstp"]
+            }
+          ]
+        },
+        {
+          "id": "3.7",
+          "label": "3.7 Müzakere (Deliberation)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2dlreason",
+              "label": "Mantıklı Gerekçelendirme",
+              "type": "indicator",
+              "columns": ["v2dlreason"]
+            },
+            {
+              "id": "v2dlcommon",
+              "label": "Ortak İyi",
+              "type": "indicator",
+              "columns": ["v2dlcommon"]
+            }
+          ]
+        },
+        {
+          "id": "3.8",
+          "label": "3.8 Yargı (Judiciary)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2juhcind",
+              "label": "Yüksek Mahkeme Bağımsızlığı",
+              "type": "indicator",
+              "columns": ["v2juhcind"]
+            },
+            {
+              "id": "v2juncind",
+              "label": "Alt Mahkeme Bağımsızlığı",
+              "type": "indicator",
+              "columns": ["v2juncind"]
+            }
+          ]
+        },
+        {
+          "id": "3.9",
+          "label": "3.9 Sivil Özgürlükler",
+          "type": "theme",
+          "children": [
+            {
+              "id": "3.9.1",
+              "label": "Kişisel Bütünlük Hakları",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2cltort",
+                  "label": "İşkenceden Özgürlük",
+                  "type": "indicator",
+                  "columns": ["v2cltort"]
+                },
+                {
+                  "id": "v2clkill",
+                  "label": "Siyasi Cinayetlerden Özgürlük",
+                  "type": "indicator",
+                  "columns": ["v2clkill"]
+                }
+              ]
+            },
+            {
+              "id": "3.9.3",
+              "label": "Özel ve Siyasi Özgürlükler",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2clrelig",
+                  "label": "Din Özgürlüğü",
+                  "type": "indicator",
+                  "columns": ["v2clrelig"]
+                },
+                {
+                  "id": "v2clfmove",
+                  "label": "Yurt Dışı Seyahat Özgürlüğü",
+                  "type": "indicator",
+                  "columns": ["v2clfmove"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3.10",
+          "label": "3.10 Egemenlik ve Devlet",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2svdomaut",
+              "label": "İç Özerklik",
+              "type": "indicator",
+              "columns": ["v2svdomaut"]
+            },
+            {
+              "id": "v2svinlaut",
+              "label": "Uluslararası Özerklik",
+              "type": "indicator",
+              "columns": ["v2svinlaut"]
+            }
+          ]
+        },
+        {
+          "id": "3.11",
+          "label": "3.11 Sivil Toplum",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2cseeorgs",
+              "label": "STK Giriş ve Çıkış",
+              "type": "indicator",
+              "columns": ["v2cseeorgs"]
+            },
+            {
+              "id": "v2csreprss",
+              "label": "STK Baskısı",
+              "type": "indicator",
+              "columns": ["v2csreprss"]
+            }
+          ]
+        },
+        {
+          "id": "3.12",
+          "label": "3.12 Medya",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2mecenefm",
+              "label": "Hükümet Sansürü (Medya)",
+              "type": "indicator",
+              "columns": ["v2mecenefm"]
+            },
+            {
+              "id": "v2meharjrn",
+              "label": "Gazetecilere Taciz",
+              "type": "indicator",
+              "columns": ["v2meharjrn"]
+            },
+            {
+              "id": "v2meslfcen",
+              "label": "Medya Öz-Sansürü",
+              "type": "indicator",
+              "columns": ["v2meslfcen"]
+            }
+          ]
+        },
+        {
+          "id": "3.13",
+          "label": "3.13 Siyasi Eşitlik",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2pepwrses",
+              "label": "Sosyo-Ekonomik Güç Dağılımı",
+              "type": "indicator",
+              "columns": ["v2pepwrses"]
+            },
+            {
+              "id": "v2peedueq",
+              "label": "Eğitim Eşitliği",
+              "type": "indicator",
+              "columns": ["v2peedueq"]
+            },
+            {
+              "id": "v2pehealth",
+              "label": "Sağlık Eşitliği",
+              "type": "indicator",
+              "columns": ["v2pehealth"]
+            }
+          ]
+        },
+        {
+          "id": "3.14",
+          "label": "3.14 Dışlanma (Exclusion)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "3.14.2",
+              "label": "Cinsiyete Göre Dışlanma",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2clgencl",
+                  "label": "Cinsiyet Eşitliği (Sivil Özgürlükler)",
+                  "type": "indicator",
+                  "columns": ["v2clgencl"]
+                },
+                {
+                  "id": "v2peapsgen",
+                  "label": "Kamu Hizmetlerine Erişim (Cinsiyet)",
+                  "type": "indicator",
+                  "columns": ["v2peapsgen"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3.15",
+          "label": "3.15 Sivil ve Akademik Alan",
+          "type": "theme",
+          "children": [
+            {
+              "id": "3.15.1",
+              "label": "Sivil Alan",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2cacamps",
+                  "label": "Siyasi Kutuplaşma",
+                  "type": "indicator",
+                  "columns": ["v2cacamps"]
+                },
+                {
+                  "id": "v2caviol",
+                  "label": "Siyasi Şiddet",
+                  "type": "indicator",
+                  "columns": ["v2caviol"]
+                }
+              ]
+            },
+            {
+              "id": "3.15.4",
+              "label": "Akademik Özgürlük",
+              "type": "subtheme",
+              "children": [
+                {
+                  "id": "v2cafres",
+                  "label": "Araştırma ve Öğretme Özgürlüğü",
+                  "type": "indicator",
+                  "columns": ["v2cafres"]
+                },
+                {
+                  "id": "v2cainsaut",
+                  "label": "Kurumsal Özerklik",
+                  "type": "indicator",
+                  "columns": ["v2cainsaut"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "special_modules",
+      "label": "ÖZEL MODÜLLER",
+      "type": "category",
+      "description": "Belirli araştırma alanlarına yönelik spesifik veri setleri",
+      "children": [
+        {
+          "id": "digital_society",
+          "label": "Dijital Toplum (Digital Society)",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2smgovdom",
+              "label": "Hükümet Dezenformasyonu (Yerel)",
+              "type": "indicator",
+              "columns": ["v2smgovdom"]
+            },
+            {
+              "id": "v2smgovshut",
+              "label": "Hükümet İnternet Kapatma",
+              "type": "indicator",
+              "columns": ["v2smgovshut"]
+            },
+            {
+              "id": "v2smgovsmmon",
+              "label": "Sosyal Medya İzlemesi",
+              "type": "indicator",
+              "columns": ["v2smgovsmmon"]
+            }
+          ]
+        },
+        {
+          "id": "party_systems",
+          "label": "Parti Sistemleri",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2xpas_democracy",
+              "label": "Parti Sistemi Demokrasi İndeksi",
+              "type": "indicator",
+              "columns": ["v2xpas_democracy"]
+            },
+            {
+              "id": "v2xpas_religion",
+              "label": "Parti Sistemi Din İndeksi",
+              "type": "indicator",
+              "columns": ["v2xpas_religion"]
+            }
+          ]
+        },
+        {
+          "id": "indoctrination",
+          "label": "Endoktrinasyon",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2xed_ed_inpt",
+              "label": "Eğitimde Endoktrinasyon Potansiyeli",
+              "type": "indicator",
+              "columns": ["v2xed_ed_inpt"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "context_external",
+      "label": "BAĞLAM ve DIŞ VERİLER",
+      "type": "category",
+      "description": "Kullanıcının V-Dem verisini kıyaslaması için",
+      "children": [
+        {
+          "id": "other_indices",
+          "label": "Diğer Demokrasi İndeksleri",
+          "type": "theme",
+          "children": [
+            {
+              "id": "v2x_regime",
+              "label": "Regimes of the World",
+              "type": "indicator",
+              "columns": ["v2x_regime"]
+            },
+            {
+              "id": "e_fh_cl",
+              "label": "Freedom House - Sivil Özgürlükler",
+              "type": "indicator",
+              "columns": ["e_fh_cl"]
+            },
+            {
+              "id": "e_fh_pr",
+              "label": "Freedom House - Siyasi Haklar",
+              "type": "indicator",
+              "columns": ["e_fh_pr"]
+            },
+            {
+              "id": "e_polity2",
+              "label": "Polity IV - Polity Skoru",
+              "type": "indicator",
+              "columns": ["e_polity2"]
+            }
+          ]
+        },
+        {
+          "id": "background_factors",
+          "label": "Arka Plan Faktörleri",
+          "type": "theme",
+          "children": [
+            {
+              "id": "e_gdp",
+              "label": "GSYİH",
+              "type": "indicator",
+              "columns": ["e_gdp"]
+            },
+            {
+              "id": "e_gdppc",
+              "label": "Kişi Başı GSYİH",
+              "type": "indicator",
+              "columns": ["e_gdppc"]
+            },
+            {
+              "id": "e_pop",
+              "label": "Nüfus",
+              "type": "indicator",
+              "columns": ["e_pop"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

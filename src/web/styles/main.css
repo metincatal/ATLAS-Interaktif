@@ -31,6 +31,7 @@
 @import './modules/chat.css';
 @import './modules/vdem.css';
 @import './modules/vdem-dashboard.css';
+@import './modules/historical.css';
 
 /* Animations */
 @import './animations/keyframes.css';

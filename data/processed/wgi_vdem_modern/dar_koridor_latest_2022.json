@@ -1,0 +1,1188 @@
+{
+  "year": 2022,
+  "countries": [
+    {
+      "name": "Afghanistan",
+      "statePower": -0.962,
+      "societyPower": -1.947,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Albania",
+      "statePower": -0.106,
+      "societyPower": 0.534,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Algeria",
+      "statePower": -0.192,
+      "societyPower": -1.358,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Angola",
+      "statePower": -0.769,
+      "societyPower": -0.184,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Argentina",
+      "statePower": -0.614,
+      "societyPower": 1.006,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Armenia",
+      "statePower": -0.269,
+      "societyPower": 0.905,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Australia",
+      "statePower": 1.537,
+      "societyPower": 0.554,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Austria",
+      "statePower": 1.748,
+      "societyPower": 0.419,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Azerbaijan",
+      "statePower": 0.36,
+      "societyPower": -2.073,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Bahrain",
+      "statePower": 1.408,
+      "societyPower": -2.308,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Bangladesh",
+      "statePower": -0.488,
+      "societyPower": -0.161,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Barbados",
+      "statePower": 0.343,
+      "societyPower": 0.783,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Belarus",
+      "statePower": -0.332,
+      "societyPower": -2.151,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Belgium",
+      "statePower": 1.381,
+      "societyPower": 0.609,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Benin",
+      "statePower": -0.456,
+      "societyPower": 0.502,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Bhutan",
+      "statePower": 0.9,
+      "societyPower": -0.15,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Bolivarian Republic of Venezuela",
+      "statePower": -1.654,
+      "societyPower": -0.912,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Bolivia",
+      "statePower": -1.202,
+      "societyPower": 0.49,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Bosnia and Herzegovina",
+      "statePower": -0.556,
+      "societyPower": 0.706,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Botswana",
+      "statePower": 0.5,
+      "societyPower": 0.458,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Brazil",
+      "statePower": -0.415,
+      "societyPower": 0.591,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Bulgaria",
+      "statePower": -0.21,
+      "societyPower": 0.638,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Burkina Faso",
+      "statePower": -0.737,
+      "societyPower": 0.815,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Burundi",
+      "statePower": -0.645,
+      "societyPower": -1.78,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Cambodia",
+      "statePower": -0.145,
+      "societyPower": -1.522,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Cameroon",
+      "statePower": -0.776,
+      "societyPower": -0.598,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Canada",
+      "statePower": 1.611,
+      "societyPower": 0.489,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Cape Verde",
+      "statePower": 0.399,
+      "societyPower": 0.649,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Central African Republic",
+      "statePower": -1.72,
+      "societyPower": 0.137,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Chad",
+      "statePower": -1.162,
+      "societyPower": -0.714,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Chile",
+      "statePower": 0.645,
+      "societyPower": 0.59,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "China",
+      "statePower": 1.124,
+      "societyPower": -2.528,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Colombia",
+      "statePower": -0.375,
+      "societyPower": 0.765,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Comoros",
+      "statePower": -1.372,
+      "societyPower": -0.042,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Costa Rica",
+      "statePower": 0.195,
+      "societyPower": 0.936,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Croatia",
+      "statePower": 0.458,
+      "societyPower": 0.364,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Cuba",
+      "statePower": 0.531,
+      "societyPower": -2.413,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Cyprus",
+      "statePower": 0.598,
+      "societyPower": 0.59,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Czechia",
+      "statePower": 1.106,
+      "societyPower": 0.615,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Côte d'Ivoire",
+      "statePower": -0.418,
+      "societyPower": 0.503,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Democratic People's Republic of Korea",
+      "statePower": -0.895,
+      "societyPower": -2.107,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Democratic Republic of the Congo",
+      "statePower": -1.733,
+      "societyPower": 0.229,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Denmark",
+      "statePower": 2.027,
+      "societyPower": 0.629,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Djibouti",
+      "statePower": -0.632,
+      "societyPower": -0.574,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Dominican Republic",
+      "statePower": -0.247,
+      "societyPower": 0.957,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Ecuador",
+      "statePower": -0.65,
+      "societyPower": 0.585,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Egypt",
+      "statePower": 0.529,
+      "societyPower": -2.04,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "El Salvador",
+      "statePower": -0.333,
+      "societyPower": -0.435,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Equatorial Guinea",
+      "statePower": -0.726,
+      "societyPower": -1.865,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Eritrea",
+      "statePower": -0.98,
+      "societyPower": -1.994,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Estonia",
+      "statePower": 1.445,
+      "societyPower": 0.732,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Ethiopia",
+      "statePower": -0.386,
+      "societyPower": -0.302,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Fiji",
+      "statePower": 0.654,
+      "societyPower": -0.08,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Finland",
+      "statePower": 2.05,
+      "societyPower": 0.383,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "France",
+      "statePower": 1.248,
+      "societyPower": 0.575,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Gabon",
+      "statePower": -0.885,
+      "societyPower": 0.526,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Georgia",
+      "statePower": 0.26,
+      "societyPower": 0.849,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Germany",
+      "statePower": 1.594,
+      "societyPower": 0.492,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Ghana",
+      "statePower": -0.245,
+      "societyPower": 0.893,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Greece",
+      "statePower": 0.322,
+      "societyPower": 0.659,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Guatemala",
+      "statePower": -1.089,
+      "societyPower": 0.34,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Guinea",
+      "statePower": -0.869,
+      "societyPower": -0.335,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Guinea-Bissau",
+      "statePower": -1.519,
+      "societyPower": 0.339,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Guyana",
+      "statePower": -0.422,
+      "societyPower": 0.778,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Haiti",
+      "statePower": -1.677,
+      "societyPower": 0.533,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Honduras",
+      "statePower": -1.249,
+      "societyPower": 1.19,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Hong Kong SAR (China)",
+      "statePower": 2.244,
+      "societyPower": -2.079,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Hungary",
+      "statePower": 0.826,
+      "societyPower": -0.755,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Iceland",
+      "statePower": 1.78,
+      "societyPower": 0.459,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "India",
+      "statePower": 0.552,
+      "societyPower": -0.936,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Indonesia",
+      "statePower": -0.087,
+      "societyPower": 0.529,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Iran",
+      "statePower": -0.162,
+      "societyPower": -2.112,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Iraq",
+      "statePower": -1.543,
+      "societyPower": 0.251,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Ireland",
+      "statePower": 1.595,
+      "societyPower": 0.659,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Israel",
+      "statePower": 1.165,
+      "societyPower": 0.258,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Italy",
+      "statePower": 0.236,
+      "societyPower": 0.899,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Jamaica",
+      "statePower": -0.032,
+      "societyPower": 1.013,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Japan",
+      "statePower": 1.779,
+      "societyPower": 0.438,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Jordan",
+      "statePower": 0.563,
+      "societyPower": -0.618,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Kazakhstan",
+      "statePower": 0.235,
+      "societyPower": -1.031,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Kenya",
+      "statePower": -0.554,
+      "societyPower": 0.992,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Kosovo",
+      "statePower": -0.352,
+      "societyPower": 0.67,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Kuwait",
+      "statePower": 0.59,
+      "societyPower": -0.694,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Kyrgyzstan",
+      "statePower": -0.959,
+      "societyPower": -0.139,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Lao PDR",
+      "statePower": 0.071,
+      "societyPower": -2.198,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Latvia",
+      "statePower": 0.817,
+      "societyPower": 0.697,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Lebanon",
+      "statePower": -1.297,
+      "societyPower": 0.618,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Lesotho",
+      "statePower": -0.775,
+      "societyPower": 1.01,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Liberia",
+      "statePower": -1.256,
+      "societyPower": 0.903,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Libya",
+      "statePower": -1.803,
+      "societyPower": 0.545,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Lithuania",
+      "statePower": 1.06,
+      "societyPower": 0.514,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Luxembourg",
+      "statePower": 1.838,
+      "societyPower": 0.616,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Madagascar",
+      "statePower": -1.091,
+      "societyPower": 0.955,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Malawi",
+      "statePower": -0.503,
+      "societyPower": 0.835,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Malaysia",
+      "statePower": 0.934,
+      "societyPower": -0.187,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Maldives",
+      "statePower": 0.136,
+      "societyPower": 0.016,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Mali",
+      "statePower": -1.042,
+      "societyPower": 0.336,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Malta",
+      "statePower": 0.752,
+      "societyPower": 0.646,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Mauritania",
+      "statePower": -0.56,
+      "societyPower": 0.056,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Mauritius",
+      "statePower": 0.87,
+      "societyPower": 0.213,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Mexico",
+      "statePower": -0.702,
+      "societyPower": 0.382,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Moldova",
+      "statePower": -0.417,
+      "societyPower": 0.887,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Mongolia",
+      "statePower": -0.269,
+      "societyPower": 0.391,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Montenegro",
+      "statePower": -0.155,
+      "societyPower": 0.653,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Morocco",
+      "statePower": 0.064,
+      "societyPower": -0.572,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Mozambique",
+      "statePower": -0.901,
+      "societyPower": 0.191,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Myanmar",
+      "statePower": -0.761,
+      "societyPower": -1.845,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Namibia",
+      "statePower": 0.333,
+      "societyPower": 0.669,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Nepal",
+      "statePower": -0.771,
+      "societyPower": 0.866,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Netherlands",
+      "statePower": 1.798,
+      "societyPower": 0.358,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "New Zealand",
+      "statePower": 1.737,
+      "societyPower": 0.522,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Nicaragua",
+      "statePower": -0.552,
+      "societyPower": -2.082,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Niger",
+      "statePower": -0.633,
+      "societyPower": 0.734,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Nigeria",
+      "statePower": -1.129,
+      "societyPower": 0.811,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "North Macedonia",
+      "statePower": -0.073,
+      "societyPower": 0.445,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Norway",
+      "statePower": 1.917,
+      "societyPower": 0.608,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Pakistan",
+      "statePower": -0.603,
+      "societyPower": 0.215,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Panama",
+      "statePower": -0.334,
+      "societyPower": 0.568,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Papua New Guinea",
+      "statePower": -0.77,
+      "societyPower": 0.961,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Paraguay",
+      "statePower": -0.673,
+      "societyPower": 0.578,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Peru",
+      "statePower": -0.664,
+      "societyPower": 0.86,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Philippines",
+      "statePower": -0.373,
+      "societyPower": 0.339,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Poland",
+      "statePower": 0.598,
+      "societyPower": -0.088,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Portugal",
+      "statePower": 1.106,
+      "societyPower": 0.498,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Republic of Korea",
+      "statePower": 1.23,
+      "societyPower": 0.321,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Republic of Yemen",
+      "statePower": -1.4,
+      "societyPower": -1.114,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Republic of the Congo",
+      "statePower": -0.77,
+      "societyPower": -1.325,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Romania",
+      "statePower": 0.342,
+      "societyPower": 0.447,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Rwanda",
+      "statePower": 0.98,
+      "societyPower": -1.865,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Saudi Arabia",
+      "statePower": 1.383,
+      "societyPower": -2.375,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Senegal",
+      "statePower": -0.342,
+      "societyPower": 1.017,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Serbia",
+      "statePower": 0.23,
+      "societyPower": -0.338,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Seychelles",
+      "statePower": 0.595,
+      "societyPower": 0.463,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Sierra Leone",
+      "statePower": -1.112,
+      "societyPower": 0.983,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Singapore",
+      "statePower": 2.726,
+      "societyPower": -1.688,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Slovakia",
+      "statePower": 0.512,
+      "societyPower": 0.528,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Slovenia",
+      "statePower": 1.083,
+      "societyPower": 0.496,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Solomon Islands",
+      "statePower": -0.401,
+      "societyPower": 0.813,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Somalia",
+      "statePower": -2.192,
+      "societyPower": -0.0,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "South Africa",
+      "statePower": -0.117,
+      "societyPower": 0.866,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "South Sudan",
+      "statePower": -1.482,
+      "societyPower": -1.613,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Spain",
+      "statePower": 0.818,
+      "societyPower": 0.754,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Sri Lanka",
+      "statePower": -0.001,
+      "societyPower": -0.114,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Sudan",
+      "statePower": -1.169,
+      "societyPower": -0.359,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Suriname",
+      "statePower": -0.498,
+      "societyPower": 1.008,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Sweden",
+      "statePower": 1.77,
+      "societyPower": 0.584,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Switzerland",
+      "statePower": 1.931,
+      "societyPower": 0.592,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Syrian Arab Republic",
+      "statePower": -1.244,
+      "societyPower": -1.891,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "São Tomé and Príncipe",
+      "statePower": -0.666,
+      "societyPower": 0.607,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Taiwan",
+      "statePower": 1.346,
+      "societyPower": 0.551,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Tajikistan",
+      "statePower": -0.401,
+      "societyPower": -1.927,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Tanzania",
+      "statePower": -0.317,
+      "societyPower": -0.123,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Thailand",
+      "statePower": 0.406,
+      "societyPower": -0.752,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "The Gambia",
+      "statePower": -0.54,
+      "societyPower": 0.75,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Timor-Leste",
+      "statePower": -0.95,
+      "societyPower": 0.945,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Togo",
+      "statePower": -0.534,
+      "societyPower": 0.171,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Trinidad and Tobago",
+      "statePower": -0.324,
+      "societyPower": 0.947,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Tunisia",
+      "statePower": -0.102,
+      "societyPower": 0.34,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Turkmenistan",
+      "statePower": -0.601,
+      "societyPower": -2.171,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Türkiye",
+      "statePower": 0.262,
+      "societyPower": -1.606,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Uganda",
+      "statePower": -0.137,
+      "societyPower": -1.012,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "Ukraine",
+      "statePower": -0.587,
+      "societyPower": -0.028,
+      "leviathanType": "Paper",
+      "cluster": 1
+    },
+    {
+      "name": "United Kingdom",
+      "statePower": 1.411,
+      "societyPower": 0.578,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "United States of America",
+      "statePower": 1.324,
+      "societyPower": 0.758,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Uruguay",
+      "statePower": 0.843,
+      "societyPower": 0.581,
+      "leviathanType": "Shackled",
+      "cluster": 0
+    },
+    {
+      "name": "Uzbekistan",
+      "statePower": -0.067,
+      "societyPower": -1.488,
+      "leviathanType": "Despotic",
+      "cluster": 2
+    },
+    {
+      "name": "Vanuatu",
+      "statePower": -0.017,
+      "societyPower": 0.937,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Zambia",
+      "statePower": -0.737,
+      "societyPower": 0.967,
+      "leviathanType": "Absent",
+      "cluster": 3
+    },
+    {
+      "name": "Zimbabwe",
+      "statePower": -1.15,
+      "societyPower": -0.306,
+      "leviathanType": "Paper",
+      "cluster": 1
+    }
+  ]
+}

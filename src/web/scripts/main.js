@@ -16,6 +16,14 @@ import { setupChat } from './modules/chat/chat-manager.js';
 import { loadDarKoridorData } from './modules/corridor/corridor-data.js';
 import { setupVdemExperience } from './modules/vdem/vdem-manager.js';
 
+// Historical Maps
+import {
+    loadHistoricalMapsData,
+    enableHistoricalMaps,
+    disableHistoricalMaps,
+    renderTimelineMilestones
+} from './modules/historical/historical-maps.js';
+
 /**
  * Uygulama başlatma
  */
@@ -32,20 +40,23 @@ window.addEventListener('DOMContentLoaded', async () => {
     try {
         console.log('1️⃣ Sayfa navigasyonu kuruluyor...');
         setupNavigation();
-        
+
         console.log('2️⃣ Dar Koridor verileri yükleniyor...');
         await loadDarKoridorData();
-        
+
         console.log('3️⃣ Panel ve Chat sistemi kuruluyor...');
         setupPanelAndChat();
         setupChat();
-        
+
         console.log('4️⃣ V-Dem deneyimi hazırlanıyor...');
         setupVdemExperience();
-        
+
+        console.log('5️⃣ Historical Maps verileri yükleniyor...');
+        await loadHistoricalMapsData();
+
         console.log('✓ ATLAS İnteraktif başlatıldı');
-        console.log('⚠️ Not: WGI ve bazı özellikler kademeli olarak eklenecek');
-        
+        console.log('📜 Historical Maps: 1789-2024 arası tarihi sınırlar hazır');
+
     } catch (error) {
         console.error('❌ Başlatma hatası:', error);
         console.error('Hata detayı:', error.message);

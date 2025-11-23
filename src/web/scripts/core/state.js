@@ -40,6 +40,15 @@ export const state = {
     currentVdemBreadcrumbs: [],
     vdemListenersBound: false,
 
+    // Historical Maps
+    historicalMapsEnabled: false,
+    historicalMapsIndex: null,
+    historicalNamesMapping: null,
+    currentHistoricalYear: 1789,
+    currentHistoricalMilestone: null,
+    historicalMapData: null,
+    historicalListenersBound: false,
+
     // Flat Map
     flatMapInitialized: false,
     flatSvg: null,

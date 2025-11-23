@@ -1,0 +1,376 @@
+/* Historical Maps Modülü - Compact Design */
+
+/* Historical Maps Preload Progress Bar */
+.historical-preload-progress {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 90%;
+    max-width: 600px;
+    background: rgba(10, 15, 30, 0.95);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    animation: slideUpFade 0.4s ease-out;
+}
+
+.preload-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.preload-icon {
+    font-size: 2rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.preload-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.preload-title {
+    color: #f4d7a7;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.preload-status {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+}
+
+.preload-bar-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.preload-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #d4a574 0%, #f4d7a7 50%, #d4a574 100%);
+    background-size: 200% 100%;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.3s ease;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Compact Historical Slider Container */
+.historical-slider-compact {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 95;
+    width: 88%;
+    max-width: 1100px;
+    min-width: 600px;
+    background: linear-gradient(135deg, rgba(10, 15, 30, 0.94) 0%, rgba(15, 20, 35, 0.92) 100%);
+    border: 1.5px solid rgba(212, 165, 116, 0.35);
+    border-radius: 20px;
+    padding: 14px 24px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7),
+                0 0 1px 1px rgba(244, 215, 167, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px) saturate(1.2);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.historical-slider-compact:hover {
+    border-color: rgba(244, 215, 167, 0.5);
+    box-shadow: 0 16px 56px rgba(0, 0, 0, 0.8),
+                0 0 2px 1px rgba(244, 215, 167, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateX(-50%) translateY(-2px);
+}
+
+/* Slider Wrapper */
+.slider-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Timeline with Slider */
+.timeline-with-slider {
+    position: relative;
+    width: 100%;
+}
+
+/* Timeline Milestone Markers */
+.timeline-milestone-markers {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 16px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.timeline-milestone {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: rgba(212, 165, 116, 0.5);
+    border: 1.5px solid rgba(244, 215, 167, 0.6);
+    border-radius: 50%;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.timeline-milestone:hover {
+    transform: translate(-50%, -50%) scale(1.6);
+    background: rgba(244, 215, 167, 0.9);
+    border-color: #fff;
+    box-shadow: 0 0 8px rgba(244, 215, 167, 0.6),
+                0 0 0 2px rgba(244, 215, 167, 0.2);
+    z-index: 3;
+}
+
+.timeline-milestone.important {
+    width: 8px;
+    height: 8px;
+    background: rgba(212, 165, 116, 0.8);
+    border: 2px solid rgba(244, 215, 167, 0.9);
+}
+
+.timeline-milestone.important:hover {
+    transform: translate(-50%, -50%) scale(2);
+    background: #d4a574;
+}
+
+/* Historical Year Slider */
+#historical-year-slider {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(
+        to right,
+        rgba(139, 90, 60, 0.4) 0%,
+        rgba(212, 165, 116, 0.5) 25%,
+        rgba(244, 215, 167, 0.6) 50%,
+        rgba(212, 165, 116, 0.5) 75%,
+        rgba(139, 90, 60, 0.4) 100%
+    );
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+#historical-year-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f4d7a7 0%, #e8c690 50%, #d4a574 100%);
+    border: 2.5px solid rgba(15, 10, 8, 0.95);
+    cursor: grab;
+    box-shadow: 0 3px 10px rgba(212, 165, 116, 0.6),
+                0 0 0 0 rgba(244, 215, 167, 0),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+#historical-year-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+    box-shadow: 0 4px 16px rgba(212, 165, 116, 0.8),
+                0 0 0 5px rgba(244, 215, 167, 0.2),
+                inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, #fce4b8 0%, #f4d7a7 50%, #e8c690 100%);
+}
+
+#historical-year-slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: 0 2px 12px rgba(212, 165, 116, 0.7),
+                0 0 0 4px rgba(244, 215, 167, 0.25),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+#historical-year-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f4d7a7 0%, #e8c690 50%, #d4a574 100%);
+    border: 2.5px solid rgba(15, 10, 8, 0.95);
+    cursor: grab;
+    box-shadow: 0 3px 10px rgba(212, 165, 116, 0.6),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#historical-year-slider::-moz-range-thumb:hover {
+    transform: scale(1.25);
+    background: linear-gradient(135deg, #fce4b8 0%, #f4d7a7 50%, #e8c690 100%);
+}
+
+#historical-year-slider::-moz-range-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+}
+
+/* Year Info Compact */
+.year-info-compact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(10, 5, 0, 0.35) 100%);
+    border-radius: 12px;
+    border: 1.5px solid rgba(212, 165, 116, 0.3);
+    white-space: nowrap;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3),
+                0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.year-info-compact:hover {
+    border-color: rgba(244, 215, 167, 0.45);
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.45) 0%, rgba(15, 10, 5, 0.4) 100%);
+}
+
+.year-label-compact {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.year-value-compact {
+    color: #f4d7a7;
+    font-size: 1.2rem;
+    font-weight: 800;
+    min-width: 52px;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5),
+                 0 0 12px rgba(244, 215, 167, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.source-divider {
+    color: rgba(212, 165, 116, 0.5);
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.source-label-compact {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.825rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.source-value-compact {
+    color: #e8c690;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .historical-slider-compact {
+        width: 95%;
+        min-width: 500px;
+        padding: 10px 16px;
+        gap: 12px;
+    }
+
+    .year-value-compact {
+        font-size: 1rem;
+    }
+
+    .source-value-compact {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .historical-slider-compact {
+        width: 95%;
+        min-width: unset;
+        flex-direction: column;
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .slider-wrapper {
+        width: 100%;
+    }
+
+    .year-info-compact {
+        width: 100%;
+        justify-content: center;
+        font-size: 0.9rem;
+    }
+
+    .timeline-milestone {
+        width: 5px;
+        height: 5px;
+    }
+
+    .timeline-milestone.important {
+        width: 7px;
+        height: 7px;
+    }
+
+    #historical-year-slider::-webkit-slider-thumb {
+        width: 14px;
+        height: 14px;
+    }
+
+    #historical-year-slider::-moz-range-thumb {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Animation for slider appearance */
+.historical-slider-compact {
+    animation: slideUpFade 0.4s ease-out;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
