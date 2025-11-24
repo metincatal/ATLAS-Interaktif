@@ -13,7 +13,8 @@ import {
     renderTimelineMilestones,
     setupHistoricalEventListeners,
     getMilestoneForYear,
-    loadHistoricalMap
+    loadHistoricalMap,
+    loadCapitalPointsToGlobe
 } from '../modules/historical/historical-maps.js';
 
 /**

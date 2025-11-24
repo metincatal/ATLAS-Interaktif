@@ -6,6 +6,7 @@
 import { state, setState } from '../../core/state.js';
 import { DATA_PATHS, COUNTRY_NAME_MAP } from '../../config/constants.js';
 import { loadHistoricalMapToGlobe } from '../../core/globe.js';
+import { openCountryPanel } from '../panel/panel-manager.js';
 
 // Map cache - Yüklenen haritaları sakla
 const mapCache = new Map();
@@ -122,11 +123,20 @@ export async function loadHistoricalMapsData() {
         const namesData = await namesResponse.json();
         setState('historicalNamesMapping', namesData);
 
+        // Başkent koordinatlarını yükle
+        const capitalsResponse = await fetch(DATA_PATHS.capitalCoordinates);
+        if (!capitalsResponse.ok) {
+            throw new Error(`Capital coordinates yükleme hatası: ${capitalsResponse.status}`);
+        }
+        const capitalsData = await capitalsResponse.json();
+        setState('capitalCoordinates', capitalsData);
+
         console.log('✓ Historical Maps verileri yüklendi:', {
             totalMilestones: indexData.milestones.length,
             yearCoverage: `${indexData.metadata.coverage.start_year}-${indexData.metadata.coverage.end_year}`,
             sources: indexData.metadata.sources.length,
-            namedCountries: namesData.mappings.length
+            namedCountries: namesData.mappings.length,
+            capitalCountries: Object.keys(capitalsData.capitals).length
         });
 
         return true;
@@ -186,6 +196,9 @@ export async function loadHistoricalMap(milestone, year = null) {
             const displayYear = year || milestone.year;
             loadHistoricalMapToGlobe(mapData, milestone, displayYear);
 
+            // Başkent noktalarını yükle
+            loadCapitalPointsToGlobe(displayYear);
+
             return mapData;
         }
 
@@ -214,6 +227,9 @@ export async function loadHistoricalMap(milestone, year = null) {
         // Globe'a yükle
         const displayYear = year || milestone.year;
         loadHistoricalMapToGlobe(mapData, milestone, displayYear);
+
+        // Başkent noktalarını yükle
+        loadCapitalPointsToGlobe(displayYear);
 
         return mapData;
     } catch (error) {
@@ -501,6 +517,8 @@ export function setupHistoricalEventListeners() {
                 const mapData = state.historicalMapData;
                 if (mapData) {
                     loadHistoricalMapToGlobe(mapData, newMilestone, year);
+                    // Başkent noktalarını güncelle
+                    loadCapitalPointsToGlobe(year);
                     lastLoadedYear = year;
                 }
             }
@@ -592,4 +610,126 @@ export function renderTimelineMilestones() {
     });
 
     console.log(`✓ ${milestones.length} milestone marker oluşturuldu`);
+}
+
+/**
+ * Belirli bir ülke için belirli bir yıldaki başkent konumunu bulur
+ * @param {string} vdemName - V-Dem ülke adı
+ * @param {number} year - Hedef yıl
+ * @returns {Object|null} Başkent bilgisi {capital, lat, lng}
+ */
+export function getCapitalForYear(vdemName, year) {
+    const capitalsData = state.capitalCoordinates;
+    if (!capitalsData || !capitalsData.capitals) {
+        return null;
+    }
+
+    const countryCapitals = capitalsData.capitals[vdemName];
+    if (!countryCapitals) {
+        return null;
+    }
+
+    // Yıla uygun başkenti bul
+    const capitalPeriod = countryCapitals.find(period =>
+        period.start_year <= year && year <= period.end_year
+    );
+
+    return capitalPeriod || null;
+}
+
+/**
+ * Belirli bir yıl için tüm başkent noktalarını oluşturur
+ * @param {number} year - Hedef yıl
+ * @returns {Array} Başkent noktaları listesi
+ */
+export function getCapitalPointsForYear(year) {
+    const capitalsData = state.capitalCoordinates;
+    const namesData = state.historicalNamesMapping;
+
+    if (!capitalsData || !namesData) {
+        return [];
+    }
+
+    const points = [];
+
+    // Tüm ülkeler için başkent noktalarını oluştur
+    Object.keys(capitalsData.capitals).forEach(vdemName => {
+        const capitalInfo = getCapitalForYear(vdemName, year);
+        if (!capitalInfo) {
+            return;
+        }
+
+        // Tarihi adı bul
+        const historicalPeriod = getHistoricalName(vdemName, year);
+        const displayName = historicalPeriod ? historicalPeriod.display_name : vdemName;
+
+        points.push({
+            lat: capitalInfo.lat,
+            lng: capitalInfo.lng,
+            vdemName: vdemName,
+            displayName: displayName,
+            capital: capitalInfo.capital,
+            year: year
+        });
+    });
+
+    return points;
+}
+
+/**
+ * Başkent noktası için tooltip metni oluşturur
+ * @param {Object} point - Başkent noktası
+ * @returns {string} Tooltip HTML
+ */
+export function createCapitalTooltip(point) {
+    let tooltip = `<strong>${point.displayName}</strong>`;
+
+    if (point.capital) {
+        tooltip += `<br><small>${point.capital}</small>`;
+    }
+
+    return tooltip;
+}
+
+/**
+ * Başkent noktalarını globe'a yükler
+ * @param {number} year - Hedef yıl
+ */
+export function loadCapitalPointsToGlobe(year) {
+    const globe = state.globe;
+    if (!globe) {
+        console.warn('⚠️  Globe hazır değil');
+        return;
+    }
+
+    const points = getCapitalPointsForYear(year);
+
+    if (points.length === 0) {
+        console.warn('⚠️  Başkent noktası bulunamadı');
+        return;
+    }
+
+    // Globe'a noktaları ekle
+    globe
+        .pointsData(points)
+        .pointLat(d => d.lat)
+        .pointLng(d => d.lng)
+        .pointColor(() => '#ffffff')
+        .pointAltitude(0.01)
+        .pointRadius(0.3)
+        .pointLabel(d => createCapitalTooltip(d))
+        .onPointClick((point) => {
+            if (point && point.vdemName) {
+                console.log(`🗺️  Başkent noktasına tıklandı: ${point.displayName}`);
+                openCountryPanel(point.vdemName);
+            }
+        })
+        .onPointHover((point) => {
+            if (globe && globe.controls()) {
+                // Hover durumunda cursor pointer yap
+                document.body.style.cursor = point ? 'pointer' : 'default';
+            }
+        });
+
+    console.log(`✓ ${points.length} başkent noktası yüklendi (${year})`);
 }

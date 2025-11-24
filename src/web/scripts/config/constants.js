@@ -89,7 +89,8 @@ export const DATA_PATHS = {
     vdemMindmap: '/data/processed/vdem_metadata/vdem_mindmap_structure.json',
     historicalMapsIndex: '/data/historical_maps/index.json',
     historicalNamesMapping: '/data/historical_maps/historical_names.json',
-    historicalMapsBaseDir: '/data/historical_maps/'
+    historicalMapsBaseDir: '/data/historical_maps/',
+    capitalCoordinates: '/data/historical_maps/capital_coordinates.json'
 };
 
 export const VDEM_COLOR_SCHEMES = [

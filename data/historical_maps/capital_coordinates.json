@@ -1,0 +1,599 @@
+{
+  "metadata": {
+    "title": "Tarihi Başkent Koordinatları",
+    "description": "Ülkelerin tarihi dönemlere göre başkent koordinatları (lat, lng)",
+    "version": "1.0.0",
+    "created": "2025-11-25",
+    "note": "V-Dem ülke adları ile eşleştirilmiştir. Başkent yoksa coğrafi merkez kullanılır."
+  },
+  "capitals": {
+    "Türkiye": [
+      {
+        "start_year": 1789,
+        "end_year": 1923,
+        "capital": "İstanbul",
+        "lat": 41.0082,
+        "lng": 28.9784
+      },
+      {
+        "start_year": 1923,
+        "end_year": 2024,
+        "capital": "Ankara",
+        "lat": 39.9334,
+        "lng": 32.8597
+      }
+    ],
+    "Russia": [
+      {
+        "start_year": 1789,
+        "end_year": 1918,
+        "capital": "St. Petersburg",
+        "lat": 59.9343,
+        "lng": 30.3351
+      },
+      {
+        "start_year": 1918,
+        "end_year": 2024,
+        "capital": "Moskova",
+        "lat": 55.7558,
+        "lng": 37.6173
+      }
+    ],
+    "Germany": [
+      {
+        "start_year": 1789,
+        "end_year": 1871,
+        "capital": "Berlin (Prusya)",
+        "lat": 52.5200,
+        "lng": 13.4050
+      },
+      {
+        "start_year": 1871,
+        "end_year": 2024,
+        "capital": "Berlin",
+        "lat": 52.5200,
+        "lng": 13.4050
+      }
+    ],
+    "German Democratic Republic": [
+      {
+        "start_year": 1949,
+        "end_year": 1990,
+        "capital": "Doğu Berlin",
+        "lat": 52.5200,
+        "lng": 13.4050
+      }
+    ],
+    "Austria": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Viyana",
+        "lat": 48.2082,
+        "lng": 16.3738
+      }
+    ],
+    "Hungary": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Budapeşte",
+        "lat": 47.4979,
+        "lng": 19.0402
+      }
+    ],
+    "France": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Paris",
+        "lat": 48.8566,
+        "lng": 2.3522
+      }
+    ],
+    "United Kingdom": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Londra",
+        "lat": 51.5074,
+        "lng": -0.1278
+      }
+    ],
+    "United States of America": [
+      {
+        "start_year": 1789,
+        "end_year": 1800,
+        "capital": "Philadelphia",
+        "lat": 39.9526,
+        "lng": -75.1652
+      },
+      {
+        "start_year": 1800,
+        "end_year": 2024,
+        "capital": "Washington D.C.",
+        "lat": 38.9072,
+        "lng": -77.0369
+      }
+    ],
+    "China": [
+      {
+        "start_year": 1789,
+        "end_year": 1912,
+        "capital": "Pekin",
+        "lat": 39.9042,
+        "lng": 116.4074
+      },
+      {
+        "start_year": 1912,
+        "end_year": 1949,
+        "capital": "Nankin",
+        "lat": 32.0603,
+        "lng": 118.7969
+      },
+      {
+        "start_year": 1949,
+        "end_year": 2024,
+        "capital": "Pekin",
+        "lat": 39.9042,
+        "lng": 116.4074
+      }
+    ],
+    "Taiwan": [
+      {
+        "start_year": 1945,
+        "end_year": 2024,
+        "capital": "Taipei",
+        "lat": 25.0330,
+        "lng": 121.5654
+      }
+    ],
+    "Japan": [
+      {
+        "start_year": 1789,
+        "end_year": 1868,
+        "capital": "Edo (Tokyo)",
+        "lat": 35.6762,
+        "lng": 139.6503
+      },
+      {
+        "start_year": 1868,
+        "end_year": 2024,
+        "capital": "Tokyo",
+        "lat": 35.6762,
+        "lng": 139.6503
+      }
+    ],
+    "India": [
+      {
+        "start_year": 1789,
+        "end_year": 1911,
+        "capital": "Kalküta",
+        "lat": 22.5726,
+        "lng": 88.3639
+      },
+      {
+        "start_year": 1911,
+        "end_year": 2024,
+        "capital": "Yeni Delhi",
+        "lat": 28.6139,
+        "lng": 77.2090
+      }
+    ],
+    "Pakistan": [
+      {
+        "start_year": 1947,
+        "end_year": 1959,
+        "capital": "Karaçi",
+        "lat": 24.8607,
+        "lng": 67.0011
+      },
+      {
+        "start_year": 1959,
+        "end_year": 2024,
+        "capital": "İslamabad",
+        "lat": 33.6844,
+        "lng": 73.0479
+      }
+    ],
+    "Bangladesh": [
+      {
+        "start_year": 1971,
+        "end_year": 2024,
+        "capital": "Dakka",
+        "lat": 23.8103,
+        "lng": 90.4125
+      }
+    ],
+    "Italy": [
+      {
+        "start_year": 1789,
+        "end_year": 1861,
+        "capital": "Torino",
+        "lat": 45.0703,
+        "lng": 7.6869
+      },
+      {
+        "start_year": 1861,
+        "end_year": 2024,
+        "capital": "Roma",
+        "lat": 41.9028,
+        "lng": 12.4964
+      }
+    ],
+    "Spain": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Madrid",
+        "lat": 40.4168,
+        "lng": -3.7038
+      }
+    ],
+    "Portugal": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Lizbon",
+        "lat": 38.7223,
+        "lng": -9.1393
+      }
+    ],
+    "Netherlands": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Amsterdam",
+        "lat": 52.3676,
+        "lng": 4.9041
+      }
+    ],
+    "Belgium": [
+      {
+        "start_year": 1831,
+        "end_year": 2024,
+        "capital": "Brüksel",
+        "lat": 50.8503,
+        "lng": 4.3517
+      }
+    ],
+    "Switzerland": [
+      {
+        "start_year": 1848,
+        "end_year": 2024,
+        "capital": "Bern",
+        "lat": 46.9480,
+        "lng": 7.4474
+      }
+    ],
+    "Sweden": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Stokholm",
+        "lat": 59.3293,
+        "lng": 18.0686
+      }
+    ],
+    "Norway": [
+      {
+        "start_year": 1814,
+        "end_year": 2024,
+        "capital": "Oslo",
+        "lat": 59.9139,
+        "lng": 10.7522
+      }
+    ],
+    "Denmark": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Kopenhag",
+        "lat": 55.6761,
+        "lng": 12.5683
+      }
+    ],
+    "Finland": [
+      {
+        "start_year": 1812,
+        "end_year": 2024,
+        "capital": "Helsinki",
+        "lat": 60.1699,
+        "lng": 24.9384
+      }
+    ],
+    "Poland": [
+      {
+        "start_year": 1596,
+        "end_year": 2024,
+        "capital": "Varşova",
+        "lat": 52.2297,
+        "lng": 21.0122
+      }
+    ],
+    "Czechia": [
+      {
+        "start_year": 1918,
+        "end_year": 2024,
+        "capital": "Prag",
+        "lat": 50.0755,
+        "lng": 14.4378
+      }
+    ],
+    "Slovakia": [
+      {
+        "start_year": 1993,
+        "end_year": 2024,
+        "capital": "Bratislava",
+        "lat": 48.1486,
+        "lng": 17.1077
+      }
+    ],
+    "Romania": [
+      {
+        "start_year": 1862,
+        "end_year": 2024,
+        "capital": "Bükreş",
+        "lat": 44.4268,
+        "lng": 26.1025
+      }
+    ],
+    "Bulgaria": [
+      {
+        "start_year": 1879,
+        "end_year": 2024,
+        "capital": "Sofya",
+        "lat": 42.6977,
+        "lng": 23.3219
+      }
+    ],
+    "Greece": [
+      {
+        "start_year": 1834,
+        "end_year": 2024,
+        "capital": "Atina",
+        "lat": 37.9838,
+        "lng": 23.7275
+      }
+    ],
+    "Serbia": [
+      {
+        "start_year": 1841,
+        "end_year": 2024,
+        "capital": "Belgrad",
+        "lat": 44.7866,
+        "lng": 20.4489
+      }
+    ],
+    "Croatia": [
+      {
+        "start_year": 1991,
+        "end_year": 2024,
+        "capital": "Zagreb",
+        "lat": 45.8150,
+        "lng": 15.9819
+      }
+    ],
+    "Bosnia and Herzegovina": [
+      {
+        "start_year": 1992,
+        "end_year": 2024,
+        "capital": "Saraybosna",
+        "lat": 43.8564,
+        "lng": 18.4131
+      }
+    ],
+    "Iran": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Tahran",
+        "lat": 35.6892,
+        "lng": 51.3890
+      }
+    ],
+    "Iraq": [
+      {
+        "start_year": 1920,
+        "end_year": 2024,
+        "capital": "Bağdat",
+        "lat": 33.3152,
+        "lng": 44.3661
+      }
+    ],
+    "Saudi Arabia": [
+      {
+        "start_year": 1932,
+        "end_year": 2024,
+        "capital": "Riyad",
+        "lat": 24.7136,
+        "lng": 46.6753
+      }
+    ],
+    "Egypt": [
+      {
+        "start_year": 1789,
+        "end_year": 2024,
+        "capital": "Kahire",
+        "lat": 30.0444,
+        "lng": 31.2357
+      }
+    ],
+    "South Africa": [
+      {
+        "start_year": 1910,
+        "end_year": 2024,
+        "capital": "Pretoria",
+        "lat": -25.7479,
+        "lng": 28.2293
+      }
+    ],
+    "Ethiopia": [
+      {
+        "start_year": 1889,
+        "end_year": 2024,
+        "capital": "Addis Ababa",
+        "lat": 9.0320,
+        "lng": 38.7469
+      }
+    ],
+    "Brazil": [
+      {
+        "start_year": 1789,
+        "end_year": 1960,
+        "capital": "Rio de Janeiro",
+        "lat": -22.9068,
+        "lng": -43.1729
+      },
+      {
+        "start_year": 1960,
+        "end_year": 2024,
+        "capital": "Brasília",
+        "lat": -15.8267,
+        "lng": -47.9218
+      }
+    ],
+    "Argentina": [
+      {
+        "start_year": 1810,
+        "end_year": 2024,
+        "capital": "Buenos Aires",
+        "lat": -34.6037,
+        "lng": -58.3816
+      }
+    ],
+    "Mexico": [
+      {
+        "start_year": 1821,
+        "end_year": 2024,
+        "capital": "Mexico City",
+        "lat": 19.4326,
+        "lng": -99.1332
+      }
+    ],
+    "Canada": [
+      {
+        "start_year": 1867,
+        "end_year": 2024,
+        "capital": "Ottawa",
+        "lat": 45.4215,
+        "lng": -75.6972
+      }
+    ],
+    "Australia": [
+      {
+        "start_year": 1901,
+        "end_year": 1927,
+        "capital": "Melbourne",
+        "lat": -37.8136,
+        "lng": 144.9631
+      },
+      {
+        "start_year": 1927,
+        "end_year": 2024,
+        "capital": "Canberra",
+        "lat": -35.2809,
+        "lng": 149.1300
+      }
+    ],
+    "Republic of Korea": [
+      {
+        "start_year": 1948,
+        "end_year": 2024,
+        "capital": "Seul",
+        "lat": 37.5665,
+        "lng": 126.9780
+      }
+    ],
+    "Democratic People's Republic of Korea": [
+      {
+        "start_year": 1948,
+        "end_year": 2024,
+        "capital": "Pyongyang",
+        "lat": 39.0392,
+        "lng": 125.7625
+      }
+    ],
+    "Vietnam": [
+      {
+        "start_year": 1976,
+        "end_year": 2024,
+        "capital": "Hanoi",
+        "lat": 21.0285,
+        "lng": 105.8542
+      }
+    ],
+    "South Vietnam": [
+      {
+        "start_year": 1954,
+        "end_year": 1975,
+        "capital": "Saigon",
+        "lat": 10.8231,
+        "lng": 106.6297
+      }
+    ],
+    "Thailand": [
+      {
+        "start_year": 1782,
+        "end_year": 2024,
+        "capital": "Bangkok",
+        "lat": 13.7563,
+        "lng": 100.5018
+      }
+    ],
+    "Indonesia": [
+      {
+        "start_year": 1945,
+        "end_year": 2024,
+        "capital": "Jakarta",
+        "lat": -6.2088,
+        "lng": 106.8456
+      }
+    ],
+    "Philippines": [
+      {
+        "start_year": 1946,
+        "end_year": 2024,
+        "capital": "Manila",
+        "lat": 14.5995,
+        "lng": 120.9842
+      }
+    ],
+    "Malaysia": [
+      {
+        "start_year": 1963,
+        "end_year": 2024,
+        "capital": "Kuala Lumpur",
+        "lat": 3.1390,
+        "lng": 101.6869
+      }
+    ],
+    "Singapore": [
+      {
+        "start_year": 1965,
+        "end_year": 2024,
+        "capital": "Singapur",
+        "lat": 1.3521,
+        "lng": 103.8198
+      }
+    ],
+    "New Zealand": [
+      {
+        "start_year": 1865,
+        "end_year": 2024,
+        "capital": "Wellington",
+        "lat": -41.2865,
+        "lng": 174.7762
+      }
+    ],
+    "Israel": [
+      {
+        "start_year": 1948,
+        "end_year": 2024,
+        "capital": "Tel Aviv",
+        "lat": 32.0853,
+        "lng": 34.7818
+      }
+    ]
+  }
+}
