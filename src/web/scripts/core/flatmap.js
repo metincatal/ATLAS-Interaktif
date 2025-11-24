@@ -16,17 +16,24 @@ const d3 = window.d3;
  * 2D düzlem haritayı başlatır
  */
 export function initializeFlatMap() {
+    // D3 kontrolü
+    if (!d3 || !d3.select) {
+        console.error('❌ D3 kütüphanesi yüklenmedi, flat map başlatılamıyor');
+        alert('D3 kütüphanesi yükleniyor, lütfen birkaç saniye bekleyin ve tekrar deneyin.');
+        return;
+    }
+
     const container = document.getElementById('flatmap-container');
     if (!container || !state.countriesData) {
         console.warn('Flat map container veya veri bulunamadı');
         return;
     }
-    
+
     // SVG oluştur
     const width = window.innerWidth;
     const topPadding = state.flatTopPadding || 0;
     const height = Math.max(window.innerHeight - topPadding, 300);
-    
+
     const svg = d3.select(container)
         .append('svg')
         .attr('width', width)

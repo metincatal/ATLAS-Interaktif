@@ -1,5 +1,6 @@
 import { state } from '../../../core/state.js';
 import { loadVdemData, getVdemValue } from '../vdem-data.js';
+import { isD3Loaded } from '../../../utils/d3-loader.js';
 
 export class VdemVisualization {
     constructor(containerId) {
@@ -11,6 +12,14 @@ export class VdemVisualization {
 
     async renderVariable(variable) {
         this.currentVariable = variable;
+
+        // D3 kontrolü
+        if (!isD3Loaded()) {
+            this.container.innerHTML = '<div class="loading" style="color: red;">D3 kütüphanesi yükleniyor, lütfen bekleyin...</div>';
+            console.error('❌ D3 kütüphanesi henüz yüklenmedi');
+            return;
+        }
+
         this.container.innerHTML = '<div class="loading">Veri yükleniyor...</div>';
 
         await loadVdemData();

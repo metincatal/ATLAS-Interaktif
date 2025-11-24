@@ -13,6 +13,7 @@ import { openCountryPanel } from '../panel/panel-manager.js';
 import { resumeAutoRotate } from '../../core/interaction.js';
 import { ANIMATION_DURATIONS } from '../../config/constants.js';
 import { setupGlobeEventHandlers } from '../../core/globe-handlers.js';
+import { waitForD3 } from '../../utils/d3-loader.js';
 
 /**
  * WGI UI ve veri yükleme akışı
@@ -95,8 +96,15 @@ export function setupWgiControls() {
         return true;
     };
     
-    const enableWgiMode = () => {
+    const enableWgiMode = async () => {
         if (state.wgiEnabled) return false;
+
+        // D3'ün yüklenmesini bekle
+        const d3Loaded = await waitForD3();
+        if (!d3Loaded) {
+            alert('D3 kütüphanesi yüklenemedi. Lütfen sayfayı yenileyin.');
+            return false;
+        }
 
         if (window.vdemControls && typeof window.vdemControls.disable === 'function') {
             window.vdemControls.disable({ nextMode: 'wgi' });
@@ -122,9 +130,9 @@ export function setupWgiControls() {
         if (historicalSlider) {
             historicalSlider.style.display = 'none';
         }
-        
+
         toggleFlatMap(false);
-        
+
         const baseColorSelector = document.getElementById('base-color-selector');
         const theoryButton = document.getElementById('theory-button');
         if (baseColorSelector) baseColorSelector.style.display = 'none';
@@ -133,17 +141,17 @@ export function setupWgiControls() {
             state.globe.polygonCapColor(pol => getWgiPolygonColor(pol));
             state.globe.polygonStrokeColor(pol => getWgiPolygonStrokeColor(pol));
         }
-        
+
         console.log('✓ WGI açıldı');
-        
+
         const activateVisualization = () => {
             setupWgiEventListeners();
             updateWgiVisualization();
             console.log('✓ WGI görselleştirme aktif');
         };
-        
+
         const hasWgiData = state.wgiYears && state.wgiYears.length > 0 && state.wgiDataByIso3 && Object.keys(state.wgiDataByIso3).length > 0;
-        
+
         if (hasWgiData) {
             activateVisualization();
         } else {

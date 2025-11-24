@@ -29,11 +29,17 @@ function getRangeMeta(indicatorId) {
 }
 
 function getColorScale(indicatorId) {
+    // D3 kontrolü
+    if (!d3 || !d3.scaleSequential) {
+        console.warn('⚠️ D3 kütüphanesi henüz yüklenmedi (V-Dem renkleri)');
+        return null;
+    }
+
     const { min, max } = getRangeMeta(indicatorId);
     const schemeId = state.currentVdemScheme || 'Turbo';
-    const interpolator = schemeMap[schemeId] || d3?.interpolateTurbo;
+    const interpolator = schemeMap[schemeId] || d3.interpolateTurbo;
     if (!interpolator) return null;
-    
+
     const scale = d3.scaleSequential(interpolator);
     const domain = state.currentVdemReverse ? [max, min] : [min, max];
     scale.domain(domain);
