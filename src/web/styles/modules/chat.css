@@ -4,7 +4,7 @@
     position: fixed;
     bottom: 24px;
     left: 24px;
-    z-index: 96; /* Yıl kaydıracından (95) 1 fazla, böylece üstte kalır */
+    z-index: var(--z-modal); /* Blur overlay'in üstünde olmalı */
 }
 
 .chat-trigger {
@@ -51,7 +51,7 @@
     overflow: hidden;
     animation: slideInUp 0.4s ease;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 96; /* Yıl kaydıracından (95) 1 fazla */
+    z-index: var(--z-modal); /* Blur overlay'in üstünde olmalı */
 }
 
 .chat-area.active {

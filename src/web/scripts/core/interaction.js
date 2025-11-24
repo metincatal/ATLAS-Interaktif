@@ -29,6 +29,9 @@ export function setupInteractionListeners() {
             state.globe.controls().autoRotate = false;
             setState('autoRotate', false);
             console.log('Otomatik dönüş durduruldu - kullanıcı kontrolü aktif');
+
+            // 5-6 saniye sonra otomatik dönüşü tekrar aktif et
+            resumeAutoRotate(6000); // 6 saniye
         }
     };
 

@@ -42,22 +42,31 @@ function getSelection() {
  */
 export function getWgiColor(iso3, indicator, year) {
     const value = getWgiValue(iso3, indicator, year);
-    
+
     const selection = getSelection();
     const selectionActive = Boolean(selection);
-    
+
     if (value === null || value === undefined || isNaN(value)) {
         return selectionActive ? (selection?.type === 'nodata' ? NODATA_HIGHLIGHT : MUTED_FILL) : DEFAULT_NODATA;
     }
-    
+
+    // D3 kontrolü - eğer yüklenmemişse fallback renk döndür
+    if (!d3 || !d3.scaleSequential) {
+        console.warn('⚠️ D3 kütüphanesi henüz yüklenmedi, fallback renk kullanılıyor');
+        // Basit bir renk hesaplama (fallback)
+        const normalized = (value + 2.5) / 5; // -2.5 to 2.5 -> 0 to 1
+        const hue = normalized * 120; // 0 (kırmızı) to 120 (yeşil)
+        return `hsl(${hue}, 70%, 50%)`;
+    }
+
     // WGI değerleri genellikle -2.5 ile +2.5 arası
     const minValue = -2.5;
     const maxValue = 2.5;
-    
+
     // Seçili skalayı al
     const scheme = state.currentWgiScheme || 'RdYlGn';
     const reverse = state.currentWgiReverse || false;
-    
+
     // D3 color scale oluştur
     let colorScale;
     

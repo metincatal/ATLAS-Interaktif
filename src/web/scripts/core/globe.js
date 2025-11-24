@@ -168,7 +168,7 @@ export function loadHistoricalMapToGlobe(mapData, milestone, year) {
         .pathColor(() => '#ffffff')
         .pathDashLength(1)
         .pathDashGap(0)
-        .pathAltitude(0.002) // Biraz yukarıda olsun
+        // .pathAltitude(0.002) // Globe.gl'de bu metod mevcut değil
         .pathTransitionDuration(0);
 
     console.log('✓ Tarihi harita globe\'a yüklendi (sadece sınırlar, path olarak)');
