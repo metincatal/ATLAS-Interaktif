@@ -11,6 +11,7 @@ export const state = {
     globe: null,
     globeInitialized: false,  // Globe başlatıldı mı?
     autoRotate: true,
+    globePaused: false, // Küre kullanıcı tarafından durduruldu mu?
     countriesData: null,
 
     // WGI

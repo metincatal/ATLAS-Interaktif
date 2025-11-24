@@ -18,3 +18,8 @@
     pointer-events: auto;
 }
 
+/* Chat açıkken blur-overlay sadece arka planı blurlar, pointer-events engellenmez */
+#blur-overlay.chat-mode {
+    pointer-events: none;
+}
+

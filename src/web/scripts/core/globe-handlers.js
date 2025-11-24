@@ -15,11 +15,15 @@ import { getWgiPolygonColor } from '../modules/wgi/wgi-colors.js';
  * Globe event handler'larını kurar
  */
 export function setupGlobeEventHandlers() {
+    // Ana sayfada mesh optimizasyonu aktif (enableMesh: false)
+    // WGI/V-Dem sayfalarında mesh açılır
     setupGlobePolygons(
         getPolygonColor,
         getPolygonLabel,
         handleCountryHover,
-        handleCountryClick
+        handleCountryClick,
+        undefined, // stroke color default
+        { enableMesh: false } // Ana sayfa için mesh optimizasyonu aktif
     );
 }
 
@@ -64,10 +68,10 @@ function handleCountryHover(polygon, prevPolygon) {
  */
 function handleCountryClick(polygon) {
     if (!polygon) return;
-    
+
     const countryName = polygon.properties.NAME || polygon.properties.ADMIN || 'Bilinmeyen Ülke';
     const countryCode = polygon.properties.ISO_A2 || 'XX';
-    
+
     // Eğer veri modları açıksa panel görünümüne geç
     if (state.wgiEnabled) {
         document.dispatchEvent(new CustomEvent('wgi:disable', { detail: { nextMode: 'panel' } }));
@@ -75,24 +79,43 @@ function handleCountryClick(polygon) {
     if (state.vdemEnabled && window.vdemControls && typeof window.vdemControls.disable === 'function') {
         window.vdemControls.disable({ nextMode: 'panel' });
     }
-    
+
     // Ülkeyi vurgula
-    state.globe.polygonCapColor(p => 
+    state.globe.polygonCapColor(p =>
         p === polygon ? SELECTED_COLOR : state.currentCountryColor
     );
-    
+
     // Kameraya ülkeyi odakla
     const { lat, lng } = getPolygonCenter(polygon);
     focusOnLocation(lat, lng, 1.5, ANIMATION_DURATIONS.cameraMove);
-    
+
+    // Globe pause butonunu devre dışı bırak (panel açıldığında küre dönmeye devam eder)
+    resetGlobePauseButton();
+
     // Otomatik dönüşü yeniden aktif et (panel açıkken dönmeye devam etsin)
     resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
-    
+
     // Sağ paneli aç ve içeriği doldur
     openCountryPanel(countryName, countryCode);
-    
+
     // Blur efektini aktifleştir
     document.getElementById('blur-overlay').classList.add('active');
-    
+
     console.log('Seçilen ülke:', countryName, 'Kod:', countryCode);
+}
+
+/**
+ * Globe pause butonunu resetler
+ */
+function resetGlobePauseButton() {
+    const pauseBtn = document.getElementById('globe-pause-btn');
+    if (!pauseBtn) return;
+
+    const pauseIcon = pauseBtn.querySelector('.pause-icon');
+    const playIcon = pauseBtn.querySelector('.play-icon');
+
+    state.globePaused = false;
+    pauseBtn.classList.remove('active');
+    if (pauseIcon) pauseIcon.style.display = 'inline';
+    if (playIcon) playIcon.style.display = 'none';
 }

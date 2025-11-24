@@ -27,17 +27,20 @@ export function setupChat() {
         e.stopPropagation();
         chatArea.classList.add('active');
         chatTrigger.style.display = 'none';
-        document.getElementById('blur-overlay').classList.add('active');
+        const blurOverlay = document.getElementById('blur-overlay');
+        blurOverlay.classList.add('active', 'chat-mode');
         chatInput.focus();
     });
-    
+
     // Chat kapatma
     closeChat.addEventListener('click', () => {
         chatArea.classList.remove('active');
         chatTrigger.style.display = 'flex';
+        const blurOverlay = document.getElementById('blur-overlay');
         const panel = document.getElementById('country-panel');
+        blurOverlay.classList.remove('chat-mode');
         if (!panel.classList.contains('active')) {
-            document.getElementById('blur-overlay').classList.remove('active');
+            blurOverlay.classList.remove('active');
         }
     });
     

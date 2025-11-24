@@ -312,12 +312,18 @@
                     <input type="range" id="historical-year-slider" min="1789" max="2023" step="1" value="2023" />
                 </div>
             </div>
-            <div class="year-info-compact">
-                <span class="year-label-compact">Yıl:</span>
-                <strong id="historical-year-label" class="year-value-compact">2023</strong>
-                <span class="source-divider">|</span>
-                <span class="source-label-compact">Kaynak:</span>
-                <span id="current-milestone-source" class="source-value-compact">CShapes 2.0 (2019)</span>
+            <div class="year-info-and-pause">
+                <div class="year-info-compact">
+                    <span class="year-label-compact">Yıl:</span>
+                    <strong id="historical-year-label" class="year-value-compact">2023</strong>
+                    <span class="source-divider">|</span>
+                    <span class="source-label-compact">Kaynak:</span>
+                    <span id="current-milestone-source" class="source-value-compact">CShapes 2.0 (2019)</span>
+                </div>
+                <button id="globe-pause-btn" class="globe-pause-btn" title="Küreyi durdur/başlat">
+                    <span class="pause-icon">⏸</span>
+                    <span class="play-icon" style="display: none;">▶</span>
+                </button>
             </div>
         </div>
 

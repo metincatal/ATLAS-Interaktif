@@ -42,7 +42,7 @@ export function setupWgiControls() {
     const disableWgiMode = (options = {}) => {
         if (!state.wgiEnabled) return false;
         const { nextMode = null } = options;
-        
+
         setState('wgiEnabled', false);
         wgiBtn.classList.remove('active');
         wgiHeader.classList.remove('dataset-mode-wgi');
@@ -55,6 +55,12 @@ export function setupWgiControls() {
         if (scaleGroup) scaleGroup.style.display = 'none';
         if (projectionToggle) projectionToggle.style.display = 'none';
         if (yearSliderContainer) yearSliderContainer.style.display = 'none';
+
+        // Ana sayfanın tarihi haritalar slider'ını tekrar göster
+        const historicalSlider = document.getElementById('historical-year-slider-container');
+        if (historicalSlider && state.historicalMapsIndex) {
+            historicalSlider.style.display = 'flex';
+        }
         
         toggleFlatMap(false);
         
@@ -91,11 +97,11 @@ export function setupWgiControls() {
     
     const enableWgiMode = () => {
         if (state.wgiEnabled) return false;
-        
+
         if (window.vdemControls && typeof window.vdemControls.disable === 'function') {
             window.vdemControls.disable({ nextMode: 'wgi' });
         }
-        
+
         setState('wgiEnabled', true);
         wgiBtn.classList.add('active');
         wgiHeader.classList.add('dataset-active', 'dataset-mode-wgi');
@@ -104,12 +110,18 @@ export function setupWgiControls() {
         }
         setState('selectedLegendRange', null);
         updateLegendSelectionStyles();
-        
+
         if (wgiControlsContainer) wgiControlsContainer.style.display = 'flex';
         if (indicatorGroup) indicatorGroup.style.display = 'flex';
         if (scaleGroup) scaleGroup.style.display = 'flex';
         if (projectionToggle) projectionToggle.style.display = 'flex';
         if (yearSliderContainer) yearSliderContainer.style.display = 'flex';
+
+        // Ana sayfanın tarihi haritalar slider'ını gizle
+        const historicalSlider = document.getElementById('historical-year-slider-container');
+        if (historicalSlider) {
+            historicalSlider.style.display = 'none';
+        }
         
         toggleFlatMap(false);
         
@@ -326,15 +338,16 @@ function updateLegendSelectionStyles() {
  */
 function updateWgiVisualization() {
     if (!state.wgiEnabled || !state.countriesData) return;
-    
-    // Globe güncelle
+
+    // Globe güncelle (WGI için mesh optimizasyonu kapalı - daha kaliteli render)
     if (state.globe) {
         setupGlobePolygons(
             getWgiPolygonColor,
             (p) => getPolygonLabelHtml(p),
             () => {},
             handleWgiPolygonClick,
-            getWgiPolygonStrokeColor
+            getWgiPolygonStrokeColor,
+            { enableMesh: true } // WGI için mesh aktif (optimizasyon yok)
         );
     }
     
@@ -405,7 +418,24 @@ function updateWgiLegend() {
 function handleWgiPolygonClick(polygon) {
     if (!polygon) return;
     requestDisableWgiMode();
+    resetGlobePauseButton(); // WGI'dan panel açılırken pause butonunu resetle
     openPanelFromPolygon(polygon, { focusOnGlobe: true });
+}
+
+/**
+ * Globe pause butonunu resetler
+ */
+function resetGlobePauseButton() {
+    const pauseBtn = document.getElementById('globe-pause-btn');
+    if (!pauseBtn) return;
+
+    const pauseIcon = pauseBtn.querySelector('.pause-icon');
+    const playIcon = pauseBtn.querySelector('.play-icon');
+
+    setState('globePaused', false);
+    pauseBtn.classList.remove('active');
+    if (pauseIcon) pauseIcon.style.display = 'inline';
+    if (playIcon) playIcon.style.display = 'none';
 }
 
 function openPanelFromPolygon(polygon, { focusOnGlobe = false } = {}) {

@@ -93,7 +93,8 @@ export function setupGlobePolygons(
     getPolygonLabel,
     onPolygonHover,
     onPolygonClick,
-    getPolygonStrokeColor = () => '#ffffff'
+    getPolygonStrokeColor = () => '#ffffff',
+    options = {}
 ) {
     const globe = state.globe;
     const countriesData = state.countriesData;
@@ -103,18 +104,28 @@ export function setupGlobePolygons(
         return;
     }
 
+    // Mesh kalitesi ayarları (WGI için daha kaliteli render)
+    const {
+        enableMesh = false, // true ise mesh optimizasyonu kapalı (daha kaliteli)
+        polygonAltitude = 0.001,
+        enableSideColor = false
+    } = options;
+
+    const altitude = enableMesh ? 0.01 : polygonAltitude;
+    const sideColor = enableMesh ? getPolygonColor : () => 'rgba(0, 0, 0, 0)';
+
     globe
         .polygonsData(countriesData.features)
-        .polygonAltitude(0.001) // FLAT MODE - kasma önleme
+        .polygonAltitude(altitude)
         .polygonCapColor(getPolygonColor)
-        .polygonSideColor(() => 'rgba(0, 0, 0, 0)') // Side render YOK
+        .polygonSideColor(sideColor)
         .polygonStrokeColor(getPolygonStrokeColor)
-        .polygonsTransitionDuration(0) // Animasyon YOK
+        .polygonsTransitionDuration(0)
         .polygonLabel(getPolygonLabel)
         .onPolygonHover(onPolygonHover)
         .onPolygonClick(onPolygonClick);
 
-    console.log('✓ Globe poligonları yapılandırıldı');
+    console.log('✓ Globe poligonları yapılandırıldı (mesh:', enableMesh ? 'aktif' : 'optimized', ')');
 }
 
 /**
