@@ -141,14 +141,46 @@ function createCountryDot(graphic, img, country, tooltip) {
 }
 
 /**
- * Tooltip pozisyonunu günceller
+ * Tooltip pozisyonunu günceller - Ekran taşma kontrolü ile
  */
 function updateTooltipPosition(e, tooltip) {
     const graphic = document.getElementById('corridor-graphic-main');
     const rect = graphic.getBoundingClientRect();
-    
-    tooltip.style.left = `${e.clientX - rect.left + 15}px`;
-    tooltip.style.top = `${e.clientY - rect.top - 10}px`;
+
+    // Tooltip boyutlarını al
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const tooltipWidth = tooltipRect.width;
+    const tooltipHeight = tooltipRect.height;
+
+    // İlk pozisyon hesaplama (mouse'un sağında ve biraz üstünde)
+    let left = e.clientX - rect.left + 15;
+    let top = e.clientY - rect.top - 10;
+
+    // Sağ tarafta taşma kontrolü
+    if (left + tooltipWidth > rect.width) {
+        // Mouse'un soluna yerleştir
+        left = e.clientX - rect.left - tooltipWidth - 15;
+    }
+
+    // Sol tarafta taşma kontrolü
+    if (left < 0) {
+        left = 10; // Minimum padding
+    }
+
+    // Üst tarafta taşma kontrolü
+    if (top < 0) {
+        // Mouse'un altına yerleştir
+        top = e.clientY - rect.top + 20;
+    }
+
+    // Alt tarafta taşma kontrolü
+    if (top + tooltipHeight > rect.height) {
+        // Yukarı çıkar
+        top = rect.height - tooltipHeight - 10;
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
 }
 
 function clampAlongDiagonal(x, y, margin = 3) {
@@ -298,7 +330,7 @@ export function closeInteractiveMap() {
 
     // Kapat
     controlsContainer.style.display = 'none';
-    toggleBtn.style.display = 'block';
+    toggleBtn.style.display = ''; // Inline style'ı kaldır, CSS kuralları geçerli olsun
     setState('interactiveMapActive', false);
 
     // Tüm ülke noktalarını gizle

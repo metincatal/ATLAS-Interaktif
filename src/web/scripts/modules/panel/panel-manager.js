@@ -268,8 +268,50 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
     // Dar Koridor grafiğini güncelle
     if (hasCorridorData) {
         const latestYear = getLatestYearForCountry(countryName);
-        updateCountryCorridorPosition(countryName, latestYear);
-        setupCorridorYearSlider(countryName, availableYears);
+
+        // Hangi yılı göstereceğimizi belirle (ana sayfadaki aktif yıl)
+        let targetYear = latestYear; // Varsayılan: en son yıl
+
+        // Aktif veri setine göre yıl belirle
+        if (state.wgiEnabled && state.currentYear) {
+            targetYear = state.currentYear;
+        } else if (state.vdemEnabled && state.currentVdemYear) {
+            targetYear = state.currentVdemYear;
+        } else if (state.historicalMapsEnabled && state.currentHistoricalYear) {
+            targetYear = state.currentHistoricalYear;
+        } else if (state.selectedYear) {
+            targetYear = state.selectedYear;
+        }
+
+        // Eğer targetYear availableYears içinde yoksa, en yakın yılı bul
+        if (!availableYears.includes(targetYear)) {
+            // En yakın yılı bul
+            const closestYear = availableYears.reduce((prev, curr) => {
+                return Math.abs(curr - targetYear) < Math.abs(prev - targetYear) ? curr : prev;
+            });
+            targetYear = closestYear;
+        }
+
+        // Yıla göre mode'u otomatik seç (1995 ve öncesi = historical, 1996+ = modern)
+        const modernBtn = document.getElementById('corridor-mode-modern');
+        const historicalBtn = document.getElementById('corridor-mode-historical');
+
+        if (targetYear <= 1995) {
+            setState('corridorMode', 'historical');
+            if (modernBtn && historicalBtn) {
+                modernBtn.classList.remove('active');
+                historicalBtn.classList.add('active');
+            }
+        } else {
+            setState('corridorMode', 'modern');
+            if (modernBtn && historicalBtn) {
+                modernBtn.classList.add('active');
+                historicalBtn.classList.remove('active');
+            }
+        }
+
+        updateCountryCorridorPosition(countryName, targetYear);
+        setupCorridorYearSlider(countryName, availableYears, targetYear);
 
         // Interactive map toggle butonunu ilk açılışta kur
         if (!state.interactiveMapSetup) {
