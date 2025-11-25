@@ -682,10 +682,11 @@ export function getCapitalPointsForYear(year) {
  * @returns {string} Tooltip HTML
  */
 export function createCapitalTooltip(point) {
-    let tooltip = `<strong>${point.displayName}</strong>`;
+    // V-Dem ana başlık adını kullan (vdemName), tarihi adı değil
+    let tooltip = `<strong>${point.vdemName}</strong>`;
 
     if (point.capital) {
-        tooltip += `<br><small>${point.capital}</small>`;
+        tooltip += `<br><small>Başkent: ${point.capital}</small>`;
     }
 
     return tooltip;
@@ -720,8 +721,23 @@ export function loadCapitalPointsToGlobe(year) {
         .pointLabel(d => createCapitalTooltip(d))
         .onPointClick((point) => {
             if (point && point.vdemName) {
-                console.log(`🗺️  Başkent noktasına tıklandı: ${point.displayName}`);
+                console.log(`🗺️  Başkent noktasına tıklandı: ${point.vdemName}`);
+
+                // Paneli aç
                 openCountryPanel(point.vdemName);
+
+                // Blur overlay'i aktif et
+                const blurOverlay = document.getElementById('blur-overlay');
+                if (blurOverlay) {
+                    blurOverlay.classList.add('active');
+                }
+
+                // Otomatik dönüşü devam ettir
+                import('../../core/interaction.js').then(({ resumeAutoRotate }) => {
+                    import('../../config/constants.js').then(({ ANIMATION_DURATIONS }) => {
+                        resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
+                    });
+                });
             }
         })
         .onPointHover((point) => {

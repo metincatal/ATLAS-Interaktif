@@ -1,0 +1,3364 @@
+{
+  "metadata": {
+    "title": "Birleştirilmiş Tarihi Ülke Verileri",
+    "description": "Tüm ülkeler için tarihi dönem adları, başkent bilgileri ve koordinatlar",
+    "version": "1.0.0",
+    "created": "2025-11-25",
+    "total_countries": 208,
+    "note": "V-Dem ülke adları, tarihi dönem adları ve başkent bilgileri birleştirilmiştir"
+  },
+  "countries": [
+    {
+      "vdem_name": "Afghanistan",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Afghanistan",
+          "years": "1789-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Albania",
+      "data_range": "1912-2023",
+      "total_data_points": 109,
+      "periods": [
+        {
+          "display_name": "Albania",
+          "years": "1912-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Algeria",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Algeria",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Angola",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Angola",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Argentina",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Argentina",
+          "years": "1810-2023",
+          "capital": "Buenos Aires",
+          "coordinates": {
+            "lat": -34.6037,
+            "lng": -58.3816
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Armenia",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Armenia",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Australia",
+      "data_range": "1789-2023",
+      "total_data_points": 230,
+      "periods": [
+        {
+          "display_name": "Australia",
+          "years": "1901-1927",
+          "capital": "Melbourne",
+          "coordinates": {
+            "lat": -37.8136,
+            "lng": 144.9631
+          }
+        },
+        {
+          "display_name": "Australia",
+          "years": "1927-2023",
+          "capital": "Canberra",
+          "coordinates": {
+            "lat": -35.2809,
+            "lng": 149.13
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Austria",
+      "data_range": "1789-2023",
+      "total_data_points": 213,
+      "periods": [
+        {
+          "display_name": "Avusturya İmparatorluğu",
+          "years": "1789-1867",
+          "capital": "Viyana",
+          "coordinates": {
+            "lat": 48.2082,
+            "lng": 16.3738
+          }
+        },
+        {
+          "display_name": "Avusturya-Macaristan",
+          "years": "1867-1918",
+          "capital": "Viyana",
+          "coordinates": {
+            "lat": 48.2082,
+            "lng": 16.3738
+          }
+        },
+        {
+          "display_name": "Avusturya",
+          "years": "1919-2023",
+          "capital": "Viyana",
+          "coordinates": {
+            "lat": 48.2082,
+            "lng": 16.3738
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Azerbaijan",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Azerbaijan",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Baden",
+      "data_range": "1819-1870",
+      "total_data_points": 52,
+      "periods": [
+        {
+          "display_name": "Baden",
+          "years": "1819-1870",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bahrain",
+      "data_range": "2000-2023",
+      "total_data_points": 23,
+      "periods": [
+        {
+          "display_name": "Bahrain",
+          "years": "2000-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bangladesh",
+      "data_range": "1971-2023",
+      "total_data_points": 50,
+      "periods": [
+        {
+          "display_name": "Doğu Pakistan",
+          "years": "1971-1971",
+          "capital": "Dakka",
+          "coordinates": {
+            "lat": 23.8103,
+            "lng": 90.4125
+          }
+        },
+        {
+          "display_name": "Bangladeş",
+          "years": "1971-2023",
+          "capital": "Dakka",
+          "coordinates": {
+            "lat": 23.8103,
+            "lng": 90.4125
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Barbados",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Barbados",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bavaria",
+      "data_range": "1818-1870",
+      "total_data_points": 53,
+      "periods": [
+        {
+          "display_name": "Bavaria",
+          "years": "1818-1870",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Belarus",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Belarus",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Belgium",
+      "data_range": "1789-2023",
+      "total_data_points": 198,
+      "periods": [
+        {
+          "display_name": "Belgium",
+          "years": "1831-2023",
+          "capital": "Brüksel",
+          "coordinates": {
+            "lat": 50.8503,
+            "lng": 4.3517
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Benin",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Benin",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bhutan",
+      "data_range": "1945-2023",
+      "total_data_points": 76,
+      "periods": [
+        {
+          "display_name": "Bhutan",
+          "years": "1945-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bolivarian Republic of Venezuela",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Bolivarian Republic of Venezuela",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bolivia",
+      "data_range": "1825-2023",
+      "total_data_points": 196,
+      "periods": [
+        {
+          "display_name": "Bolivia",
+          "years": "1825-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bosnia and Herzegovina",
+      "data_range": "1992-2023",
+      "total_data_points": 29,
+      "periods": [
+        {
+          "display_name": "Yugoslavya (Bosna-Hersek)",
+          "years": "1992-1992",
+          "capital": "Saraybosna",
+          "coordinates": {
+            "lat": 43.8564,
+            "lng": 18.4131
+          }
+        },
+        {
+          "display_name": "Bosna-Hersek",
+          "years": "1992-2023",
+          "capital": "Saraybosna",
+          "coordinates": {
+            "lat": 43.8564,
+            "lng": 18.4131
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Botswana",
+      "data_range": "1966-2023",
+      "total_data_points": 55,
+      "periods": [
+        {
+          "display_name": "Botswana",
+          "years": "1966-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Brazil",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Portekiz Brezilya'sı",
+          "years": "1789-1822",
+          "capital": "Rio de Janeiro",
+          "coordinates": {
+            "lat": -22.9068,
+            "lng": -43.1729
+          }
+        },
+        {
+          "display_name": "Brezilya İmparatorluğu",
+          "years": "1822-1889",
+          "capital": "Rio de Janeiro",
+          "coordinates": {
+            "lat": -22.9068,
+            "lng": -43.1729
+          }
+        },
+        {
+          "display_name": "Brezilya",
+          "years": "1889-1960",
+          "capital": "Rio de Janeiro",
+          "coordinates": {
+            "lat": -22.9068,
+            "lng": -43.1729
+          }
+        },
+        {
+          "display_name": "Brezilya",
+          "years": "1960-2023",
+          "capital": "Brasília",
+          "coordinates": {
+            "lat": -15.8267,
+            "lng": -47.9218
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Brunswick",
+      "data_range": "1832-1867",
+      "total_data_points": 36,
+      "periods": [
+        {
+          "display_name": "Brunswick",
+          "years": "1832-1867",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Bulgaria",
+      "data_range": "1878-2023",
+      "total_data_points": 143,
+      "periods": [
+        {
+          "display_name": "Bulgaria",
+          "years": "1879-2023",
+          "capital": "Sofya",
+          "coordinates": {
+            "lat": 42.6977,
+            "lng": 23.3219
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Burkina Faso",
+      "data_range": "1960-2023",
+      "total_data_points": 61,
+      "periods": [
+        {
+          "display_name": "Burkina Faso",
+          "years": "1960-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Burma/Myanmar",
+      "data_range": "1790-1995",
+      "total_data_points": 206,
+      "periods": [
+        {
+          "display_name": "Burma/Myanmar",
+          "years": "1790-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Burundi",
+      "data_range": "1916-2023",
+      "total_data_points": 105,
+      "periods": [
+        {
+          "display_name": "Burundi",
+          "years": "1916-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Cambodia",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Cambodia",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Cameroon",
+      "data_range": "1961-2023",
+      "total_data_points": 60,
+      "periods": [
+        {
+          "display_name": "Cameroon",
+          "years": "1961-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Canada",
+      "data_range": "1841-2023",
+      "total_data_points": 180,
+      "periods": [
+        {
+          "display_name": "Canada",
+          "years": "1867-2023",
+          "capital": "Ottawa",
+          "coordinates": {
+            "lat": 45.4215,
+            "lng": -75.6972
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Cape Verde",
+      "data_range": "1900-2023",
+      "total_data_points": 118,
+      "periods": [
+        {
+          "display_name": "Cape Verde",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Central African Republic",
+      "data_range": "1920-2023",
+      "total_data_points": 99,
+      "periods": [
+        {
+          "display_name": "Central African Republic",
+          "years": "1920-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Chad",
+      "data_range": "1920-2023",
+      "total_data_points": 101,
+      "periods": [
+        {
+          "display_name": "Chad",
+          "years": "1920-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Chile",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Chile",
+          "years": "1789-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "China",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Qing Hanedanlığı",
+          "years": "1789-1911",
+          "capital": "Pekin",
+          "coordinates": {
+            "lat": 39.9042,
+            "lng": 116.4074
+          }
+        },
+        {
+          "display_name": "Çin Cumhuriyeti",
+          "years": "1912-1912",
+          "capital": "Pekin",
+          "coordinates": {
+            "lat": 39.9042,
+            "lng": 116.4074
+          }
+        },
+        {
+          "display_name": "Çin Cumhuriyeti",
+          "years": "1912-1949",
+          "capital": "Nankin",
+          "coordinates": {
+            "lat": 32.0603,
+            "lng": 118.7969
+          }
+        },
+        {
+          "display_name": "Çin Cumhuriyeti",
+          "years": "1949-1949",
+          "capital": "Pekin",
+          "coordinates": {
+            "lat": 39.9042,
+            "lng": 116.4074
+          }
+        },
+        {
+          "display_name": "Çin Halk Cumhuriyeti",
+          "years": "1949-1949",
+          "capital": "Nankin",
+          "coordinates": {
+            "lat": 32.0603,
+            "lng": 118.7969
+          }
+        },
+        {
+          "display_name": "Çin Halk Cumhuriyeti",
+          "years": "1949-2023",
+          "capital": "Pekin",
+          "coordinates": {
+            "lat": 39.9042,
+            "lng": 116.4074
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Colombia",
+      "data_range": "1810-2023",
+      "total_data_points": 210,
+      "periods": [
+        {
+          "display_name": "Colombia",
+          "years": "1810-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Comoros",
+      "data_range": "1900-2023",
+      "total_data_points": 89,
+      "periods": [
+        {
+          "display_name": "Comoros",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Costa Rica",
+      "data_range": "1838-2023",
+      "total_data_points": 183,
+      "periods": [
+        {
+          "display_name": "Costa Rica",
+          "years": "1838-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Croatia",
+      "data_range": "1941-2023",
+      "total_data_points": 34,
+      "periods": [
+        {
+          "display_name": "Yugoslavya (Hırvatistan)",
+          "years": "1991-1991",
+          "capital": "Zagreb",
+          "coordinates": {
+            "lat": 45.815,
+            "lng": 15.9819
+          }
+        },
+        {
+          "display_name": "Hırvatistan",
+          "years": "1991-2023",
+          "capital": "Zagreb",
+          "coordinates": {
+            "lat": 45.815,
+            "lng": 15.9819
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Cuba",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Cuba",
+          "years": "1789-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Cyprus",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Cyprus",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Czechia",
+      "data_range": "1918-2023",
+      "total_data_points": 103,
+      "periods": [
+        {
+          "display_name": "Avusturya-Macaristan (Bohemya)",
+          "years": "1918-1918",
+          "capital": "Prag",
+          "coordinates": {
+            "lat": 50.0755,
+            "lng": 14.4378
+          }
+        },
+        {
+          "display_name": "Çekoslovakya",
+          "years": "1918-1992",
+          "capital": "Prag",
+          "coordinates": {
+            "lat": 50.0755,
+            "lng": 14.4378
+          }
+        },
+        {
+          "display_name": "Çekya",
+          "years": "1993-2023",
+          "capital": "Prag",
+          "coordinates": {
+            "lat": 50.0755,
+            "lng": 14.4378
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Côte d'Ivoire",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Côte d'Ivoire",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Democratic People's Republic of Korea",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Kuzey Kore",
+          "years": "1996-2023",
+          "capital": "Pyongyang",
+          "coordinates": {
+            "lat": 39.0392,
+            "lng": 125.7625
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Democratic Republic of the Congo",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Democratic Republic of the Congo",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Denmark",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Denmark",
+          "years": "1789-2023",
+          "capital": "Kopenhag",
+          "coordinates": {
+            "lat": 55.6761,
+            "lng": 12.5683
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Djibouti",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Djibouti",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Dominican Republic",
+      "data_range": "1844-2023",
+      "total_data_points": 177,
+      "periods": [
+        {
+          "display_name": "Dominican Republic",
+          "years": "1844-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Ecuador",
+      "data_range": "1830-2023",
+      "total_data_points": 191,
+      "periods": [
+        {
+          "display_name": "Ecuador",
+          "years": "1830-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Egypt",
+      "data_range": "1799-2023",
+      "total_data_points": 220,
+      "periods": [
+        {
+          "display_name": "Egypt",
+          "years": "1799-2023",
+          "capital": "Kahire",
+          "coordinates": {
+            "lat": 30.0444,
+            "lng": 31.2357
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "El Salvador",
+      "data_range": "1838-2023",
+      "total_data_points": 183,
+      "periods": [
+        {
+          "display_name": "El Salvador",
+          "years": "1838-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Equatorial Guinea",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Equatorial Guinea",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Eritrea",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Eritrea",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Estonia",
+      "data_range": "1918-2023",
+      "total_data_points": 53,
+      "periods": [
+        {
+          "display_name": "Estonia",
+          "years": "1918-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Eswatini",
+      "data_range": "1900-2020",
+      "total_data_points": 118,
+      "periods": [
+        {
+          "display_name": "Eswatini",
+          "years": "1900-2020",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Ethiopia",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Etiyopya İmparatorluğu",
+          "years": "1889-1974",
+          "capital": "Addis Ababa",
+          "coordinates": {
+            "lat": 9.032,
+            "lng": 38.7469
+          }
+        },
+        {
+          "display_name": "Etiyopya",
+          "years": "1974-2023",
+          "capital": "Addis Ababa",
+          "coordinates": {
+            "lat": 9.032,
+            "lng": 38.7469
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Fiji",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Fiji",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Finland",
+      "data_range": "1809-2023",
+      "total_data_points": 212,
+      "periods": [
+        {
+          "display_name": "Finland",
+          "years": "1812-2023",
+          "capital": "Helsinki",
+          "coordinates": {
+            "lat": 60.1699,
+            "lng": 24.9384
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "France",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "France",
+          "years": "1789-2023",
+          "capital": "Paris",
+          "coordinates": {
+            "lat": 48.8566,
+            "lng": 2.3522
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Gabon",
+      "data_range": "1910-2023",
+      "total_data_points": 111,
+      "periods": [
+        {
+          "display_name": "Gabon",
+          "years": "1910-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Georgia",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Georgia",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Germany",
+      "data_range": "1789-2023",
+      "total_data_points": 207,
+      "periods": [
+        {
+          "display_name": "Prusya / Alman Konfederasyonu",
+          "years": "1789-1870",
+          "capital": "Berlin (Prusya)",
+          "coordinates": {
+            "lat": 52.52,
+            "lng": 13.405
+          }
+        },
+        {
+          "display_name": "Alman İmparatorluğu",
+          "years": "1871-1871",
+          "capital": "Berlin (Prusya)",
+          "coordinates": {
+            "lat": 52.52,
+            "lng": 13.405
+          }
+        },
+        {
+          "display_name": "Alman İmparatorluğu",
+          "years": "1871-1918",
+          "capital": "Berlin",
+          "coordinates": {
+            "lat": 52.52,
+            "lng": 13.405
+          }
+        },
+        {
+          "display_name": "Weimar Cumhuriyeti",
+          "years": "1919-1933",
+          "capital": "Berlin",
+          "coordinates": {
+            "lat": 52.52,
+            "lng": 13.405
+          }
+        },
+        {
+          "display_name": "Nazi Almanyası",
+          "years": "1933-1945",
+          "capital": "Berlin",
+          "coordinates": {
+            "lat": 52.52,
+            "lng": 13.405
+          }
+        },
+        {
+          "display_name": "Batı Almanya",
+          "years": "1949-1990",
+          "capital": "Berlin",
+          "coordinates": {
+            "lat": 52.52,
+            "lng": 13.405
+          }
+        },
+        {
+          "display_name": "Almanya",
+          "years": "1991-2023",
+          "capital": "Berlin",
+          "coordinates": {
+            "lat": 52.52,
+            "lng": 13.405
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Ghana",
+      "data_range": "1902-2023",
+      "total_data_points": 119,
+      "periods": [
+        {
+          "display_name": "Ghana",
+          "years": "1902-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Greece",
+      "data_range": "1822-2023",
+      "total_data_points": 199,
+      "periods": [
+        {
+          "display_name": "Greece",
+          "years": "1834-2023",
+          "capital": "Atina",
+          "coordinates": {
+            "lat": 37.9838,
+            "lng": 23.7275
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Guatemala",
+      "data_range": "1789-2023",
+      "total_data_points": 230,
+      "periods": [
+        {
+          "display_name": "Guatemala",
+          "years": "1789-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Guinea",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Guinea",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Guinea-Bissau",
+      "data_range": "1935-2023",
+      "total_data_points": 86,
+      "periods": [
+        {
+          "display_name": "Guinea-Bissau",
+          "years": "1935-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Guyana",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Guyana",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Haiti",
+      "data_range": "1789-2023",
+      "total_data_points": 230,
+      "periods": [
+        {
+          "display_name": "Haiti",
+          "years": "1789-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Hanover",
+      "data_range": "1789-1865",
+      "total_data_points": 74,
+      "periods": [
+        {
+          "display_name": "Hanover",
+          "years": "1789-1865",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Hesse-Darmstadt",
+      "data_range": "1789-1871",
+      "total_data_points": 83,
+      "periods": [
+        {
+          "display_name": "Hesse-Darmstadt",
+          "years": "1789-1871",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Honduras",
+      "data_range": "1838-2023",
+      "total_data_points": 159,
+      "periods": [
+        {
+          "display_name": "Honduras",
+          "years": "1838-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Hong Kong",
+      "data_range": "1900-1995",
+      "total_data_points": 96,
+      "periods": [
+        {
+          "display_name": "Hong Kong",
+          "years": "1900-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Hong Kong SAR (China)",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Hong Kong SAR (China)",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Hungary",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Macaristan Krallığı",
+          "years": "1789-1866",
+          "capital": "Budapeşte",
+          "coordinates": {
+            "lat": 47.4979,
+            "lng": 19.0402
+          }
+        },
+        {
+          "display_name": "Avusturya-Macaristan (Macaristan)",
+          "years": "1867-1918",
+          "capital": "Budapeşte",
+          "coordinates": {
+            "lat": 47.4979,
+            "lng": 19.0402
+          }
+        },
+        {
+          "display_name": "Macaristan",
+          "years": "1919-2023",
+          "capital": "Budapeşte",
+          "coordinates": {
+            "lat": 47.4979,
+            "lng": 19.0402
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Iceland",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Iceland",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "India",
+      "data_range": "1858-2023",
+      "total_data_points": 163,
+      "periods": [
+        {
+          "display_name": "Britanya Hindistanı",
+          "years": "1858-1911",
+          "capital": "Kalküta",
+          "coordinates": {
+            "lat": 22.5726,
+            "lng": 88.3639
+          }
+        },
+        {
+          "display_name": "Britanya Hindistanı",
+          "years": "1911-1947",
+          "capital": "Yeni Delhi",
+          "coordinates": {
+            "lat": 28.6139,
+            "lng": 77.209
+          }
+        },
+        {
+          "display_name": "Hindistan",
+          "years": "1947-2023",
+          "capital": "Yeni Delhi",
+          "coordinates": {
+            "lat": 28.6139,
+            "lng": 77.209
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Indonesia",
+      "data_range": "1800-2023",
+      "total_data_points": 221,
+      "periods": [
+        {
+          "display_name": "Indonesia",
+          "years": "1945-2023",
+          "capital": "Jakarta",
+          "coordinates": {
+            "lat": -6.2088,
+            "lng": 106.8456
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Iran",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Kaçar Hanedanlığı",
+          "years": "1900-1925",
+          "capital": "Tahran",
+          "coordinates": {
+            "lat": 35.6892,
+            "lng": 51.389
+          }
+        },
+        {
+          "display_name": "Pehle vi İran'ı",
+          "years": "1925-1979",
+          "capital": "Tahran",
+          "coordinates": {
+            "lat": 35.6892,
+            "lng": 51.389
+          }
+        },
+        {
+          "display_name": "İran İslam Cumhuriyeti",
+          "years": "1979-2023",
+          "capital": "Tahran",
+          "coordinates": {
+            "lat": 35.6892,
+            "lng": 51.389
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Iraq",
+      "data_range": "1920-2023",
+      "total_data_points": 101,
+      "periods": [
+        {
+          "display_name": "Iraq",
+          "years": "1920-2023",
+          "capital": "Bağdat",
+          "coordinates": {
+            "lat": 33.3152,
+            "lng": 44.3661
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Ireland",
+      "data_range": "1919-2023",
+      "total_data_points": 102,
+      "periods": [
+        {
+          "display_name": "Ireland",
+          "years": "1919-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Israel",
+      "data_range": "1948-2023",
+      "total_data_points": 73,
+      "periods": [
+        {
+          "display_name": "Israel",
+          "years": "1948-2023",
+          "capital": "Tel Aviv",
+          "coordinates": {
+            "lat": 32.0853,
+            "lng": 34.7818
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Italy",
+      "data_range": "1861-2023",
+      "total_data_points": 160,
+      "periods": [
+        {
+          "display_name": "İtalyan Devletleri",
+          "years": "1861-1861",
+          "capital": "Torino",
+          "coordinates": {
+            "lat": 45.0703,
+            "lng": 7.6869
+          }
+        },
+        {
+          "display_name": "İtalyan Devletleri",
+          "years": "1861-1861",
+          "capital": "Roma",
+          "coordinates": {
+            "lat": 41.9028,
+            "lng": 12.4964
+          }
+        },
+        {
+          "display_name": "İtalya Krallığı",
+          "years": "1861-1861",
+          "capital": "Torino",
+          "coordinates": {
+            "lat": 45.0703,
+            "lng": 7.6869
+          }
+        },
+        {
+          "display_name": "İtalya Krallığı",
+          "years": "1861-1946",
+          "capital": "Roma",
+          "coordinates": {
+            "lat": 41.9028,
+            "lng": 12.4964
+          }
+        },
+        {
+          "display_name": "İtalya",
+          "years": "1946-2023",
+          "capital": "Roma",
+          "coordinates": {
+            "lat": 41.9028,
+            "lng": 12.4964
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Ivory Coast",
+      "data_range": "1900-1995",
+      "total_data_points": 96,
+      "periods": [
+        {
+          "display_name": "Ivory Coast",
+          "years": "1900-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Jamaica",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Jamaica",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Japan",
+      "data_range": "1789-2023",
+      "total_data_points": 157,
+      "periods": [
+        {
+          "display_name": "Edo Dönemi Japonya",
+          "years": "1789-1868",
+          "capital": "Edo (Tokyo)",
+          "coordinates": {
+            "lat": 35.6762,
+            "lng": 139.6503
+          }
+        },
+        {
+          "display_name": "Edo Dönemi Japonya",
+          "years": "1868-1868",
+          "capital": "Tokyo",
+          "coordinates": {
+            "lat": 35.6762,
+            "lng": 139.6503
+          }
+        },
+        {
+          "display_name": "Japon İmparatorluğu",
+          "years": "1868-1868",
+          "capital": "Edo (Tokyo)",
+          "coordinates": {
+            "lat": 35.6762,
+            "lng": 139.6503
+          }
+        },
+        {
+          "display_name": "Japon İmparatorluğu",
+          "years": "1868-1947",
+          "capital": "Tokyo",
+          "coordinates": {
+            "lat": 35.6762,
+            "lng": 139.6503
+          }
+        },
+        {
+          "display_name": "Japonya",
+          "years": "1947-2023",
+          "capital": "Tokyo",
+          "coordinates": {
+            "lat": 35.6762,
+            "lng": 139.6503
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Jordan",
+      "data_range": "1922-2023",
+      "total_data_points": 99,
+      "periods": [
+        {
+          "display_name": "Jordan",
+          "years": "1922-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Kazakhstan",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Kazakhstan",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Kenya",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Kenya",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Kosovo",
+      "data_range": "2008-2023",
+      "total_data_points": 16,
+      "periods": [
+        {
+          "display_name": "Kosovo",
+          "years": "2008-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Kuwait",
+      "data_range": "1801-2023",
+      "total_data_points": 125,
+      "periods": [
+        {
+          "display_name": "Kuwait",
+          "years": "1801-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Kyrgyzstan",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Kyrgyzstan",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Lao PDR",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Lao PDR",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Laos",
+      "data_range": "1900-1995",
+      "total_data_points": 96,
+      "periods": [
+        {
+          "display_name": "Laos",
+          "years": "1900-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Latvia",
+      "data_range": "1920-2023",
+      "total_data_points": 51,
+      "periods": [
+        {
+          "display_name": "Latvia",
+          "years": "1920-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Lebanon",
+      "data_range": "1918-2023",
+      "total_data_points": 103,
+      "periods": [
+        {
+          "display_name": "Lebanon",
+          "years": "1918-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Lesotho",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Lesotho",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Liberia",
+      "data_range": "1839-2023",
+      "total_data_points": 182,
+      "periods": [
+        {
+          "display_name": "Liberia",
+          "years": "1839-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Libya",
+      "data_range": "1934-2023",
+      "total_data_points": 78,
+      "periods": [
+        {
+          "display_name": "Libya",
+          "years": "1934-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Lithuania",
+      "data_range": "1918-2023",
+      "total_data_points": 53,
+      "periods": [
+        {
+          "display_name": "Lithuania",
+          "years": "1918-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Luxembourg",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Luxembourg",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Madagascar",
+      "data_range": "1817-2023",
+      "total_data_points": 204,
+      "periods": [
+        {
+          "display_name": "Madagascar",
+          "years": "1817-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Malawi",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Malawi",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Malaysia",
+      "data_range": "1955-2023",
+      "total_data_points": 66,
+      "periods": [
+        {
+          "display_name": "Malaysia",
+          "years": "1963-2023",
+          "capital": "Kuala Lumpur",
+          "coordinates": {
+            "lat": 3.139,
+            "lng": 101.6869
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Maldives",
+      "data_range": "1900-2023",
+      "total_data_points": 115,
+      "periods": [
+        {
+          "display_name": "Maldives",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Mali",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Mali",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Malta",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Malta",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Mauritania",
+      "data_range": "1904-2023",
+      "total_data_points": 117,
+      "periods": [
+        {
+          "display_name": "Mauritania",
+          "years": "1904-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Mauritius",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Mauritius",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Mecklenburg Schwerin",
+      "data_range": "1789-1867",
+      "total_data_points": 79,
+      "periods": [
+        {
+          "display_name": "Mecklenburg Schwerin",
+          "years": "1789-1867",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Mexico",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Mexico",
+          "years": "1821-2023",
+          "capital": "Mexico City",
+          "coordinates": {
+            "lat": 19.4326,
+            "lng": -99.1332
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Modena",
+      "data_range": "1797-1797",
+      "total_data_points": 1,
+      "periods": [
+        {
+          "display_name": "Modena",
+          "years": "1797-1797",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Moldova",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Moldova",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Mongolia",
+      "data_range": "1911-2023",
+      "total_data_points": 110,
+      "periods": [
+        {
+          "display_name": "Mongolia",
+          "years": "1911-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Montenegro",
+      "data_range": "1900-2023",
+      "total_data_points": 36,
+      "periods": [
+        {
+          "display_name": "Montenegro",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Morocco",
+      "data_range": "1912-2023",
+      "total_data_points": 109,
+      "periods": [
+        {
+          "display_name": "Morocco",
+          "years": "1912-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Mozambique",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Mozambique",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Myanmar",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Myanmar",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Namibia",
+      "data_range": "1900-2023",
+      "total_data_points": 120,
+      "periods": [
+        {
+          "display_name": "Namibia",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Nassau",
+      "data_range": "1806-1866",
+      "total_data_points": 61,
+      "periods": [
+        {
+          "display_name": "Nassau",
+          "years": "1806-1866",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Nepal",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Nepal",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Netherlands",
+      "data_range": "1789-2023",
+      "total_data_points": 228,
+      "periods": [
+        {
+          "display_name": "Netherlands",
+          "years": "1789-2023",
+          "capital": "Amsterdam",
+          "coordinates": {
+            "lat": 52.3676,
+            "lng": 4.9041
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "New Zealand",
+      "data_range": "1853-2023",
+      "total_data_points": 167,
+      "periods": [
+        {
+          "display_name": "New Zealand",
+          "years": "1865-2023",
+          "capital": "Wellington",
+          "coordinates": {
+            "lat": -41.2865,
+            "lng": 174.7762
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Nicaragua",
+      "data_range": "1838-2023",
+      "total_data_points": 183,
+      "periods": [
+        {
+          "display_name": "Nicaragua",
+          "years": "1838-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Niger",
+      "data_range": "1922-2023",
+      "total_data_points": 99,
+      "periods": [
+        {
+          "display_name": "Niger",
+          "years": "1922-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Nigeria",
+      "data_range": "1914-2023",
+      "total_data_points": 106,
+      "periods": [
+        {
+          "display_name": "Nigeria",
+          "years": "1914-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "North Korea",
+      "data_range": "1945-1995",
+      "total_data_points": 51,
+      "periods": [
+        {
+          "display_name": "North Korea",
+          "years": "1945-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "North Macedonia",
+      "data_range": "1991-2023",
+      "total_data_points": 30,
+      "periods": [
+        {
+          "display_name": "North Macedonia",
+          "years": "1991-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Norway",
+      "data_range": "1789-2023",
+      "total_data_points": 230,
+      "periods": [
+        {
+          "display_name": "Norway",
+          "years": "1814-2023",
+          "capital": "Oslo",
+          "coordinates": {
+            "lat": 59.9139,
+            "lng": 10.7522
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Oldenburg",
+      "data_range": "1848-1867",
+      "total_data_points": 20,
+      "periods": [
+        {
+          "display_name": "Oldenburg",
+          "years": "1848-1867",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Oman",
+      "data_range": "1900-1998",
+      "total_data_points": 98,
+      "periods": [
+        {
+          "display_name": "Oman",
+          "years": "1900-1998",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Pakistan",
+      "data_range": "1947-2023",
+      "total_data_points": 74,
+      "periods": [
+        {
+          "display_name": "Britanya Hindistanı",
+          "years": "1947-1947",
+          "capital": "Karaçi",
+          "coordinates": {
+            "lat": 24.8607,
+            "lng": 67.0011
+          }
+        },
+        {
+          "display_name": "Pakistan",
+          "years": "1947-1959",
+          "capital": "Karaçi",
+          "coordinates": {
+            "lat": 24.8607,
+            "lng": 67.0011
+          }
+        },
+        {
+          "display_name": "Pakistan",
+          "years": "1959-2023",
+          "capital": "İslamabad",
+          "coordinates": {
+            "lat": 33.6844,
+            "lng": 73.0479
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Palestine/Gaza",
+      "data_range": "1948-1966",
+      "total_data_points": 19,
+      "periods": [
+        {
+          "display_name": "Palestine/Gaza",
+          "years": "1948-1966",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Palestine/West Bank",
+      "data_range": "1948-1995",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Palestine/West Bank",
+          "years": "1948-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Panama",
+      "data_range": "1903-2023",
+      "total_data_points": 118,
+      "periods": [
+        {
+          "display_name": "Panama",
+          "years": "1903-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Papal States",
+      "data_range": "1789-1870",
+      "total_data_points": 78,
+      "periods": [
+        {
+          "display_name": "Papal States",
+          "years": "1789-1870",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Papua New Guinea",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Papua New Guinea",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Paraguay",
+      "data_range": "1811-2023",
+      "total_data_points": 210,
+      "periods": [
+        {
+          "display_name": "Paraguay",
+          "years": "1811-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Parma",
+      "data_range": "1789-1859",
+      "total_data_points": 60,
+      "periods": [
+        {
+          "display_name": "Parma",
+          "years": "1789-1859",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Peru",
+      "data_range": "1821-2023",
+      "total_data_points": 125,
+      "periods": [
+        {
+          "display_name": "Peru",
+          "years": "1821-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Philippines",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Philippines",
+          "years": "1946-2023",
+          "capital": "Manila",
+          "coordinates": {
+            "lat": 14.5995,
+            "lng": 120.9842
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Piedmont-Sardinia",
+      "data_range": "1789-1861",
+      "total_data_points": 73,
+      "periods": [
+        {
+          "display_name": "Piedmont-Sardinia",
+          "years": "1789-1861",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Poland",
+      "data_range": "1789-2023",
+      "total_data_points": 165,
+      "periods": [
+        {
+          "display_name": "Polonya-Litvanya Birliği",
+          "years": "1789-1795",
+          "capital": "Varşova",
+          "coordinates": {
+            "lat": 52.2297,
+            "lng": 21.0122
+          }
+        },
+        {
+          "display_name": "Bölünmüş Polonya",
+          "years": "1795-1918",
+          "capital": "Varşova",
+          "coordinates": {
+            "lat": 52.2297,
+            "lng": 21.0122
+          }
+        },
+        {
+          "display_name": "Polonya",
+          "years": "1918-2023",
+          "capital": "Varşova",
+          "coordinates": {
+            "lat": 52.2297,
+            "lng": 21.0122
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Portugal",
+      "data_range": "1833-2023",
+      "total_data_points": 188,
+      "periods": [
+        {
+          "display_name": "Portugal",
+          "years": "1833-2023",
+          "capital": "Lizbon",
+          "coordinates": {
+            "lat": 38.7223,
+            "lng": -9.1393
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Qatar",
+      "data_range": "1900-1995",
+      "total_data_points": 96,
+      "periods": [
+        {
+          "display_name": "Qatar",
+          "years": "1900-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Republic of Korea",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Güney Kore",
+          "years": "1996-2023",
+          "capital": "Seul",
+          "coordinates": {
+            "lat": 37.5665,
+            "lng": 126.978
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Republic of Vietnam",
+      "data_range": "1902-1922",
+      "total_data_points": 21,
+      "periods": [
+        {
+          "display_name": "Republic of Vietnam",
+          "years": "1902-1922",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Republic of Yemen",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Republic of Yemen",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Republic of the Congo",
+      "data_range": "1903-2023",
+      "total_data_points": 118,
+      "periods": [
+        {
+          "display_name": "Republic of the Congo",
+          "years": "1903-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Romania",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Romania",
+          "years": "1900-2023",
+          "capital": "Bükreş",
+          "coordinates": {
+            "lat": 44.4268,
+            "lng": 26.1025
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Russia",
+      "data_range": "1789-1995",
+      "total_data_points": 207,
+      "periods": [
+        {
+          "display_name": "Rus İmparatorluğu",
+          "years": "1789-1917",
+          "capital": "St. Petersburg",
+          "coordinates": {
+            "lat": 59.9343,
+            "lng": 30.3351
+          }
+        },
+        {
+          "display_name": "Rus SFSC",
+          "years": "1918-1918",
+          "capital": "St. Petersburg",
+          "coordinates": {
+            "lat": 59.9343,
+            "lng": 30.3351
+          }
+        },
+        {
+          "display_name": "Rus SFSC",
+          "years": "1918-1922",
+          "capital": "Moskova",
+          "coordinates": {
+            "lat": 55.7558,
+            "lng": 37.6173
+          }
+        },
+        {
+          "display_name": "Sovyetler Birliği",
+          "years": "1923-1991",
+          "capital": "Moskova",
+          "coordinates": {
+            "lat": 55.7558,
+            "lng": 37.6173
+          }
+        },
+        {
+          "display_name": "Rusya Federasyonu",
+          "years": "1992-1995",
+          "capital": "Moskova",
+          "coordinates": {
+            "lat": 55.7558,
+            "lng": 37.6173
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Rwanda",
+      "data_range": "1916-2023",
+      "total_data_points": 105,
+      "periods": [
+        {
+          "display_name": "Rwanda",
+          "years": "1916-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Sao Tome and Principe",
+      "data_range": "1900-1995",
+      "total_data_points": 96,
+      "periods": [
+        {
+          "display_name": "Sao Tome and Principe",
+          "years": "1900-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Saudi Arabia",
+      "data_range": "1789-2022",
+      "total_data_points": 205,
+      "periods": [
+        {
+          "display_name": "Saudi Arabia",
+          "years": "1932-2022",
+          "capital": "Riyad",
+          "coordinates": {
+            "lat": 24.7136,
+            "lng": 46.6753
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Saxe-Weimar-Eisenach",
+      "data_range": "1809-1867",
+      "total_data_points": 59,
+      "periods": [
+        {
+          "display_name": "Saxe-Weimar-Eisenach",
+          "years": "1809-1867",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Saxony",
+      "data_range": "1789-1867",
+      "total_data_points": 79,
+      "periods": [
+        {
+          "display_name": "Saxony",
+          "years": "1789-1867",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Senegal",
+      "data_range": "1960-2023",
+      "total_data_points": 61,
+      "periods": [
+        {
+          "display_name": "Senegal",
+          "years": "1960-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Serbia",
+      "data_range": "1834-2023",
+      "total_data_points": 187,
+      "periods": [
+        {
+          "display_name": "Sırbistan Prensliği",
+          "years": "1841-1878",
+          "capital": "Belgrad",
+          "coordinates": {
+            "lat": 44.7866,
+            "lng": 20.4489
+          }
+        },
+        {
+          "display_name": "Sırbistan Krallığı",
+          "years": "1878-1918",
+          "capital": "Belgrad",
+          "coordinates": {
+            "lat": 44.7866,
+            "lng": 20.4489
+          }
+        },
+        {
+          "display_name": "Yugoslavya (Sırbistan)",
+          "years": "1918-1992",
+          "capital": "Belgrad",
+          "coordinates": {
+            "lat": 44.7866,
+            "lng": 20.4489
+          }
+        },
+        {
+          "display_name": "Sırbistan",
+          "years": "2006-2023",
+          "capital": "Belgrad",
+          "coordinates": {
+            "lat": 44.7866,
+            "lng": 20.4489
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Seychelles",
+      "data_range": "1903-2023",
+      "total_data_points": 118,
+      "periods": [
+        {
+          "display_name": "Seychelles",
+          "years": "1903-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Sierra Leone",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Sierra Leone",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Singapore",
+      "data_range": "1867-2023",
+      "total_data_points": 154,
+      "periods": [
+        {
+          "display_name": "Singapore",
+          "years": "1965-2023",
+          "capital": "Singapur",
+          "coordinates": {
+            "lat": 1.3521,
+            "lng": 103.8198
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Slovakia",
+      "data_range": "1939-2023",
+      "total_data_points": 34,
+      "periods": [
+        {
+          "display_name": "Çekoslovakya",
+          "years": "1939-1992",
+          "capital": null,
+          "coordinates": null
+        },
+        {
+          "display_name": "Slovakya",
+          "years": "1993-2023",
+          "capital": "Bratislava",
+          "coordinates": {
+            "lat": 48.1486,
+            "lng": 17.1077
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Slovenia",
+      "data_range": "1989-2023",
+      "total_data_points": 32,
+      "periods": [
+        {
+          "display_name": "Slovenia",
+          "years": "1989-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Solomon Islands",
+      "data_range": "1900-2023",
+      "total_data_points": 116,
+      "periods": [
+        {
+          "display_name": "Solomon Islands",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Somalia",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Somalia",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Somaliland",
+      "data_range": "1991-1995",
+      "total_data_points": 5,
+      "periods": [
+        {
+          "display_name": "Somaliland",
+          "years": "1991-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "South Africa",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "South Africa",
+          "years": "1910-2023",
+          "capital": "Pretoria",
+          "coordinates": {
+            "lat": -25.7479,
+            "lng": 28.2293
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "South Korea",
+      "data_range": "1789-1995",
+      "total_data_points": 202,
+      "periods": [
+        {
+          "display_name": "South Korea",
+          "years": "1789-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "South Sudan",
+      "data_range": "2011-2023",
+      "total_data_points": 13,
+      "periods": [
+        {
+          "display_name": "South Sudan",
+          "years": "2011-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Spain",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Spain",
+          "years": "1789-2023",
+          "capital": "Madrid",
+          "coordinates": {
+            "lat": 40.4168,
+            "lng": -3.7038
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Sri Lanka",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Sri Lanka",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Sudan",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Sudan",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Suriname",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Suriname",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Sweden",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Sweden",
+          "years": "1789-2023",
+          "capital": "Stokholm",
+          "coordinates": {
+            "lat": 59.3293,
+            "lng": 18.0686
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Switzerland",
+      "data_range": "1798-2023",
+      "total_data_points": 223,
+      "periods": [
+        {
+          "display_name": "Switzerland",
+          "years": "1848-2023",
+          "capital": "Bern",
+          "coordinates": {
+            "lat": 46.948,
+            "lng": 7.4474
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Syria",
+      "data_range": "1918-1995",
+      "total_data_points": 76,
+      "periods": [
+        {
+          "display_name": "Syria",
+          "years": "1918-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Syrian Arab Republic",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Syrian Arab Republic",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "São Tomé and Príncipe",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "São Tomé and Príncipe",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Taiwan",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Japon Tayvanı",
+          "years": "1945-1945",
+          "capital": "Taipei",
+          "coordinates": {
+            "lat": 25.033,
+            "lng": 121.5654
+          }
+        },
+        {
+          "display_name": "Tayvan (Çin Cumhuriyeti)",
+          "years": "1945-2023",
+          "capital": "Taipei",
+          "coordinates": {
+            "lat": 25.033,
+            "lng": 121.5654
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Tajikistan",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Tajikistan",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Tanzania",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Tanzania",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Thailand",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Thailand",
+          "years": "1900-2023",
+          "capital": "Bangkok",
+          "coordinates": {
+            "lat": 13.7563,
+            "lng": 100.5018
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "The Gambia",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "The Gambia",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Timor-Leste",
+      "data_range": "2002-2023",
+      "total_data_points": 22,
+      "periods": [
+        {
+          "display_name": "Timor-Leste",
+          "years": "2002-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Togo",
+      "data_range": "1916-2023",
+      "total_data_points": 105,
+      "periods": [
+        {
+          "display_name": "Togo",
+          "years": "1916-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Trinidad and Tobago",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Trinidad and Tobago",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Tunisia",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Tunisia",
+          "years": "1789-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Turkmenistan",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Turkmenistan",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Tuscany",
+      "data_range": "1848-1861",
+      "total_data_points": 14,
+      "periods": [
+        {
+          "display_name": "Tuscany",
+          "years": "1848-1861",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Two Sicilies",
+      "data_range": "1808-1849",
+      "total_data_points": 12,
+      "periods": [
+        {
+          "display_name": "Two Sicilies",
+          "years": "1808-1849",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Türkiye",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "Osmanlı İmparatorluğu",
+          "years": "1789-1922",
+          "capital": "İstanbul",
+          "coordinates": {
+            "lat": 41.0082,
+            "lng": 28.9784
+          }
+        },
+        {
+          "display_name": "Türkiye",
+          "years": "1923-1923",
+          "capital": "İstanbul",
+          "coordinates": {
+            "lat": 41.0082,
+            "lng": 28.9784
+          }
+        },
+        {
+          "display_name": "Türkiye",
+          "years": "1923-2023",
+          "capital": "Ankara",
+          "coordinates": {
+            "lat": 39.9334,
+            "lng": 32.8597
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Uganda",
+      "data_range": "1996-2023",
+      "total_data_points": 25,
+      "periods": [
+        {
+          "display_name": "Uganda",
+          "years": "1996-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Ukraine",
+      "data_range": "1990-2023",
+      "total_data_points": 31,
+      "periods": [
+        {
+          "display_name": "Ukraine",
+          "years": "1990-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "United Arab Emirates",
+      "data_range": "1971-2019",
+      "total_data_points": 26,
+      "periods": [
+        {
+          "display_name": "United Arab Emirates",
+          "years": "1971-2019",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "United Kingdom",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "United Kingdom",
+          "years": "1789-2023",
+          "capital": "Londra",
+          "coordinates": {
+            "lat": 51.5074,
+            "lng": -0.1278
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "United States of America",
+      "data_range": "1789-2023",
+      "total_data_points": 232,
+      "periods": [
+        {
+          "display_name": "United States of America",
+          "years": "1789-1800",
+          "capital": "Philadelphia",
+          "coordinates": {
+            "lat": 39.9526,
+            "lng": -75.1652
+          }
+        },
+        {
+          "display_name": "United States of America",
+          "years": "1800-2023",
+          "capital": "Washington D.C.",
+          "coordinates": {
+            "lat": 38.9072,
+            "lng": -77.0369
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Uruguay",
+      "data_range": "1825-2023",
+      "total_data_points": 195,
+      "periods": [
+        {
+          "display_name": "Uruguay",
+          "years": "1825-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Uzbekistan",
+      "data_range": "1912-2023",
+      "total_data_points": 40,
+      "periods": [
+        {
+          "display_name": "Uzbekistan",
+          "years": "1912-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Vanuatu",
+      "data_range": "1906-2023",
+      "total_data_points": 110,
+      "periods": [
+        {
+          "display_name": "Vanuatu",
+          "years": "1906-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Venezuela",
+      "data_range": "1789-1995",
+      "total_data_points": 197,
+      "periods": [
+        {
+          "display_name": "Venezuela",
+          "years": "1789-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Viet Nam",
+      "data_range": "1996-2021",
+      "total_data_points": 23,
+      "periods": [
+        {
+          "display_name": "Viet Nam",
+          "years": "1996-2021",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Vietnam",
+      "data_range": "1945-1995",
+      "total_data_points": 51,
+      "periods": [
+        {
+          "display_name": "Fransız Hindiçinisi",
+          "years": "1945-1954",
+          "capital": null,
+          "coordinates": null
+        },
+        {
+          "display_name": "Kuzey Vietnam",
+          "years": "1954-1975",
+          "capital": null,
+          "coordinates": null
+        },
+        {
+          "display_name": "Vietnam",
+          "years": "1976-1995",
+          "capital": "Hanoi",
+          "coordinates": {
+            "lat": 21.0285,
+            "lng": 105.8542
+          }
+        }
+      ]
+    },
+    {
+      "vdem_name": "Würtemberg",
+      "data_range": "1815-1871",
+      "total_data_points": 57,
+      "periods": [
+        {
+          "display_name": "Würtemberg",
+          "years": "1815-1871",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Yemen",
+      "data_range": "1789-1995",
+      "total_data_points": 140,
+      "periods": [
+        {
+          "display_name": "Yemen",
+          "years": "1789-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Zambia",
+      "data_range": "1911-2023",
+      "total_data_points": 110,
+      "periods": [
+        {
+          "display_name": "Zambia",
+          "years": "1911-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Zanzibar",
+      "data_range": "1856-1995",
+      "total_data_points": 140,
+      "periods": [
+        {
+          "display_name": "Zanzibar",
+          "years": "1856-1995",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    },
+    {
+      "vdem_name": "Zimbabwe",
+      "data_range": "1900-2023",
+      "total_data_points": 121,
+      "periods": [
+        {
+          "display_name": "Zimbabwe",
+          "years": "1900-2023",
+          "capital": null,
+          "coordinates": null
+        }
+      ]
+    }
+  ]
+}

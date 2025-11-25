@@ -40,7 +40,7 @@ export function setupWgiControls() {
     wgiHeader.style.display = 'flex';
     wgiHeader.classList.remove('dataset-active', 'dataset-mode-wgi');
     
-    const disableWgiMode = (options = {}) => {
+    const disableWgiMode = async (options = {}) => {
         if (!state.wgiEnabled) return false;
         const { nextMode = null } = options;
 
@@ -74,12 +74,19 @@ export function setupWgiControls() {
         
         setState('selectedLegendRange', null);
         updateLegendSelectionStyles();
-        
+
         if (state.globe) {
             state.globe.polygonCapColor(() => state.currentCountryColor);
             state.globe.polygonStrokeColor(() => '#ffffff');
+
+            // Historical maps aktifse başkent noktalarını tekrar yükle
+            if (state.historicalMapsEnabled && state.currentHistoricalYear) {
+                // loadCapitalPointsToGlobe fonksiyonunu import etmeliyiz
+                const { loadCapitalPointsToGlobe } = await import('../historical/historical-maps.js');
+                loadCapitalPointsToGlobe(state.currentHistoricalYear);
+            }
         }
-        
+
         setupGlobeEventHandlers();
         
         const pendingFocus = state.pendingCountryFocus;
@@ -140,6 +147,9 @@ export function setupWgiControls() {
         if (state.globe && state.countriesData) {
             state.globe.polygonCapColor(pol => getWgiPolygonColor(pol));
             state.globe.polygonStrokeColor(pol => getWgiPolygonStrokeColor(pol));
+
+            // Başkent noktalarını temizle (WGI'da gösterilmemeli)
+            state.globe.pointsData([]);
         }
 
         console.log('✓ WGI açıldı');
