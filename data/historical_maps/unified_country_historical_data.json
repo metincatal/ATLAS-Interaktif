@@ -2,10 +2,11 @@
   "metadata": {
     "title": "Birleştirilmiş Tarihi Ülke Verileri",
     "description": "Tüm ülkeler için tarihi dönem adları, başkent bilgileri ve koordinatlar",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "created": "2025-11-25",
     "total_countries": 208,
-    "note": "V-Dem ülke adları, tarihi dönem adları ve başkent bilgileri birleştirilmiştir"
+    "note": "V-Dem ülke adları, tarihi dönem adları ve başkent bilgileri birleştirilmiştir Eksik başkentler eklendi.",
+    "updated": "2025-11-25"
   },
   "countries": [
     {
@@ -16,8 +17,11 @@
         {
           "display_name": "Afghanistan",
           "years": "1789-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kabil",
+          "coordinates": {
+            "lat": 34.5553,
+            "lng": 66.0088
+          }
         }
       ]
     },
@@ -29,8 +33,11 @@
         {
           "display_name": "Albania",
           "years": "1912-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Tiran",
+          "coordinates": {
+            "lat": 41.3275,
+            "lng": 19.8187
+          }
         }
       ]
     },
@@ -42,8 +49,11 @@
         {
           "display_name": "Algeria",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Cezayir",
+          "coordinates": {
+            "lat": 36.7538,
+            "lng": 3.0588
+          }
         }
       ]
     },
@@ -55,8 +65,11 @@
         {
           "display_name": "Angola",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Luanda",
+          "coordinates": {
+            "lat": -8.8383,
+            "lng": 13.2344
+          }
         }
       ]
     },
@@ -84,8 +97,11 @@
         {
           "display_name": "Armenia",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Erivan",
+          "coordinates": {
+            "lat": 40.1792,
+            "lng": 44.4991
+          }
         }
       ]
     },
@@ -156,8 +172,11 @@
         {
           "display_name": "Azerbaijan",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bakü",
+          "coordinates": {
+            "lat": 40.4093,
+            "lng": 49.8671
+          }
         }
       ]
     },
@@ -169,8 +188,11 @@
         {
           "display_name": "Baden",
           "years": "1819-1870",
-          "capital": null,
-          "coordinates": null
+          "capital": "Karlsruhe",
+          "coordinates": {
+            "lat": 49.0069,
+            "lng": 8.4037
+          }
         }
       ]
     },
@@ -182,8 +204,11 @@
         {
           "display_name": "Bahrain",
           "years": "2000-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Manama",
+          "coordinates": {
+            "lat": 26.0667,
+            "lng": 50.5577
+          }
         }
       ]
     },
@@ -220,8 +245,11 @@
         {
           "display_name": "Barbados",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bridgetown",
+          "coordinates": {
+            "lat": 13.0969,
+            "lng": -59.6145
+          }
         }
       ]
     },
@@ -233,8 +261,11 @@
         {
           "display_name": "Bavaria",
           "years": "1818-1870",
-          "capital": null,
-          "coordinates": null
+          "capital": "München",
+          "coordinates": {
+            "lat": 48.1351,
+            "lng": 11.582
+          }
         }
       ]
     },
@@ -246,8 +277,11 @@
         {
           "display_name": "Belarus",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Minsk",
+          "coordinates": {
+            "lat": 53.9045,
+            "lng": 27.5615
+          }
         }
       ]
     },
@@ -275,8 +309,11 @@
         {
           "display_name": "Benin",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Porto-Novo",
+          "coordinates": {
+            "lat": 6.4969,
+            "lng": 2.6289
+          }
         }
       ]
     },
@@ -288,8 +325,11 @@
         {
           "display_name": "Bhutan",
           "years": "1945-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Thimphu",
+          "coordinates": {
+            "lat": 27.4728,
+            "lng": 89.6389
+          }
         }
       ]
     },
@@ -301,8 +341,11 @@
         {
           "display_name": "Bolivarian Republic of Venezuela",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Caracas",
+          "coordinates": {
+            "lat": 10.4806,
+            "lng": -66.9036
+          }
         }
       ]
     },
@@ -314,8 +357,11 @@
         {
           "display_name": "Bolivia",
           "years": "1825-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "La Paz",
+          "coordinates": {
+            "lat": -16.5,
+            "lng": -68.15
+          }
         }
       ]
     },
@@ -352,8 +398,11 @@
         {
           "display_name": "Botswana",
           "years": "1966-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Gaborone",
+          "coordinates": {
+            "lat": -24.6282,
+            "lng": 25.9231
+          }
         }
       ]
     },
@@ -408,8 +457,11 @@
         {
           "display_name": "Brunswick",
           "years": "1832-1867",
-          "capital": null,
-          "coordinates": null
+          "capital": "Braunschweig",
+          "coordinates": {
+            "lat": 52.2689,
+            "lng": 10.5268
+          }
         }
       ]
     },
@@ -437,8 +489,11 @@
         {
           "display_name": "Burkina Faso",
           "years": "1960-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Ouagadougou",
+          "coordinates": {
+            "lat": 12.3714,
+            "lng": -1.5197
+          }
         }
       ]
     },
@@ -450,8 +505,11 @@
         {
           "display_name": "Burma/Myanmar",
           "years": "1790-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Yangon",
+          "coordinates": {
+            "lat": 16.8661,
+            "lng": 96.1951
+          }
         }
       ]
     },
@@ -463,8 +521,11 @@
         {
           "display_name": "Burundi",
           "years": "1916-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Gitega",
+          "coordinates": {
+            "lat": -3.4264,
+            "lng": 29.9306
+          }
         }
       ]
     },
@@ -476,8 +537,11 @@
         {
           "display_name": "Cambodia",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Phnom Penh",
+          "coordinates": {
+            "lat": 11.5564,
+            "lng": 104.9282
+          }
         }
       ]
     },
@@ -489,8 +553,11 @@
         {
           "display_name": "Cameroon",
           "years": "1961-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Yaoundé",
+          "coordinates": {
+            "lat": 3.848,
+            "lng": 11.5021
+          }
         }
       ]
     },
@@ -518,8 +585,11 @@
         {
           "display_name": "Cape Verde",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Praia",
+          "coordinates": {
+            "lat": 14.933,
+            "lng": -23.5133
+          }
         }
       ]
     },
@@ -531,8 +601,11 @@
         {
           "display_name": "Central African Republic",
           "years": "1920-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bangui",
+          "coordinates": {
+            "lat": 4.3947,
+            "lng": 18.5582
+          }
         }
       ]
     },
@@ -544,8 +617,11 @@
         {
           "display_name": "Chad",
           "years": "1920-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "N'Djamena",
+          "coordinates": {
+            "lat": 12.1348,
+            "lng": 15.0557
+          }
         }
       ]
     },
@@ -557,8 +633,11 @@
         {
           "display_name": "Chile",
           "years": "1789-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Santiago",
+          "coordinates": {
+            "lat": -33.4489,
+            "lng": -70.6693
+          }
         }
       ]
     },
@@ -631,8 +710,11 @@
         {
           "display_name": "Colombia",
           "years": "1810-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bogota",
+          "coordinates": {
+            "lat": 4.711,
+            "lng": -74.0721
+          }
         }
       ]
     },
@@ -644,8 +726,11 @@
         {
           "display_name": "Comoros",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Moroni",
+          "coordinates": {
+            "lat": -11.7172,
+            "lng": 43.2473
+          }
         }
       ]
     },
@@ -657,8 +742,11 @@
         {
           "display_name": "Costa Rica",
           "years": "1838-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "San José",
+          "coordinates": {
+            "lat": 9.9281,
+            "lng": -84.0907
+          }
         }
       ]
     },
@@ -695,8 +783,11 @@
         {
           "display_name": "Cuba",
           "years": "1789-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Havana",
+          "coordinates": {
+            "lat": 23.1136,
+            "lng": -82.3666
+          }
         }
       ]
     },
@@ -708,8 +799,11 @@
         {
           "display_name": "Cyprus",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Lefkoşa",
+          "coordinates": {
+            "lat": 35.1856,
+            "lng": 33.3823
+          }
         }
       ]
     },
@@ -755,8 +849,11 @@
         {
           "display_name": "Côte d'Ivoire",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Yamoussoukro",
+          "coordinates": {
+            "lat": 6.827,
+            "lng": -5.2893
+          }
         }
       ]
     },
@@ -784,8 +881,11 @@
         {
           "display_name": "Democratic Republic of the Congo",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kinshasa",
+          "coordinates": {
+            "lat": -4.4419,
+            "lng": 15.2663
+          }
         }
       ]
     },
@@ -813,8 +913,11 @@
         {
           "display_name": "Djibouti",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Djibouti",
+          "coordinates": {
+            "lat": 11.8251,
+            "lng": 42.5903
+          }
         }
       ]
     },
@@ -826,8 +929,11 @@
         {
           "display_name": "Dominican Republic",
           "years": "1844-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Santo Domingo",
+          "coordinates": {
+            "lat": 18.4861,
+            "lng": -69.9312
+          }
         }
       ]
     },
@@ -839,8 +945,11 @@
         {
           "display_name": "Ecuador",
           "years": "1830-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Quito",
+          "coordinates": {
+            "lat": -0.1807,
+            "lng": -78.4678
+          }
         }
       ]
     },
@@ -868,8 +977,11 @@
         {
           "display_name": "El Salvador",
           "years": "1838-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "San Salvador",
+          "coordinates": {
+            "lat": 13.6929,
+            "lng": -89.2182
+          }
         }
       ]
     },
@@ -881,8 +993,11 @@
         {
           "display_name": "Equatorial Guinea",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Malabo",
+          "coordinates": {
+            "lat": 3.7523,
+            "lng": 8.737
+          }
         }
       ]
     },
@@ -894,8 +1009,11 @@
         {
           "display_name": "Eritrea",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Asmara",
+          "coordinates": {
+            "lat": 15.3229,
+            "lng": 38.9251
+          }
         }
       ]
     },
@@ -907,8 +1025,11 @@
         {
           "display_name": "Estonia",
           "years": "1918-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Tallinn",
+          "coordinates": {
+            "lat": 59.437,
+            "lng": 24.7536
+          }
         }
       ]
     },
@@ -920,8 +1041,11 @@
         {
           "display_name": "Eswatini",
           "years": "1900-2020",
-          "capital": null,
-          "coordinates": null
+          "capital": "Mbabane",
+          "coordinates": {
+            "lat": -26.3054,
+            "lng": 31.1367
+          }
         }
       ]
     },
@@ -958,8 +1082,11 @@
         {
           "display_name": "Fiji",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Suva",
+          "coordinates": {
+            "lat": -18.1248,
+            "lng": 178.4501
+          }
         }
       ]
     },
@@ -1003,8 +1130,11 @@
         {
           "display_name": "Gabon",
           "years": "1910-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Libreville",
+          "coordinates": {
+            "lat": 0.4162,
+            "lng": 9.4673
+          }
         }
       ]
     },
@@ -1016,8 +1146,11 @@
         {
           "display_name": "Georgia",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Tiflis",
+          "coordinates": {
+            "lat": 41.7151,
+            "lng": 44.8271
+          }
         }
       ]
     },
@@ -1099,8 +1232,11 @@
         {
           "display_name": "Ghana",
           "years": "1902-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Accra",
+          "coordinates": {
+            "lat": 5.6037,
+            "lng": -0.187
+          }
         }
       ]
     },
@@ -1128,8 +1264,11 @@
         {
           "display_name": "Guatemala",
           "years": "1789-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Guatemala City",
+          "coordinates": {
+            "lat": 14.6349,
+            "lng": -90.5069
+          }
         }
       ]
     },
@@ -1141,8 +1280,11 @@
         {
           "display_name": "Guinea",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Conakry",
+          "coordinates": {
+            "lat": 9.6412,
+            "lng": -13.5784
+          }
         }
       ]
     },
@@ -1154,8 +1296,11 @@
         {
           "display_name": "Guinea-Bissau",
           "years": "1935-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bissau",
+          "coordinates": {
+            "lat": 11.8037,
+            "lng": -15.1804
+          }
         }
       ]
     },
@@ -1167,8 +1312,11 @@
         {
           "display_name": "Guyana",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Georgetown",
+          "coordinates": {
+            "lat": 6.8013,
+            "lng": -58.1551
+          }
         }
       ]
     },
@@ -1180,8 +1328,11 @@
         {
           "display_name": "Haiti",
           "years": "1789-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Port-au-Prince",
+          "coordinates": {
+            "lat": 18.5944,
+            "lng": -72.3074
+          }
         }
       ]
     },
@@ -1193,8 +1344,11 @@
         {
           "display_name": "Hanover",
           "years": "1789-1865",
-          "capital": null,
-          "coordinates": null
+          "capital": "Hannover",
+          "coordinates": {
+            "lat": 52.3759,
+            "lng": 9.732
+          }
         }
       ]
     },
@@ -1206,8 +1360,11 @@
         {
           "display_name": "Hesse-Darmstadt",
           "years": "1789-1871",
-          "capital": null,
-          "coordinates": null
+          "capital": "Darmstadt",
+          "coordinates": {
+            "lat": 49.8728,
+            "lng": 8.6512
+          }
         }
       ]
     },
@@ -1219,8 +1376,11 @@
         {
           "display_name": "Honduras",
           "years": "1838-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Tegucigalpa",
+          "coordinates": {
+            "lat": 14.0723,
+            "lng": -87.1921
+          }
         }
       ]
     },
@@ -1232,8 +1392,11 @@
         {
           "display_name": "Hong Kong",
           "years": "1900-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Victoria",
+          "coordinates": {
+            "lat": 22.2783,
+            "lng": 114.1747
+          }
         }
       ]
     },
@@ -1245,8 +1408,11 @@
         {
           "display_name": "Hong Kong SAR (China)",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Hong Kong",
+          "coordinates": {
+            "lat": 22.3193,
+            "lng": 114.1694
+          }
         }
       ]
     },
@@ -1292,8 +1458,11 @@
         {
           "display_name": "Iceland",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Reykjavik",
+          "coordinates": {
+            "lat": 64.1466,
+            "lng": -21.9426
+          }
         }
       ]
     },
@@ -1405,8 +1574,11 @@
         {
           "display_name": "Ireland",
           "years": "1919-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Dublin",
+          "coordinates": {
+            "lat": 53.3498,
+            "lng": -6.2603
+          }
         }
       ]
     },
@@ -1486,8 +1658,11 @@
         {
           "display_name": "Ivory Coast",
           "years": "1900-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Yamoussoukro",
+          "coordinates": {
+            "lat": 6.827,
+            "lng": -5.2893
+          }
         }
       ]
     },
@@ -1499,8 +1674,11 @@
         {
           "display_name": "Jamaica",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kingston",
+          "coordinates": {
+            "lat": 17.9714,
+            "lng": -76.7931
+          }
         }
       ]
     },
@@ -1564,8 +1742,11 @@
         {
           "display_name": "Jordan",
           "years": "1922-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Amman",
+          "coordinates": {
+            "lat": 31.9454,
+            "lng": 35.9284
+          }
         }
       ]
     },
@@ -1577,8 +1758,11 @@
         {
           "display_name": "Kazakhstan",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Astana",
+          "coordinates": {
+            "lat": 51.1694,
+            "lng": 71.4491
+          }
         }
       ]
     },
@@ -1590,8 +1774,11 @@
         {
           "display_name": "Kenya",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Nairobi",
+          "coordinates": {
+            "lat": -1.2864,
+            "lng": 36.8172
+          }
         }
       ]
     },
@@ -1603,8 +1790,11 @@
         {
           "display_name": "Kosovo",
           "years": "2008-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Prishtina",
+          "coordinates": {
+            "lat": 42.6629,
+            "lng": 21.1655
+          }
         }
       ]
     },
@@ -1616,8 +1806,11 @@
         {
           "display_name": "Kuwait",
           "years": "1801-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kuwait City",
+          "coordinates": {
+            "lat": 29.3759,
+            "lng": 47.9774
+          }
         }
       ]
     },
@@ -1629,8 +1822,11 @@
         {
           "display_name": "Kyrgyzstan",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bishkek",
+          "coordinates": {
+            "lat": 42.8746,
+            "lng": 74.5698
+          }
         }
       ]
     },
@@ -1642,8 +1838,11 @@
         {
           "display_name": "Lao PDR",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Vientiane",
+          "coordinates": {
+            "lat": 17.9757,
+            "lng": 102.6331
+          }
         }
       ]
     },
@@ -1655,8 +1854,11 @@
         {
           "display_name": "Laos",
           "years": "1900-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Vientiane",
+          "coordinates": {
+            "lat": 17.9757,
+            "lng": 102.6331
+          }
         }
       ]
     },
@@ -1668,8 +1870,11 @@
         {
           "display_name": "Latvia",
           "years": "1920-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Riga",
+          "coordinates": {
+            "lat": 56.9496,
+            "lng": 24.1052
+          }
         }
       ]
     },
@@ -1681,8 +1886,11 @@
         {
           "display_name": "Lebanon",
           "years": "1918-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Beirut",
+          "coordinates": {
+            "lat": 33.8886,
+            "lng": 35.4955
+          }
         }
       ]
     },
@@ -1694,8 +1902,11 @@
         {
           "display_name": "Lesotho",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Maseru",
+          "coordinates": {
+            "lat": -29.3167,
+            "lng": 27.4833
+          }
         }
       ]
     },
@@ -1707,8 +1918,11 @@
         {
           "display_name": "Liberia",
           "years": "1839-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Monrovia",
+          "coordinates": {
+            "lat": 6.3156,
+            "lng": -10.8074
+          }
         }
       ]
     },
@@ -1720,8 +1934,11 @@
         {
           "display_name": "Libya",
           "years": "1934-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Tripoli",
+          "coordinates": {
+            "lat": 32.8872,
+            "lng": 13.1913
+          }
         }
       ]
     },
@@ -1733,8 +1950,11 @@
         {
           "display_name": "Lithuania",
           "years": "1918-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Vilnius",
+          "coordinates": {
+            "lat": 54.6872,
+            "lng": 25.2797
+          }
         }
       ]
     },
@@ -1746,8 +1966,11 @@
         {
           "display_name": "Luxembourg",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Luxembourg",
+          "coordinates": {
+            "lat": 49.6116,
+            "lng": 6.1319
+          }
         }
       ]
     },
@@ -1759,8 +1982,11 @@
         {
           "display_name": "Madagascar",
           "years": "1817-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Antananarivo",
+          "coordinates": {
+            "lat": -18.8792,
+            "lng": 47.5079
+          }
         }
       ]
     },
@@ -1772,8 +1998,11 @@
         {
           "display_name": "Malawi",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Lilongwe",
+          "coordinates": {
+            "lat": -13.9626,
+            "lng": 33.7741
+          }
         }
       ]
     },
@@ -1801,8 +2030,11 @@
         {
           "display_name": "Maldives",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Male",
+          "coordinates": {
+            "lat": 4.1755,
+            "lng": 73.5093
+          }
         }
       ]
     },
@@ -1814,8 +2046,11 @@
         {
           "display_name": "Mali",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bamako",
+          "coordinates": {
+            "lat": 12.6392,
+            "lng": -8.0029
+          }
         }
       ]
     },
@@ -1827,8 +2062,11 @@
         {
           "display_name": "Malta",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Valletta",
+          "coordinates": {
+            "lat": 35.8989,
+            "lng": 14.5146
+          }
         }
       ]
     },
@@ -1840,8 +2078,11 @@
         {
           "display_name": "Mauritania",
           "years": "1904-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Nouakchott",
+          "coordinates": {
+            "lat": 18.0735,
+            "lng": -15.9582
+          }
         }
       ]
     },
@@ -1853,8 +2094,11 @@
         {
           "display_name": "Mauritius",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Port Louis",
+          "coordinates": {
+            "lat": -20.1609,
+            "lng": 57.5012
+          }
         }
       ]
     },
@@ -1866,8 +2110,11 @@
         {
           "display_name": "Mecklenburg Schwerin",
           "years": "1789-1867",
-          "capital": null,
-          "coordinates": null
+          "capital": "Schwerin",
+          "coordinates": {
+            "lat": 53.6355,
+            "lng": 11.4013
+          }
         }
       ]
     },
@@ -1895,8 +2142,11 @@
         {
           "display_name": "Modena",
           "years": "1797-1797",
-          "capital": null,
-          "coordinates": null
+          "capital": "Modena",
+          "coordinates": {
+            "lat": 44.6471,
+            "lng": 10.9252
+          }
         }
       ]
     },
@@ -1908,8 +2158,11 @@
         {
           "display_name": "Moldova",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Chișinău",
+          "coordinates": {
+            "lat": 47.0105,
+            "lng": 28.8638
+          }
         }
       ]
     },
@@ -1921,8 +2174,11 @@
         {
           "display_name": "Mongolia",
           "years": "1911-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Ulaanbaatar",
+          "coordinates": {
+            "lat": 47.8864,
+            "lng": 106.9057
+          }
         }
       ]
     },
@@ -1934,8 +2190,11 @@
         {
           "display_name": "Montenegro",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Podgorica",
+          "coordinates": {
+            "lat": 42.4304,
+            "lng": 19.2594
+          }
         }
       ]
     },
@@ -1947,8 +2206,11 @@
         {
           "display_name": "Morocco",
           "years": "1912-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Rabat",
+          "coordinates": {
+            "lat": 34.0209,
+            "lng": -6.8416
+          }
         }
       ]
     },
@@ -1960,8 +2222,11 @@
         {
           "display_name": "Mozambique",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Maputo",
+          "coordinates": {
+            "lat": -25.9655,
+            "lng": 32.5832
+          }
         }
       ]
     },
@@ -1973,8 +2238,11 @@
         {
           "display_name": "Myanmar",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Naypyidaw",
+          "coordinates": {
+            "lat": 19.7633,
+            "lng": 96.0785
+          }
         }
       ]
     },
@@ -1986,8 +2254,11 @@
         {
           "display_name": "Namibia",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Windhoek",
+          "coordinates": {
+            "lat": -22.5597,
+            "lng": 17.0832
+          }
         }
       ]
     },
@@ -1999,8 +2270,11 @@
         {
           "display_name": "Nassau",
           "years": "1806-1866",
-          "capital": null,
-          "coordinates": null
+          "capital": "Wiesbaden",
+          "coordinates": {
+            "lat": 50.0826,
+            "lng": 8.24
+          }
         }
       ]
     },
@@ -2012,8 +2286,11 @@
         {
           "display_name": "Nepal",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kathmandu",
+          "coordinates": {
+            "lat": 27.7172,
+            "lng": 85.324
+          }
         }
       ]
     },
@@ -2057,8 +2334,11 @@
         {
           "display_name": "Nicaragua",
           "years": "1838-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Managua",
+          "coordinates": {
+            "lat": 12.115,
+            "lng": -86.2362
+          }
         }
       ]
     },
@@ -2070,8 +2350,11 @@
         {
           "display_name": "Niger",
           "years": "1922-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Niamey",
+          "coordinates": {
+            "lat": 13.5127,
+            "lng": 2.1128
+          }
         }
       ]
     },
@@ -2083,8 +2366,11 @@
         {
           "display_name": "Nigeria",
           "years": "1914-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Abuja",
+          "coordinates": {
+            "lat": 9.0765,
+            "lng": 7.3986
+          }
         }
       ]
     },
@@ -2096,8 +2382,11 @@
         {
           "display_name": "North Korea",
           "years": "1945-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Pyongyang",
+          "coordinates": {
+            "lat": 39.0392,
+            "lng": 125.7625
+          }
         }
       ]
     },
@@ -2109,8 +2398,11 @@
         {
           "display_name": "North Macedonia",
           "years": "1991-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Skopje",
+          "coordinates": {
+            "lat": 41.9973,
+            "lng": 21.428
+          }
         }
       ]
     },
@@ -2138,8 +2430,11 @@
         {
           "display_name": "Oldenburg",
           "years": "1848-1867",
-          "capital": null,
-          "coordinates": null
+          "capital": "Oldenburg",
+          "coordinates": {
+            "lat": 53.1435,
+            "lng": 8.2146
+          }
         }
       ]
     },
@@ -2151,8 +2446,11 @@
         {
           "display_name": "Oman",
           "years": "1900-1998",
-          "capital": null,
-          "coordinates": null
+          "capital": "Muscat",
+          "coordinates": {
+            "lat": 23.588,
+            "lng": 58.3829
+          }
         }
       ]
     },
@@ -2198,8 +2496,11 @@
         {
           "display_name": "Palestine/Gaza",
           "years": "1948-1966",
-          "capital": null,
-          "coordinates": null
+          "capital": "Gaza",
+          "coordinates": {
+            "lat": 31.5017,
+            "lng": 34.4668
+          }
         }
       ]
     },
@@ -2211,8 +2512,11 @@
         {
           "display_name": "Palestine/West Bank",
           "years": "1948-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Ramallah",
+          "coordinates": {
+            "lat": 31.9038,
+            "lng": 35.2034
+          }
         }
       ]
     },
@@ -2224,8 +2528,11 @@
         {
           "display_name": "Panama",
           "years": "1903-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Panama City",
+          "coordinates": {
+            "lat": 8.9824,
+            "lng": -79.5199
+          }
         }
       ]
     },
@@ -2237,8 +2544,11 @@
         {
           "display_name": "Papal States",
           "years": "1789-1870",
-          "capital": null,
-          "coordinates": null
+          "capital": "Roma",
+          "coordinates": {
+            "lat": 41.9028,
+            "lng": 12.4964
+          }
         }
       ]
     },
@@ -2250,8 +2560,11 @@
         {
           "display_name": "Papua New Guinea",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Port Moresby",
+          "coordinates": {
+            "lat": -9.4438,
+            "lng": 147.1803
+          }
         }
       ]
     },
@@ -2263,8 +2576,11 @@
         {
           "display_name": "Paraguay",
           "years": "1811-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Asunción",
+          "coordinates": {
+            "lat": -25.2637,
+            "lng": -57.5759
+          }
         }
       ]
     },
@@ -2276,8 +2592,11 @@
         {
           "display_name": "Parma",
           "years": "1789-1859",
-          "capital": null,
-          "coordinates": null
+          "capital": "Parma",
+          "coordinates": {
+            "lat": 44.8015,
+            "lng": 10.3279
+          }
         }
       ]
     },
@@ -2289,8 +2608,11 @@
         {
           "display_name": "Peru",
           "years": "1821-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Lima",
+          "coordinates": {
+            "lat": -12.0464,
+            "lng": -77.0428
+          }
         }
       ]
     },
@@ -2318,8 +2640,11 @@
         {
           "display_name": "Piedmont-Sardinia",
           "years": "1789-1861",
-          "capital": null,
-          "coordinates": null
+          "capital": "Torino",
+          "coordinates": {
+            "lat": 45.0703,
+            "lng": 7.6869
+          }
         }
       ]
     },
@@ -2381,8 +2706,11 @@
         {
           "display_name": "Qatar",
           "years": "1900-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Doha",
+          "coordinates": {
+            "lat": 25.2854,
+            "lng": 51.531
+          }
         }
       ]
     },
@@ -2410,8 +2738,11 @@
         {
           "display_name": "Republic of Vietnam",
           "years": "1902-1922",
-          "capital": null,
-          "coordinates": null
+          "capital": "Saigon",
+          "coordinates": {
+            "lat": 10.8231,
+            "lng": 106.6297
+          }
         }
       ]
     },
@@ -2423,8 +2754,11 @@
         {
           "display_name": "Republic of Yemen",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Sana'a",
+          "coordinates": {
+            "lat": 15.5527,
+            "lng": 44.2075
+          }
         }
       ]
     },
@@ -2436,8 +2770,11 @@
         {
           "display_name": "Republic of the Congo",
           "years": "1903-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Brazzaville",
+          "coordinates": {
+            "lat": -4.2634,
+            "lng": 15.2429
+          }
         }
       ]
     },
@@ -2517,8 +2854,11 @@
         {
           "display_name": "Rwanda",
           "years": "1916-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kigali",
+          "coordinates": {
+            "lat": -1.9403,
+            "lng": 29.8739
+          }
         }
       ]
     },
@@ -2530,8 +2870,11 @@
         {
           "display_name": "Sao Tome and Principe",
           "years": "1900-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "São Tomé",
+          "coordinates": {
+            "lat": 0.3365,
+            "lng": 6.7273
+          }
         }
       ]
     },
@@ -2559,8 +2902,11 @@
         {
           "display_name": "Saxe-Weimar-Eisenach",
           "years": "1809-1867",
-          "capital": null,
-          "coordinates": null
+          "capital": "Weimar",
+          "coordinates": {
+            "lat": 50.9787,
+            "lng": 11.3236
+          }
         }
       ]
     },
@@ -2572,8 +2918,11 @@
         {
           "display_name": "Saxony",
           "years": "1789-1867",
-          "capital": null,
-          "coordinates": null
+          "capital": "Dresden",
+          "coordinates": {
+            "lat": 51.0504,
+            "lng": 13.7373
+          }
         }
       ]
     },
@@ -2585,8 +2934,11 @@
         {
           "display_name": "Senegal",
           "years": "1960-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Dakar",
+          "coordinates": {
+            "lat": 14.7167,
+            "lng": -17.4677
+          }
         }
       ]
     },
@@ -2641,8 +2993,11 @@
         {
           "display_name": "Seychelles",
           "years": "1903-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Victoria",
+          "coordinates": {
+            "lat": -4.6191,
+            "lng": 55.4513
+          }
         }
       ]
     },
@@ -2654,8 +3009,11 @@
         {
           "display_name": "Sierra Leone",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Freetown",
+          "coordinates": {
+            "lat": 8.4657,
+            "lng": -13.2317
+          }
         }
       ]
     },
@@ -2683,8 +3041,11 @@
         {
           "display_name": "Çekoslovakya",
           "years": "1939-1992",
-          "capital": null,
-          "coordinates": null
+          "capital": "Bratislava",
+          "coordinates": {
+            "lat": 48.1486,
+            "lng": 17.1077
+          }
         },
         {
           "display_name": "Slovakya",
@@ -2705,8 +3066,11 @@
         {
           "display_name": "Slovenia",
           "years": "1989-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Ljubljana",
+          "coordinates": {
+            "lat": 46.0569,
+            "lng": 14.5058
+          }
         }
       ]
     },
@@ -2718,8 +3082,11 @@
         {
           "display_name": "Solomon Islands",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Honiara",
+          "coordinates": {
+            "lat": -9.4456,
+            "lng": 159.9729
+          }
         }
       ]
     },
@@ -2731,8 +3098,11 @@
         {
           "display_name": "Somalia",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Mogadishu",
+          "coordinates": {
+            "lat": 2.0469,
+            "lng": 45.3182
+          }
         }
       ]
     },
@@ -2744,8 +3114,11 @@
         {
           "display_name": "Somaliland",
           "years": "1991-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Hargeisa",
+          "coordinates": {
+            "lat": 9.56,
+            "lng": 44.065
+          }
         }
       ]
     },
@@ -2773,8 +3146,11 @@
         {
           "display_name": "South Korea",
           "years": "1789-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Seoul",
+          "coordinates": {
+            "lat": 37.5665,
+            "lng": 126.978
+          }
         }
       ]
     },
@@ -2786,8 +3162,11 @@
         {
           "display_name": "South Sudan",
           "years": "2011-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Juba",
+          "coordinates": {
+            "lat": 4.8517,
+            "lng": 31.5825
+          }
         }
       ]
     },
@@ -2815,8 +3194,11 @@
         {
           "display_name": "Sri Lanka",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Colombo",
+          "coordinates": {
+            "lat": 6.9271,
+            "lng": 79.8612
+          }
         }
       ]
     },
@@ -2828,8 +3210,11 @@
         {
           "display_name": "Sudan",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Khartoum",
+          "coordinates": {
+            "lat": 15.5007,
+            "lng": 32.5599
+          }
         }
       ]
     },
@@ -2841,8 +3226,11 @@
         {
           "display_name": "Suriname",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Paramaribo",
+          "coordinates": {
+            "lat": 5.852,
+            "lng": -55.2038
+          }
         }
       ]
     },
@@ -2886,8 +3274,11 @@
         {
           "display_name": "Syria",
           "years": "1918-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Damascus",
+          "coordinates": {
+            "lat": 33.5138,
+            "lng": 36.2765
+          }
         }
       ]
     },
@@ -2899,8 +3290,11 @@
         {
           "display_name": "Syrian Arab Republic",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Damascus",
+          "coordinates": {
+            "lat": 33.5138,
+            "lng": 36.2765
+          }
         }
       ]
     },
@@ -2912,8 +3306,11 @@
         {
           "display_name": "São Tomé and Príncipe",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "São Tomé",
+          "coordinates": {
+            "lat": 0.3365,
+            "lng": 6.7273
+          }
         }
       ]
     },
@@ -2950,8 +3347,11 @@
         {
           "display_name": "Tajikistan",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Dushanbe",
+          "coordinates": {
+            "lat": 38.5598,
+            "lng": 68.787
+          }
         }
       ]
     },
@@ -2963,8 +3363,11 @@
         {
           "display_name": "Tanzania",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Dodoma",
+          "coordinates": {
+            "lat": -6.163,
+            "lng": 35.7516
+          }
         }
       ]
     },
@@ -2992,8 +3395,11 @@
         {
           "display_name": "The Gambia",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Banjul",
+          "coordinates": {
+            "lat": 13.4549,
+            "lng": -16.579
+          }
         }
       ]
     },
@@ -3005,8 +3411,11 @@
         {
           "display_name": "Timor-Leste",
           "years": "2002-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Dili",
+          "coordinates": {
+            "lat": -8.5569,
+            "lng": 125.5603
+          }
         }
       ]
     },
@@ -3018,8 +3427,11 @@
         {
           "display_name": "Togo",
           "years": "1916-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Lomé",
+          "coordinates": {
+            "lat": 6.1256,
+            "lng": 1.2311
+          }
         }
       ]
     },
@@ -3031,8 +3443,11 @@
         {
           "display_name": "Trinidad and Tobago",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Port of Spain",
+          "coordinates": {
+            "lat": 10.6603,
+            "lng": -61.5089
+          }
         }
       ]
     },
@@ -3044,8 +3459,11 @@
         {
           "display_name": "Tunisia",
           "years": "1789-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Tunis",
+          "coordinates": {
+            "lat": 36.8065,
+            "lng": 10.1815
+          }
         }
       ]
     },
@@ -3057,8 +3475,11 @@
         {
           "display_name": "Turkmenistan",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Ashgabat",
+          "coordinates": {
+            "lat": 37.9601,
+            "lng": 58.3261
+          }
         }
       ]
     },
@@ -3070,8 +3491,11 @@
         {
           "display_name": "Tuscany",
           "years": "1848-1861",
-          "capital": null,
-          "coordinates": null
+          "capital": "Firenze",
+          "coordinates": {
+            "lat": 43.7696,
+            "lng": 11.2558
+          }
         }
       ]
     },
@@ -3083,8 +3507,11 @@
         {
           "display_name": "Two Sicilies",
           "years": "1808-1849",
-          "capital": null,
-          "coordinates": null
+          "capital": "Napoli",
+          "coordinates": {
+            "lat": 40.8518,
+            "lng": 14.2681
+          }
         }
       ]
     },
@@ -3130,8 +3557,11 @@
         {
           "display_name": "Uganda",
           "years": "1996-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kampala",
+          "coordinates": {
+            "lat": 0.3476,
+            "lng": 32.5825
+          }
         }
       ]
     },
@@ -3143,8 +3573,11 @@
         {
           "display_name": "Ukraine",
           "years": "1990-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Kiev",
+          "coordinates": {
+            "lat": 50.4501,
+            "lng": 30.5234
+          }
         }
       ]
     },
@@ -3156,8 +3589,11 @@
         {
           "display_name": "United Arab Emirates",
           "years": "1971-2019",
-          "capital": null,
-          "coordinates": null
+          "capital": "Abu Dhabi",
+          "coordinates": {
+            "lat": 24.4539,
+            "lng": 54.3773
+          }
         }
       ]
     },
@@ -3210,8 +3646,11 @@
         {
           "display_name": "Uruguay",
           "years": "1825-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Montevideo",
+          "coordinates": {
+            "lat": -34.9011,
+            "lng": -56.1645
+          }
         }
       ]
     },
@@ -3223,8 +3662,11 @@
         {
           "display_name": "Uzbekistan",
           "years": "1912-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Tashkent",
+          "coordinates": {
+            "lat": 41.2995,
+            "lng": 69.2401
+          }
         }
       ]
     },
@@ -3236,8 +3678,11 @@
         {
           "display_name": "Vanuatu",
           "years": "1906-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Port Vila",
+          "coordinates": {
+            "lat": -17.7333,
+            "lng": 168.3273
+          }
         }
       ]
     },
@@ -3249,8 +3694,11 @@
         {
           "display_name": "Venezuela",
           "years": "1789-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Caracas",
+          "coordinates": {
+            "lat": 10.4806,
+            "lng": -66.9036
+          }
         }
       ]
     },
@@ -3262,8 +3710,11 @@
         {
           "display_name": "Viet Nam",
           "years": "1996-2021",
-          "capital": null,
-          "coordinates": null
+          "capital": "Hanoi",
+          "coordinates": {
+            "lat": 21.0285,
+            "lng": 105.8542
+          }
         }
       ]
     },
@@ -3275,14 +3726,20 @@
         {
           "display_name": "Fransız Hindiçinisi",
           "years": "1945-1954",
-          "capital": null,
-          "coordinates": null
+          "capital": "Hanoi",
+          "coordinates": {
+            "lat": 21.0285,
+            "lng": 105.8542
+          }
         },
         {
           "display_name": "Kuzey Vietnam",
           "years": "1954-1975",
-          "capital": null,
-          "coordinates": null
+          "capital": "Hanoi",
+          "coordinates": {
+            "lat": 21.0285,
+            "lng": 105.8542
+          }
         },
         {
           "display_name": "Vietnam",
@@ -3303,8 +3760,11 @@
         {
           "display_name": "Würtemberg",
           "years": "1815-1871",
-          "capital": null,
-          "coordinates": null
+          "capital": "Stuttgart",
+          "coordinates": {
+            "lat": 48.7758,
+            "lng": 9.1829
+          }
         }
       ]
     },
@@ -3316,8 +3776,11 @@
         {
           "display_name": "Yemen",
           "years": "1789-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Sana'a",
+          "coordinates": {
+            "lat": 15.5527,
+            "lng": 44.2075
+          }
         }
       ]
     },
@@ -3329,8 +3792,11 @@
         {
           "display_name": "Zambia",
           "years": "1911-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Lusaka",
+          "coordinates": {
+            "lat": -15.3875,
+            "lng": 28.3228
+          }
         }
       ]
     },
@@ -3342,8 +3808,11 @@
         {
           "display_name": "Zanzibar",
           "years": "1856-1995",
-          "capital": null,
-          "coordinates": null
+          "capital": "Stone Town",
+          "coordinates": {
+            "lat": -6.1659,
+            "lng": 39.2026
+          }
         }
       ]
     },
@@ -3355,8 +3824,11 @@
         {
           "display_name": "Zimbabwe",
           "years": "1900-2023",
-          "capital": null,
-          "coordinates": null
+          "capital": "Harare",
+          "coordinates": {
+            "lat": -17.8252,
+            "lng": 31.0335
+          }
         }
       ]
     }

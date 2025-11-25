@@ -1,0 +1,950 @@
+{
+  "metadata": {
+    "total_missing": 157,
+    "generated": "2025-11-25"
+  },
+  "missing": [
+    {
+      "vdem_name": "Afghanistan",
+      "display_name": "Afghanistan",
+      "years": "1789-2023",
+      "data_points": 232
+    },
+    {
+      "vdem_name": "Chile",
+      "display_name": "Chile",
+      "years": "1789-2023",
+      "data_points": 232
+    },
+    {
+      "vdem_name": "Cuba",
+      "display_name": "Cuba",
+      "years": "1789-2023",
+      "data_points": 232
+    },
+    {
+      "vdem_name": "Tunisia",
+      "display_name": "Tunisia",
+      "years": "1789-2023",
+      "data_points": 232
+    },
+    {
+      "vdem_name": "Guatemala",
+      "display_name": "Guatemala",
+      "years": "1789-2023",
+      "data_points": 230
+    },
+    {
+      "vdem_name": "Haiti",
+      "display_name": "Haiti",
+      "years": "1789-2023",
+      "data_points": 230
+    },
+    {
+      "vdem_name": "Colombia",
+      "display_name": "Colombia",
+      "years": "1810-2023",
+      "data_points": 210
+    },
+    {
+      "vdem_name": "Paraguay",
+      "display_name": "Paraguay",
+      "years": "1811-2023",
+      "data_points": 210
+    },
+    {
+      "vdem_name": "Burma/Myanmar",
+      "display_name": "Burma/Myanmar",
+      "years": "1790-1995",
+      "data_points": 206
+    },
+    {
+      "vdem_name": "Madagascar",
+      "display_name": "Madagascar",
+      "years": "1817-2023",
+      "data_points": 204
+    },
+    {
+      "vdem_name": "South Korea",
+      "display_name": "South Korea",
+      "years": "1789-1995",
+      "data_points": 202
+    },
+    {
+      "vdem_name": "Venezuela",
+      "display_name": "Venezuela",
+      "years": "1789-1995",
+      "data_points": 197
+    },
+    {
+      "vdem_name": "Bolivia",
+      "display_name": "Bolivia",
+      "years": "1825-2023",
+      "data_points": 196
+    },
+    {
+      "vdem_name": "Uruguay",
+      "display_name": "Uruguay",
+      "years": "1825-2023",
+      "data_points": 195
+    },
+    {
+      "vdem_name": "Ecuador",
+      "display_name": "Ecuador",
+      "years": "1830-2023",
+      "data_points": 191
+    },
+    {
+      "vdem_name": "Costa Rica",
+      "display_name": "Costa Rica",
+      "years": "1838-2023",
+      "data_points": 183
+    },
+    {
+      "vdem_name": "El Salvador",
+      "display_name": "El Salvador",
+      "years": "1838-2023",
+      "data_points": 183
+    },
+    {
+      "vdem_name": "Nicaragua",
+      "display_name": "Nicaragua",
+      "years": "1838-2023",
+      "data_points": 183
+    },
+    {
+      "vdem_name": "Liberia",
+      "display_name": "Liberia",
+      "years": "1839-2023",
+      "data_points": 182
+    },
+    {
+      "vdem_name": "Dominican Republic",
+      "display_name": "Dominican Republic",
+      "years": "1844-2023",
+      "data_points": 177
+    },
+    {
+      "vdem_name": "Honduras",
+      "display_name": "Honduras",
+      "years": "1838-2023",
+      "data_points": 159
+    },
+    {
+      "vdem_name": "Yemen",
+      "display_name": "Yemen",
+      "years": "1789-1995",
+      "data_points": 140
+    },
+    {
+      "vdem_name": "Zanzibar",
+      "display_name": "Zanzibar",
+      "years": "1856-1995",
+      "data_points": 140
+    },
+    {
+      "vdem_name": "Kuwait",
+      "display_name": "Kuwait",
+      "years": "1801-2023",
+      "data_points": 125
+    },
+    {
+      "vdem_name": "Peru",
+      "display_name": "Peru",
+      "years": "1821-2023",
+      "data_points": 125
+    },
+    {
+      "vdem_name": "Algeria",
+      "display_name": "Algeria",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Angola",
+      "display_name": "Angola",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Barbados",
+      "display_name": "Barbados",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Benin",
+      "display_name": "Benin",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Cambodia",
+      "display_name": "Cambodia",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Cyprus",
+      "display_name": "Cyprus",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Democratic Republic of the Congo",
+      "display_name": "Democratic Republic of the Congo",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Djibouti",
+      "display_name": "Djibouti",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Equatorial Guinea",
+      "display_name": "Equatorial Guinea",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Fiji",
+      "display_name": "Fiji",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Guinea",
+      "display_name": "Guinea",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Guyana",
+      "display_name": "Guyana",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Jamaica",
+      "display_name": "Jamaica",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Kenya",
+      "display_name": "Kenya",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Lesotho",
+      "display_name": "Lesotho",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Luxembourg",
+      "display_name": "Luxembourg",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Malawi",
+      "display_name": "Malawi",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Mali",
+      "display_name": "Mali",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Malta",
+      "display_name": "Malta",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Mauritius",
+      "display_name": "Mauritius",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Mozambique",
+      "display_name": "Mozambique",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Nepal",
+      "display_name": "Nepal",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Sierra Leone",
+      "display_name": "Sierra Leone",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Somalia",
+      "display_name": "Somalia",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Sri Lanka",
+      "display_name": "Sri Lanka",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Suriname",
+      "display_name": "Suriname",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "The Gambia",
+      "display_name": "The Gambia",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Trinidad and Tobago",
+      "display_name": "Trinidad and Tobago",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Zimbabwe",
+      "display_name": "Zimbabwe",
+      "years": "1900-2023",
+      "data_points": 121
+    },
+    {
+      "vdem_name": "Namibia",
+      "display_name": "Namibia",
+      "years": "1900-2023",
+      "data_points": 120
+    },
+    {
+      "vdem_name": "Ghana",
+      "display_name": "Ghana",
+      "years": "1902-2023",
+      "data_points": 119
+    },
+    {
+      "vdem_name": "Cape Verde",
+      "display_name": "Cape Verde",
+      "years": "1900-2023",
+      "data_points": 118
+    },
+    {
+      "vdem_name": "Eswatini",
+      "display_name": "Eswatini",
+      "years": "1900-2020",
+      "data_points": 118
+    },
+    {
+      "vdem_name": "Panama",
+      "display_name": "Panama",
+      "years": "1903-2023",
+      "data_points": 118
+    },
+    {
+      "vdem_name": "Republic of the Congo",
+      "display_name": "Republic of the Congo",
+      "years": "1903-2023",
+      "data_points": 118
+    },
+    {
+      "vdem_name": "Seychelles",
+      "display_name": "Seychelles",
+      "years": "1903-2023",
+      "data_points": 118
+    },
+    {
+      "vdem_name": "Mauritania",
+      "display_name": "Mauritania",
+      "years": "1904-2023",
+      "data_points": 117
+    },
+    {
+      "vdem_name": "Solomon Islands",
+      "display_name": "Solomon Islands",
+      "years": "1900-2023",
+      "data_points": 116
+    },
+    {
+      "vdem_name": "Maldives",
+      "display_name": "Maldives",
+      "years": "1900-2023",
+      "data_points": 115
+    },
+    {
+      "vdem_name": "Gabon",
+      "display_name": "Gabon",
+      "years": "1910-2023",
+      "data_points": 111
+    },
+    {
+      "vdem_name": "Mongolia",
+      "display_name": "Mongolia",
+      "years": "1911-2023",
+      "data_points": 110
+    },
+    {
+      "vdem_name": "Vanuatu",
+      "display_name": "Vanuatu",
+      "years": "1906-2023",
+      "data_points": 110
+    },
+    {
+      "vdem_name": "Zambia",
+      "display_name": "Zambia",
+      "years": "1911-2023",
+      "data_points": 110
+    },
+    {
+      "vdem_name": "Albania",
+      "display_name": "Albania",
+      "years": "1912-2023",
+      "data_points": 109
+    },
+    {
+      "vdem_name": "Morocco",
+      "display_name": "Morocco",
+      "years": "1912-2023",
+      "data_points": 109
+    },
+    {
+      "vdem_name": "Nigeria",
+      "display_name": "Nigeria",
+      "years": "1914-2023",
+      "data_points": 106
+    },
+    {
+      "vdem_name": "Burundi",
+      "display_name": "Burundi",
+      "years": "1916-2023",
+      "data_points": 105
+    },
+    {
+      "vdem_name": "Rwanda",
+      "display_name": "Rwanda",
+      "years": "1916-2023",
+      "data_points": 105
+    },
+    {
+      "vdem_name": "Togo",
+      "display_name": "Togo",
+      "years": "1916-2023",
+      "data_points": 105
+    },
+    {
+      "vdem_name": "Lebanon",
+      "display_name": "Lebanon",
+      "years": "1918-2023",
+      "data_points": 103
+    },
+    {
+      "vdem_name": "Ireland",
+      "display_name": "Ireland",
+      "years": "1919-2023",
+      "data_points": 102
+    },
+    {
+      "vdem_name": "Chad",
+      "display_name": "Chad",
+      "years": "1920-2023",
+      "data_points": 101
+    },
+    {
+      "vdem_name": "Central African Republic",
+      "display_name": "Central African Republic",
+      "years": "1920-2023",
+      "data_points": 99
+    },
+    {
+      "vdem_name": "Jordan",
+      "display_name": "Jordan",
+      "years": "1922-2023",
+      "data_points": 99
+    },
+    {
+      "vdem_name": "Niger",
+      "display_name": "Niger",
+      "years": "1922-2023",
+      "data_points": 99
+    },
+    {
+      "vdem_name": "Oman",
+      "display_name": "Oman",
+      "years": "1900-1998",
+      "data_points": 98
+    },
+    {
+      "vdem_name": "Hong Kong",
+      "display_name": "Hong Kong",
+      "years": "1900-1995",
+      "data_points": 96
+    },
+    {
+      "vdem_name": "Ivory Coast",
+      "display_name": "Ivory Coast",
+      "years": "1900-1995",
+      "data_points": 96
+    },
+    {
+      "vdem_name": "Laos",
+      "display_name": "Laos",
+      "years": "1900-1995",
+      "data_points": 96
+    },
+    {
+      "vdem_name": "Qatar",
+      "display_name": "Qatar",
+      "years": "1900-1995",
+      "data_points": 96
+    },
+    {
+      "vdem_name": "Sao Tome and Principe",
+      "display_name": "Sao Tome and Principe",
+      "years": "1900-1995",
+      "data_points": 96
+    },
+    {
+      "vdem_name": "Comoros",
+      "display_name": "Comoros",
+      "years": "1900-2023",
+      "data_points": 89
+    },
+    {
+      "vdem_name": "Guinea-Bissau",
+      "display_name": "Guinea-Bissau",
+      "years": "1935-2023",
+      "data_points": 86
+    },
+    {
+      "vdem_name": "Hesse-Darmstadt",
+      "display_name": "Hesse-Darmstadt",
+      "years": "1789-1871",
+      "data_points": 83
+    },
+    {
+      "vdem_name": "Mecklenburg Schwerin",
+      "display_name": "Mecklenburg Schwerin",
+      "years": "1789-1867",
+      "data_points": 79
+    },
+    {
+      "vdem_name": "Saxony",
+      "display_name": "Saxony",
+      "years": "1789-1867",
+      "data_points": 79
+    },
+    {
+      "vdem_name": "Libya",
+      "display_name": "Libya",
+      "years": "1934-2023",
+      "data_points": 78
+    },
+    {
+      "vdem_name": "Papal States",
+      "display_name": "Papal States",
+      "years": "1789-1870",
+      "data_points": 78
+    },
+    {
+      "vdem_name": "Bhutan",
+      "display_name": "Bhutan",
+      "years": "1945-2023",
+      "data_points": 76
+    },
+    {
+      "vdem_name": "Syria",
+      "display_name": "Syria",
+      "years": "1918-1995",
+      "data_points": 76
+    },
+    {
+      "vdem_name": "Hanover",
+      "display_name": "Hanover",
+      "years": "1789-1865",
+      "data_points": 74
+    },
+    {
+      "vdem_name": "Piedmont-Sardinia",
+      "display_name": "Piedmont-Sardinia",
+      "years": "1789-1861",
+      "data_points": 73
+    },
+    {
+      "vdem_name": "Burkina Faso",
+      "display_name": "Burkina Faso",
+      "years": "1960-2023",
+      "data_points": 61
+    },
+    {
+      "vdem_name": "Nassau",
+      "display_name": "Nassau",
+      "years": "1806-1866",
+      "data_points": 61
+    },
+    {
+      "vdem_name": "Senegal",
+      "display_name": "Senegal",
+      "years": "1960-2023",
+      "data_points": 61
+    },
+    {
+      "vdem_name": "Cameroon",
+      "display_name": "Cameroon",
+      "years": "1961-2023",
+      "data_points": 60
+    },
+    {
+      "vdem_name": "Parma",
+      "display_name": "Parma",
+      "years": "1789-1859",
+      "data_points": 60
+    },
+    {
+      "vdem_name": "Saxe-Weimar-Eisenach",
+      "display_name": "Saxe-Weimar-Eisenach",
+      "years": "1809-1867",
+      "data_points": 59
+    },
+    {
+      "vdem_name": "Würtemberg",
+      "display_name": "Würtemberg",
+      "years": "1815-1871",
+      "data_points": 57
+    },
+    {
+      "vdem_name": "Botswana",
+      "display_name": "Botswana",
+      "years": "1966-2023",
+      "data_points": 55
+    },
+    {
+      "vdem_name": "Bavaria",
+      "display_name": "Bavaria",
+      "years": "1818-1870",
+      "data_points": 53
+    },
+    {
+      "vdem_name": "Estonia",
+      "display_name": "Estonia",
+      "years": "1918-2023",
+      "data_points": 53
+    },
+    {
+      "vdem_name": "Lithuania",
+      "display_name": "Lithuania",
+      "years": "1918-2023",
+      "data_points": 53
+    },
+    {
+      "vdem_name": "Baden",
+      "display_name": "Baden",
+      "years": "1819-1870",
+      "data_points": 52
+    },
+    {
+      "vdem_name": "Latvia",
+      "display_name": "Latvia",
+      "years": "1920-2023",
+      "data_points": 51
+    },
+    {
+      "vdem_name": "North Korea",
+      "display_name": "North Korea",
+      "years": "1945-1995",
+      "data_points": 51
+    },
+    {
+      "vdem_name": "Vietnam",
+      "display_name": "Fransız Hindiçinisi",
+      "years": "1945-1954",
+      "data_points": 51
+    },
+    {
+      "vdem_name": "Vietnam",
+      "display_name": "Kuzey Vietnam",
+      "years": "1954-1975",
+      "data_points": 51
+    },
+    {
+      "vdem_name": "Uzbekistan",
+      "display_name": "Uzbekistan",
+      "years": "1912-2023",
+      "data_points": 40
+    },
+    {
+      "vdem_name": "Brunswick",
+      "display_name": "Brunswick",
+      "years": "1832-1867",
+      "data_points": 36
+    },
+    {
+      "vdem_name": "Montenegro",
+      "display_name": "Montenegro",
+      "years": "1900-2023",
+      "data_points": 36
+    },
+    {
+      "vdem_name": "Slovakia",
+      "display_name": "Çekoslovakya",
+      "years": "1939-1992",
+      "data_points": 34
+    },
+    {
+      "vdem_name": "Slovenia",
+      "display_name": "Slovenia",
+      "years": "1989-2023",
+      "data_points": 32
+    },
+    {
+      "vdem_name": "Armenia",
+      "display_name": "Armenia",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Azerbaijan",
+      "display_name": "Azerbaijan",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Belarus",
+      "display_name": "Belarus",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Eritrea",
+      "display_name": "Eritrea",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Georgia",
+      "display_name": "Georgia",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Kazakhstan",
+      "display_name": "Kazakhstan",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Kyrgyzstan",
+      "display_name": "Kyrgyzstan",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Palestine/West Bank",
+      "display_name": "Palestine/West Bank",
+      "years": "1948-1995",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Tajikistan",
+      "display_name": "Tajikistan",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Turkmenistan",
+      "display_name": "Turkmenistan",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "Ukraine",
+      "display_name": "Ukraine",
+      "years": "1990-2023",
+      "data_points": 31
+    },
+    {
+      "vdem_name": "North Macedonia",
+      "display_name": "North Macedonia",
+      "years": "1991-2023",
+      "data_points": 30
+    },
+    {
+      "vdem_name": "United Arab Emirates",
+      "display_name": "United Arab Emirates",
+      "years": "1971-2019",
+      "data_points": 26
+    },
+    {
+      "vdem_name": "Bolivarian Republic of Venezuela",
+      "display_name": "Bolivarian Republic of Venezuela",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Côte d'Ivoire",
+      "display_name": "Côte d'Ivoire",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Hong Kong SAR (China)",
+      "display_name": "Hong Kong SAR (China)",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Iceland",
+      "display_name": "Iceland",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Lao PDR",
+      "display_name": "Lao PDR",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Moldova",
+      "display_name": "Moldova",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Myanmar",
+      "display_name": "Myanmar",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Papua New Guinea",
+      "display_name": "Papua New Guinea",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Republic of Yemen",
+      "display_name": "Republic of Yemen",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Sudan",
+      "display_name": "Sudan",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Syrian Arab Republic",
+      "display_name": "Syrian Arab Republic",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "São Tomé and Príncipe",
+      "display_name": "São Tomé and Príncipe",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Tanzania",
+      "display_name": "Tanzania",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Uganda",
+      "display_name": "Uganda",
+      "years": "1996-2023",
+      "data_points": 25
+    },
+    {
+      "vdem_name": "Bahrain",
+      "display_name": "Bahrain",
+      "years": "2000-2023",
+      "data_points": 23
+    },
+    {
+      "vdem_name": "Viet Nam",
+      "display_name": "Viet Nam",
+      "years": "1996-2021",
+      "data_points": 23
+    },
+    {
+      "vdem_name": "Timor-Leste",
+      "display_name": "Timor-Leste",
+      "years": "2002-2023",
+      "data_points": 22
+    },
+    {
+      "vdem_name": "Republic of Vietnam",
+      "display_name": "Republic of Vietnam",
+      "years": "1902-1922",
+      "data_points": 21
+    },
+    {
+      "vdem_name": "Oldenburg",
+      "display_name": "Oldenburg",
+      "years": "1848-1867",
+      "data_points": 20
+    },
+    {
+      "vdem_name": "Palestine/Gaza",
+      "display_name": "Palestine/Gaza",
+      "years": "1948-1966",
+      "data_points": 19
+    },
+    {
+      "vdem_name": "Kosovo",
+      "display_name": "Kosovo",
+      "years": "2008-2023",
+      "data_points": 16
+    },
+    {
+      "vdem_name": "Tuscany",
+      "display_name": "Tuscany",
+      "years": "1848-1861",
+      "data_points": 14
+    },
+    {
+      "vdem_name": "South Sudan",
+      "display_name": "South Sudan",
+      "years": "2011-2023",
+      "data_points": 13
+    },
+    {
+      "vdem_name": "Two Sicilies",
+      "display_name": "Two Sicilies",
+      "years": "1808-1849",
+      "data_points": 12
+    },
+    {
+      "vdem_name": "Somaliland",
+      "display_name": "Somaliland",
+      "years": "1991-1995",
+      "data_points": 5
+    },
+    {
+      "vdem_name": "Modena",
+      "display_name": "Modena",
+      "years": "1797-1797",
+      "data_points": 1
+    }
+  ]
+}
