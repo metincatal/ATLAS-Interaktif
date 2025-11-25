@@ -32,12 +32,12 @@ export function getCountryDataForYear(countryName, year) {
  */
 export function getAvailableYearsForCountry(countryName) {
     if (!state.darKoridorByCountry) return [];
-    
+
     const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
     let countryYearData = state.darKoridorByCountry[mappedName] || state.darKoridorByCountry[countryName];
-    
+
     if (!countryYearData || countryYearData.length === 0) return [];
-    
+
     // Tüm yılları döndür (sıralı)
     return countryYearData.map(d => d.year).sort((a, b) => a - b);
 }
