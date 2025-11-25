@@ -66,6 +66,14 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.panel-country-subtitle {
+    font-size: 0.95rem;
+    margin: 8px 0 0 0;
+    opacity: 0.9;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 /* Panel Content */
 .panel-content {
     padding: 25px;

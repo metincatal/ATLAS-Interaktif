@@ -98,6 +98,86 @@ export async function preloadAllHistoricalMaps(progressCallback) {
 }
 
 /**
+ * Unified data'yı historical_names.json formatına dönüştürür
+ */
+function convertToHistoricalNamesFormat(unifiedData) {
+    const mappings = [];
+
+    unifiedData.countries.forEach(country => {
+        if (country.periods.length === 0) return;
+
+        // Her period için display_name benzersiz mi kontrol et
+        const groupedPeriods = [];
+        country.periods.forEach(period => {
+            // Yıl aralığını parse et
+            const [startYear, endYear] = period.years.split('-').map(Number);
+
+            groupedPeriods.push({
+                start_year: startYear,
+                end_year: endYear,
+                display_name: period.display_name,
+                display_name_en: period.display_name,  // Fallback
+                notes: `Başkent: ${period.capital || 'Bilinmiyor'}`
+            });
+        });
+
+        if (groupedPeriods.length > 0) {
+            mappings.push({
+                vdem_name: country.vdem_name,
+                historical_periods: groupedPeriods
+            });
+        }
+    });
+
+    return {
+        metadata: {
+            title: 'Tarihi Ülke Adları (Unified Data Uyumlu)',
+            generated_from: 'unified_country_historical_data.json',
+            version: '2.0.0'
+        },
+        mappings: mappings
+    };
+}
+
+/**
+ * Unified data'yı capital_coordinates.json formatına dönüştürür
+ */
+function convertToCapitalCoordinatesFormat(unifiedData) {
+    const capitals = {};
+
+    unifiedData.countries.forEach(country => {
+        const countryCapitals = [];
+
+        country.periods.forEach(period => {
+            if (period.capital && period.coordinates) {
+                const [startYear, endYear] = period.years.split('-').map(Number);
+
+                countryCapitals.push({
+                    start_year: startYear,
+                    end_year: endYear,
+                    capital: period.capital,
+                    lat: period.coordinates.lat,
+                    lng: period.coordinates.lng
+                });
+            }
+        });
+
+        if (countryCapitals.length > 0) {
+            capitals[country.vdem_name] = countryCapitals;
+        }
+    });
+
+    return {
+        metadata: {
+            title: 'Tarihi Başkent Koordinatları (Unified Data Uyumlu)',
+            generated_from: 'unified_country_historical_data.json',
+            version: '2.0.0'
+        },
+        capitals: capitals
+    };
+}
+
+/**
  * Historical Maps Index ve Names verilerini yükler
  */
 export async function loadHistoricalMapsData() {
@@ -115,28 +195,28 @@ export async function loadHistoricalMapsData() {
         const indexData = await indexResponse.json();
         setState('historicalMapsIndex', indexData);
 
-        // Historical names mapping yükle
-        const namesResponse = await fetch(DATA_PATHS.historicalNamesMapping);
-        if (!namesResponse.ok) {
-            throw new Error(`Names mapping yükleme hatası: ${namesResponse.status}`);
+        // Birleştirilmiş tarihi veri yükle
+        const unifiedResponse = await fetch(DATA_PATHS.unifiedHistoricalData);
+        if (!unifiedResponse.ok) {
+            throw new Error(`Unified data yükleme hatası: ${unifiedResponse.status}`);
         }
-        const namesData = await namesResponse.json();
-        setState('historicalNamesMapping', namesData);
+        const unifiedData = await unifiedResponse.json();
+        setState('unifiedHistoricalData', unifiedData);
 
-        // Başkent koordinatlarını yükle
-        const capitalsResponse = await fetch(DATA_PATHS.capitalCoordinates);
-        if (!capitalsResponse.ok) {
-            throw new Error(`Capital coordinates yükleme hatası: ${capitalsResponse.status}`);
-        }
-        const capitalsData = await capitalsResponse.json();
-        setState('capitalCoordinates', capitalsData);
+        // Geriye dönük uyumluluk için eski formatları oluştur
+        const historicalNamesCompat = convertToHistoricalNamesFormat(unifiedData);
+        const capitalCoordinatesCompat = convertToCapitalCoordinatesFormat(unifiedData);
+        setState('historicalNamesMapping', historicalNamesCompat);
+        setState('capitalCoordinates', capitalCoordinatesCompat);
 
         console.log('✓ Historical Maps verileri yüklendi:', {
             totalMilestones: indexData.milestones.length,
             yearCoverage: `${indexData.metadata.coverage.start_year}-${indexData.metadata.coverage.end_year}`,
             sources: indexData.metadata.sources.length,
-            namedCountries: namesData.mappings.length,
-            capitalCountries: Object.keys(capitalsData.capitals).length
+            unifiedCountries: unifiedData.countries.length,
+            unifiedPeriods: unifiedData.metadata.total_periods,
+            namedCountries: historicalNamesCompat.mappings.length,
+            capitalCountries: Object.keys(capitalCoordinatesCompat.capitals).length
         });
 
         return true;
@@ -247,6 +327,7 @@ export async function loadHistoricalMap(milestone, year = null) {
 export function getHistoricalName(vdemName, year) {
     const namesData = state.historicalNamesMapping;
     if (!namesData) {
+        console.warn(`⚠️ historicalNamesMapping yüklenmemiş - vdemName: ${vdemName}, year: ${year}`);
         return null;
     }
 
@@ -427,6 +508,11 @@ export async function enableHistoricalMaps() {
  */
 export function disableHistoricalMaps() {
     console.log('🗺️  Historical Maps modu devre dışı bırakılıyor...');
+
+    // Globe noktalarını temizle (MEMORY LEAK ÖNLEYİCİ)
+    if (state.globe) {
+        state.globe.pointsData([]);
+    }
 
     updateHistoricalUI(false);
 
@@ -621,6 +707,7 @@ export function renderTimelineMilestones() {
 export function getCapitalForYear(vdemName, year) {
     const capitalsData = state.capitalCoordinates;
     if (!capitalsData || !capitalsData.capitals) {
+        console.warn(`⚠️ capitalCoordinates yüklenmemiş - vdemName: ${vdemName}, year: ${year}`);
         return null;
     }
 
@@ -682,8 +769,8 @@ export function getCapitalPointsForYear(year) {
  * @returns {string} Tooltip HTML
  */
 export function createCapitalTooltip(point) {
-    // V-Dem ana başlık adını kullan (vdemName), tarihi adı değil
-    let tooltip = `<strong>${point.vdemName}</strong>`;
+    // Tooltip'te tarihi adı göster
+    let tooltip = `<strong>${point.displayName}</strong>`;
 
     if (point.capital) {
         tooltip += `<br><small>Başkent: ${point.capital}</small>`;

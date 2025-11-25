@@ -45,6 +45,8 @@ export const state = {
     historicalMapsEnabled: false,
     historicalMapsIndex: null,
     historicalNamesMapping: null,
+    capitalCoordinates: null,  // Tarihi başkent koordinatları
+    unifiedHistoricalData: null,  // Birleştirilmiş tarihi veri
     currentHistoricalYear: 1789,
     currentHistoricalMilestone: null,
     historicalMapData: null,

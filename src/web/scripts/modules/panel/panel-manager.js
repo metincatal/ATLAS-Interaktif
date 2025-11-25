@@ -87,9 +87,35 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
         flagImg.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="213"><rect width="320" height="213" fill="%23cccccc"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="%23666666" font-size="20">Bayrak Yok</text></svg>';
     };
     
-    // Ülke adı
+    // Ülke adı (V-Dem modern adı)
     panelCountryName.textContent = countryName;
-    
+
+    // Alt başlık - tarihi ad ve başkent
+    const panelCountrySubtitle = document.getElementById('panel-country-subtitle');
+    const currentYear = state.currentHistoricalYear || state.selectedYear || 2023;
+
+    // Historical maps aktifse tarihi bilgileri göster
+    if (state.historicalMapsEnabled && state.historicalNamesMapping) {
+        import('../historical/historical-maps.js').then(({ getHistoricalName, getCapitalForYear }) => {
+            const historicalInfo = getHistoricalName(countryName, currentYear);
+            const capitalInfo = getCapitalForYear(countryName, currentYear);
+
+            let subtitle = '';
+            if (historicalInfo) {
+                subtitle += historicalInfo.display_name;
+            }
+            if (capitalInfo) {
+                subtitle += subtitle ? ` • Başkent: ${capitalInfo.capital}` : `Başkent: ${capitalInfo.capital}`;
+            }
+
+            panelCountrySubtitle.textContent = subtitle;
+            panelCountrySubtitle.style.display = subtitle ? 'block' : 'none';
+        });
+    } else {
+        panelCountrySubtitle.textContent = '';
+        panelCountrySubtitle.style.display = 'none';
+    }
+
     // Sabit analiz metinlerini panel öğelerine yaz
     const analyses = getCountryAnalysesText(countryName);
     nationsFailText.textContent = analyses.nationsFail;
