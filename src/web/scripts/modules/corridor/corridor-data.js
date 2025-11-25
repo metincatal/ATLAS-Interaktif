@@ -51,11 +51,16 @@ export function updateDarKoridorDataForYear(year, mode = null) {
     const corridorMode = mode || state.corridorMode || 'modern';
 
     // Mode'a göre doğru veri kaynağını seç
-    const darKoridorByYear = corridorMode === 'historical'
+    let darKoridorByYear = corridorMode === 'historical'
         ? state.darKoridorHistoricalByYear
         : state.darKoridorByYear;
 
     if (!darKoridorByYear) return;
+
+    // Historical veri "years" key'i içinde ise, onu çıkar
+    if (corridorMode === 'historical' && darKoridorByYear.years) {
+        darKoridorByYear = darKoridorByYear.years;
+    }
 
     const yearStr = String(year);
     if (!darKoridorByYear[yearStr]) {
@@ -64,9 +69,10 @@ export function updateDarKoridorDataForYear(year, mode = null) {
     }
 
     // darKoridorData formatını oluştur
+    const yearData = darKoridorByYear[yearStr];
     const darKoridorData = {
-        countries: darKoridorByYear[yearStr].map(country => ({
-            name: country.country,
+        countries: yearData.map(country => ({
+            name: country.name || country.country,
             statePower: country.statePower,
             societyPower: country.societyPower,
             leviathanType: country.leviathanType,

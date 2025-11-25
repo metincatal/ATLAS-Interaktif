@@ -13,11 +13,16 @@ export function getCountryDataForYear(countryName, year, mode = null) {
     const corridorMode = mode || state.corridorMode || 'modern';
 
     // Mode'a göre doğru veri kaynağını seç
-    const dataSource = corridorMode === 'historical'
+    let dataSource = corridorMode === 'historical'
         ? state.darKoridorHistoricalByCountry
         : state.darKoridorByCountry;
 
     if (!dataSource) return null;
+
+    // Historical veri "countries" key'i içinde ise, onu çıkar
+    if (corridorMode === 'historical' && dataSource.countries) {
+        dataSource = dataSource.countries;
+    }
 
     // Ülke adı eşleştirmesi yap
     const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
@@ -43,11 +48,16 @@ export function getAvailableYearsForCountry(countryName, mode = null) {
     const corridorMode = mode || state.corridorMode || 'modern';
 
     // Mode'a göre doğru veri kaynağını seç
-    const dataSource = corridorMode === 'historical'
+    let dataSource = corridorMode === 'historical'
         ? state.darKoridorHistoricalByCountry
         : state.darKoridorByCountry;
 
     if (!dataSource) return [];
+
+    // Historical veri "countries" key'i içinde ise, onu çıkar
+    if (corridorMode === 'historical' && dataSource.countries) {
+        dataSource = dataSource.countries;
+    }
 
     const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
     let countryYearData = dataSource[mappedName] || dataSource[countryName];

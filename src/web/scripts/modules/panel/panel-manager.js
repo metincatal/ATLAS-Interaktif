@@ -96,29 +96,44 @@ function switchCorridorMode(mode) {
     }
 
     // Yıl aralığını güncelle
-    const availableYears = getAvailableYearsForCountry(countryName, mode);
+    let availableYears = getAvailableYearsForCountry(countryName, mode);
 
     if (availableYears.length === 0) {
         console.warn(`${countryName} için ${mode} modunda veri yok`);
         return;
     }
 
-    // Historical mode için dinamik yıl aralığını güncelle
+    // Historical mode için: Sadece 1995 ve öncesi yılları kullan
     if (mode === 'historical') {
+        // 1995 ve öncesi yılları filtrele
+        availableYears = availableYears.filter(year => year <= 1995);
+
+        if (availableYears.length === 0) {
+            console.warn(`${countryName} için 1995 ve öncesi veri yok`);
+            return;
+        }
+
+        // Dinamik yıl aralığını güncelle
         const firstYear = availableYears[0];
         const lastYear = availableYears[availableYears.length - 1];
         const yearRangeSpan = document.getElementById('historical-year-range');
         if (yearRangeSpan) {
-            yearRangeSpan.textContent = `(${firstYear}-${lastYear <= 1995 ? lastYear : 1995})`;
+            yearRangeSpan.textContent = `(${firstYear}-${lastYear})`;
         }
     }
 
     // Hangi yılı göstereceğimizi belirle
     let targetYear;
     if (mode === 'historical') {
-        // Tam Tarih modunda: 1995 (veya son yıl 1995'ten küçükse son yıl)
-        const lastYear = availableYears[availableYears.length - 1];
-        targetYear = Math.min(1995, lastYear);
+        // Tam Tarih modunda: 1995 yılından başla (eğer varsa)
+        // availableYears zaten sıralı ve 1995 ve öncesi filtrelenmiş
+        const year1995Index = availableYears.indexOf(1995);
+        if (year1995Index !== -1) {
+            targetYear = 1995;
+        } else {
+            // 1995 yoksa en son yıl
+            targetYear = availableYears[availableYears.length - 1];
+        }
     } else {
         // Modern modunda: En son yıl
         targetYear = availableYears[availableYears.length - 1];
@@ -128,7 +143,7 @@ function switchCorridorMode(mode) {
     setupCorridorYearSlider(countryName, availableYears, targetYear);
     updateCountryCorridorPosition(countryName, targetYear);
 
-    console.log(`✓ Corridor mode değiştirildi: ${mode}, hedef yıl: ${targetYear}`);
+    console.log(`✓ Corridor mode değiştirildi: ${mode}, hedef yıl: ${targetYear}, yıl aralığı: ${availableYears[0]}-${availableYears[availableYears.length-1]}`);
 }
 
 /**
@@ -154,13 +169,18 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
     }
 
     // Historical mode için dinamik yıl aralığını ayarla
-    const historicalYears = getAvailableYearsForCountry(countryName, 'historical');
+    let historicalYears = getAvailableYearsForCountry(countryName, 'historical');
     if (historicalYears.length > 0) {
-        const firstYear = historicalYears[0];
-        const lastYear = historicalYears[historicalYears.length - 1];
-        const yearRangeSpan = document.getElementById('historical-year-range');
-        if (yearRangeSpan) {
-            yearRangeSpan.textContent = `(${firstYear}-${lastYear <= 1995 ? lastYear : 1995})`;
+        // Sadece 1995 ve öncesi yılları filtrele
+        historicalYears = historicalYears.filter(year => year <= 1995);
+
+        if (historicalYears.length > 0) {
+            const firstYear = historicalYears[0];
+            const lastYear = historicalYears[historicalYears.length - 1];
+            const yearRangeSpan = document.getElementById('historical-year-range');
+            if (yearRangeSpan) {
+                yearRangeSpan.textContent = `(${firstYear}-${lastYear})`;
+            }
         }
     }
 
