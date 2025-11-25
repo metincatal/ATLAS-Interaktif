@@ -13,7 +13,7 @@ import { setupPanelAndChat } from './modules/panel/panel-manager.js';
 import { setupChat } from './modules/chat/chat-manager.js';
 
 // Dar Koridor
-import { loadDarKoridorData } from './modules/corridor/corridor-data.js';
+import { loadDarKoridorData, loadHistoricalCorridorData } from './modules/corridor/corridor-data.js';
 import { setupVdemExperience } from './modules/vdem/vdem-manager.js';
 
 // Historical Maps
@@ -43,6 +43,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         console.log('2️⃣ Dar Koridor verileri yükleniyor...');
         await loadDarKoridorData();
+        await loadHistoricalCorridorData();
 
         console.log('3️⃣ Panel ve Chat sistemi kuruluyor...');
         setupPanelAndChat();

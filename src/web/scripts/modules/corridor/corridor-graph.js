@@ -16,14 +16,14 @@ export function updateCountryCorridorPosition(countryName, year) {
     const img = graphic?.querySelector('img');
     const dot = document.getElementById('country-position-dot');
     const infoBar = document.getElementById('corridor-info-bar');
-    
+
     if (!graphic || !img || !dot || !infoBar) {
         console.warn('Corridor grafik elementleri bulunamadı');
         return;
     }
-    
-    // Ülke verisini al
-    const countryData = getCountryDataForYear(countryName, year);
+
+    // Ülke verisini al (mevcut mode'a göre)
+    const countryData = getCountryDataForYear(countryName, year, state.corridorMode);
     
     if (!countryData) {
         console.warn(`${countryName} için ${year} yılı verisi bulunamadı`);
@@ -99,51 +99,72 @@ function getTypeColor(type) {
 /**
  * Yıl slider'ını kurar - SADECE MEVCUT YILLAR
  */
-export function setupCorridorYearSlider(countryName, availableYears) {
+export function setupCorridorYearSlider(countryName, availableYears, targetYear = null) {
     const yearInput = document.getElementById('corridor-year-input');
     const yearLabel = document.getElementById('corridor-year-label');
-    
+
     if (!yearInput || !yearLabel) return;
-    
+
     if (availableYears.length === 0) {
         console.warn('Ülke için yıl verisi yok');
         return;
     }
-    
+
     // Yılları sırala (küçükten büyüğe)
     const sortedYears = [...availableYears].sort((a, b) => a - b);
-    
+
     // Slider'ı index bazlı yap (0, 1, 2, ...)
     const minIndex = 0;
     const maxIndex = sortedYears.length - 1;
-    
+
     yearInput.min = minIndex;
     yearInput.max = maxIndex;
-    yearInput.value = maxIndex; // Son yıl (en güncel)
     yearInput.step = 1;
-    
-    // Başlangıç değeri
-    const initialYear = sortedYears[maxIndex];
+
+    // Hedef yılı bul veya son yılı kullan
+    let initialIndex = maxIndex;
+    let initialYear = sortedYears[maxIndex];
+
+    if (targetYear !== null) {
+        // targetYear'a en yakın yılı bul
+        const targetIndex = sortedYears.indexOf(targetYear);
+        if (targetIndex !== -1) {
+            initialIndex = targetIndex;
+            initialYear = targetYear;
+        } else {
+            // Tam eşleşme yoksa en yakın yılı bul
+            initialIndex = sortedYears.findIndex(y => y >= targetYear);
+            if (initialIndex === -1) initialIndex = maxIndex;
+            initialYear = sortedYears[initialIndex];
+        }
+    }
+
+    yearInput.value = initialIndex;
     yearLabel.textContent = initialYear;
-    
-    // Event listener - Index'e göre yıl bul
-    yearInput.addEventListener('input', (e) => {
+
+    // Eski event listener'ı kaldır ve yeni ekle (duplicate önleme)
+    const newInput = yearInput.cloneNode(true);
+    yearInput.parentNode.replaceChild(newInput, yearInput);
+
+    // Yeni input elementine event listener ekle
+    const updatedInput = document.getElementById('corridor-year-input');
+    updatedInput.addEventListener('input', (e) => {
         const index = parseInt(e.target.value);
         const selectedYear = sortedYears[index];
-        
+
         if (selectedYear) {
             yearLabel.textContent = selectedYear;
-            
+
             // Grafik pozisyonunu güncelle
             updateCountryCorridorPosition(countryName, selectedYear);
-            
+
             // Eğer interactive map aktifse, tüm ülkeleri de güncelle
             if (state.interactiveMapActive) {
                 updateInteractiveMapYear(selectedYear);
             }
         }
     });
-    
+
     console.log(`✓ Corridor year slider kuruldu: ${sortedYears.length} yıl (${sortedYears[0]}-${sortedYears[sortedYears.length-1]})`);
 }
 
@@ -151,10 +172,15 @@ export function setupCorridorYearSlider(countryName, availableYears) {
  * Interactive map için yıl güncellemesi
  */
 function updateInteractiveMapYear(year) {
+    // darKoridorData'yı mevcut mode'a göre güncelle (tüm ülkeler için)
+    import('./corridor-data.js').then(({ updateDarKoridorDataForYear }) => {
+        updateDarKoridorDataForYear(year, state.corridorMode);
+    });
+
     // Interactive map modülüne yıl değişikliğini bildir
     const event = new CustomEvent('corridorYearChanged', { detail: { year } });
     document.dispatchEvent(event);
-    
+
     console.log(`📊 Interactive map yıl güncellendi: ${year}`);
 }
 

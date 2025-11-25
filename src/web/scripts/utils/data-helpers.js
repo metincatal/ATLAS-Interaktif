@@ -6,35 +6,51 @@ import { COUNTRY_NAME_MAP } from '../config/constants.js';
 import { state } from '../core/state.js';
 
 /**
- * Ülke için belirli bir yılın verilerini döndürür
+ * Ülke için belirli bir yılın verilerini döndürür (mode'a göre)
  */
-export function getCountryDataForYear(countryName, year) {
-    if (!state.darKoridorByCountry) return null;
-    
+export function getCountryDataForYear(countryName, year, mode = null) {
+    // Mode belirtilmemişse state'den al
+    const corridorMode = mode || state.corridorMode || 'modern';
+
+    // Mode'a göre doğru veri kaynağını seç
+    const dataSource = corridorMode === 'historical'
+        ? state.darKoridorHistoricalByCountry
+        : state.darKoridorByCountry;
+
+    if (!dataSource) return null;
+
     // Ülke adı eşleştirmesi yap
     const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
-    
+
     // Hem eşleştirilmiş adı hem de orijinal adı dene
-    let countryYearData = state.darKoridorByCountry[mappedName];
+    let countryYearData = dataSource[mappedName];
     if (!countryYearData) {
-        countryYearData = state.darKoridorByCountry[countryName];
+        countryYearData = dataSource[countryName];
     }
-    
+
     if (!countryYearData) return null;
-    
+
     // O yılın verisini bul
     const yearData = countryYearData.find(d => d.year === year);
     return yearData;
 }
 
 /**
- * Ülkenin mevcut olan yıllarını döndürür
+ * Ülkenin mevcut olan yıllarını döndürür (mode'a göre)
  */
-export function getAvailableYearsForCountry(countryName) {
-    if (!state.darKoridorByCountry) return [];
+export function getAvailableYearsForCountry(countryName, mode = null) {
+    // Mode belirtilmemişse state'den al
+    const corridorMode = mode || state.corridorMode || 'modern';
+
+    // Mode'a göre doğru veri kaynağını seç
+    const dataSource = corridorMode === 'historical'
+        ? state.darKoridorHistoricalByCountry
+        : state.darKoridorByCountry;
+
+    if (!dataSource) return [];
 
     const mappedName = COUNTRY_NAME_MAP[countryName] || countryName;
-    let countryYearData = state.darKoridorByCountry[mappedName] || state.darKoridorByCountry[countryName];
+    let countryYearData = dataSource[mappedName] || dataSource[countryName];
 
     if (!countryYearData || countryYearData.length === 0) return [];
 

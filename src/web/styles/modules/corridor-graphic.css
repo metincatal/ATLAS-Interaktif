@@ -231,6 +231,47 @@
     font-weight: var(--font-weight-bold);
 }
 
+/* Mod Seçici - Modern vs Tam Tarih */
+.corridor-mode-selector {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 16px 0;
+    padding: 0 20px;
+}
+
+.corridor-mode-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: 2px solid rgba(42, 82, 152, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgb(30, 60, 114);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.corridor-mode-btn:hover {
+    background: rgba(42, 82, 152, 0.1);
+    border-color: rgba(42, 82, 152, 0.5);
+    transform: translateY(-2px);
+}
+
+.corridor-mode-btn.active {
+    background: linear-gradient(135deg, rgb(42, 82, 152) 0%, rgb(30, 60, 114) 100%);
+    border-color: rgb(42, 82, 152);
+    color: white;
+    box-shadow: 0 4px 12px rgba(42, 82, 152, 0.3);
+}
+
+.corridor-mode-btn #historical-year-range {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
 /* Yıl Kaydırıcısı - Minimal */
 .corridor-year-slider {
     display: flex;

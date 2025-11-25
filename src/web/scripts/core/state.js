@@ -66,6 +66,9 @@ export const state = {
     darKoridorData: null,
     darKoridorByYear: null,
     darKoridorByCountry: null,
+    darKoridorHistoricalByYear: null,  // Historical veri (1995'e kadar)
+    darKoridorHistoricalByCountry: null,  // Historical veri (ülkelere göre)
+    corridorMode: 'modern',  // 'modern' veya 'historical'
     selectedYear: 2023,
     currentCountryName: null,
     currentCountryAvailableYears: [],

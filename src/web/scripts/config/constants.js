@@ -84,6 +84,8 @@ export const GLOBE_BACKGROUND_URL = 'https://unpkg.com/three-globe/example/img/n
 export const DATA_PATHS = {
     darKoridorAllYears: '/data/processed/wgi_vdem_modern/dar_koridor_all_years.json',
     darKoridorByCountry: '/data/processed/wgi_vdem_modern/dar_koridor_by_country.json',
+    darKoridorHistoricalAllYears: '/data/processed/vdem_historical/dar_koridor_combined_all_years.json',
+    darKoridorHistoricalByCountry: '/data/processed/vdem_historical/dar_koridor_by_country_all_years.json',
     wgiDataset: '/data/raw/wgidataset.csv',
     vdemDataset: '/data/processed/vdem_metadata/vdem_data.json',
     vdemMindmap: '/data/processed/vdem_metadata/vdem_mindmap_structure.json',

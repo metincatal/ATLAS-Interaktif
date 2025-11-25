@@ -44,18 +44,25 @@ export async function loadDarKoridorData() {
 }
 
 /**
- * Belirli bir yıl için darKoridorData'yı günceller
+ * Belirli bir yıl için darKoridorData'yı günceller (mode'a göre)
  */
-export function updateDarKoridorDataForYear(year) {
-    const darKoridorByYear = state.darKoridorByYear;
+export function updateDarKoridorDataForYear(year, mode = null) {
+    // Mode belirtilmemişse state'den al
+    const corridorMode = mode || state.corridorMode || 'modern';
+
+    // Mode'a göre doğru veri kaynağını seç
+    const darKoridorByYear = corridorMode === 'historical'
+        ? state.darKoridorHistoricalByYear
+        : state.darKoridorByYear;
+
     if (!darKoridorByYear) return;
-    
+
     const yearStr = String(year);
     if (!darKoridorByYear[yearStr]) {
-        console.warn(`⚠ ${year} yılı için veri bulunamadı`);
+        console.warn(`⚠ ${year} yılı için veri bulunamadı (${corridorMode} mode)`);
         return;
     }
-    
+
     // darKoridorData formatını oluştur
     const darKoridorData = {
         countries: darKoridorByYear[yearStr].map(country => ({
@@ -66,10 +73,46 @@ export function updateDarKoridorDataForYear(year) {
             cluster: country.cluster
         }))
     };
-    
+
     setState('darKoridorData', darKoridorData);
     setState('selectedYear', year);
-    
-    console.log(`✓ ${year} yılı verileri yüklendi: ${darKoridorData.countries.length} ülke`);
+
+    console.log(`✓ ${year} yılı verileri yüklendi: ${darKoridorData.countries.length} ülke (${corridorMode} mode)`);
+}
+
+/**
+ * Historical Dar Koridor verilerini yükler (1995'e kadar geri giden veriler)
+ */
+export async function loadHistoricalCorridorData() {
+    try {
+        // Yıllara göre organize edilmiş historical veri
+        const responseByYear = await fetch(DATA_PATHS.darKoridorHistoricalAllYears);
+        if (!responseByYear.ok) {
+            throw new Error('Historical Dar Koridor verileri (yıllara göre) yüklenemedi');
+        }
+        const historicalByYear = await responseByYear.json();
+        setState('darKoridorHistoricalByYear', historicalByYear);
+
+        // Ülkelere göre organize edilmiş historical veri
+        const responseByCountry = await fetch(DATA_PATHS.darKoridorHistoricalByCountry);
+        if (!responseByCountry.ok) {
+            throw new Error('Historical Dar Koridor verileri (ülkelere göre) yüklenemedi');
+        }
+        const historicalByCountry = await responseByCountry.json();
+        setState('darKoridorHistoricalByCountry', historicalByCountry);
+
+        const yearCount = Object.keys(historicalByYear).length;
+        const countryCount = Object.keys(historicalByCountry).length;
+        console.log(`✓ Historical Dar Koridor verileri yüklendi`);
+        console.log(`  Yıl aralığı: ${yearCount} yıl (1789-2023)`);
+        console.log(`  Ülke sayısı: ${countryCount} ülke`);
+
+        return true;
+    } catch (error) {
+        console.warn('Historical Dar Koridor verileri yüklenemedi:', error);
+        setState('darKoridorHistoricalByYear', null);
+        setState('darKoridorHistoricalByCountry', null);
+        return false;
+    }
 }
 

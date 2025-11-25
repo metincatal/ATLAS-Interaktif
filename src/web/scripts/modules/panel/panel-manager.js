@@ -50,8 +50,85 @@ export function setupPanelAndChat() {
     panel.addEventListener('click', (e) => {
         e.stopPropagation();
     });
-    
+
+    // Corridor mode butonları için event listener ekle
+    setupCorridorModeButtons();
+
     console.log('✓ Panel yöneticisi hazır');
+}
+
+/**
+ * Corridor mode butonlarını kurar (Modern vs Tam Tarih)
+ */
+function setupCorridorModeButtons() {
+    const modernBtn = document.getElementById('corridor-mode-modern');
+    const historicalBtn = document.getElementById('corridor-mode-historical');
+
+    if (!modernBtn || !historicalBtn) {
+        console.warn('⚠️ Corridor mode butonları bulunamadı');
+        return;
+    }
+
+    modernBtn.addEventListener('click', () => switchCorridorMode('modern'));
+    historicalBtn.addEventListener('click', () => switchCorridorMode('historical'));
+}
+
+/**
+ * Corridor mode'u değiştirir
+ */
+function switchCorridorMode(mode) {
+    const countryName = state.currentCountryName;
+    if (!countryName) return;
+
+    // Mode'u güncelle
+    setState('corridorMode', mode);
+
+    // Buton stillerini güncelle
+    const modernBtn = document.getElementById('corridor-mode-modern');
+    const historicalBtn = document.getElementById('corridor-mode-historical');
+
+    if (mode === 'modern') {
+        modernBtn.classList.add('active');
+        historicalBtn.classList.remove('active');
+    } else {
+        modernBtn.classList.remove('active');
+        historicalBtn.classList.add('active');
+    }
+
+    // Yıl aralığını güncelle
+    const availableYears = getAvailableYearsForCountry(countryName, mode);
+
+    if (availableYears.length === 0) {
+        console.warn(`${countryName} için ${mode} modunda veri yok`);
+        return;
+    }
+
+    // Historical mode için dinamik yıl aralığını güncelle
+    if (mode === 'historical') {
+        const firstYear = availableYears[0];
+        const lastYear = availableYears[availableYears.length - 1];
+        const yearRangeSpan = document.getElementById('historical-year-range');
+        if (yearRangeSpan) {
+            yearRangeSpan.textContent = `(${firstYear}-${lastYear <= 1995 ? lastYear : 1995})`;
+        }
+    }
+
+    // Hangi yılı göstereceğimizi belirle
+    let targetYear;
+    if (mode === 'historical') {
+        // Tam Tarih modunda: 1995 (veya son yıl 1995'ten küçükse son yıl)
+        const lastYear = availableYears[availableYears.length - 1];
+        targetYear = Math.min(1995, lastYear);
+    } else {
+        // Modern modunda: En son yıl
+        targetYear = availableYears[availableYears.length - 1];
+    }
+
+    // Slider ve grafik güncelle
+    setupCorridorYearSlider(countryName, availableYears, targetYear);
+    updateCountryCorridorPosition(countryName, targetYear);
+
+    console.log(`✓ Corridor mode değiştirildi: ${mode}, hedef yıl: ${targetYear}`);
 }
 
 /**
@@ -66,8 +143,28 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
     
     // Mevcut ülkeyi kaydet
     setState('currentCountryName', countryName);
-    
-    // Ülkenin mevcut yıllarını al
+
+    // Mode'u modern olarak sıfırla
+    setState('corridorMode', 'modern');
+    const modernBtn = document.getElementById('corridor-mode-modern');
+    const historicalBtn = document.getElementById('corridor-mode-historical');
+    if (modernBtn && historicalBtn) {
+        modernBtn.classList.add('active');
+        historicalBtn.classList.remove('active');
+    }
+
+    // Historical mode için dinamik yıl aralığını ayarla
+    const historicalYears = getAvailableYearsForCountry(countryName, 'historical');
+    if (historicalYears.length > 0) {
+        const firstYear = historicalYears[0];
+        const lastYear = historicalYears[historicalYears.length - 1];
+        const yearRangeSpan = document.getElementById('historical-year-range');
+        if (yearRangeSpan) {
+            yearRangeSpan.textContent = `(${firstYear}-${lastYear <= 1995 ? lastYear : 1995})`;
+        }
+    }
+
+    // Ülkenin mevcut yıllarını al (modern mode)
     const availableYears = getAvailableYearsForCountry(countryName);
     setState('currentCountryAvailableYears', availableYears);
     const hasCorridorData = availableYears.length > 0;

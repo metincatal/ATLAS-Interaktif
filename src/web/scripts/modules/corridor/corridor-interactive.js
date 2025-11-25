@@ -294,14 +294,14 @@ function hideAllCountryDots() {
  * Belirli bir yıl için interactive map'i yeniler
  */
 function refreshInteractiveMapForYear(year) {
-    // O yıl için darKoridorData'yı güncelle
+    // O yıl için darKoridorData'yı güncelle (mevcut mode'a göre)
     import('../corridor/corridor-data.js').then(module => {
-        module.updateDarKoridorDataForYear(year);
-        
+        module.updateDarKoridorDataForYear(year, state.corridorMode);
+
         // Noktaları yeniden oluştur
         setTimeout(() => {
             showAllCountryDots();
-            console.log(`✓ Interactive map ${year} yılı için güncellendi`);
+            console.log(`✓ Interactive map ${year} yılı için güncellendi (${state.corridorMode} mode)`);
         }, 100);
     });
 }
