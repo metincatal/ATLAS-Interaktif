@@ -90,7 +90,8 @@ export const DATA_PATHS = {
     historicalMapsIndex: '/data/historical_maps/index.json',
     historicalNamesMapping: '/data/historical_maps/historical_names.json',
     historicalMapsBaseDir: '/data/historical_maps/',
-    capitalCoordinates: '/data/historical_maps/capital_coordinates.json'
+    capitalCoordinates: '/data/historical_maps/capital_coordinates.json',
+    unifiedHistoricalData: '/data/historical_maps/unified_country_historical_data.json'  // Yeni birleştirilmiş veri
 };
 
 export const VDEM_COLOR_SCHEMES = [
