@@ -143,6 +143,22 @@ function switchCorridorMode(mode) {
     setupCorridorYearSlider(countryName, availableYears, targetYear);
     updateCountryCorridorPosition(countryName, targetYear);
 
+    // Eğer interactive map aktifse, tüm ülkeleri de güncelle
+    if (state.interactiveMapActive) {
+        import('../corridor/corridor-data.js').then(({ updateDarKoridorDataForYear }) => {
+            updateDarKoridorDataForYear(targetYear, mode);
+
+            // Yeni verileri yükledikten sonra grafikteki tüm ülkeleri yeniden çiz
+            setTimeout(() => {
+                import('../corridor/corridor-interactive.js').then(({ refreshAllCountryDots }) => {
+                    if (refreshAllCountryDots) {
+                        refreshAllCountryDots();
+                    }
+                });
+            }, 100);
+        });
+    }
+
     console.log(`✓ Corridor mode değiştirildi: ${mode}, hedef yıl: ${targetYear}, yıl aralığı: ${availableYears[0]}-${availableYears[availableYears.length-1]}`);
 }
 
@@ -240,12 +256,21 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
         ? analyses.corridor
         : `${countryName} için Dar Koridor verisi bulunamadı.`;
     
+    // Interactive map'i kapat (panel her açıldığında varsayılan olarak kapalı)
+    if (state.interactiveMapActive) {
+        import('../corridor/corridor-interactive.js').then(({ closeInteractiveMap }) => {
+            if (closeInteractiveMap) {
+                closeInteractiveMap();
+            }
+        });
+    }
+
     // Dar Koridor grafiğini güncelle
     if (hasCorridorData) {
         const latestYear = getLatestYearForCountry(countryName);
         updateCountryCorridorPosition(countryName, latestYear);
         setupCorridorYearSlider(countryName, availableYears);
-        
+
         // Interactive map toggle butonunu ilk açılışta kur
         if (!state.interactiveMapSetup) {
             setupToggleInteractiveMap();

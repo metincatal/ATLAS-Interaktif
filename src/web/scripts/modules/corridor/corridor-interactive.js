@@ -31,28 +31,16 @@ export function setupToggleInteractiveMap() {
     
     toggleBtn.addEventListener('click', () => {
         const isActive = state.interactiveMapActive;
-        
-        if (isActive) {
-            // Kapat
-            controlsContainer.style.display = 'none';
-            toggleBtn.innerHTML = '<span>📊</span> Tüm Ülkeleri Göster';
-            toggleBtn.classList.remove('active');
-            setState('interactiveMapActive', false);
-            
-            // Tüm ülke noktalarını gizle
-            hideAllCountryDots();
-            
-            console.log('Interactive map kapatıldı');
-        } else {
+
+        if (!isActive) {
             // Aç
             controlsContainer.style.display = 'block';
-            toggleBtn.innerHTML = '<span>✕</span> Kapat';
-            toggleBtn.classList.add('active');
+            toggleBtn.style.display = 'none'; // Butonu gizle
             setState('interactiveMapActive', true);
-            
+
             // Tüm ülke noktalarını göster
             showAllCountryDots();
-            
+
             console.log('Interactive map açıldı');
         }
     });
@@ -202,7 +190,7 @@ function clampAlongDiagonal(x, y, margin = 3) {
 function showStatistics(countries) {
     const statsContainer = document.getElementById('corridor-stats-filters');
     if (!statsContainer) return;
-    
+
     // Tiplere göre say
     const counts = {
         all: countries.length,
@@ -211,9 +199,10 @@ function showStatistics(countries) {
         paper: countries.filter(c => c.leviathanType === 'Paper').length,
         absent: countries.filter(c => c.leviathanType === 'Absent').length
     };
-    
-    // HTML oluştur
+
+    // HTML oluştur - çarpı işareti ekle
     statsContainer.innerHTML = `
+        <button class="interactive-map-close-btn" id="close-interactive-map" title="Kapat">✕</button>
         <div class="stat-filter-btn" data-type="all">
             <div class="stat-count">${counts.all}</div>
             <div class="stat-label">Toplam</div>
@@ -240,13 +229,21 @@ function showStatistics(countries) {
             <div class="stat-percent">%${((counts.absent/counts.all)*100).toFixed(0)}</div>
         </div>
     `;
-    
+
+    // Çarpı işaretine event listener ekle
+    const closeBtn = document.getElementById('close-interactive-map');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            closeInteractiveMap();
+        });
+    }
+
     // Filter event'leri ekle
     statsContainer.querySelectorAll('.stat-filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const filterType = btn.dataset.type;
             filterCountryDots(filterType);
-            
+
             // Active class'ı güncelle
             statsContainer.querySelectorAll('.stat-filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -282,11 +279,41 @@ function filterCountryDots(type) {
 function hideAllCountryDots() {
     const allDots = document.querySelectorAll('.corridor-country-dot');
     allDots.forEach(dot => dot.remove());
-    
+
     // İstatistikleri temizle
     const statsContainer = document.getElementById('corridor-stats-filters');
     if (statsContainer) {
         statsContainer.innerHTML = '';
+    }
+}
+
+/**
+ * Interactive map'i kapatır
+ */
+export function closeInteractiveMap() {
+    const toggleBtn = document.getElementById('toggle-interactive-map');
+    const controlsContainer = document.getElementById('interactive-map-controls');
+
+    if (!toggleBtn || !controlsContainer) return;
+
+    // Kapat
+    controlsContainer.style.display = 'none';
+    toggleBtn.style.display = 'block';
+    setState('interactiveMapActive', false);
+
+    // Tüm ülke noktalarını gizle
+    hideAllCountryDots();
+
+    console.log('Interactive map kapatıldı');
+}
+
+/**
+ * Tüm ülke noktalarını yeniden çizer (mod değişikliği için)
+ */
+export function refreshAllCountryDots() {
+    if (state.interactiveMapActive) {
+        showAllCountryDots();
+        console.log('✓ Tüm ülke noktaları yenilendi');
     }
 }
 

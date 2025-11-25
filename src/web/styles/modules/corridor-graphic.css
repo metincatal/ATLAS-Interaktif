@@ -411,6 +411,37 @@
     padding: 10px;
     background: rgba(42, 82, 152, 0.05);
     border-radius: var(--radius-md);
+    position: relative;
+}
+
+/* İnteraktif Harita Kapatma Butonu (Çarpı İşareti) */
+.interactive-map-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(231, 76, 60, 0.1);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    color: #e74c3c;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    padding: 0;
+    line-height: 1;
+    z-index: 10;
+}
+
+.interactive-map-close-btn:hover {
+    background: #e74c3c;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
 }
 
 .stat-filter-btn {
