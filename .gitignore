@@ -69,3 +69,4 @@ Articles-and-Books/
 # Büyük veri dosyaları (GitHub limitini aşıyor)
 data/raw/
 data/processed/v4/vdem_data.json
+data/processed/vdem_metadata/
