@@ -89,11 +89,10 @@ function handleCountryClick(polygon) {
     const { lat, lng } = getPolygonCenter(polygon);
     focusOnLocation(lat, lng, 1.5, ANIMATION_DURATIONS.cameraMove);
 
-    // Globe pause butonunu devre dışı bırak (panel açıldığında küre dönmeye devam eder)
-    resetGlobePauseButton();
-
-    // Otomatik dönüşü yeniden aktif et (panel açıkken dönmeye devam etsin)
-    resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
+    // Eğer küre pause edilmemişse, otomatik dönüşü devam ettir
+    if (!state.globePaused) {
+        resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
+    }
 
     // Sağ paneli aç ve içeriği doldur
     openCountryPanel(countryName, countryCode);
@@ -102,20 +101,4 @@ function handleCountryClick(polygon) {
     document.getElementById('blur-overlay').classList.add('active');
 
     console.log('Seçilen ülke:', countryName, 'Kod:', countryCode);
-}
-
-/**
- * Globe pause butonunu resetler
- */
-function resetGlobePauseButton() {
-    const pauseBtn = document.getElementById('globe-pause-btn');
-    if (!pauseBtn) return;
-
-    const pauseIcon = pauseBtn.querySelector('.pause-icon');
-    const playIcon = pauseBtn.querySelector('.play-icon');
-
-    state.globePaused = false;
-    pauseBtn.classList.remove('active');
-    if (pauseIcon) pauseIcon.style.display = 'inline';
-    if (playIcon) playIcon.style.display = 'none';
 }

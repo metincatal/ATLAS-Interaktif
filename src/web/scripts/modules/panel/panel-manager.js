@@ -270,48 +270,70 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
         const latestYear = getLatestYearForCountry(countryName);
 
         // Hangi yılı göstereceğimizi belirle (ana sayfadaki aktif yıl)
-        let targetYear = latestYear; // Varsayılan: en son yıl
+        // Öncelik sırası: WGI > V-Dem > Ana sayfadaki yıl slider'ı (currentHistoricalYear) > selectedYear > en son yıl
+        let targetYear;
 
         // Aktif veri setine göre yıl belirle
         if (state.wgiEnabled && state.currentYear) {
             targetYear = state.currentYear;
         } else if (state.vdemEnabled && state.currentVdemYear) {
             targetYear = state.currentVdemYear;
-        } else if (state.historicalMapsEnabled && state.currentHistoricalYear) {
+        } else if (state.currentHistoricalYear) {
+            // Ana sayfadaki yıl slider'ının değerini kullan
             targetYear = state.currentHistoricalYear;
         } else if (state.selectedYear) {
             targetYear = state.selectedYear;
+        } else {
+            // Hiçbiri yoksa en son yılı kullan
+            targetYear = latestYear;
         }
 
-        // Eğer targetYear availableYears içinde yoksa, en yakın yılı bul
-        if (!availableYears.includes(targetYear)) {
-            // En yakın yılı bul
-            const closestYear = availableYears.reduce((prev, curr) => {
-                return Math.abs(curr - targetYear) < Math.abs(prev - targetYear) ? curr : prev;
-            });
-            targetYear = closestYear;
-        }
-
-        // Yıla göre mode'u otomatik seç (1995 ve öncesi = historical, 1996+ = modern)
+        // Önce mode'u belirle (hedef yıla göre)
         const modernBtn = document.getElementById('corridor-mode-modern');
         const historicalBtn = document.getElementById('corridor-mode-historical');
 
+        let selectedMode;
+        let finalAvailableYears;
+
         if (targetYear <= 1995) {
+            selectedMode = 'historical';
             setState('corridorMode', 'historical');
             if (modernBtn && historicalBtn) {
                 modernBtn.classList.remove('active');
                 historicalBtn.classList.add('active');
             }
+            // Historical mode için available years'ı hesapla
+            finalAvailableYears = getAvailableYearsForCountry(countryName, 'historical');
         } else {
+            selectedMode = 'modern';
             setState('corridorMode', 'modern');
             if (modernBtn && historicalBtn) {
                 modernBtn.classList.add('active');
                 historicalBtn.classList.remove('active');
             }
+            // Modern mode için zaten availableYears hesaplanmıştı
+            finalAvailableYears = availableYears;
         }
 
+        // Şimdi seçilen mode'daki available years'a göre en yakın yılı bul
+        if (finalAvailableYears.length === 0) {
+            console.warn(`${countryName} için ${selectedMode} modunda veri yok`);
+            return;
+        }
+
+        if (!finalAvailableYears.includes(targetYear)) {
+            // En yakın yılı bul
+            const closestYear = finalAvailableYears.reduce((prev, curr) => {
+                return Math.abs(curr - targetYear) < Math.abs(prev - targetYear) ? curr : prev;
+            });
+            targetYear = closestYear;
+        }
+
+        // State'e seçili yılı kaydet (interactive map için)
+        setState('selectedYear', targetYear);
+
         updateCountryCorridorPosition(countryName, targetYear);
-        setupCorridorYearSlider(countryName, availableYears, targetYear);
+        setupCorridorYearSlider(countryName, finalAvailableYears, targetYear);
 
         // Interactive map toggle butonunu ilk açılışta kur
         if (!state.interactiveMapSetup) {

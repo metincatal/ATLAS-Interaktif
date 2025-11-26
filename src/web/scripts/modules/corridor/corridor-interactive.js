@@ -6,6 +6,7 @@
 import { state, setState } from '../../core/state.js';
 import { calculateCorridorPosition } from '../../utils/geometry.js';
 import { LEVIATHAN_COLORS } from '../../config/constants.js';
+import { updateDarKoridorDataForYear } from './corridor-data.js';
 
 /**
  * Toggle interactive map butonunu kurar
@@ -38,10 +39,15 @@ export function setupToggleInteractiveMap() {
             toggleBtn.style.display = 'none'; // Butonu gizle
             setState('interactiveMapActive', true);
 
+            // Şu anki yıl ve mode için veriyi yükle
+            const currentYear = state.selectedYear || 2023;
+            const currentMode = state.corridorMode || 'modern';
+            updateDarKoridorDataForYear(currentYear, currentMode);
+
             // Tüm ülke noktalarını göster
             showAllCountryDots();
 
-            console.log('Interactive map açıldı');
+            console.log(`Interactive map açıldı (${currentYear}, ${currentMode} mode)`);
         }
     });
     

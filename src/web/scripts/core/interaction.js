@@ -92,6 +92,11 @@ function setupGlobePauseButton() {
  */
 export function resumeAutoRotate(delay = 0) {
     setTimeout(() => {
+        // Eğer küre pause edilmişse, otomatik dönüşü aktif etme
+        if (state.globePaused) {
+            return;
+        }
+
         if (!state.autoRotate && state.globe) {
             state.globe.controls().autoRotate = true;
             setState('autoRotate', true);

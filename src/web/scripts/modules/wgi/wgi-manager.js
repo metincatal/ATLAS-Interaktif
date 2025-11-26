@@ -96,8 +96,11 @@ export function setupWgiControls() {
         } else {
             setState('pendingCountryFocus', null);
         }
-        
-        resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
+
+        // Eğer küre kullanıcı tarafından pause edilmişse, otomatik dönüşü aktif etme
+        if (!state.globePaused) {
+            resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
+        }
         
         console.log('✓ WGI kapatıldı');
         return true;
@@ -435,44 +438,35 @@ function updateWgiLegend() {
 
 function handleWgiPolygonClick(polygon) {
     if (!polygon) return;
+    // Önce pause durumunu kaydet
+    const wasPaused = state.globePaused;
+    // WGI modunu kapat
     requestDisableWgiMode();
-    resetGlobePauseButton(); // WGI'dan panel açılırken pause butonunu resetle
+    // Eğer pause edilmemişse, buton zaten doğru durumda
+    // Pause edilmişse, panel açılırken globe-handlers.js'deki handleCountryClick resetleyecek
     openPanelFromPolygon(polygon, { focusOnGlobe: true });
-}
-
-/**
- * Globe pause butonunu resetler
- */
-function resetGlobePauseButton() {
-    const pauseBtn = document.getElementById('globe-pause-btn');
-    if (!pauseBtn) return;
-
-    const pauseIcon = pauseBtn.querySelector('.pause-icon');
-    const playIcon = pauseBtn.querySelector('.play-icon');
-
-    setState('globePaused', false);
-    pauseBtn.classList.remove('active');
-    if (pauseIcon) pauseIcon.style.display = 'inline';
-    if (playIcon) playIcon.style.display = 'none';
 }
 
 function openPanelFromPolygon(polygon, { focusOnGlobe = false } = {}) {
     if (!polygon) return;
-    
+
     const countryName = polygon.properties.NAME || polygon.properties.ADMIN || 'Bilinmeyen Ülke';
     const countryCode = polygon.properties.ISO_A2 || 'XX';
-    
+
     openCountryPanel(countryName, countryCode);
-    
+
     const blurOverlay = document.getElementById('blur-overlay');
     if (blurOverlay) {
         blurOverlay.classList.add('active');
     }
-    
+
     if (focusOnGlobe && state.globe) {
         const { lat, lng } = getPolygonCenter(polygon);
         focusOnLocation(lat, lng, 1.5, ANIMATION_DURATIONS.cameraMove);
-        resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
+        // Eğer küre pause edilmemişse, otomatik dönüşü devam ettir
+        if (!state.globePaused) {
+            resumeAutoRotate(ANIMATION_DURATIONS.autoRotateDelay);
+        }
     }
 }
 

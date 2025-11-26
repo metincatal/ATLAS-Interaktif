@@ -47,7 +47,7 @@ export const state = {
     historicalNamesMapping: null,
     capitalCoordinates: null,  // Tarihi başkent koordinatları
     unifiedHistoricalData: null,  // Birleştirilmiş tarihi veri
-    currentHistoricalYear: 1789,
+    currentHistoricalYear: 2023,  // Varsayılan olarak 2023 (en güncel yıl)
     currentHistoricalMilestone: null,
     historicalMapData: null,
     historicalListenersBound: false,
