@@ -155,6 +155,11 @@ export function setupCorridorYearSlider(countryName, availableYears, targetYear 
         if (selectedYear) {
             yearLabel.textContent = selectedYear;
 
+            // State'e seçili yılı kaydet (interactive map için)
+            import('../../core/state.js').then(({ setState }) => {
+                setState('selectedYear', selectedYear);
+            });
+
             // Grafik pozisyonunu güncelle
             updateCountryCorridorPosition(countryName, selectedYear);
 

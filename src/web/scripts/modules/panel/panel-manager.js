@@ -302,8 +302,8 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
                 modernBtn.classList.remove('active');
                 historicalBtn.classList.add('active');
             }
-            // Historical mode için available years'ı hesapla
-            finalAvailableYears = getAvailableYearsForCountry(countryName, 'historical');
+            // Historical mode için available years'ı hesapla ve 1995 ve öncesi ile filtrele
+            finalAvailableYears = getAvailableYearsForCountry(countryName, 'historical').filter(year => year <= 1995);
         } else {
             selectedMode = 'modern';
             setState('corridorMode', 'modern');
