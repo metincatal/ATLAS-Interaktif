@@ -90,7 +90,7 @@ function addMessage(text, type) {
 }
 
 /**
- * Ollama'ya mesaj gönderir
+ * Ollama'ya mesaj gönderir (Stream mode)
  */
 async function sendToOllama(userMessage) {
     // Conversation history'ye ekle
@@ -98,13 +98,16 @@ async function sendToOllama(userMessage) {
         role: 'user',
         content: userMessage
     });
-    
-    // Typing indicator göster
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'ai-message';
-    typingDiv.innerHTML = '<span class="typing-indicator">...</span>';
-    document.getElementById('chat-messages').appendChild(typingDiv);
-    
+
+    // AI mesajı için div oluştur
+    const chatMessages = document.getElementById('chat-messages');
+    const aiMessageDiv = document.createElement('div');
+    aiMessageDiv.className = 'ai-message';
+    aiMessageDiv.textContent = '';
+    chatMessages.appendChild(aiMessageDiv);
+
+    let fullResponse = '';
+
     try {
         const response = await fetch(getOllamaUrl(), {
             method: 'POST',
@@ -114,31 +117,58 @@ async function sendToOllama(userMessage) {
             body: JSON.stringify({
                 model: API_CONFIG.ollama.model,
                 prompt: `${SYSTEM_PROMPT}\n\nKullanıcı: ${userMessage}\n\nAsistan:`,
-                stream: false,
+                stream: true,
                 options: API_CONFIG.ollama.options
             })
         });
-        
-        // Typing indicator'ı kaldır
-        typingDiv.remove();
-        
+
         if (!response.ok) {
             throw new Error(`Ollama API hatası: ${response.status}`);
         }
-        
-        const data = await response.json();
-        const aiResponse = data.response || 'Yanıt alınamadı';
-        
+
+        // Stream'i oku
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        while (true) {
+            const { done, value } = await reader.read();
+
+            if (done) break;
+
+            // Chunk'ı decode et
+            const chunk = decoder.decode(value);
+            const lines = chunk.split('\n').filter(line => line.trim());
+
+            for (const line of lines) {
+                try {
+                    const data = JSON.parse(line);
+
+                    if (data.response) {
+                        fullResponse += data.response;
+                        aiMessageDiv.textContent = fullResponse;
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+
+                    if (data.done) {
+                        break;
+                    }
+                } catch (e) {
+                    // JSON parse hatası - devam et
+                    console.warn('JSON parse hatası:', e);
+                }
+            }
+        }
+
         // Conversation history'ye ekle
         state.conversationHistory.push({
             role: 'assistant',
-            content: aiResponse
+            content: fullResponse
         });
-        
-        return aiResponse;
-        
+
+        return fullResponse;
+
     } catch (error) {
-        typingDiv.remove();
+        aiMessageDiv.remove();
         console.error('Ollama bağlantı hatası:', error);
         throw error;
     }
