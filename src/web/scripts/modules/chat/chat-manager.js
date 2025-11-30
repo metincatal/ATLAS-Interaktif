@@ -57,8 +57,7 @@ export function setupChat() {
         
         // AI cevabı al
         try {
-            const response = await sendToOllama(message);
-            addMessage(response, 'ai');
+            await sendToOllama(message);
         } catch (error) {
             console.error('Chat hatası:', error);
             addMessage('Üzgünüm, şu anda mesajınıza yanıt veremiyorum. Lütfen Ollama servisinin çalıştığından emin olun.', 'ai');
