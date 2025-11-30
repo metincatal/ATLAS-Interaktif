@@ -130,12 +130,53 @@
     cursor: pointer;
     transition: all var(--transition-normal);
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    position: relative;
 }
 
 .corridor-action-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
     background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Custom Tooltip */
+.corridor-action-btn[data-tooltip]:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: normal;
+    white-space: nowrap;
+    z-index: 1000;
+    animation: tooltipFadeIn 0.2s ease-in-out;
+}
+
+.corridor-action-btn[data-tooltip]:hover::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 /* Responsive - Panel */

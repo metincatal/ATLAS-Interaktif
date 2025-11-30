@@ -7,6 +7,7 @@ import { state } from '../../core/state.js';
 import { getCountryDataForYear } from '../../utils/data-helpers.js';
 import { calculateCorridorPosition, updateDotPosition } from '../../utils/geometry.js';
 import { LEVIATHAN_TYPES, LEVIATHAN_TYPES_SHORT } from '../../config/constants.js';
+import { updateCorridorActionTooltip } from '../panel/panel-manager.js';
 
 /**
  * Ülke için grafik pozisyonunu günceller
@@ -162,6 +163,9 @@ export function setupCorridorYearSlider(countryName, availableYears, targetYear 
 
             // Grafik pozisyonunu güncelle
             updateCountryCorridorPosition(countryName, selectedYear);
+
+            // Corridor action butonu tooltip'ini güncelle
+            updateCorridorActionTooltip(countryName, selectedYear);
 
             // Eğer interactive map aktifse, tüm ülkeleri de güncelle
             if (state.interactiveMapActive) {

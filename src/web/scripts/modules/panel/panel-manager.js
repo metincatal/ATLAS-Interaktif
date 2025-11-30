@@ -12,13 +12,23 @@ import { getCountryISOCode } from '../../utils/country-codes.js';
 import { setupToggleInteractiveMap } from '../corridor/corridor-interactive.js';
 
 /**
+ * Corridor action butonu tooltip'ini günceller
+ */
+export function updateCorridorActionTooltip(countryName, year) {
+    const btn = document.getElementById('corridor-action-btn');
+    if (!btn || !countryName || !year) return;
+
+    btn.setAttribute('data-tooltip', `${countryName} - ${year} yılında oyuna başlamak ister misiniz?`);
+}
+
+/**
  * Panel ve Chat sistemini kurar
  */
 export function setupPanelAndChat() {
     const panel = document.getElementById('country-panel');
     const closePanel = document.getElementById('close-panel');
     const blurOverlay = document.getElementById('blur-overlay');
-    
+
     // Panel kapatma fonksiyonu
     const closePanelFunc = () => {
         panel.classList.remove('active');
@@ -142,6 +152,9 @@ function switchCorridorMode(mode) {
     // Slider ve grafik güncelle
     setupCorridorYearSlider(countryName, availableYears, targetYear);
     updateCountryCorridorPosition(countryName, targetYear);
+
+    // Corridor action butonu tooltip'ini güncelle
+    updateCorridorActionTooltip(countryName, targetYear);
 
     // Eğer interactive map aktifse, tüm ülkeleri de güncelle
     if (state.interactiveMapActive) {
@@ -334,6 +347,9 @@ export function openCountryPanel(countryName, countryCodeFromGeoJSON) {
 
         updateCountryCorridorPosition(countryName, targetYear);
         setupCorridorYearSlider(countryName, finalAvailableYears, targetYear);
+
+        // Corridor action butonu tooltip'ini güncelle
+        updateCorridorActionTooltip(countryName, targetYear);
 
         // Interactive map toggle butonunu ilk açılışta kur
         if (!state.interactiveMapSetup) {
