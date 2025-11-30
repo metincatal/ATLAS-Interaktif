@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özgürlük Dengesi - ATLAS İnteraktif</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/base/reset.css">
+    <link rel="stylesheet" href="styles/base/variables.css">
+    <link rel="stylesheet" href="styles/pages/game.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Sol Alan - Oyun Alanı -->
+        <div class="game-area">
+            <div class="game-panel">
+                <!-- Sol Üst: Dar Koridor Grafiği -->
+                <div class="corridor-position">
+                    <div class="corridor-graphic-container">
+                        <img src="assets/images/darKoridorGrafigiYazili.png" alt="Dar Koridor Grafiği">
+                        <div id="game-country-dot" class="country-dot"></div>
+                    </div>
+                </div>
+
+                <!-- Orta Sağ: Ülke Bilgileri -->
+                <div class="country-info">
+                    <h2 id="game-country-title" class="country-title">Ülke - Yıl</h2>
+                    <div id="game-country-details" class="country-details">
+                        <div class="loading-spinner"></div>
+                        <p>Ülke bilgileri yükleniyor...</p>
+                    </div>
+                </div>
+
+                <!-- Sağ Üst: Oyuna Başla Butonu -->
+                <button id="start-game-btn" class="start-game-btn" data-tooltip="Oyuna başla">
+                    ✕
+                </button>
+            </div>
+        </div>
+
+        <!-- Sağ Panel - Oyunun Amacı -->
+        <div class="info-panel">
+            <h2 class="info-title">Oyunun Amacı</h2>
+            <div class="info-content">
+                <p>
+                    <strong>Özgürlük Dengesi</strong>, Daron Acemoğlu ve James A. Robinson'un
+                    "Dar Koridor" teorisinden esinlenerek hazırlanmış interaktif bir deneyimdir.
+                </p>
+                <p>
+                    Bu oyunda amacınız, seçtiğiniz ülkeyi <strong>dar koridor</strong> içinde tutmaktır.
+                    Dar koridor, devlet kapasitesi ile toplumsal güç arasındaki hassas dengenin
+                    sağlandığı bölgedir.
+                </p>
+                <div class="game-rules">
+                    <h3>🎯 Hedefler</h3>
+                    <ul>
+                        <li>Ülkeyi "Zincirlenmiş Leviathan" bölgesinde tutun</li>
+                        <li>Devlet kapasitesini ve toplumsal gücü dengeleyin</li>
+                        <li>Farklı politika kararları alarak dengeyi koruyun</li>
+                    </ul>
+                </div>
+                <div class="game-warning">
+                    <h3>⚠️ Dikkat</h3>
+                    <ul>
+                        <li><strong>Despotik Leviathan:</strong> Aşırı devlet gücü, zayıf toplum</li>
+                        <li><strong>Kağıt Leviathan:</strong> Zayıf devlet, zayıf toplum</li>
+                        <li><strong>Devletsiz Özgürlük:</strong> Zayıf devlet, güçlü toplum</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="scripts/pages/game.js"></script>
+</body>
+</html>

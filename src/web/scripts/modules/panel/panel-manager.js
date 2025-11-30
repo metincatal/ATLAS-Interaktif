@@ -64,7 +64,37 @@ export function setupPanelAndChat() {
     // Corridor mode butonları için event listener ekle
     setupCorridorModeButtons();
 
+    // Oyun butonunu kur
+    setupGameButton();
+
     console.log('✓ Panel yöneticisi hazır');
+}
+
+/**
+ * Özgürlük Dengesi oyun butonunu kurar
+ */
+function setupGameButton() {
+    const gameBtn = document.getElementById('corridor-action-btn');
+
+    if (!gameBtn) {
+        console.warn('⚠️ Oyun butonu bulunamadı');
+        return;
+    }
+
+    gameBtn.addEventListener('click', () => {
+        const countryName = state.currentCountryName;
+        const year = state.selectedYear;
+
+        if (!countryName || !year) {
+            alert('Lütfen önce bir ülke seçin!');
+            return;
+        }
+
+        // Oyun sayfasına yönlendir (URL parametreleriyle)
+        window.location.href = `game.html?country=${encodeURIComponent(countryName)}&year=${year}`;
+    });
+
+    console.log('✓ Oyun butonu hazır');
 }
 
 /**
