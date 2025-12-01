@@ -47,13 +47,15 @@ function updateTitle() {
  */
 async function loadCorridorPosition() {
     try {
-        // Corridor verilerini yükle
+        // Mode'u belirle
         const mode = year <= 1995 ? 'historical' : 'modern';
-        const dataUrl = mode === 'historical'
-            ? 'data/processed/vdem_historical/dar_koridor_by_country_all_years.json'
-            : 'data/processed/v2_1/dar_koridor_by_country.json';
 
-        console.log(`Veri yükleniyor: ${dataUrl}`);
+        // Yıllara göre organize edilmiş veri dosyasını yükle
+        const dataUrl = mode === 'historical'
+            ? '/data/processed/vdem_historical/dar_koridor_combined_all_years.json'
+            : '/data/processed/wgi_vdem_modern/dar_koridor_all_years.json';
+
+        console.log(`Veri yükleniyor: ${dataUrl} (mode: ${mode})`);
         const response = await fetch(dataUrl);
 
         if (!response.ok) {
@@ -62,32 +64,35 @@ async function loadCorridorPosition() {
 
         const data = await response.json();
 
-        console.log(`Toplam ülke sayısı: ${data.countries?.length || 'bilinmiyor'}`);
+        // Historical veri "years" key'i içinde ise, onu çıkar
+        let yearlyData = mode === 'historical' && data.years ? data.years : data;
 
-        // Ülke verisini bul
-        const countryData = data.countries.find(c => c.country === countryName);
+        // Yıl verisini al
+        const yearStr = String(year);
+        if (!yearlyData[yearStr]) {
+            console.error(`${year} yılı için veri bulunamadı (${mode} mode)`);
+            console.log('Mevcut yıllar:', Object.keys(yearlyData).slice(0, 10));
+            return;
+        }
+
+        const countriesInYear = yearlyData[yearStr];
+        console.log(`${year} yılı için ${countriesInYear.length} ülke bulundu`);
+
+        // Ülkeyi bul
+        const countryData = countriesInYear.find(c =>
+            (c.name || c.country) === countryName
+        );
 
         if (!countryData) {
-            console.error(`${countryName} için veri bulunamadı`);
-            console.log('Mevcut ülkeler:', data.countries.slice(0, 5).map(c => c.country));
-            return;
-        }
-
-        console.log(`${countryName} için ${countryData.years?.length || 0} yıl verisi bulundu`);
-
-        // Yıl verisini bul
-        const yearData = countryData.years.find(y => y.year === year);
-
-        if (!yearData) {
             console.error(`${countryName} için ${year} yılı verisi bulunamadı`);
-            console.log('Mevcut yıllar:', countryData.years.slice(0, 5).map(y => y.year));
+            console.log('Mevcut ülkeler:', countriesInYear.slice(0, 10).map(c => c.name || c.country));
             return;
         }
 
-        console.log('Yıl verisi:', yearData);
+        console.log('Ülke verisi:', countryData);
 
         // Noktayı grafik üzerinde konumlandır
-        updateDotPosition(yearData.state_capacity, yearData.society_strength);
+        updateDotPosition(countryData.statePower, countryData.societyPower);
 
     } catch (error) {
         console.error('Corridor pozisyonu yüklenirken hata:', error);
@@ -95,9 +100,9 @@ async function loadCorridorPosition() {
 }
 
 /**
- * Grafik üzerinde noktayı konumlandırır
+ * Grafik üzerinde noktayı konumlandırır (ana sayfadaki calculateCorridorPosition mantığını kullanır)
  */
-function updateDotPosition(stateCapacity, societyStrength) {
+function updateDotPosition(statePower, societyPower) {
     const dot = document.getElementById('game-country-dot');
     const container = document.querySelector('.corridor-graphic-container');
 
@@ -110,26 +115,29 @@ function updateDotPosition(stateCapacity, societyStrength) {
     const img = container.querySelector('img');
 
     const positionDot = () => {
-        const graphWidth = img.offsetWidth;
-        const graphHeight = img.offsetHeight;
+        console.log(`State power: ${statePower}, Society power: ${societyPower}`);
 
-        console.log(`Grafik boyutları: ${graphWidth}x${graphHeight}`);
-        console.log(`State capacity: ${stateCapacity}, Society strength: ${societyStrength}`);
+        // Ana sayfadaki gibi pozisyon hesapla (yüzde cinsinden)
+        let { x, y } = calculateCorridorPosition(statePower, societyPower);
 
-        // Normalize edilmiş koordinatlar (0-1 arası)
-        // State capacity: X ekseni (soldan sağa)
-        // Society strength: Y ekseni (yukarıdan aşağıya, tersine çevrilmiş)
-        const x = stateCapacity * graphWidth;
-        const y = (1 - societyStrength) * graphHeight;
+        // Clamp işlemi
+        ({ x, y } = clampAlongDiagonal(x, y));
 
-        console.log(`Hesaplanan pozisyon: x=${x}, y=${y}`);
+        const imgWidth = img.offsetWidth;
+        const imgHeight = img.offsetHeight;
+
+        // Pixel pozisyonu hesapla
+        const dotLeft = (imgWidth * x / 100);
+        const dotTop = (imgHeight * y / 100);
+
+        console.log(`Hesaplanan pozisyon: x=${x}%, y=${y}% => ${dotLeft}px, ${dotTop}px`);
 
         // Noktayı konumlandır
-        dot.style.left = `${x}px`;
-        dot.style.top = `${y}px`;
+        dot.style.left = `${dotLeft}px`;
+        dot.style.top = `${dotTop}px`;
         dot.style.display = 'block';
 
-        console.log(`✓ Nokta konumlandı: State=${stateCapacity}, Society=${societyStrength}`);
+        console.log(`✓ Nokta konumlandı`);
     };
 
     // Eğer resim yüklenmemişse, yüklenmesini bekle
@@ -139,6 +147,53 @@ function updateDotPosition(stateCapacity, societyStrength) {
     } else {
         positionDot();
     }
+}
+
+/**
+ * Corridor pozisyonunu hesaplar (ana sayfadan)
+ */
+function calculateCorridorPosition(statePower, societyPower) {
+    // [-2, 2] aralığını [0, 100] aralığına dönüştür
+    const x = ((statePower + 2) / 4) * 100;
+    const y = ((2 - societyPower) / 4) * 100; // Y ekseni ters
+
+    return { x, y };
+}
+
+/**
+ * Pozisyonu grafik sınırları içinde tutar (ana sayfadan)
+ */
+function clampAlongDiagonal(x, y, margin = 3) {
+    const min = margin;
+    const max = 100 - margin;
+    let newX = x;
+    let newY = y;
+
+    if (newY < min) {
+        const delta = min - newY;
+        newY = min;
+        newX = Math.min(max, newX + delta);
+    }
+
+    if (newY > max) {
+        const delta = newY - max;
+        newY = max;
+        newX = Math.max(min, newX - delta);
+    }
+
+    if (newX < min) {
+        const delta = min - newX;
+        newX = min;
+        newY = Math.min(max, newY + delta);
+    }
+
+    if (newX > max) {
+        const delta = newX - max;
+        newX = max;
+        newY = Math.max(min, newY - delta);
+    }
+
+    return { x: newX, y: newY };
 }
 
 /**
