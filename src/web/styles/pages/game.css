@@ -64,7 +64,6 @@ body {
     position: absolute;
     width: 16px;
     height: 16px;
-    background: #FF6B6B;
     border: 3px solid white;
     border-radius: 50%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -72,6 +71,68 @@ body {
     z-index: 10;
     transition: all 0.3s ease;
     display: none;
+    cursor: pointer;
+}
+
+.country-dot:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Leviathan tiplerine göre renkler - Ana sayfadaki gibi */
+.country-dot.shackled {
+    background: #2ecc71;
+}
+
+.country-dot.despotic {
+    background: #e74c3c;
+}
+
+.country-dot.paper {
+    background: #f39c12;
+}
+
+.country-dot.absent {
+    background: #9b59b6;
+}
+
+/* Tooltip - Ana sayfadaki gibi */
+.corridor-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    min-width: 180px;
+}
+
+.corridor-tooltip .tooltip-country {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.corridor-tooltip .tooltip-info {
+    line-height: 1.6;
+}
+
+.corridor-tooltip .tooltip-value {
+    font-weight: bold;
+    color: #3498db;
+}
+
+.corridor-tooltip .tooltip-value.state-power {
+    color: #e74c3c;
+}
+
+.corridor-tooltip .tooltip-value.society-power {
+    color: #2ecc71;
 }
 
 /* Ülke Bilgileri - Float'un yanında ve altında akar */

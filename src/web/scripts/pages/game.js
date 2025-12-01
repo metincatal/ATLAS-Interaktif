@@ -91,8 +91,8 @@ async function loadCorridorPosition() {
 
         console.log('Ülke verisi:', countryData);
 
-        // Noktayı grafik üzerinde konumlandır
-        updateDotPosition(countryData.statePower, countryData.societyPower);
+        // Noktayı grafik üzerinde konumlandır ve tooltip'i kur
+        updateDotPosition(countryData.statePower, countryData.societyPower, countryData);
 
     } catch (error) {
         console.error('Corridor pozisyonu yüklenirken hata:', error);
@@ -100,14 +100,15 @@ async function loadCorridorPosition() {
 }
 
 /**
- * Grafik üzerinde noktayı konumlandırır (ana sayfadaki calculateCorridorPosition mantığını kullanır)
+ * Grafik üzerinde noktayı konumlandırır ve tooltip ekler
  */
-function updateDotPosition(statePower, societyPower) {
+function updateDotPosition(statePower, societyPower, countryData) {
     const dot = document.getElementById('game-country-dot');
     const container = document.querySelector('.corridor-graphic-container');
+    const tooltip = document.getElementById('game-corridor-tooltip');
 
-    if (!dot || !container) {
-        console.warn('Nokta veya container bulunamadı');
+    if (!dot || !container || !tooltip) {
+        console.warn('Nokta, container veya tooltip bulunamadı');
         return;
     }
 
@@ -137,7 +138,14 @@ function updateDotPosition(statePower, societyPower) {
         dot.style.top = `${dotTop}px`;
         dot.style.display = 'block';
 
-        console.log(`✓ Nokta konumlandı`);
+        // Leviathan tipine göre class ekle (ana sayfadaki gibi)
+        const levType = countryData.leviathanType || 'Absent';
+        dot.className = 'country-dot ' + levType.toLowerCase();
+
+        // Tooltip event'lerini ekle
+        setupTooltip(dot, tooltip, countryData);
+
+        console.log(`✓ Nokta konumlandı (${levType}) ve tooltip kuruldu`);
     };
 
     // Eğer resim yüklenmemişse, yüklenmesini bekle
@@ -150,12 +158,98 @@ function updateDotPosition(statePower, societyPower) {
 }
 
 /**
- * Corridor pozisyonunu hesaplar (ana sayfadan)
+ * Tooltip kurulumu - Ana sayfadaki gibi
+ */
+function setupTooltip(dot, tooltip, countryData) {
+    // Leviathan tipi renkleri (ana sayfadaki gibi)
+    const LEVIATHAN_COLORS = {
+        'Shackled': '#2ecc71',
+        'Despotic': '#e74c3c',
+        'Paper': '#f39c12',
+        'Absent': '#9b59b6'
+    };
+
+    const levType = countryData.leviathanType || 'Absent';
+    const levColor = LEVIATHAN_COLORS[levType] || '#999';
+
+    // Mouse enter - Tooltip göster
+    dot.addEventListener('mouseenter', (e) => {
+        tooltip.style.display = 'block';
+        tooltip.innerHTML = `
+            <div class="tooltip-country">${countryName}</div>
+            <div class="tooltip-info">
+                Devlet: <span class="tooltip-value state-power">${countryData.statePower.toFixed(2)}</span><br>
+                Toplum: <span class="tooltip-value society-power">${countryData.societyPower.toFixed(2)}</span><br>
+                Tip: <span class="tooltip-value leviathan-type" style="color:${levColor}">${levType}</span>
+            </div>
+        `;
+        updateTooltipPosition(e, tooltip);
+    });
+
+    // Mouse move - Tooltip pozisyonunu güncelle
+    dot.addEventListener('mousemove', (e) => {
+        updateTooltipPosition(e, tooltip);
+    });
+
+    // Mouse leave - Tooltip gizle
+    dot.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+    });
+}
+
+/**
+ * Tooltip pozisyonunu günceller (ana sayfadaki gibi)
+ */
+function updateTooltipPosition(e, tooltip) {
+    const container = document.querySelector('.corridor-graphic-container');
+    const rect = container.getBoundingClientRect();
+
+    // Tooltip boyutlarını al
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const tooltipWidth = tooltipRect.width;
+    const tooltipHeight = tooltipRect.height;
+
+    // İlk pozisyon hesaplama (mouse'un sağında ve biraz üstünde)
+    let left = e.clientX - rect.left + 15;
+    let top = e.clientY - rect.top - 10;
+
+    // Sağ tarafta taşma kontrolü
+    if (left + tooltipWidth > rect.width) {
+        // Mouse'un soluna yerleştir
+        left = e.clientX - rect.left - tooltipWidth - 15;
+    }
+
+    // Sol tarafta taşma kontrolü
+    if (left < 0) {
+        left = 10; // Minimum padding
+    }
+
+    // Üst tarafta taşma kontrolü
+    if (top < 0) {
+        // Mouse'un altına yerleştir
+        top = e.clientY - rect.top + 20;
+    }
+
+    // Alt tarafta taşma kontrolü
+    if (top + tooltipHeight > rect.height) {
+        // Yukarı çıkar
+        top = rect.height - tooltipHeight - 10;
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+}
+
+/**
+ * Corridor pozisyonunu hesaplar (ana sayfadan - geometry.js)
+ * X ekseni: SocietyPower (Toplum Gücü) - soldan sağa
+ * Y ekseni: StatePower (Devlet Gücü) - yukarıdan aşağıya (ters)
  */
 function calculateCorridorPosition(statePower, societyPower) {
-    // [-2, 2] aralığını [0, 100] aralığına dönüştür
-    const x = ((statePower + 2) / 4) * 100;
-    const y = ((2 - societyPower) / 4) * 100; // Y ekseni ters
+    // X ekseni: SocietyPower (Toplum Gücü) - soldan sağa
+    const x = ((societyPower + 3) / 6) * 100;
+    // Y'yi ters çeviriyoruz çünkü grafik koordinatları üstten başlar
+    const y = 100 - ((statePower + 3) / 6) * 100;
 
     return { x, y };
 }
