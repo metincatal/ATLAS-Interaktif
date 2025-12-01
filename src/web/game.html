@@ -15,8 +15,19 @@
         <!-- Sol Alan - Oyun Alanı -->
         <div class="game-area">
             <div class="game-panel">
-                <!-- Başlık -->
-                <h2 id="game-country-title" class="country-title">Ülke - Yıl</h2>
+                <!-- Başlık - Bayrak ve Bilgiler -->
+                <div class="country-header">
+                    <div class="country-flag-container">
+                        <span id="game-country-flag" class="country-flag">🏳️</span>
+                    </div>
+                    <div class="country-title-info">
+                        <h2 id="game-country-name" class="country-name">Ülke</h2>
+                        <div class="country-year-badge">
+                            <span class="year-icon">📅</span>
+                            <span id="game-country-year" class="country-year">1897</span>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Sol: Dar Koridor Grafiği (Float) -->
                 <div class="corridor-position">
@@ -34,11 +45,6 @@
                         <p>Ülke bilgileri yükleniyor...</p>
                     </div>
                 </div>
-
-                <!-- Sağ Üst: Oyuna Başla Butonu -->
-                <button id="start-game-btn" class="start-game-btn" data-tooltip="Oyuna başla">
-                    ✕
-                </button>
             </div>
         </div>
 
@@ -71,6 +77,13 @@
                         <li><strong>Devletsiz Özgürlük:</strong> Zayıf devlet, güçlü toplum</li>
                     </ul>
                 </div>
+
+                <!-- Oyuna Başla Butonu -->
+                <button id="start-game-btn" class="start-game-button" disabled>
+                    <span class="btn-icon">🎮</span>
+                    <span class="btn-text">Oyuna Başla</span>
+                    <span class="btn-subtitle">(Yakında)</span>
+                </button>
             </div>
         </div>
     </div>

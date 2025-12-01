@@ -35,11 +35,117 @@ async function initGame() {
 }
 
 /**
- * Başlığı günceller
+ * Başlığı günceller (bayrak, ülke adı, yıl)
  */
 function updateTitle() {
-    const titleElement = document.getElementById('game-country-title');
-    titleElement.textContent = `${countryName} - ${year}`;
+    const nameElement = document.getElementById('game-country-name');
+    const yearElement = document.getElementById('game-country-year');
+    const flagElement = document.getElementById('game-country-flag');
+
+    nameElement.textContent = countryName;
+    yearElement.textContent = year;
+
+    // Bayrak emoji'sini al
+    const countryFlag = getCountryFlag(countryName);
+    flagElement.textContent = countryFlag;
+}
+
+/**
+ * Ülke adına göre bayrak emoji'si döndürür
+ */
+function getCountryFlag(countryName) {
+    const flagMap = {
+        'Turkey': '🇹🇷',
+        'Tunisia': '🇹🇳',
+        'Afghanistan': '🇦🇫',
+        'Albania': '🇦🇱',
+        'Algeria': '🇩🇿',
+        'Argentina': '🇦🇷',
+        'Armenia': '🇦🇲',
+        'Australia': '🇦🇺',
+        'Austria': '🇦🇹',
+        'Azerbaijan': '🇦🇿',
+        'Bangladesh': '🇧🇩',
+        'Belarus': '🇧🇾',
+        'Belgium': '🇧🇪',
+        'Bolivia': '🇧🇴',
+        'Brazil': '🇧🇷',
+        'Bulgaria': '🇧🇬',
+        'Canada': '🇨🇦',
+        'Chile': '🇨🇱',
+        'China': '🇨🇳',
+        'Colombia': '🇨🇴',
+        'Croatia': '🇭🇷',
+        'Cuba': '🇨🇺',
+        'Cyprus': '🇨🇾',
+        'Czech Republic': '🇨🇿',
+        'Denmark': '🇩🇰',
+        'Ecuador': '🇪🇨',
+        'Egypt': '🇪🇬',
+        'Estonia': '🇪🇪',
+        'Ethiopia': '🇪🇹',
+        'Finland': '🇫🇮',
+        'France': '🇫🇷',
+        'Georgia': '🇬🇪',
+        'Germany': '🇩🇪',
+        'Ghana': '🇬🇭',
+        'Greece': '🇬🇷',
+        'Hungary': '🇭🇺',
+        'Iceland': '🇮🇸',
+        'India': '🇮🇳',
+        'Indonesia': '🇮🇩',
+        'Iran': '🇮🇷',
+        'Iraq': '🇮🇶',
+        'Ireland': '🇮🇪',
+        'Israel': '🇮🇱',
+        'Italy': '🇮🇹',
+        'Japan': '🇯🇵',
+        'Jordan': '🇯🇴',
+        'Kazakhstan': '🇰🇿',
+        'Kenya': '🇰🇪',
+        'Korea South': '🇰🇷',
+        'Kuwait': '🇰🇼',
+        'Latvia': '🇱🇻',
+        'Lebanon': '🇱🇧',
+        'Libya': '🇱🇾',
+        'Lithuania': '🇱🇹',
+        'Malaysia': '🇲🇾',
+        'Mexico': '🇲🇽',
+        'Morocco': '🇲🇦',
+        'Netherlands': '🇳🇱',
+        'New Zealand': '🇳🇿',
+        'Nigeria': '🇳🇬',
+        'Norway': '🇳🇴',
+        'Pakistan': '🇵🇰',
+        'Peru': '🇵🇪',
+        'Philippines': '🇵🇭',
+        'Poland': '🇵🇱',
+        'Portugal': '🇵🇹',
+        'Romania': '🇷🇴',
+        'Russia': '🇷🇺',
+        'Saudi Arabia': '🇸🇦',
+        'Serbia': '🇷🇸',
+        'Singapore': '🇸🇬',
+        'Slovakia': '🇸🇰',
+        'South Africa': '🇿🇦',
+        'Spain': '🇪🇸',
+        'Sudan': '🇸🇩',
+        'Sweden': '🇸🇪',
+        'Switzerland': '🇨🇭',
+        'Syria': '🇸🇾',
+        'Thailand': '🇹🇭',
+        'Ukraine': '🇺🇦',
+        'United Arab Emirates': '🇦🇪',
+        'United Kingdom': '🇬🇧',
+        'United States': '🇺🇸',
+        'Uruguay': '🇺🇾',
+        'Venezuela': '🇻🇪',
+        'Vietnam': '🇻🇳',
+        'Yemen': '🇾🇪',
+        'Zimbabwe': '🇿🇼'
+    };
+
+    return flagMap[countryName] || '🏳️';
 }
 
 /**
@@ -382,10 +488,12 @@ Yanıtını 3-4 kısa paragraf halinde ver. Markdown kullanma, sadece düz metin
 function setupStartButton() {
     const startBtn = document.getElementById('start-game-btn');
 
+    // Şimdilik disabled, gelecekte aktif edilecek
     startBtn.addEventListener('click', () => {
-        // Şimdilik ana sayfaya dön (sonra oyun mekaniği eklenecek)
-        console.log('Oyun başlatılacak...');
-        // window.location.href = 'index.html';
+        if (!startBtn.disabled) {
+            console.log('Oyun başlatılacak...');
+            // Gelecekte: Oyun mekaniği başlatılacak
+        }
     });
 }
 
