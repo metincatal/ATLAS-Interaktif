@@ -476,7 +476,7 @@ Yanıtını 3-4 kısa paragraf halinde ver. Markdown kullanma, sadece düz metin
         detailsElement.innerHTML = `
             <p style="color: #e74c3c;">
                 <strong>Bilgiler yüklenemedi.</strong><br>
-                Ollama servisinin çalıştığından ve deepseek-r1 modelinin yüklü olduğundan emin olun.
+                Ollama servisinin çalıştığından ve deepseek-v3.1:671b-cloud modelinin yüklü olduğundan emin olun.
             </p>
         `;
     }
@@ -488,11 +488,28 @@ Yanıtını 3-4 kısa paragraf halinde ver. Markdown kullanma, sadece düz metin
 function setupStartButton() {
     const startBtn = document.getElementById('start-game-btn');
 
-    // Şimdilik disabled, gelecekte aktif edilecek
+    // Butonu aktif et
+    startBtn.disabled = false;
+    startBtn.style.opacity = '1';
+    startBtn.style.cursor = 'pointer';
+
+    // "(Yakında)" yazısını kaldır
+    const subtitle = startBtn.querySelector('.btn-subtitle');
+    if (subtitle) {
+        subtitle.textContent = 'Hemen Başla!';
+    }
+
     startBtn.addEventListener('click', () => {
-        if (!startBtn.disabled) {
-            console.log('Oyun başlatılacak...');
-            // Gelecekte: Oyun mekaniği başlatılacak
+        // Ülke ve yıl parametrelerini al
+        const urlParams = new URLSearchParams(window.location.search);
+        const country = urlParams.get('country');
+        const year = urlParams.get('year');
+
+        if (country && year) {
+            // Oyun sayfasına yönlendir
+            window.location.href = `game-play.html?country=${country}&year=${year}`;
+        } else {
+            alert('Ülke veya yıl bilgisi eksik!');
         }
     });
 }

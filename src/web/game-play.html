@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özgürlük Dengesi - Oyun</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/base/reset.css">
+    <link rel="stylesheet" href="styles/base/variables.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-light: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --border-color: #475569;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            padding: 12px;
+            margin: 0;
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-columns: minmax(280px, 320px) 1fr minmax(300px, 340px);
+            gap: 12px;
+            height: calc(100vh - 24px);
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        /* ===================
+           SOL PANEL - Baskı Grupları
+           =================== */
+        .left-sidebar {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Baskı Grupları Paneli */
+        .stakeholders-panel {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .stakeholder-item {
+            background: var(--bg-card-light);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .stakeholder-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .stakeholder-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .stakeholder-header .mood-emoji {
+            font-size: 16px;
+        }
+
+        .stakeholder-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .bar-label {
+            width: 65px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--bg-dark);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.influence {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .progress-fill.satisfaction {
+            background: linear-gradient(90deg, var(--accent-warning), var(--accent-success));
+        }
+
+        .bar-value {
+            width: 35px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 10px;
+        }
+
+        .crisis-warning {
+            margin-top: 8px;
+            padding: 6px 10px;
+            background: rgba(239, 68, 68, 0.15);
+            border-radius: 5px;
+            color: var(--accent-danger);
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* ===================
+           ORTA PANEL - Ana Oyun Alanı
+           =================== */
+        .center-panel {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Dar Koridor Grafiği */
+        .corridor-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .corridor-graphic-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .corridor-graphic-container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .country-dot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            display: none;
+        }
+
+        .country-dot.shackled { background: var(--accent-success); }
+        .country-dot.despotic { background: var(--accent-danger); }
+        .country-dot.paper { background: var(--accent-warning); }
+        .country-dot.absent { background: var(--accent-secondary); }
+
+        .corridor-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+            white-space: nowrap;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Dashboard Grid - Alt Kısım */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+            flex-shrink: 0;
+        }
+
+        .dashboard-card {
+            background: var(--bg-card-light);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .dashboard-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .dashboard-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .dashboard-card.freedom { border-left-color: var(--accent-success); }
+        .dashboard-card.leviathan { border-left-color: var(--accent-secondary); }
+
+        /* Leviathan Badge */
+        .leviathan-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            margin-top: 2px;
+        }
+
+        .leviathan-badge.shackled { background: var(--accent-success); }
+        .leviathan-badge.despotic { background: var(--accent-danger); }
+        .leviathan-badge.paper { background: var(--accent-warning); }
+        .leviathan-badge.absent { background: var(--accent-secondary); }
+
+        /* ===================
+           SAĞ PANEL - Aksiyon Masası
+           =================== */
+        .right-panel {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            text-align: center;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Politik Sermaye Göstergesi */
+        .capital-indicator {
+            background: var(--bg-card-light);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .capital-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .capital-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .capital-progress {
+            flex: 1;
+            height: 10px;
+            background: var(--bg-dark);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .capital-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-success), var(--accent-primary));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .capital-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        /* Politika Kartları Grid (2x2) */
+        .policy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        .policy-card {
+            background: var(--bg-card-light);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .policy-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .policy-card.selected {
+            border-color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .policy-card.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Multi-select checkbox */
+        .policy-checkbox {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .policy-card.selected .policy-checkbox {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .policy-card.selected .policy-checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .policy-card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            padding-right: 22px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .policy-card-desc {
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .policy-card-cost {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-success);
+        }
+
+        /* Önizleme Kutusu */
+        .preview-box {
+            background: var(--bg-card-light);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            min-height: 80px;
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .preview-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        /* Butonlar */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-primary);
+            border: 2px solid var(--accent-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        /* Olaylar Akışı - Sol Panelde Alt Kısım */
+        .events-feed {
+            background: var(--bg-card-light);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .events-feed h3 {
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .event-item {
+            padding: 8px;
+            background: var(--bg-dark);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 10px;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+
+        .event-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-turn {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Loading */
+        .loading-spinner {
+            border: 3px solid var(--bg-card-light);
+            border-top: 3px solid var(--accent-primary);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar Styling */
+        .left-sidebar::-webkit-scrollbar,
+        .right-panel::-webkit-scrollbar,
+        .events-feed::-webkit-scrollbar,
+        .policy-grid::-webkit-scrollbar,
+        .stakeholders-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .left-sidebar::-webkit-scrollbar-track,
+        .right-panel::-webkit-scrollbar-track,
+        .events-feed::-webkit-scrollbar-track,
+        .policy-grid::-webkit-scrollbar-track,
+        .stakeholders-panel::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+            border-radius: 3px;
+        }
+
+        .left-sidebar::-webkit-scrollbar-thumb,
+        .right-panel::-webkit-scrollbar-thumb,
+        .events-feed::-webkit-scrollbar-thumb,
+        .policy-grid::-webkit-scrollbar-thumb,
+        .stakeholders-panel::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .game-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .left-sidebar {
+                order: 2;
+            }
+
+            .center-panel {
+                order: 1;
+                min-height: 400px;
+            }
+
+            .right-panel {
+                order: 3;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- SOL PANEL: Baskı Grupları ve Olaylar -->
+        <div class="left-sidebar">
+            <div class="sidebar-title">
+                <span>👥</span> Baskı Grupları
+            </div>
+
+            <!-- Baskı Grupları Paneli -->
+            <div class="stakeholders-panel" id="stakeholders-list">
+                <p style="text-align: center; color: var(--text-muted);">Yükleniyor...</p>
+            </div>
+
+            <!-- Olaylar Akışı -->
+            <div class="events-feed">
+                <h3><span>📰</span> Son Olaylar</h3>
+                <div id="events-list">
+                    <p style="text-align: center; color: var(--text-muted);">Henüz olay yok.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORTA PANEL: Grafik ve Dashboard -->
+        <div class="center-panel">
+            <!-- Dar Koridor Grafiği -->
+            <div class="corridor-section">
+                <div class="corridor-graphic-container">
+                    <img src="assets/images/darKoridorGrafigiYazili.png" alt="Dar Koridor Grafiği">
+                    <div id="country-dot" class="country-dot"></div>
+                    <div id="corridor-tooltip" class="corridor-tooltip"></div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="dashboard-label">Yıl</div>
+                    <div class="dashboard-value" id="current-year">----</div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="dashboard-label">Tur</div>
+                    <div class="dashboard-value">
+                        <span id="current-turn">-</span> / <span id="max-turns">-</span>
+                    </div>
+                </div>
+                <div class="dashboard-card freedom">
+                    <div class="dashboard-label">Özgürlük</div>
+                    <div class="dashboard-value" id="freedom-score">--/100</div>
+                </div>
+                <div class="dashboard-card leviathan">
+                    <div class="dashboard-label">Leviathan Tipi</div>
+                    <div id="leviathan-badge" class="leviathan-badge">
+                        Yükleniyor...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAĞ PANEL: Aksiyon Masası -->
+        <div class="right-panel">
+            <div class="panel-header">AKSİYON MASASI</div>
+
+            <!-- Politik Sermaye -->
+            <div class="capital-indicator">
+                <div class="capital-label">💎 POLİTİK SERMAYE</div>
+                <div class="capital-bar">
+                    <div class="capital-progress">
+                        <div id="capital-fill" class="capital-fill" style="width: 100%;"></div>
+                    </div>
+                    <span class="capital-text">
+                        <span id="capital-current">100</span>/<span id="capital-max">100</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Politika Kartları Grid (2x2) -->
+            <div id="policy-grid" class="policy-grid">
+                <!-- Kartlar dinamik olarak eklenecek -->
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #718096;">
+                    <div class="loading-spinner"></div>
+                    <p>Politikalar yükleniyor...</p>
+                </div>
+            </div>
+
+            <!-- Önizleme Kutusu -->
+            <div class="preview-box" id="preview-box">
+                <p style="text-align: center; color: #718096;">Bir politika seçin veya kendiniz yazın...</p>
+            </div>
+
+            <!-- Aksiyon Butonları -->
+            <div class="action-buttons">
+                <button id="apply-policy-btn" class="btn btn-primary" disabled>
+                    ⚡ Politikayı Uygula
+                </button>
+                <button id="write-policy-btn" class="btn btn-secondary">
+                    📝 Kendi Politikamı Yazacağım
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="scripts/pages/game-play.js"></script>
+</body>
+</html>

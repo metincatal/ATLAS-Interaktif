@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "description": "17 V-Dem değişkenini 2 faktöre (State Power, Society Power) dönüştüren yükleme matrisi",
+    "source": "V-Dem v15 (1789-2023)",
+    "method": "Factor Analysis (sklearn)",
+    "n_components": 2,
+    "variables_count": 17,
+    "explained_variance": {
+      "factor1_state": 0.0587,
+      "factor2_society": 0.0568,
+      "total": 0.1155
+    },
+    "date_calculated": "2025-12-02 21:38:17",
+    "usage": "Oyunda 17 değişken değerleri bu matrisle çarpılarak 2 faktör skoru hesaplanır"
+  },
+  "loadings": {
+    "factor1_state": [
+      0.738203,
+      0.656161,
+      0.628293,
+      0.622486,
+      0.727797,
+      0.612849,
+      0.653963,
+      0.616136,
+      0.616654,
+      0.352895,
+      0.297422,
+      0.715443,
+      0.676823,
+      -0.853256,
+      0.996682,
+      0.654747,
+      0.671595
+    ],
+    "factor2_society": [
+      0.589555,
+      0.676702,
+      0.638552,
+      0.587635,
+      0.567112,
+      0.552864,
+      0.64514,
+      0.627496,
+      0.599855,
+      0.454429,
+      0.628987,
+      0.216625,
+      -0.011035,
+      0.31001,
+      -0.06423,
+      0.642436,
+      0.613811
+    ]
+  },
+  "variables": [
+    "v2x_libdem",
+    "v2x_partipdem",
+    "v2x_delibdem",
+    "v2x_egaldem",
+    "v2x_freexp",
+    "v2mecenefm",
+    "v2x_cspart",
+    "v2cseeorgs",
+    "v2cscnsult",
+    "v2x_elecreg",
+    "v2x_elecoff",
+    "v2juhcind",
+    "v2juaccnt",
+    "v2x_corr",
+    "v2x_rule",
+    "v2xcs_ccsi",
+    "v2x_frassoc_thick"
+  ],
+  "formula": {
+    "description": "Faktör skorları hesaplama formülü",
+    "state_power": "Σ(variable[i] × factor1_state[i]) for i in 0..16",
+    "society_power": "Σ(variable[i] × factor2_society[i]) for i in 0..16",
+    "note": "Değişkenler önce standardize edilmeli (mean=0, std=1)"
+  }
+}
