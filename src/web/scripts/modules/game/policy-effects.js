@@ -3,7 +3,8 @@
  * Politika etkilerini AI ile analiz eder ve değişken değişimlerini hesaplar
  */
 
-import { getOllamaUrl } from '../../config/api-config.js';
+import { API_CONFIG, getOllamaUrl } from '../../config/api-config.js';
+import { INTENSITY_MULTIPLIERS, MAX_VARIABLE_CHANGE } from './game-constants.js';
 
 export class PolicyEffectsCalculator {
     constructor(volatilityData, correlationMatrix) {
@@ -11,13 +12,9 @@ export class PolicyEffectsCalculator {
         this.correlationMatrix = correlationMatrix.correlations; // 2318 değişken × 17 ana değişken
         this.core17Variables = correlationMatrix.metadata.core_variables; // 17 ana değişken listesi
 
-        // Şiddet çarpanları (PRD'deki formül)
-        this.intensityMultipliers = {
-            "Soft": 0.5,
-            "Moderate": 1.0,
-            "Radical": 2.5,
-            "Extreme": 4.0
-        };
+        // Şiddet çarpanları (game-constants.js'den import ediliyor)
+        // Orijinal değerler (0.5, 1.0, 2.5, 4.0) çok yüksekti ve radikal değişimlere neden oluyordu
+        this.intensityMultipliers = INTENSITY_MULTIPLIERS;
     }
 
     /**
@@ -37,13 +34,10 @@ export class PolicyEffectsCalculator {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    model: 'deepseek-v3.1:671b-cloud',
+                    model: API_CONFIG.ollama.model,
                     prompt: prompt,
                     stream: false,
-                    options: {
-                        temperature: 0.7,
-                        top_p: 0.9
-                    }
+                    options: API_CONFIG.ollama.options
                 })
             });
 
@@ -169,11 +163,14 @@ SADECE JSON formatında dön:
             // Eğer bu değişken 17 ana değişkenden biriyse, direkt uygula
             if (this.core17Variables.includes(variable)) {
                 const sigma = this.sigmaValues[variable]?.sigma || 0.05;
-                const intensityMultiplier = this.intensityMultipliers[effect.intensity] || 1.0;
+                const intensityMultiplier = this.intensityMultipliers[effect.intensity] || 0.5;
                 const direction = effect.direction;
 
                 // FORMÜL: Δ = Yön × σ × Şiddet
-                const change = direction * sigma * intensityMultiplier;
+                let change = direction * sigma * intensityMultiplier;
+                
+                // Değişken bazlı maksimum değişim sınırı uygula
+                change = Math.max(-MAX_VARIABLE_CHANGE, Math.min(MAX_VARIABLE_CHANGE, change));
                 changes17[variable] += change;
 
                 console.log(`  ${variable}: ${direction > 0 ? '+' : ''}${change.toFixed(4)} (σ=${sigma.toFixed(4)}, ${effect.intensity})`);
@@ -181,17 +178,22 @@ SADECE JSON formatında dön:
             // Eğer bu değişken 500+ listeden biriyse, korelasyon ile yayılım
             else if (this.correlationMatrix[variable]) {
                 const sigma = this.sigmaValues[variable]?.sigma || 0.05;
-                const intensityMultiplier = this.intensityMultipliers[effect.intensity] || 1.0;
+                const intensityMultiplier = this.intensityMultipliers[effect.intensity] || 0.5;
                 const direction = effect.direction;
 
                 // FORMÜL: Δ = Yön × σ × Şiddet
-                const change = direction * sigma * intensityMultiplier;
+                let change = direction * sigma * intensityMultiplier;
+                
+                // Değişken bazlı maksimum değişim sınırı uygula
+                change = Math.max(-MAX_VARIABLE_CHANGE, Math.min(MAX_VARIABLE_CHANGE, change));
 
                 // Korelasyon ile 17 ana değişkene yayılım
                 const correlations = this.correlationMatrix[variable];
                 for (const [coreVar, correlation] of Object.entries(correlations)) {
                     if (Math.abs(correlation) >= 0.3) {
-                        const propagatedChange = change * correlation;
+                        let propagatedChange = change * correlation;
+                        // Yayılan değişimi de sınırla
+                        propagatedChange = Math.max(-MAX_VARIABLE_CHANGE, Math.min(MAX_VARIABLE_CHANGE, propagatedChange));
                         changes17[coreVar] += propagatedChange;
                     }
                 }

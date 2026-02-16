@@ -10,23 +10,25 @@
     <link rel="stylesheet" href="styles/base/variables.css">
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --bg-card-light: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
+            --bg-main: #f0f4f8;
+            --bg-card: #ffffff;
+            --bg-card-alt: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
             --accent-primary: #3b82f6;
             --accent-secondary: #8b5cf6;
             --accent-success: #10b981;
             --accent-warning: #f59e0b;
             --accent-danger: #ef4444;
-            --border-color: #475569;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-dark);
+            background: var(--bg-main);
             min-height: 100vh;
             padding: 12px;
             margin: 0;
@@ -34,7 +36,7 @@
 
         .game-container {
             display: grid;
-            grid-template-columns: minmax(280px, 320px) 1fr minmax(300px, 340px);
+            grid-template-columns: minmax(260px, 300px) 1fr minmax(320px, 380px);
             gap: 12px;
             height: calc(100vh - 24px);
             max-width: 1800px;
@@ -51,6 +53,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            box-shadow: var(--shadow-md);
         }
 
         .sidebar-title {
@@ -61,23 +64,34 @@
             letter-spacing: 0.5px;
             margin-bottom: 12px;
             padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        /* Baskı Grupları Paneli */
+        .section-badge {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Baskı Grupları Paneli - scrollbar kaldırıldı */
         .stakeholders-panel {
-            flex: 1;
-            overflow-y: auto;
+            flex: none;
+            overflow: visible;
         }
 
         .stakeholder-item {
-            background: var(--bg-card-light);
-            border-radius: 8px;
+            background: var(--bg-card-alt);
+            border-radius: 10px;
             padding: 12px;
             margin-bottom: 10px;
+            border: 1px solid var(--border-color);
         }
 
         .stakeholder-item:last-child {
@@ -89,13 +103,53 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 10px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-primary);
         }
 
-        .stakeholder-header .mood-emoji {
-            font-size: 16px;
+        .stakeholder-badge {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .mood-status {
+            margin-left: auto;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .mood-status.status-excellent {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+        }
+
+        .mood-status.status-good {
+            background: rgba(34, 197, 94, 0.15);
+            color: #16a34a;
+        }
+
+        .mood-status.status-normal {
+            background: rgba(245, 158, 11, 0.15);
+            color: #d97706;
+        }
+
+        .mood-status.status-bad {
+            background: rgba(239, 68, 68, 0.15);
+            color: #dc2626;
+        }
+
+        .mood-status.status-critical {
+            background: rgba(185, 28, 28, 0.2);
+            color: #b91c1c;
+            font-weight: 700;
         }
 
         .stakeholder-bar {
@@ -119,16 +173,18 @@
 
         .progress-bar {
             flex: 1;
-            height: 6px;
-            background: var(--bg-dark);
-            border-radius: 3px;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
             overflow: hidden;
+            position: relative;
         }
 
         .progress-fill {
             height: 100%;
-            border-radius: 3px;
+            border-radius: 4px;
             transition: width 0.5s ease;
+            position: relative;
         }
 
         .progress-fill.influence {
@@ -139,23 +195,38 @@
             background: linear-gradient(90deg, var(--accent-warning), var(--accent-success));
         }
 
+        /* Değişim göstergesi */
+        .change-indicator {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 3px;
+            color: white;
+        }
+        .change-indicator.positive { background: var(--accent-success); }
+        .change-indicator.negative { background: var(--accent-danger); }
+
         .bar-value {
-            width: 35px;
+            width: 40px;
             text-align: right;
             font-weight: 600;
             color: var(--text-primary);
-            font-size: 10px;
+            font-size: 11px;
         }
 
         .crisis-warning {
             margin-top: 8px;
             padding: 6px 10px;
-            background: rgba(239, 68, 68, 0.15);
-            border-radius: 5px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 6px;
             color: var(--accent-danger);
             font-size: 11px;
             font-weight: 600;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         /* ===================
@@ -168,15 +239,28 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            box-shadow: var(--shadow-md);
         }
 
-        /* Dar Koridor Grafiği */
-        .corridor-section {
+        /* Üst Bölüm: Grafik Sol, Info Sağ */
+        .center-panel-top {
+            display: flex;
+            gap: 16px;
             flex: 1;
+            min-height: 0;
+        }
+
+        /* Dar Koridor Grafiği - Sol Taraf (Daha geniş) */
+        .corridor-section {
+            flex: 1 1 65%;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 0;
+            padding: 8px;
+            background: rgba(100, 116, 139, 0.05);
+            border-radius: 10px;
+            min-width: 0;
+            overflow: hidden;
         }
 
         .corridor-graphic-container {
@@ -188,24 +272,102 @@
             justify-content: center;
         }
 
-        .corridor-graphic-container img {
-            max-width: 100%;
+        /* Image wrapper - responsive nokta konumlandırma için */
+        .corridor-graphic-container .corridor-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .corridor-graphic-container img,
+        .corridor-graphic-container .corridor-image-wrapper img {
+            width: 100%;
+            height: 100%;
             max-height: 100%;
-            width: auto;
-            height: auto;
             object-fit: contain;
             display: block;
             border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Grafik kare olduğunda aspect ratio kontrolü */
+        @media (max-aspect-ratio: 4/3) {
+            .center-panel-top {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .corridor-section {
+                flex: 0 0 auto;
+                max-height: 45vh;
+                width: 100%;
+            }
+
+            .corridor-graphic-container img,
+            .corridor-graphic-container .corridor-image-wrapper img {
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+            }
+
+            .info-panel-right {
+                flex: 0 0 auto !important;
+                flex-direction: row !important;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 12px;
+            }
+
+            .info-panel-right .info-country-name {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+
+            .info-panel-right .info-stats-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px;
+                width: 100%;
+            }
+
+            .info-panel-right .info-stat-row {
+                flex: 1 1 calc(33% - 6px);
+                min-width: 100px;
+            }
+        }
+
+        /* Daha dar ekranlar için */
+        @media (max-width: 900px) {
+            .center-panel-top {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .corridor-section {
+                flex: 0 0 auto;
+                max-height: 40vh;
+                min-height: 200px;
+            }
+
+            .info-panel-right {
+                flex: 0 0 auto !important;
+                flex-direction: row !important;
+                flex-wrap: wrap;
+            }
         }
 
         .country-dot {
             position: absolute;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--accent-primary);
             border: 3px solid white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
             cursor: pointer;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
@@ -219,58 +381,344 @@
 
         .corridor-tooltip {
             position: absolute;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(30, 41, 59, 0.95);
             color: white;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 11px;
             pointer-events: none;
             z-index: 100;
             display: none;
             white-space: nowrap;
-            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
         }
 
-        /* Dashboard Grid - Alt Kısım */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 12px;
-            flex-shrink: 0;
+        /* Info Panel - Sağ Taraf (Kompakt ve Şık) */
+        .info-panel-right {
+            flex: 0 0 145px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .dashboard-card {
-            background: var(--bg-card-light);
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-primary);
-        }
-
-        .dashboard-label {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .dashboard-value {
-            font-size: 20px;
+        /* Ülke Adı */
+        .info-country-name {
+            font-size: 14px;
             font-weight: 700;
+            color: white;
+            text-align: center;
+            padding: 6px 10px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+        }
+
+        /* İstatistikler Listesi */
+        .info-stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* Her Bir Satır */
+        .info-stat-row {
+            display: grid;
+            grid-template-columns: 18px 1fr auto;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 6px;
+            border-radius: 6px;
+            background: var(--bg-card-alt);
+            border-left: 2px solid var(--accent-primary);
+            transition: all 0.2s ease;
+        }
+
+        .info-stat-row:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(2px);
+        }
+
+        .info-stat-icon {
+            font-size: 9px;
+            font-weight: 700;
+            flex-shrink: 0;
+            text-align: center;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: white;
+        }
+
+        .stat-icon-state { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .stat-icon-society { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        .stat-icon-year { background: linear-gradient(135deg, #10b981, #059669); }
+        .stat-icon-turn { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .stat-icon-freedom { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .stat-icon-leviathan { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+        .info-stat-label {
+            color: var(--text-muted);
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .info-stat-value {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .info-stat-row.leviathan-row {
+            background: rgba(239, 68, 68, 0.1);
+            border-left-color: var(--accent-danger);
+        }
+
+        .info-stat-row.leviathan-row .info-stat-value {
+            color: var(--accent-danger);
+            font-size: 9px;
+        }
+
+        /* AI Yardımcı - Sol Panel (Yeni Konum) */
+        .ai-helper-sidebar {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 250px;
+            overflow: hidden;
+        }
+
+        .ai-helper-sidebar .ai-helper-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ai-helper-sidebar .ai-icon {
+            background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .ai-helper-sidebar .ai-chat-container {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            min-height: 100px;
+            max-height: none;
+        }
+
+        .ai-helper-sidebar .ai-message {
+            padding: 8px 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .ai-helper-sidebar .ai-message:last-child {
+            margin-bottom: 0;
+        }
+
+        .ai-helper-sidebar .ai-message.assistant {
+            background: var(--bg-card-alt);
             color: var(--text-primary);
         }
 
-        .dashboard-card.freedom { border-left-color: var(--accent-success); }
-        .dashboard-card.leviathan { border-left-color: var(--accent-secondary); }
+        .ai-helper-sidebar .ai-message.user {
+            background: var(--accent-secondary);
+            color: white;
+            margin-left: 15px;
+        }
 
-        /* Leviathan Badge */
-        .leviathan-badge {
-            display: inline-flex;
-            align-items: center;
+        .ai-helper-sidebar .ai-input-row {
+            display: flex;
             gap: 6px;
-            padding: 5px 10px;
-            border-radius: 12px;
+            flex-shrink: 0;
+            margin-top: auto;
+            padding-top: 10px;
+        }
+
+        .ai-helper-sidebar .ai-input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 11px;
+            background: white;
+        }
+
+        .ai-helper-sidebar .ai-input:focus {
+            outline: none;
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .ai-helper-sidebar .ai-send-btn {
+            padding: 8px 12px;
+            background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .ai-helper-sidebar .ai-send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Son Olaylar - Orta Panel Alt (Yeni Konum) */
+        .events-feed-center {
+            background: var(--bg-card-alt);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 12px;
+            border: 1px solid var(--border-color);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 150px;
+            max-height: 250px;
+            overflow: hidden;
+        }
+
+        .events-feed-center .events-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .events-feed-center .events-icon {
+            background: linear-gradient(135deg, var(--accent-danger) 0%, var(--accent-warning) 100%);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .events-feed-center .events-list-container {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .events-feed-center .events-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .events-feed-center .event-card {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            border-left: 4px solid var(--accent-primary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .events-feed-center .event-card.positive {
+            border-left-color: var(--accent-success);
+        }
+
+        .events-feed-center .event-card.negative {
+            border-left-color: var(--accent-danger);
+        }
+
+        .events-feed-center .event-card.neutral {
+            border-left-color: var(--accent-warning);
+        }
+
+        .events-feed-center .event-headline {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .events-feed-center .event-details {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+
+        .events-feed-center .event-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .events-feed-center .event-category {
+            background: var(--bg-card-alt);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Leviathan Badge (Artık info-stat-value içinde) */
+        .leviathan-badge {
+            font-weight: 700;
+            font-size: 9px;
             font-size: 11px;
             font-weight: 600;
             color: white;
@@ -292,6 +740,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            box-shadow: var(--shadow-md);
         }
 
         .panel-header {
@@ -309,10 +758,11 @@
 
         /* Politik Sermaye Göstergesi */
         .capital-indicator {
-            background: var(--bg-card-light);
+            background: var(--bg-card-alt);
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 12px;
+            border: 1px solid var(--border-color);
         }
 
         .capital-label {
@@ -325,6 +775,26 @@
             gap: 6px;
         }
 
+        .capital-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .regen-info {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--accent-success);
+            margin-left: auto;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
         .capital-bar {
             display: flex;
             align-items: center;
@@ -333,16 +803,16 @@
 
         .capital-progress {
             flex: 1;
-            height: 10px;
-            background: var(--bg-dark);
-            border-radius: 5px;
+            height: 12px;
+            background: var(--border-color);
+            border-radius: 6px;
             overflow: hidden;
         }
 
         .capital-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--accent-success), var(--accent-primary));
-            border-radius: 5px;
+            border-radius: 6px;
             transition: width 0.5s ease;
         }
 
@@ -354,22 +824,35 @@
             text-align: right;
         }
 
-        /* Politika Kartları Grid (2x2) */
+        /* Politika Kartları - Wrapper */
+        .policy-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Politika Kartları Grid (2x4) - 8 kart */
         .policy-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-bottom: 12px;
-            flex: 1;
-            min-height: 0;
+            margin-bottom: 8px;
+            margin-top: 40px;
             overflow-y: auto;
+            max-height: 500px;
+            position: relative;
+            flex: 1;
         }
 
         .policy-card {
-            background: var(--bg-card-light);
-            border: 2px solid transparent;
-            border-radius: 8px;
-            padding: 12px;
+            background: var(--bg-card-alt);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+            padding-bottom: 32px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
@@ -377,17 +860,435 @@
 
         .policy-card:hover {
             border-color: var(--accent-primary);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
         }
 
         .policy-card.selected {
             border-color: var(--accent-primary);
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .policy-card.manual-card {
+            border-color: var(--accent-secondary);
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .policy-card.manual-card.selected {
+            background: rgba(139, 92, 246, 0.15);
         }
 
         .policy-card.disabled {
             opacity: 0.4;
             cursor: not-allowed;
+        }
+
+        /* Favori butonu - sol üstte */
+        .favorite-btn {
+            position: absolute;
+            top: 92px;
+            left: 11px;
+            width: 22px;
+            height: 22px;
+            border: none;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+            padding: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .favorite-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            background: rgba(245, 158, 11, 0.2);
+        }
+
+        .favorite-btn.active {
+            opacity: 1;
+            background: rgba(245, 158, 11, 0.3);
+        }
+
+        /* Hafıza (Memory) Sistemi - Overlay */
+        .memory-toggle-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--accent-primary);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            transition: all 0.2s ease;
+            z-index: 10;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .memory-toggle-btn:hover {
+            background: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        .memory-toggle-btn:hover span {
+            background: white;
+        }
+
+        .memory-toggle-btn span {
+            display: block;
+            width: 16px;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 1px;
+            transition: background 0.2s ease;
+        }
+
+        .memory-toggle-btn.has-items::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-warning);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .memory-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            border-radius: 8px;
+            z-index: 30;
+            display: none;
+            flex-direction: column;
+            padding: 16px;
+            animation: fadeIn 0.2s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+        }
+
+        .memory-overlay.active {
+            display: flex;
+        }
+
+        /* Memory overlay'i policy-section'a göre konumlandır */
+        .policy-section .memory-overlay {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .memory-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .memory-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .memory-badge {
+            background: linear-gradient(135deg, var(--accent-warning) 0%, var(--accent-danger) 100%);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .memory-close-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: var(--bg-card-alt);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .memory-close-btn:hover {
+            background: var(--accent-danger);
+            color: white;
+        }
+
+        .memory-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .memory-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card-alt);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .memory-item:hover {
+            border-color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .memory-item-content {
+            flex: 1;
+        }
+
+        .memory-item-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .memory-item-desc {
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .memory-item-cost {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            white-space: nowrap;
+        }
+
+        .memory-item-remove {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-danger);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .memory-item-remove:hover {
+            background: var(--accent-danger);
+            color: white;
+        }
+
+        .memory-empty {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .memory-empty-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            opacity: 0.5;
+        }
+
+        /* Politika Kartı Büyütme Overlay */
+        .policy-expand-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            border: none;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--accent-primary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .policy-expand-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .policy-detail-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            border-radius: 8px;
+            z-index: 35;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .policy-detail-overlay.active {
+            display: flex;
+        }
+
+        /* Policy detail overlay'i policy-section'a göre konumlandır */
+        .policy-section .policy-detail-overlay {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .policy-detail-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .policy-detail-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            flex: 1;
+            padding-right: 16px;
+        }
+
+        .policy-detail-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--bg-card-alt);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .policy-detail-close:hover {
+            background: var(--accent-danger);
+            color: white;
+        }
+
+        .policy-detail-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: white;
+        }
+
+        .policy-detail-section {
+            margin-bottom: 16px;
+        }
+
+        .policy-detail-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .policy-detail-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .policy-detail-meta {
+            display: flex;
+            gap: 16px;
+            padding: 12px;
+            background: var(--bg-card-alt);
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .policy-detail-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .policy-detail-meta-label {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .policy-detail-meta-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .policy-detail-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .policy-detail-actions .btn {
+            flex: 1;
         }
 
         /* Multi-select checkbox */
@@ -399,7 +1300,7 @@
             height: 18px;
             border: 2px solid var(--border-color);
             border-radius: 4px;
-            background: var(--bg-dark);
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -409,6 +1310,15 @@
         .policy-card.selected .policy-checkbox {
             background: var(--accent-primary);
             border-color: var(--accent-primary);
+        }
+
+        .policy-card.manual-card .policy-checkbox {
+            border-color: var(--accent-secondary);
+        }
+
+        .policy-card.manual-card.selected .policy-checkbox {
+            background: var(--accent-secondary);
+            border-color: var(--accent-secondary);
         }
 
         .policy-card.selected .policy-checkbox::after {
@@ -422,7 +1332,7 @@
             font-size: 12px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             padding-right: 22px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -434,7 +1344,7 @@
             font-size: 10px;
             color: var(--text-secondary);
             line-height: 1.4;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -444,12 +1354,50 @@
         .policy-card-cost {
             font-size: 11px;
             font-weight: 600;
-            color: var(--accent-success);
+            color: var(--accent-primary);
+        }
+
+        /* Daha Fazla Politika Butonu */
+        .generate-more-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-card-alt);
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .generate-more-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .generate-more-btn .tooltip-text {
+            display: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .generate-more-btn:hover .tooltip-text {
+            display: inline;
+        }
+
+        .generate-more-btn:hover .plus-icon {
+            display: none;
         }
 
         /* Önizleme Kutusu */
         .preview-box {
-            background: var(--bg-card-light);
+            background: var(--bg-card-alt);
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 12px;
@@ -457,6 +1405,7 @@
             font-size: 11px;
             line-height: 1.5;
             color: var(--text-secondary);
+            border: 1px solid var(--border-color);
         }
 
         .preview-title {
@@ -464,6 +1413,86 @@
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 6px;
+        }
+
+        /* AI Yardımcı Alanı */
+        .ai-helper-section {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .ai-helper-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-bottom: 8px;
+        }
+
+        .ai-chat-container {
+            max-height: 120px;
+            overflow-y: auto;
+            margin-bottom: 8px;
+        }
+
+        .ai-message {
+            padding: 8px 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .ai-message.assistant {
+            background: white;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .ai-message.user {
+            background: var(--accent-secondary);
+            color: white;
+            margin-left: 20px;
+        }
+
+        .ai-input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 11px;
+            background: white;
+        }
+
+        .ai-input:focus {
+            outline: none;
+            border-color: var(--accent-secondary);
+        }
+
+        .ai-send-btn {
+            padding: 8px 16px;
+            background: var(--accent-secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ai-send-btn:hover {
+            background: #7c3aed;
         }
 
         /* Butonlar */
@@ -501,7 +1530,7 @@
         }
 
         .btn-secondary {
-            background: transparent;
+            background: white;
             color: var(--accent-primary);
             border: 2px solid var(--accent-primary);
         }
@@ -511,49 +1540,11 @@
             color: white;
         }
 
-        /* Olaylar Akışı - Sol Panelde Alt Kısım */
-        .events-feed {
-            background: var(--bg-card-light);
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 12px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-
-        .events-feed h3 {
-            margin: 0 0 10px 0;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .event-item {
-            padding: 8px;
-            background: var(--bg-dark);
-            border-radius: 6px;
-            margin-bottom: 6px;
-            font-size: 10px;
-            line-height: 1.4;
-            color: var(--text-secondary);
-        }
-
-        .event-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .event-turn {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
+        /* Eski events-feed stili kaldırıldı - artık events-feed-center kullanılıyor */
 
         /* Loading */
         .loading-spinner {
-            border: 3px solid var(--bg-card-light);
+            border: 3px solid var(--border-color);
             border-top: 3px solid var(--accent-primary);
             border-radius: 50%;
             width: 32px;
@@ -572,7 +1563,8 @@
         .right-panel::-webkit-scrollbar,
         .events-feed::-webkit-scrollbar,
         .policy-grid::-webkit-scrollbar,
-        .stakeholders-panel::-webkit-scrollbar {
+        .stakeholders-panel::-webkit-scrollbar,
+        .ai-chat-container::-webkit-scrollbar {
             width: 6px;
         }
 
@@ -580,8 +1572,9 @@
         .right-panel::-webkit-scrollbar-track,
         .events-feed::-webkit-scrollbar-track,
         .policy-grid::-webkit-scrollbar-track,
-        .stakeholders-panel::-webkit-scrollbar-track {
-            background: var(--bg-dark);
+        .stakeholders-panel::-webkit-scrollbar-track,
+        .ai-chat-container::-webkit-scrollbar-track {
+            background: var(--border-color);
             border-radius: 3px;
         }
 
@@ -589,7 +1582,8 @@
         .right-panel::-webkit-scrollbar-thumb,
         .events-feed::-webkit-scrollbar-thumb,
         .policy-grid::-webkit-scrollbar-thumb,
-        .stakeholders-panel::-webkit-scrollbar-thumb {
+        .stakeholders-panel::-webkit-scrollbar-thumb,
+        .ai-chat-container::-webkit-scrollbar-thumb {
             background: var(--accent-primary);
             border-radius: 3px;
         }
@@ -616,8 +1610,37 @@
                 order: 3;
             }
 
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .center-panel-top {
+                flex-direction: column;
+            }
+
+            .corridor-section {
+                flex: 0 0 auto;
+                min-height: 200px;
+            }
+
+            .info-panel-right {
+                flex: 0 0 auto;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .info-country-name {
+                width: 100%;
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            .info-stats-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .info-stat-row {
+                flex: 0 0 auto;
             }
         }
 
@@ -633,7 +1656,7 @@
         <!-- SOL PANEL: Baskı Grupları ve Olaylar -->
         <div class="left-sidebar">
             <div class="sidebar-title">
-                <span>👥</span> Baskı Grupları
+                <span class="section-badge">GRUPLAR</span> Baskı Grupları
             </div>
 
             <!-- Baskı Grupları Paneli -->
@@ -641,47 +1664,86 @@
                 <p style="text-align: center; color: var(--text-muted);">Yükleniyor...</p>
             </div>
 
-            <!-- Olaylar Akışı -->
-            <div class="events-feed">
-                <h3><span>📰</span> Son Olaylar</h3>
-                <div id="events-list">
-                    <p style="text-align: center; color: var(--text-muted);">Henüz olay yok.</p>
+            <!-- AI Politika Danışmanı - Sol Panel -->
+            <div class="ai-helper-sidebar" id="ai-helper-section">
+                <div class="ai-helper-header">
+                    <span class="ai-icon">AI</span> Politika Danışmanı
+                </div>
+                <div class="ai-chat-container" id="ai-chat-container">
+                    <div class="ai-message assistant">
+                        Merhaba! Politika oluşturmanıza yardımcı olabilirim. Ne tür bir politika düşünüyorsunuz?
+                    </div>
+                </div>
+                <div class="ai-input-row">
+                    <input type="text" class="ai-input" id="ai-input" placeholder="Politika hakkında soru sorun...">
+                    <button class="ai-send-btn" id="ai-send-btn">Gönder</button>
                 </div>
             </div>
         </div>
 
         <!-- ORTA PANEL: Grafik ve Dashboard -->
         <div class="center-panel">
-            <!-- Dar Koridor Grafiği -->
-            <div class="corridor-section">
-                <div class="corridor-graphic-container">
-                    <img src="assets/images/darKoridorGrafigiYazili.png" alt="Dar Koridor Grafiği">
-                    <div id="country-dot" class="country-dot"></div>
-                    <div id="corridor-tooltip" class="corridor-tooltip"></div>
+            <!-- Üst Bölüm: Grafik Sol, Info Sağ -->
+            <div class="center-panel-top">
+                <!-- Dar Koridor Grafiği - Sol -->
+                <div class="corridor-section">
+                    <div class="corridor-graphic-container">
+                        <div class="corridor-image-wrapper">
+                            <img src="assets/images/darKoridorGrafigiYazili.png" alt="Dar Koridor Grafiği">
+                            <div id="country-dot" class="country-dot"></div>
+                            <div id="corridor-tooltip" class="corridor-tooltip"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Paneli - Sağ (Kompakt Dikey Liste) -->
+                <div class="info-panel-right">
+                    <!-- Ülke Adı -->
+                    <div class="info-country-name" id="country-name-display">🇹🇷 Türkiye</div>
+                    
+                    <!-- İstatistikler Listesi -->
+                    <div class="info-stats-list">
+                        <div class="info-stat-row">
+                            <span class="info-stat-icon stat-icon-state">D</span>
+                            <span class="info-stat-label">Devlet</span>
+                            <span class="info-stat-value" id="state-power-display">0.00</span>
+                        </div>
+                        <div class="info-stat-row">
+                            <span class="info-stat-icon stat-icon-society">T</span>
+                            <span class="info-stat-label">Toplum</span>
+                            <span class="info-stat-value" id="society-power-display">0.00</span>
+                        </div>
+                        <div class="info-stat-row">
+                            <span class="info-stat-icon stat-icon-year">Y</span>
+                            <span class="info-stat-label">Yil</span>
+                            <span class="info-stat-value" id="current-year">1926</span>
+                        </div>
+                        <div class="info-stat-row">
+                            <span class="info-stat-icon stat-icon-turn">T</span>
+                            <span class="info-stat-label">Tur</span>
+                            <span class="info-stat-value"><span id="current-turn">0</span>/<span id="max-turns">20</span></span>
+                        </div>
+                        <div class="info-stat-row">
+                            <span class="info-stat-icon stat-icon-freedom">O</span>
+                            <span class="info-stat-label">Ozgurluk</span>
+                            <span class="info-stat-value" id="freedom-score">7/100</span>
+                        </div>
+                        <div class="info-stat-row leviathan-row">
+                            <span class="info-stat-icon stat-icon-leviathan">L</span>
+                            <span class="info-stat-label">Leviathan</span>
+                            <span class="info-stat-value" id="leviathan-badge">Despotic</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Dashboard Grid -->
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="dashboard-label">Yıl</div>
-                    <div class="dashboard-value" id="current-year">----</div>
+            <!-- Son Olaylar - Orta Panel Alt -->
+            <div class="events-feed-center" id="events-feed-section">
+                <div class="events-header">
+                    <span class="events-icon">HABERLER</span> Son Olaylar
                 </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-label">Tur</div>
-                    <div class="dashboard-value">
-                        <span id="current-turn">-</span> / <span id="max-turns">-</span>
-                    </div>
-                </div>
-                <div class="dashboard-card freedom">
-                    <div class="dashboard-label">Özgürlük</div>
-                    <div class="dashboard-value" id="freedom-score">--/100</div>
-                </div>
-                <div class="dashboard-card leviathan">
-                    <div class="dashboard-label">Leviathan Tipi</div>
-                    <div id="leviathan-badge" class="leviathan-badge">
-                        Yükleniyor...
-                    </div>
+                <div class="events-list-container" id="events-list">
+                    <p class="events-placeholder">Henüz olay yok. Politika uyguladıkça olaylar burada görünecek.</p>
                 </div>
             </div>
         </div>
@@ -691,8 +1753,11 @@
             <div class="panel-header">AKSİYON MASASI</div>
 
             <!-- Politik Sermaye -->
-            <div class="capital-indicator">
-                <div class="capital-label">💎 POLİTİK SERMAYE</div>
+            <div class="capital-indicator" title="Her turda sermaye kazanırsınız">
+                <div class="capital-label">
+                    <span class="capital-badge">PS</span> POLITIK SERMAYE
+                    <span class="regen-info" id="capital-regen">(+20/tur)</span>
+                </div>
                 <div class="capital-bar">
                     <div class="capital-progress">
                         <div id="capital-fill" class="capital-fill" style="width: 100%;"></div>
@@ -703,27 +1768,36 @@
                 </div>
             </div>
 
-            <!-- Politika Kartları Grid (2x2) -->
-            <div id="policy-grid" class="policy-grid">
-                <!-- Kartlar dinamik olarak eklenecek -->
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #718096;">
-                    <div class="loading-spinner"></div>
-                    <p>Politikalar yükleniyor...</p>
+            <!-- Politika Kartları Section -->
+            <div class="policy-section">
+                <!-- Politika Kartları Grid (2x3) -->
+                <div id="policy-grid" class="policy-grid">
+                    <!-- Kartlar dinamik olarak eklenecek -->
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
+                        <div class="loading-spinner"></div>
+                        <p>Politikalar yükleniyor...</p>
+                    </div>
                 </div>
+
+                <!-- Daha Fazla Politika Üret Butonu -->
+                <button id="generate-more-btn" class="generate-more-btn" title="Daha Fazla Politika Kartı Üret">
+                    <span class="plus-icon">+</span>
+                    <span class="tooltip-text">Daha Fazla Politika Kartı Üret</span>
+                </button>
             </div>
 
             <!-- Önizleme Kutusu -->
             <div class="preview-box" id="preview-box">
-                <p style="text-align: center; color: #718096;">Bir politika seçin veya kendiniz yazın...</p>
+                <p style="text-align: center; color: var(--text-muted);">Bir politika seçin veya kendiniz yazın...</p>
             </div>
 
             <!-- Aksiyon Butonları -->
             <div class="action-buttons">
                 <button id="apply-policy-btn" class="btn btn-primary" disabled>
-                    ⚡ Politikayı Uygula
+                    Politikayi Uygula
                 </button>
                 <button id="write-policy-btn" class="btn btn-secondary">
-                    📝 Kendi Politikamı Yazacağım
+                    Kendi Politikam
                 </button>
             </div>
         </div>

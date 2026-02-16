@@ -5,6 +5,10 @@
 
 import { gameController } from '../modules/game/game-controller.js';
 import { GameUI } from '../modules/game/game-ui.js';
+import { BASE_PATH } from '../config/constants.js';
+
+// Dar koridor verileri (index.html ve game.html ile aynı kaynak)
+let darKoridorData = null;
 
 /**
  * Ülke adından ülke koduna çeviren mapping
@@ -95,6 +99,7 @@ const COUNTRY_NAME_TO_CODE = {
     'United Arab Emirates': 'ARE',
     'United Kingdom': 'GBR',
     'United States': 'USA',
+    'United States of America': 'USA',
     'Uruguay': 'URY',
     'Venezuela': 'VEN',
     'Vietnam': 'VNM',
@@ -115,6 +120,66 @@ let gameUI = null;
 let isGameActive = false;
 
 /**
+ * Dar koridor verilerini yükle (index.html ve game.html ile aynı kaynak)
+ */
+async function loadDarKoridorData() {
+    try {
+        // Mode'u belirle
+        const mode = yearParam <= 1995 ? 'historical' : 'modern';
+
+        const dataUrl = mode === 'historical'
+            ? `${BASE_PATH}/data/processed/vdem_historical/dar_koridor_combined_all_years.json`
+            : `${BASE_PATH}/data/processed/wgi_vdem_modern/dar_koridor_all_years.json`;
+
+        console.log(`Dar koridor verileri yükleniyor: ${dataUrl}`);
+        const response = await fetch(dataUrl);
+
+        if (!response.ok) {
+            throw new Error(`Veri yüklenemedi: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // Historical veri "years" key'i içinde ise, onu çıkar
+        darKoridorData = mode === 'historical' && data.years ? data.years : data;
+
+        console.log('✅ Dar koridor verileri yüklendi');
+        return true;
+    } catch (error) {
+        console.error('Dar koridor verisi yüklenemedi:', error);
+        return false;
+    }
+}
+
+/**
+ * Ülke için doğru statePower ve societyPower değerlerini al
+ */
+function getCorrectCorridorValues(countryName, year) {
+    if (!darKoridorData) return null;
+
+    const yearStr = String(year);
+    if (!darKoridorData[yearStr]) {
+        console.warn(`${year} yılı için dar koridor verisi bulunamadı`);
+        return null;
+    }
+
+    const countriesInYear = darKoridorData[yearStr];
+    const countryData = countriesInYear.find(c =>
+        (c.name || c.country) === countryName
+    );
+
+    if (!countryData) {
+        console.warn(`${countryName} için ${year} yılı verisi bulunamadı`);
+        return null;
+    }
+
+    return {
+        statePower: countryData.statePower,
+        societyPower: countryData.societyPower,
+        leviathanType: countryData.leviathanType
+    };
+}
+
+/**
  * Sayfa yüklendiğinde
  */
 async function initializeGamePlay() {
@@ -130,16 +195,14 @@ async function initializeGamePlay() {
     gameUI = new GameUI();
     gameUI.showLoading('Oyun verileri yükleniyor...');
 
+    // Dar koridor verilerini yükle (index.html ve game.html ile aynı kaynak)
+    await loadDarKoridorData();
+
     // Oyun verilerini yükle
     const success = await gameController.loadGameData();
 
     if (!success) {
-        gameUI.elements.countryDetails.innerHTML = `
-            <div style="background: #f8d7da; padding: 20px; border-radius: 12px; border-left: 4px solid #dc3545;">
-                <strong>❌ Hata!</strong>
-                <p>Oyun verileri yüklenemedi. Lütfen sayfayı yenileyin.</p>
-            </div>
-        `;
+        showError('Oyun verileri yüklenemedi. Lütfen sayfayı yenileyin.');
         return;
     }
 
@@ -147,10 +210,48 @@ async function initializeGamePlay() {
     const gameStarted = gameController.startGame(countryCode, yearParam);
 
     if (!gameStarted) {
-        gameUI.elements.countryDetails.innerHTML = `
-            <div style="background: #f8d7da; padding: 20px; border-radius: 12px; border-left: 4px solid #dc3545;">
+        showError('Seçilen ülke veya yıl için veri bulunamadı.');
+        return;
+    }
+
+    // Oyun aktif
+    isGameActive = true;
+
+    // UI'yi güncelle - doğru statePower/societyPower değerlerini kullan
+    const state = gameController.getGameState();
+
+    // JSON dosyasından doğru değerleri al (index.html ve game.html ile aynı)
+    const corridorValues = getCorrectCorridorValues(countryParam, yearParam);
+    if (corridorValues) {
+        state.statePower = corridorValues.statePower;
+        state.societyPower = corridorValues.societyPower;
+        state.leviathanType = corridorValues.leviathanType;
+
+        // Politik sermayeyi doğru Leviathan tipine göre yeniden hesapla
+        gameController.recalculatePoliticalCapital(corridorValues.leviathanType);
+
+        console.log('✅ Doğru dar koridor değerleri uygulandı:', corridorValues);
+    }
+
+    gameUI.updateGameState(gameController.getGameState());
+    gameUI.showPolicyForm(gameController.getGameState()); // GameState parametresi ile dinamik politikalar
+
+    // Event listener'ları ekle
+    setupEventListeners();
+
+    console.log('✅ Oyun hazır!', state);
+}
+
+/**
+ * Hata mesajı göster
+ */
+function showError(message) {
+    const container = document.querySelector('.center-panel');
+    if (container) {
+        container.innerHTML = `
+            <div style="background: #f8d7da; padding: 20px; border-radius: 12px; border-left: 4px solid #dc3545; margin: 20px;">
                 <strong>❌ Hata!</strong>
-                <p>Seçilen ülke veya yıl için veri bulunamadı.</p>
+                <p>${message}</p>
                 <button onclick="window.location.href='index.html'"
                         style="margin-top: 10px; padding: 10px 20px; background: #667eea; color: white;
                                border: none; border-radius: 8px; cursor: pointer;">
@@ -158,21 +259,7 @@ async function initializeGamePlay() {
                 </button>
             </div>
         `;
-        return;
     }
-
-    // Oyun aktif
-    isGameActive = true;
-
-    // UI'yi güncelle
-    const state = gameController.getGameState();
-    gameUI.updateGameState(state);
-    gameUI.showPolicyForm(state); // GameState parametresi ile dinamik politikalar
-
-    // Event listener'ları ekle
-    setupEventListeners();
-
-    console.log('✅ Oyun hazır!', state);
 }
 
 /**
@@ -203,7 +290,7 @@ async function handleClick(e) {
 }
 
 /**
- * Politika uygula (multi-select destekli)
+ * Politika uygula (multi-select destekli) - Her politika için ayrı AI olay üretimi
  */
 async function handleApplyPolicy() {
     if (!isGameActive) {
@@ -219,54 +306,98 @@ async function handleApplyPolicy() {
         return;
     }
 
+    // Toplam maliyeti hesapla
+    const totalCost = gameUI.getTotalCost();
+    const currentCapital = gameController.getGameState().politicalCapital.current;
+
+    // Yeterli sermaye var mı kontrol et
+    if (totalCost > currentCapital) {
+        gameUI.showPolicyResult({
+            error: `Yetersiz politik sermaye! Gerekli: ${totalCost}, Mevcut: ${Math.round(currentCapital)}`
+        }, false);
+        return;
+    }
+
     // Butonu devre dışı bırak
     const btn = document.getElementById('apply-policy-btn');
     if (btn) {
         btn.disabled = true;
-        btn.textContent = `⏳ ${selectedPolicies.length} Politika Analiz Ediliyor...`;
+        btn.textContent = `${selectedPolicies.length} Politika Analiz Ediliyor...`;
     }
 
     try {
-        // Birden fazla politika varsa, birleştirilmiş bir prompt oluştur
-        let title, description;
+        // Her politika için ayrı ayrı işlem yap
+        const gameState = gameController.getGameState();
+        const allResults = [];
+        
+        for (let i = 0; i < selectedPolicies.length; i++) {
+            const policy = selectedPolicies[i];
+            
+            if (btn) {
+                btn.textContent = `Politika ${i + 1}/${selectedPolicies.length}: ${policy.title.substring(0, 20)}...`;
+            }
 
-        if (selectedPolicies.length === 1) {
-            title = selectedPolicies[0].title;
-            description = selectedPolicies[0].description;
-        } else {
-            title = `${selectedPolicies.length} Politika Paketi`;
-            description = selectedPolicies.map((p, i) =>
-                `${i + 1}. ${p.title}: ${p.description}`
-            ).join('\n\n');
+            // Her politikayı ayrı uygula
+            const result = await gameController.applyPolicy(
+                policy.title, 
+                policy.description, 
+                policy.cost || 25
+            );
+
+            if (result.success) {
+                allResults.push({ policy, result });
+                
+                // Her politika için AI'dan gerçekçi olay üret
+                try {
+                    const event = await gameUI.generateRealisticEvent(policy, gameState, result);
+                    gameUI.addEvent(event);
+                    console.log(`Olay oluşturuldu: ${policy.title} ->`, event.headline);
+                } catch (eventError) {
+                    console.warn('Olay üretilemedi, fallback kullanılıyor:', eventError);
+                    const fallbackEvent = gameUI.generateFallbackEvent(policy, gameState, result);
+                    gameUI.addEvent(fallbackEvent);
+                }
+            }
         }
 
-        if (!title || !description) {
-            gameUI.showPolicyResult({ error: 'Politika başlığı veya açıklaması eksik!' }, false);
-            return;
-        }
-
-        // Politikaları uygula
-        const result = await gameController.applyPolicy(title, description);
-
-        if (result.success) {
+        if (allResults.length > 0) {
+            // Politika uygulandı - iz bırakmayı aktifleştir
+            gameUI.enableTrailForNextUpdate();
+            
             // UI'yi güncelle
             const newState = gameController.getGameState();
             gameUI.updateGameState(newState);
-            gameUI.showPolicyResult(result, true);
+            
+            // Sonuçları göster - her politika ayrı ayrı
+            gameUI.showMultiPolicyResult(allResults, selectedPolicies);
 
             // Seçimi temizle
             gameUI.clearSelection();
 
-            // Oyun bitti mi?
-            if (gameController.getGameState().currentTurn >= gameController.getGameState().maxTurns) {
-                setTimeout(() => {
-                    const scores = gameController.endGame();
-                    gameUI.showGameOver(scores);
-                    isGameActive = false;
-                }, 2000);
-            }
+            // TUR BİTİR - Politik sermaye rejenerasyonu ve yeni politikalar
+            setTimeout(async () => {
+                const turnResult = gameController.endTurn();
+
+                // Güncel state'i al (rejenerasyon uygulandıktan sonra)
+                const updatedState = gameController.getGameState();
+                gameUI.updateGameState(updatedState);
+
+                // Yeni tur için yeni politika kartları üret
+                await gameUI.showPolicyForm(updatedState);
+
+                console.log(`Tur ${updatedState.currentTurn} başladı, sermaye: ${updatedState.politicalCapital.current}/${updatedState.politicalCapital.max}`);
+
+                // Oyun bitti mi?
+                if (turnResult.gameOver) {
+                    setTimeout(() => {
+                        const scores = gameController.endGame();
+                        gameUI.showGameOver(scores);
+                        isGameActive = false;
+                    }, 1000);
+                }
+            }, 2500);
         } else {
-            gameUI.showPolicyResult(result, false);
+            gameUI.showPolicyResult({ error: 'Politikalar uygulanamadı!' }, false);
         }
     } catch (error) {
         console.error('Politika uygulama hatası:', error);
@@ -274,7 +405,7 @@ async function handleApplyPolicy() {
     } finally {
         if (btn) {
             btn.disabled = false;
-            btn.textContent = '⚡ Politikayı Uygula';
+            btn.textContent = 'Politikayı Uygula';
         }
     }
 }

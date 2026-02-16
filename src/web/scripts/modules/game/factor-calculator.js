@@ -39,6 +39,13 @@ export class FactorCalculator {
             societyPower += varValue * this.loadings.factor2_society[i];
         }
 
+        // Faktör skorlarını sınırla (-3 ile +3 arasında)
+        // Bu, aşırı değerlerin (örn: -9, +12) oluşmasını önler
+        const MIN_FACTOR = -3;
+        const MAX_FACTOR = 3;
+        statePower = Math.max(MIN_FACTOR, Math.min(MAX_FACTOR, statePower));
+        societyPower = Math.max(MIN_FACTOR, Math.min(MAX_FACTOR, societyPower));
+
         return {
             statePower: parseFloat(statePower.toFixed(4)),
             societyPower: parseFloat(societyPower.toFixed(4))

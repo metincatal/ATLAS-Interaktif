@@ -3,6 +3,15 @@
  * Oyunun tüm durumunu tutar ve günceller
  */
 
+import { 
+    CAPITAL_BY_LEVIATHAN, 
+    COUNTRY_CAPITAL_MODIFIERS, 
+    DEFAULT_CAPITAL_MODIFIER, 
+    DEFAULT_LEVIATHAN_TYPE,
+    MAX_FACTOR_CHANGE_PER_TURN,
+    FACTOR_LIMITS
+} from './game-constants.js';
+
 export class GameState {
     constructor() {
         this.state = {
@@ -80,7 +89,18 @@ export class GameState {
         // Faktörleri ayarla
         this.state.statePower = initialFactors.statePower;
         this.state.societyPower = initialFactors.societyPower;
-        this.state.leviathanType = initialFactors.leviathanType || 'Absent';
+        this.state.leviathanType = initialFactors.leviathanType || DEFAULT_LEVIATHAN_TYPE;
+
+        // Dinamik politik sermaye hesapla (Leviathan tipi + ülke çarpanı)
+        const levType = this.state.leviathanType;
+        const baseCapital = CAPITAL_BY_LEVIATHAN[levType] || CAPITAL_BY_LEVIATHAN[DEFAULT_LEVIATHAN_TYPE];
+        const countryModifier = COUNTRY_CAPITAL_MODIFIERS[countryCode] || DEFAULT_CAPITAL_MODIFIER;
+
+        this.state.politicalCapital = {
+            current: Math.round(baseCapital.current * countryModifier),
+            max: Math.round(baseCapital.max * countryModifier),
+            regenPerTurn: Math.round(baseCapital.regen * countryModifier)
+        };
 
         // Paydaşları ayarla
         if (initialStakeholders) {
@@ -101,7 +121,10 @@ export class GameState {
 
         console.log('✓ Oyun başlatıldı:', {
             country,
+            countryCode,
             year,
+            leviathanType: levType,
+            politicalCapital: this.state.politicalCapital,
             statePower: this.state.statePower,
             societyPower: this.state.societyPower,
             variables: Object.keys(this.state.variables).length
@@ -121,9 +144,61 @@ export class GameState {
      * @param {Object} factors - {statePower, societyPower, leviathanType}
      */
     updateFactors(factors) {
-        this.state.statePower = factors.statePower;
-        this.state.societyPower = factors.societyPower;
-        this.state.leviathanType = factors.leviathanType;
+        const oldType = this.state.leviathanType;
+        const newType = factors.leviathanType;
+        const oldStatePower = this.state.statePower;
+        const oldSocietyPower = this.state.societyPower;
+
+        // Tur bazlı değişim sınırı uygula
+        // Bu, radikal ve ani değişimleri önler
+        let newStatePower = factors.statePower;
+        let newSocietyPower = factors.societyPower;
+
+        const stateChange = newStatePower - oldStatePower;
+        const societyChange = newSocietyPower - oldSocietyPower;
+
+        // Maksimum değişim sınırını uygula
+        if (Math.abs(stateChange) > MAX_FACTOR_CHANGE_PER_TURN) {
+            newStatePower = oldStatePower + (stateChange > 0 ? MAX_FACTOR_CHANGE_PER_TURN : -MAX_FACTOR_CHANGE_PER_TURN);
+            console.log(`⚠ State Power değişimi sınırlandı: ${stateChange.toFixed(4)} → ${(newStatePower - oldStatePower).toFixed(4)}`);
+        }
+        if (Math.abs(societyChange) > MAX_FACTOR_CHANGE_PER_TURN) {
+            newSocietyPower = oldSocietyPower + (societyChange > 0 ? MAX_FACTOR_CHANGE_PER_TURN : -MAX_FACTOR_CHANGE_PER_TURN);
+            console.log(`⚠ Society Power değişimi sınırlandı: ${societyChange.toFixed(4)} → ${(newSocietyPower - oldSocietyPower).toFixed(4)}`);
+        }
+
+        // Faktör sınırlarını uygula
+        newStatePower = Math.max(FACTOR_LIMITS.MIN, Math.min(FACTOR_LIMITS.MAX, newStatePower));
+        newSocietyPower = Math.max(FACTOR_LIMITS.MIN, Math.min(FACTOR_LIMITS.MAX, newSocietyPower));
+
+        this.state.statePower = parseFloat(newStatePower.toFixed(4));
+        this.state.societyPower = parseFloat(newSocietyPower.toFixed(4));
+        this.state.leviathanType = newType;
+
+        // Leviathan tipi değiştiyse politik sermaye limitlerini güncelle
+        if (oldType !== newType) {
+            const newCapital = CAPITAL_BY_LEVIATHAN[newType] || CAPITAL_BY_LEVIATHAN[DEFAULT_LEVIATHAN_TYPE];
+            const countryMod = COUNTRY_CAPITAL_MODIFIERS[this.state.countryCode] || DEFAULT_CAPITAL_MODIFIER;
+
+            const newMax = Math.round(newCapital.max * countryMod);
+            const newRegen = Math.round(newCapital.regen * countryMod);
+
+            this.state.politicalCapital.max = newMax;
+            this.state.politicalCapital.regenPerTurn = newRegen;
+
+            // Mevcut sermaye yeni max'ı aşıyorsa düşür
+            if (this.state.politicalCapital.current > newMax) {
+                this.state.politicalCapital.current = newMax;
+            }
+
+            console.log(`⚡ Leviathan tipi değişti: ${oldType} → ${newType}`, {
+                newMax,
+                newRegen,
+                currentCapital: this.state.politicalCapital.current
+            });
+
+            this.addEvent(`🔄 Rejim değişimi: ${oldType} → ${newType}`);
+        }
 
         // Trail'e ekle
         this.state.history.trail.push({

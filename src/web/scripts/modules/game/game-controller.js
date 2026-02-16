@@ -7,6 +7,8 @@ import { GameState } from './game-state.js';
 import { PolicyEffectsCalculator } from './policy-effects.js';
 import { FactorCalculator } from './factor-calculator.js';
 import { PolicyManager } from './policy-manager.js';
+import { CAPITAL_BY_LEVIATHAN, COUNTRY_CAPITAL_MODIFIERS, DEFAULT_CAPITAL_MODIFIER, DEFAULT_LEVIATHAN_TYPE } from './game-constants.js';
+import { BASE_PATH } from '../../config/constants.js';
 
 export class GameController {
     constructor() {
@@ -39,11 +41,11 @@ export class GameController {
         try {
             // 5 veri dosyasını paralel yükle
             const [volatility, correlation, loadings, initVars, stakeholders] = await Promise.all([
-                fetch('/data/processed/game_data/variable_volatility.json').then(r => r.json()),
-                fetch('/data/processed/game_data/correlation_matrix.json').then(r => r.json()),
-                fetch('/data/processed/game_data/factor_loadings.json').then(r => r.json()),
-                fetch('/data/processed/game_data/initial_variables.json').then(r => r.json()),
-                fetch('/data/processed/game_data/stakeholder_profiles.json').then(r => r.json())
+                fetch(`${BASE_PATH}/data/processed/game_data/variable_volatility.json`).then(r => r.json()),
+                fetch(`${BASE_PATH}/data/processed/game_data/correlation_matrix.json`).then(r => r.json()),
+                fetch(`${BASE_PATH}/data/processed/game_data/factor_loadings.json`).then(r => r.json()),
+                fetch(`${BASE_PATH}/data/processed/game_data/initial_variables.json`).then(r => r.json()),
+                fetch(`${BASE_PATH}/data/processed/game_data/stakeholder_profiles.json`).then(r => r.json())
             ]);
 
             this.gameData.volatility = volatility;
@@ -130,14 +132,15 @@ export class GameController {
      * Politika uygula (ANA OYUN AKIŞI)
      * @param {string} policyTitle - Politika başlığı
      * @param {string} policyDescription - Politika açıklaması
+     * @param {number} forcedCost - Zorunlu maliyet (UI'dan gelen toplam maliyet)
      * @returns {Promise<Object>} Sonuç
      */
-    async applyPolicy(policyTitle, policyDescription) {
+    async applyPolicy(policyTitle, policyDescription, forcedCost = null) {
         if (!this.gameState.getState().gameActive) {
             return { success: false, error: 'Oyun aktif değil' };
         }
 
-        console.log('⚙ Politika uygulanıyor:', policyTitle);
+        console.log('⚙ Politika uygulanıyor:', policyTitle, 'Maliyet:', forcedCost);
 
         const state = this.gameState.getState();
 
@@ -155,8 +158,8 @@ export class GameController {
             context
         );
 
-        // 2. Politik sermaye kontrolü
-        const cost = aiAnalysis.political_cost || 25;
+        // 2. Politik sermaye kontrolü - UI'dan gelen maliyet varsa onu kullan
+        const cost = forcedCost !== null ? forcedCost : (aiAnalysis.political_cost || 25);
         if (!this.gameState.spendPoliticalCapital(cost)) {
             return {
                 success: false,
@@ -227,6 +230,10 @@ export class GameController {
      * Turu bitir
      */
     endTurn() {
+        // Önce dinamik rejenerasyonu güncelle (paydaş memnuniyetine göre)
+        this.updateDynamicRegeneration();
+
+        // Sonra turu bitir (sermaye rejenerasyonu burada uygulanıyor)
         this.gameState.endTurn();
 
         // Yeni politika önerileri oluştur
@@ -295,6 +302,90 @@ export class GameController {
         countries.sort((a, b) => a.name.localeCompare(b.name));
 
         return countries;
+    }
+
+    /**
+     * Politik sermayeyi doğru Leviathan tipine göre yeniden hesapla
+     * @param {string} leviathanType - Leviathan tipi
+     */
+    recalculatePoliticalCapital(leviathanType) {
+        const state = this.gameState.getState();
+        const countryCode = state.countryCode;
+
+        const baseCapital = CAPITAL_BY_LEVIATHAN[leviathanType] || CAPITAL_BY_LEVIATHAN[DEFAULT_LEVIATHAN_TYPE];
+        const countryModifier = COUNTRY_CAPITAL_MODIFIERS[countryCode] || DEFAULT_CAPITAL_MODIFIER;
+
+        // Baz değerleri hesapla
+        const baseCurrent = Math.round(baseCapital.current * countryModifier);
+        const baseMax = Math.round(baseCapital.max * countryModifier);
+        const baseRegen = Math.round(baseCapital.regen * countryModifier);
+
+        // Dinamik rejenerasyon: Paydaş memnuniyetine göre çarpan
+        const satisfactionMultiplier = this.calculateSatisfactionMultiplier(state.stakeholders);
+
+        // Kriz durumu çarpanı
+        const crisis = this.gameState.checkCrisis();
+        const crisisMultiplier = crisis ? 0.5 : 1.0;
+
+        // Final rejenerasyon
+        const dynamicRegen = Math.round(baseRegen * satisfactionMultiplier * crisisMultiplier);
+
+        state.leviathanType = leviathanType;
+        state.politicalCapital = {
+            current: baseCurrent,
+            max: baseMax,
+            regenPerTurn: dynamicRegen,
+            baseRegen: baseRegen // UI'da göstermek için
+        };
+
+        console.log(`💰 Politik sermaye yeniden hesaplandı:`, {
+            leviathanType,
+            countryCode,
+            countryModifier,
+            baseRegen,
+            satisfactionMultiplier: satisfactionMultiplier.toFixed(2),
+            crisisMultiplier,
+            finalRegen: dynamicRegen,
+            current: baseCurrent,
+            max: baseMax
+        });
+    }
+
+    /**
+     * Paydaş memnuniyetine göre çarpan hesapla
+     * Formül: 0.5 + (ortalama memnuniyet × 0.75)
+     * - %100 memnuniyet → 1.25 çarpan
+     * - %50 memnuniyet → 0.875 çarpan
+     * - %0 memnuniyet → 0.5 çarpan
+     */
+    calculateSatisfactionMultiplier(stakeholders) {
+        if (!stakeholders) return 1.0;
+
+        const satisfactions = Object.values(stakeholders).map(s => s.satisfaction || 0.5);
+        const avgSatisfaction = satisfactions.reduce((a, b) => a + b, 0) / satisfactions.length;
+
+        return 0.5 + (avgSatisfaction * 0.75);
+    }
+
+    /**
+     * Her tur sonunda dinamik rejenerasyonu güncelle
+     */
+    updateDynamicRegeneration() {
+        const state = this.gameState.getState();
+        const baseCapital = CAPITAL_BY_LEVIATHAN[state.leviathanType] || CAPITAL_BY_LEVIATHAN[DEFAULT_LEVIATHAN_TYPE];
+        const countryModifier = COUNTRY_CAPITAL_MODIFIERS[state.countryCode] || DEFAULT_CAPITAL_MODIFIER;
+        const baseRegen = Math.round(baseCapital.regen * countryModifier);
+
+        const satisfactionMultiplier = this.calculateSatisfactionMultiplier(state.stakeholders);
+        const crisis = this.gameState.checkCrisis();
+        const crisisMultiplier = crisis ? 0.5 : 1.0;
+
+        const dynamicRegen = Math.round(baseRegen * satisfactionMultiplier * crisisMultiplier);
+
+        state.politicalCapital.regenPerTurn = dynamicRegen;
+        state.politicalCapital.baseRegen = baseRegen;
+
+        console.log(`🔄 Rejenerasyon güncellendi: ${dynamicRegen}/tur (baz: ${baseRegen}, memnuniyet: ${satisfactionMultiplier.toFixed(2)}, kriz: ${crisisMultiplier})`);
     }
 }
 

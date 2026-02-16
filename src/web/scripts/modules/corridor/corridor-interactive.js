@@ -59,23 +59,31 @@ export function setupToggleInteractiveMap() {
  */
 function showAllCountryDots() {
     const graphic = document.getElementById('corridor-graphic-main');
+    const wrapper = graphic?.querySelector('.corridor-image-wrapper');
     const img = graphic?.querySelector('img');
     const tooltip = document.getElementById('corridor-tooltip');
     
-    if (!graphic || !img || !state.darKoridorData) {
+    if (!graphic || !wrapper || !img || !state.darKoridorData) {
         console.warn('Grafik veya veri bulunamadı');
         return;
     }
     
+    // Image yüklenene kadar bekle
+    if (!img.complete || !img.naturalWidth) {
+        console.log('Image yükleniyor, noktalar bekleniyor...');
+        img.addEventListener('load', () => showAllCountryDots());
+        return;
+    }
+    
     // Önceki noktaları temizle
-    const oldDots = graphic.querySelectorAll('.corridor-country-dot');
+    const oldDots = wrapper.querySelectorAll('.corridor-country-dot');
     oldDots.forEach(dot => dot.remove());
     
     // Her ülke için nokta oluştur
     const countries = state.darKoridorData.countries || [];
     
     countries.forEach((country, index) => {
-        createCountryDot(graphic, img, country, tooltip);
+        createCountryDot(wrapper, img, country, tooltip);
     });
     
     // İstatistikleri göster
@@ -86,8 +94,9 @@ function showAllCountryDots() {
 
 /**
  * Bir ülke için nokta oluşturur
+ * Responsive uyumlu - yüzde değerleri kullanır
  */
-function createCountryDot(graphic, img, country, tooltip) {
+function createCountryDot(wrapper, img, country, tooltip) {
     const dot = document.createElement('div');
     dot.className = 'corridor-country-dot visible';
     
@@ -104,20 +113,9 @@ function createCountryDot(graphic, img, country, tooltip) {
     
     ({ x, y } = clampAlongDiagonal(x, y));
     
-    // Pixel pozisyonu hesapla
-    const computedStyle = window.getComputedStyle(graphic);
-    const paddingLeft = parseFloat(computedStyle.paddingLeft);
-    const paddingTop = parseFloat(computedStyle.paddingTop);
-    
-    const imgRect = img.getBoundingClientRect();
-    const imgWidth = imgRect.width;
-    const imgHeight = imgRect.height;
-    
-    const dotLeft = paddingLeft + (imgWidth * x / 100);
-    const dotTop = paddingTop + (imgHeight * y / 100);
-    
-    dot.style.left = `${dotLeft}px`;
-    dot.style.top = `${dotTop}px`;
+    // Yüzde değerleri ile konumlandır - responsive için
+    dot.style.left = `${x}%`;
+    dot.style.top = `${y}%`;
     
     // Hover event
     dot.addEventListener('mouseenter', (e) => {
@@ -143,7 +141,7 @@ function createCountryDot(graphic, img, country, tooltip) {
         tooltip.style.display = 'none';
     });
     
-    graphic.appendChild(dot);
+    wrapper.appendChild(dot);
 }
 
 /**
@@ -315,8 +313,13 @@ function filterCountryDots(type) {
  * Tüm ülke noktalarını gizler
  */
 function hideAllCountryDots() {
-    const allDots = document.querySelectorAll('.corridor-country-dot');
-    allDots.forEach(dot => dot.remove());
+    const graphic = document.getElementById('corridor-graphic-main');
+    const wrapper = graphic?.querySelector('.corridor-image-wrapper');
+    
+    if (wrapper) {
+        const allDots = wrapper.querySelectorAll('.corridor-country-dot');
+        allDots.forEach(dot => dot.remove());
+    }
 
     // İstatistikleri temizle
     const statsContainer = document.getElementById('corridor-stats-filters');

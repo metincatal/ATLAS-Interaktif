@@ -53,7 +53,14 @@ body {
     width: 100%;
 }
 
-.corridor-graphic-container img {
+/* Image wrapper - responsive nokta konumlandırma için */
+.corridor-graphic-container .corridor-image-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.corridor-graphic-container img,
+.corridor-graphic-container .corridor-image-wrapper img {
     width: 100%;
     height: auto;
     display: block;

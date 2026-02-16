@@ -9,6 +9,23 @@ import { calculateCorridorPosition, updateDotPosition } from '../../utils/geomet
 import { LEVIATHAN_TYPES, LEVIATHAN_TYPES_SHORT } from '../../config/constants.js';
 import { updateCorridorActionTooltip } from '../panel/panel-manager.js';
 
+// Mevcut state (resize için)
+let currentCorridorState = null;
+
+// Resize handler
+let corridorResizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(corridorResizeTimeout);
+    corridorResizeTimeout = setTimeout(() => {
+        if (currentCorridorState) {
+            updateCountryCorridorPosition(
+                currentCorridorState.countryName,
+                currentCorridorState.year
+            );
+        }
+    }, 100);
+});
+
 /**
  * Ülke için grafik pozisyonunu günceller
  */
@@ -20,6 +37,17 @@ export function updateCountryCorridorPosition(countryName, year) {
 
     if (!graphic || !img || !dot || !infoBar) {
         console.warn('Corridor grafik elementleri bulunamadı');
+        return;
+    }
+
+    // State'i kaydet (resize için)
+    currentCorridorState = { countryName, year };
+
+    // Image yüklenene kadar bekle
+    if (!img.complete || !img.naturalWidth) {
+        dot.style.display = 'none';
+        console.log('Image yükleniyor, bekleniyor...');
+        img.addEventListener('load', () => updateCountryCorridorPosition(countryName, year));
         return;
     }
 
@@ -41,8 +69,12 @@ export function updateCountryCorridorPosition(countryName, year) {
     );
     
     // Dot'u güncelle
-    dot.style.display = 'block';
-    updateDotPosition(graphic, img, dot, x, y);
+    const success = updateDotPosition(graphic, img, dot, x, y);
+    
+    if (!success) {
+        console.warn('Nokta konumlandırılamadı, image henüz yüklenmemiş');
+        return;
+    }
     
     // Leviathan tipine göre renk
     const levType = countryData.leviathanType || 'Absent';

@@ -3,6 +3,7 @@
  */
 
 import { API_CONFIG, getOllamaUrl } from '../config/api-config.js';
+import { BASE_PATH } from '../config/constants.js';
 
 // URL parametrelerinden ülke ve yıl bilgisini al
 const urlParams = new URLSearchParams(window.location.search);
@@ -24,14 +25,14 @@ async function initGame() {
     // Başlığı güncelle
     updateTitle();
 
+    // Oyuna başla butonunu hemen kur (AI yanıtını beklemeye gerek yok)
+    setupStartButton();
+
     // Dar koridor pozisyonunu göster
     await loadCorridorPosition();
 
-    // Ülke bilgilerini Ollama'dan çek
-    await loadCountryInfo();
-
-    // Oyuna başla butonunu kur
-    setupStartButton();
+    // Ülke bilgilerini Ollama'dan çek (async, buton beklemez)
+    loadCountryInfo();
 }
 
 /**
@@ -158,8 +159,8 @@ async function loadCorridorPosition() {
 
         // Yıllara göre organize edilmiş veri dosyasını yükle
         const dataUrl = mode === 'historical'
-            ? '/data/processed/vdem_historical/dar_koridor_combined_all_years.json'
-            : '/data/processed/wgi_vdem_modern/dar_koridor_all_years.json';
+            ? `${BASE_PATH}/data/processed/vdem_historical/dar_koridor_combined_all_years.json`
+            : `${BASE_PATH}/data/processed/wgi_vdem_modern/dar_koridor_all_years.json`;
 
         console.log(`Veri yükleniyor: ${dataUrl} (mode: ${mode})`);
         const response = await fetch(dataUrl);
@@ -206,7 +207,45 @@ async function loadCorridorPosition() {
 }
 
 /**
+ * Image'ın container içindeki gerçek render alanını hesaplar
+ * object-fit: contain kullanıldığında image, container'dan küçük olabilir
+ */
+function getImageRenderBounds(img) {
+    const containerWidth = img.clientWidth;
+    const containerHeight = img.clientHeight;
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    
+    if (!naturalWidth || !naturalHeight) {
+        return { offsetX: 0, offsetY: 0, width: containerWidth, height: containerHeight };
+    }
+    
+    const containerRatio = containerWidth / containerHeight;
+    const imageRatio = naturalWidth / naturalHeight;
+    
+    let renderWidth, renderHeight, offsetX, offsetY;
+    
+    if (imageRatio > containerRatio) {
+        renderWidth = containerWidth;
+        renderHeight = containerWidth / imageRatio;
+        offsetX = 0;
+        offsetY = (containerHeight - renderHeight) / 2;
+    } else {
+        renderHeight = containerHeight;
+        renderWidth = containerHeight * imageRatio;
+        offsetX = (containerWidth - renderWidth) / 2;
+        offsetY = 0;
+    }
+    
+    return { offsetX, offsetY, width: renderWidth, height: renderHeight };
+}
+
+// Mevcut state'i sakla (resize için)
+let currentDotState = null;
+
+/**
  * Grafik üzerinde noktayı konumlandırır ve tooltip ekler
+ * object-fit: contain ile uyumlu - gerçek render alanını hesaplar
  */
 function updateDotPosition(statePower, societyPower, countryData) {
     const dot = document.getElementById('game-country-dot');
@@ -221,7 +260,18 @@ function updateDotPosition(statePower, societyPower, countryData) {
     // Grafik boyutlarını al
     const img = container.querySelector('img');
 
+    // State'i kaydet (resize için)
+    currentDotState = { statePower, societyPower, countryData };
+
     const positionDot = () => {
+        // Image naturalWidth kontrolü - yüklenmemişse bekle
+        if (!img.naturalWidth || !img.naturalHeight) {
+            dot.style.display = 'none';
+            console.warn('Image henüz yüklenmedi, bekleniyor...');
+            setTimeout(() => updateDotPosition(statePower, societyPower, countryData), 100);
+            return;
+        }
+
         console.log(`State power: ${statePower}, Society power: ${societyPower}`);
 
         // Ana sayfadaki gibi pozisyon hesapla (yüzde cinsinden)
@@ -230,16 +280,15 @@ function updateDotPosition(statePower, societyPower, countryData) {
         // Clamp işlemi
         ({ x, y } = clampAlongDiagonal(x, y));
 
-        const imgWidth = img.offsetWidth;
-        const imgHeight = img.offsetHeight;
+        // Image'ın gerçek render alanını hesapla
+        const bounds = getImageRenderBounds(img);
+        
+        // Pixel pozisyonunu hesapla
+        const dotLeft = bounds.offsetX + (bounds.width * x / 100);
+        const dotTop = bounds.offsetY + (bounds.height * y / 100);
 
-        // Pixel pozisyonu hesapla
-        const dotLeft = (imgWidth * x / 100);
-        const dotTop = (imgHeight * y / 100);
+        console.log(`Hesaplanan pozisyon: x=${x}%, y=${y}% => ${dotLeft.toFixed(1)}px, ${dotTop.toFixed(1)}px`);
 
-        console.log(`Hesaplanan pozisyon: x=${x}%, y=${y}% => ${dotLeft}px, ${dotTop}px`);
-
-        // Noktayı konumlandır
         dot.style.left = `${dotLeft}px`;
         dot.style.top = `${dotTop}px`;
         dot.style.display = 'block';
@@ -254,14 +303,30 @@ function updateDotPosition(statePower, societyPower, countryData) {
         console.log(`✓ Nokta konumlandı (${levType}) ve tooltip kuruldu`);
     };
 
-    // Eğer resim yüklenmemişse, yüklenmesini bekle
-    if (!img.complete) {
+    // Image'ın tam yüklenmesini bekle
+    if (img.complete && img.naturalWidth) {
+        positionDot();
+    } else {
+        dot.style.display = 'none'; // Yüklenene kadar gizle
         console.log('Grafik yükleniyor, bekleniyor...');
         img.addEventListener('load', positionDot);
-    } else {
-        positionDot();
     }
 }
+
+// Resize handler - nokta pozisyonunu yeniden hesapla
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        if (currentDotState) {
+            updateDotPosition(
+                currentDotState.statePower,
+                currentDotState.societyPower,
+                currentDotState.countryData
+            );
+        }
+    }, 100);
+});
 
 /**
  * Tooltip kurulumu - Ana sayfadaki gibi
@@ -352,10 +417,27 @@ function updateTooltipPosition(e, tooltip) {
  * Y ekseni: StatePower (Devlet Gücü) - yukarıdan aşağıya (ters)
  */
 function calculateCorridorPosition(statePower, societyPower) {
+    // Faktör sınırları
+    const FACTOR_MIN = -3;
+    const FACTOR_MAX = 3;
+    const MARGIN = 3; // Kenar boşluğu
+    
+    // Faktör değerlerini sınırla
+    const clampedStatePower = Math.max(FACTOR_MIN, Math.min(FACTOR_MAX, statePower || 0));
+    const clampedSocietyPower = Math.max(FACTOR_MIN, Math.min(FACTOR_MAX, societyPower || 0));
+    
     // X ekseni: SocietyPower (Toplum Gücü) - soldan sağa
-    const x = ((societyPower + 3) / 6) * 100;
+    // -3 → 0%, 0 → 50%, +3 → 100%
+    let x = ((clampedSocietyPower - FACTOR_MIN) / (FACTOR_MAX - FACTOR_MIN)) * 100;
+    
+    // Y ekseni: StatePower (Devlet Gücü) - alttan yukarıya
     // Y'yi ters çeviriyoruz çünkü grafik koordinatları üstten başlar
-    const y = 100 - ((statePower + 3) / 6) * 100;
+    // -3 → 100% (alt), 0 → 50% (orta), +3 → 0% (üst)
+    let y = 100 - ((clampedStatePower - FACTOR_MIN) / (FACTOR_MAX - FACTOR_MIN)) * 100;
+    
+    // Kesin sınırlandırma: koordinatlar her zaman grafik içinde olmalı
+    x = Math.max(MARGIN, Math.min(100 - MARGIN, x));
+    y = Math.max(MARGIN, Math.min(100 - MARGIN, y));
 
     return { x, y };
 }
@@ -483,12 +565,14 @@ Yanıtını 3-4 kısa paragraf halinde ver. Markdown kullanma, sadece düz metin
 }
 
 /**
- * Oyuna başla butonunu kurar
+ * Oyuna başla butonunu kurar - Sayfa yüklenir yüklenmez aktif olur
  */
 function setupStartButton() {
     const startBtn = document.getElementById('start-game-btn');
 
-    // Butonu aktif et
+    if (!startBtn) return;
+
+    // Butonu hemen aktif et (AI yanıtını beklemeye gerek yok)
     startBtn.disabled = false;
     startBtn.style.opacity = '1';
     startBtn.style.cursor = 'pointer';
@@ -516,3 +600,10 @@ function setupStartButton() {
 
 // Sayfa yüklendiğinde oyunu başlat
 window.addEventListener('DOMContentLoaded', initGame);
+
+
+
+
+
+
+

@@ -20,11 +20,26 @@
     padding: 0;
 }
 
+/* Image Wrapper - Responsive nokta konumlandırma için */
+.corridor-image-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.corridor-image-wrapper img,
 .corridor-graphic img {
     width: 100%;
     height: auto;
     display: block;
     border-radius: var(--radius-xs);
+}
+
+/* Noktalar artık wrapper'a göre yüzde ile konumlandırılacak */
+.corridor-image-wrapper .position-dot,
+.corridor-image-wrapper .country-dot,
+.corridor-image-wrapper .corridor-country-dot {
+    /* Yüzde değerleri JavaScript'ten gelecek */
+    transform: translate(-50%, -50%);
 }
 
 /* Eksen Etiketleri */
@@ -60,7 +75,8 @@
     box-shadow: 0 2px 8px rgba(255, 59, 48, 0.6);
     animation: pulse 2s infinite;
     z-index: var(--z-dropdown);
-    margin: -8px 0 0 -8px;
+    /* Yüzde bazlı konumlandırma için transform kullanıyoruz */
+    transform: translate(-50%, -50%);
 }
 
 /* Tüm ülke noktaları */

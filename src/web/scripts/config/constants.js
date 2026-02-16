@@ -80,20 +80,34 @@ export const GLOBE_TEXTURE_URL = 'https://unpkg.com/three-globe/example/img/eart
 export const GLOBE_BUMP_URL = 'https://unpkg.com/three-globe/example/img/earth-topology.png';
 export const GLOBE_BACKGROUND_URL = 'https://unpkg.com/three-globe/example/img/night-sky.png';
 
+// GitHub Pages base path tespiti
+// localhost'ta '' döner, GitHub Pages'de '/ATLAS-Interaktif' döner
+function getBasePath() {
+    const path = window.location.pathname;
+    // GitHub Pages: /ATLAS-Interaktif/ veya /ATLAS-Interaktif/game.html gibi
+    const match = path.match(/^(\/[^/]+)/);
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return '';
+    }
+    return match ? match[1] : '';
+}
+
+export const BASE_PATH = getBasePath();
+
 // Veri dosyası yolları
 export const DATA_PATHS = {
-    darKoridorAllYears: '/data/processed/wgi_vdem_modern/dar_koridor_all_years.json',
-    darKoridorByCountry: '/data/processed/wgi_vdem_modern/dar_koridor_by_country.json',
-    darKoridorHistoricalAllYears: '/data/processed/vdem_historical/dar_koridor_combined_all_years.json',
-    darKoridorHistoricalByCountry: '/data/processed/vdem_historical/dar_koridor_by_country_all_years.json',
-    wgiDataset: '/data/raw/wgidataset.csv',
-    vdemDataset: '/data/processed/vdem_metadata/vdem_data.json',
-    vdemMindmap: '/data/processed/vdem_metadata/vdem_mindmap_structure.json',
-    historicalMapsIndex: '/data/historical_maps/index.json',
-    historicalNamesMapping: '/data/historical_maps/historical_names.json',
-    historicalMapsBaseDir: '/data/historical_maps/',
-    capitalCoordinates: '/data/historical_maps/capital_coordinates.json',
-    unifiedHistoricalData: '/data/historical_maps/unified_country_historical_data.json'  // Yeni birleştirilmiş veri
+    darKoridorAllYears: `${BASE_PATH}/data/processed/wgi_vdem_modern/dar_koridor_all_years.json`,
+    darKoridorByCountry: `${BASE_PATH}/data/processed/wgi_vdem_modern/dar_koridor_by_country.json`,
+    darKoridorHistoricalAllYears: `${BASE_PATH}/data/processed/vdem_historical/dar_koridor_combined_all_years.json`,
+    darKoridorHistoricalByCountry: `${BASE_PATH}/data/processed/vdem_historical/dar_koridor_by_country_all_years.json`,
+    wgiDataset: `${BASE_PATH}/data/raw/wgidataset.csv`,
+    vdemDataset: `${BASE_PATH}/data/processed/vdem_metadata/vdem_data.json`,
+    vdemMindmap: `${BASE_PATH}/data/processed/vdem_metadata/vdem_mindmap_structure.json`,
+    historicalMapsIndex: `${BASE_PATH}/data/historical_maps/index.json`,
+    historicalNamesMapping: `${BASE_PATH}/data/historical_maps/historical_names.json`,
+    historicalMapsBaseDir: `${BASE_PATH}/data/historical_maps/`,
+    capitalCoordinates: `${BASE_PATH}/data/historical_maps/capital_coordinates.json`,
+    unifiedHistoricalData: `${BASE_PATH}/data/historical_maps/unified_country_historical_data.json`
 };
 
 export const VDEM_COLOR_SCHEMES = [
