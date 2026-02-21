@@ -1,88 +1,192 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Özgürlük Dengesi - Dar Koridor teorisine dayalı interaktif oyun deneyimi. Daron Acemoğlu ve James A. Robinson'un teorilerini keşfedin.">
     <title>Özgürlük Dengesi - ATLAS İnteraktif</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles/base/reset.css">
     <link rel="stylesheet" href="styles/base/variables.css">
     <link rel="stylesheet" href="styles/pages/game.css">
 </head>
+
 <body>
-    <div class="game-container">
-        <!-- Sol Alan - Oyun Alanı -->
-        <div class="game-area">
+    <!-- Background Particles -->
+    <div class="bg-particles" aria-hidden="true">
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+        <div class="particle particle-4"></div>
+        <div class="particle particle-5"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="game-navbar" role="navigation" aria-label="Oyun navigasyonu">
+        <div class="navbar-brand">
+            <a href="index.html" class="brand-link" aria-label="ATLAS İnteraktif ana sayfasına dön">
+                <span class="brand-icon" aria-hidden="true">🌍</span>
+                <span class="brand-name">ATLAS İnteraktif</span>
+            </a>
+        </div>
+        <div class="navbar-center">
+            <span class="page-badge" aria-label="Mevcut sayfa">
+                <span class="badge-icon" aria-hidden="true">⚖️</span>
+                Özgürlük Dengesi
+            </span>
+        </div>
+        <div class="navbar-actions">
+            <a href="index.html" class="nav-action-btn" id="back-to-atlas" aria-label="Atlas haritasına dön">
+                <span aria-hidden="true">←</span> Atlas'a Dön
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Game Container -->
+    <main class="game-container" role="main">
+
+        <!-- Left Panel - Country Visualization (65%) -->
+        <section class="game-area" aria-label="Ülke görselleştirme alanı">
             <div class="game-panel">
-                <!-- Başlık - Bayrak ve Bilgiler -->
-                <div class="country-header">
-                    <div class="country-flag-container">
+
+                <!-- Country Header Card -->
+                <div class="country-header" role="region" aria-label="Ülke bilgileri">
+                    <div class="country-flag-container" aria-hidden="true">
                         <span id="game-country-flag" class="country-flag">🏳️</span>
+                        <div class="flag-glow" aria-hidden="true"></div>
                     </div>
                     <div class="country-title-info">
-                        <h2 id="game-country-name" class="country-name">Ülke</h2>
-                        <div class="country-year-badge">
-                            <span class="year-icon">📅</span>
-                            <span id="game-country-year" class="country-year">1897</span>
+                        <h1 id="game-country-name" class="country-name">Ülke</h1>
+                        <div class="country-meta">
+                            <div class="country-year-badge" aria-label="Seçili yıl">
+                                <span class="year-icon" aria-hidden="true">📅</span>
+                                <span id="game-country-year" class="country-year">—</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="corridor-status-indicator" id="corridor-status-badge" aria-live="polite">
+                        <div class="status-dot" aria-hidden="true"></div>
+                        <span class="status-text">Analiz bekleniyor</span>
+                    </div>
+                </div>
+
+                <!-- Dar Koridor Grafiği -->
+                <div class="corridor-section" role="region" aria-label="Dar Koridor grafiği">
+                    <div class="corridor-chart-header">
+                        <h2 class="corridor-chart-title">
+                            <span class="title-icon" aria-hidden="true">🏛️</span>
+                            Dar Koridor Analizi
+                        </h2>
+                        <div class="corridor-axes-labels" aria-hidden="true">
+                            <span class="axis-label-y">↑ Devlet Gücü</span>
+                            <span class="axis-label-x">Toplum Gücü →</span>
+                        </div>
+                    </div>
+                    <div class="corridor-position">
+                        <div class="corridor-graphic-container">
+                            <div class="corridor-image-wrapper">
+                                <img src="assets/images/darKoridorGrafigiYazili.png"
+                                    alt="Dar Koridor Grafiği: Dört bölge - Despotik Leviathan (üst sol), Zincirlenmiş Leviathan (üst sağ/merkez), Kağıt Leviathan (alt sol), Devletsiz Özgürlük (alt sağ)"
+                                    loading="eager">
+                                <div id="game-country-dot" class="country-dot" role="img"
+                                    aria-label="Ülkenin grafik üzerindeki konumu" tabindex="0"></div>
+                                <div id="game-corridor-tooltip" class="corridor-tooltip" role="tooltip"
+                                    aria-live="polite"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sol: Dar Koridor Grafiği (Float) -->
-                <div class="corridor-position">
-                    <div class="corridor-graphic-container">
-                        <div class="corridor-image-wrapper">
-                            <img src="assets/images/darKoridorGrafigiYazili.png" alt="Dar Koridor Grafiği">
-                            <div id="game-country-dot" class="country-dot"></div>
-                            <div id="game-corridor-tooltip" class="corridor-tooltip"></div>
+                <!-- Ülke Detay Bilgileri -->
+                <div class="country-info-section" role="region" aria-label="Ülke detay bilgileri">
+                    <div class="info-section-header">
+                        <h2 class="info-section-title">
+                            <span aria-hidden="true">📊</span>
+                            Kurumsal Analiz
+                        </h2>
+                    </div>
+                    <div id="game-country-details" class="country-details" aria-live="polite">
+                        <div class="loading-state" aria-label="Yükleniyor">
+                            <div class="loading-spinner" aria-hidden="true"></div>
+                            <p class="loading-text">Ülke bilgileri yükleniyor...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Ülke Bilgileri (Grafik etrafından akar) -->
-                <div class="country-info">
-                    <div id="game-country-details" class="country-details">
-                        <div class="loading-spinner"></div>
-                        <p>Ülke bilgileri yükleniyor...</p>
-                    </div>
-                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Sağ Panel - Oyunun Amacı -->
-        <div class="info-panel">
-            <h2 class="info-title">Oyunun Amacı</h2>
-            <div class="info-content">
-                <p>
-                    <strong>Özgürlük Dengesi</strong>, Daron Acemoğlu ve James A. Robinson'un
-                    "Dar Koridor" teorisinden esinlenerek hazırlanmış interaktif bir deneyimdir.
-                </p>
-                <p>
-                    Bu oyunda amacınız, seçtiğiniz ülkeyi <strong>dar koridor</strong> içinde tutmaktır.
-                    Dar koridor, devlet kapasitesi ile toplumsal güç arasındaki hassas dengenin
-                    sağlandığı bölgedir.
-                </p>
-                <div class="game-rules">
-                    <h3>🎯 Hedefler</h3>
-                    <ul>
-                        <li>Ülkeyi "Zincirlenmiş Leviathan" bölgesinde tutun</li>
+        <!-- Right Panel - Game Info (35%) -->
+        <aside class="info-panel" aria-label="Oyun bilgileri ve kurallar">
+            <div class="info-panel-inner">
+
+                <!-- Panel Header -->
+                <div class="panel-hero">
+                    <div class="hero-icon-wrapper" aria-hidden="true">
+                        <span class="hero-icon">⚖️</span>
+                        <div class="hero-icon-ring"></div>
+                    </div>
+                    <h2 class="info-title">Özgürlük Dengesi</h2>
+                    <p class="info-subtitle">Dar Koridor'da Denge Oyunu</p>
+                </div>
+
+                <!-- Theory Description -->
+                <div class="theory-intro" role="region" aria-label="Oyun tanımı">
+                    <p>
+                        <strong>Özgürlük Dengesi</strong>, Daron Acemoğlu ve James A. Robinson'un
+                        <em>"Dar Koridor"</em> teorisinden esinlenerek hazırlanmış interaktif bir
+                        deneyimdir.
+                    </p>
+                    <p>
+                        Bu oyunda amacınız, seçtiğiniz ülkeyi <strong>dar koridor</strong> içinde tutmaktır.
+                        Dar koridor, devlet kapasitesi ile toplumsal güç arasındaki hassas dengenin
+                        sağlandığı bölgedir.
+                    </p>
+                </div>
+
+                <!-- Game Rules -->
+                <div class="game-rules info-card" role="region" aria-label="Oyun hedefleri">
+                    <div class="card-header">
+                        <span class="card-icon" aria-hidden="true">🎯</span>
+                        <h3>Hedefler</h3>
+                    </div>
+                    <ul class="rules-list" role="list">
+                        <li>Ülkeyi <strong>"Zincirlenmiş Leviathan"</strong> bölgesinde tutun</li>
                         <li>Devlet kapasitesini ve toplumsal gücü dengeleyin</li>
                         <li>Farklı politika kararları alarak dengeyi koruyun</li>
                     </ul>
                 </div>
-                <div class="game-warning">
-                    <h3>⚠️ Dikkat</h3>
-                    <ul>
+
+                <!-- Warning Zones -->
+                <div class="game-warning info-card" role="region" aria-label="Tehlike bölgeleri">
+                    <div class="card-header">
+                        <span class="card-icon" aria-hidden="true">⚠️</span>
+                        <h3>Tehlike Bölgeleri</h3>
+                    </div>
+                    <ul class="rules-list warning-list" role="list">
                         <li><strong>Despotik Leviathan:</strong> Aşırı devlet gücü, zayıf toplum</li>
                         <li><strong>Kağıt Leviathan:</strong> Zayıf devlet, zayıf toplum</li>
                         <li><strong>Devletsiz Özgürlük:</strong> Zayıf devlet, güçlü toplum</li>
                     </ul>
                 </div>
 
-                <div class="game-strategy">
-                    <h3>💡 Strateji İpuçları</h3>
-                    <ul>
+                <!-- Strategy Tips -->
+                <div class="game-strategy info-card" role="region" aria-label="Strateji ipuçları">
+                    <div class="card-header">
+                        <span class="card-icon" aria-hidden="true">💡</span>
+                        <h3>Strateji İpuçları</h3>
+                    </div>
+                    <ul class="rules-list strategy-list" role="list">
                         <li>Devlet kapasitesini artırırken toplumsal özgürlükleri koruyun</li>
                         <li>Tek taraflı güç artışı dengeyi bozar</li>
                         <li>Tarihsel bağlamı göz önünde bulundurun</li>
@@ -90,13 +194,17 @@
                     </ul>
                 </div>
 
-                <div class="game-info-box">
-                    <h3>📚 Teorik Çerçeve</h3>
-                    <p>
+                <!-- Theoretical Framework -->
+                <div class="game-info-box info-card" role="region" aria-label="Teorik çerçeve">
+                    <div class="card-header">
+                        <span class="card-icon" aria-hidden="true">📚</span>
+                        <h3>Teorik Çerçeve</h3>
+                    </div>
+                    <p class="theory-text">
                         Dar Koridor teorisi, başarılı devletlerin devlet gücü ile toplumsal güç
                         arasında sürekli bir denge kurduğunu savunur. Bu denge:
                     </p>
-                    <ul>
+                    <ul class="rules-list framework-list" role="list">
                         <li>Özgürlükleri korur</li>
                         <li>Kamu düzenini sağlar</li>
                         <li>Ekonomik büyümeyi destekler</li>
@@ -104,48 +212,100 @@
                     </ul>
                 </div>
 
-                <div class="game-regions">
-                    <h3>🗺️ Bölge Açıklamaları</h3>
-                    <div class="region-item region-shackled">
-                        <div class="region-header">
-                            <span class="region-icon">✓</span>
-                            <span class="region-name">Zincirlenmiş Leviathan</span>
+                <!-- Region Zones Explainer -->
+                <div class="game-regions" role="region" aria-label="Bölge açıklamaları">
+                    <h3 class="regions-title">
+                        <span aria-hidden="true">🗺️</span>
+                        Bölge Açıklamaları
+                    </h3>
+                    <div class="regions-grid" role="list">
+                        <div class="region-item region-shackled" role="listitem">
+                            <div class="region-header">
+                                <span class="region-icon" aria-hidden="true">✓</span>
+                                <span class="region-name">Zincirlenmiş Leviathan</span>
+                            </div>
+                            <p>Güçlü devlet + Güçlü toplum = İdeal denge</p>
                         </div>
-                        <p>Güçlü devlet + Güçlü toplum = İdeal denge</p>
-                    </div>
-                    <div class="region-item region-despotic">
-                        <div class="region-header">
-                            <span class="region-icon">⚡</span>
-                            <span class="region-name">Despotik Leviathan</span>
+                        <div class="region-item region-despotic" role="listitem">
+                            <div class="region-header">
+                                <span class="region-icon" aria-hidden="true">⚡</span>
+                                <span class="region-name">Despotik Leviathan</span>
+                            </div>
+                            <p>Güçlü devlet + Zayıf toplum = Otoriter rejim</p>
                         </div>
-                        <p>Güçlü devlet + Zayıf toplum = Otoriter rejim</p>
-                    </div>
-                    <div class="region-item region-paper">
-                        <div class="region-header">
-                            <span class="region-icon">📄</span>
-                            <span class="region-name">Kağıt Leviathan</span>
+                        <div class="region-item region-paper" role="listitem">
+                            <div class="region-header">
+                                <span class="region-icon" aria-hidden="true">📄</span>
+                                <span class="region-name">Kağıt Leviathan</span>
+                            </div>
+                            <p>Zayıf devlet + Zayıf toplum = Kırılgan yapı</p>
                         </div>
-                        <p>Zayıf devlet + Zayıf toplum = Kırılgan yapı</p>
-                    </div>
-                    <div class="region-item region-absent">
-                        <div class="region-header">
-                            <span class="region-icon">🌊</span>
-                            <span class="region-name">Devletsiz Özgürlük</span>
+                        <div class="region-item region-absent" role="listitem">
+                            <div class="region-header">
+                                <span class="region-icon" aria-hidden="true">🌊</span>
+                                <span class="region-name">Devletsiz Özgürlük</span>
+                            </div>
+                            <p>Zayıf devlet + Güçlü toplum = Anarşi riski</p>
                         </div>
-                        <p>Zayıf devlet + Güçlü toplum = Anarşi riski</p>
                     </div>
                 </div>
 
-                <!-- Oyuna Başla Butonu -->
-                <button id="start-game-btn" class="start-game-button" disabled>
-                    <span class="btn-icon">🎮</span>
-                    <span class="btn-text">Oyuna Başla</span>
-                    <span class="btn-subtitle">(Yakında)</span>
-                </button>
+                <!-- Start Game Button -->
+                <div class="start-game-wrapper">
+                    <button id="start-game-btn" class="start-game-button" disabled aria-label="Oyuna başla (yakında)">
+                        <span class="btn-icon" aria-hidden="true">🎮</span>
+                        <div class="btn-content">
+                            <span class="btn-text">Oyuna Başla</span>
+                            <span class="btn-subtitle">Yakında &middot; Demo sürümü hazırlanıyor</span>
+                        </div>
+                    </button>
+                </div>
+
             </div>
-        </div>
+        </aside>
+
+    </main>
+
+    <!-- Mobile Bottom Nav -->
+    <div class="mobile-bottom-nav" role="navigation" aria-label="Mobil alt navigasyon">
+        <button class="mob-nav-btn active" id="mob-tab-country" aria-selected="true" aria-controls="mobile-tab-content">
+            <span aria-hidden="true">🏛️</span>
+            <span>Analiz</span>
+        </button>
+        <button class="mob-nav-btn" id="mob-tab-info" aria-selected="false" aria-controls="mobile-tab-content">
+            <span aria-hidden="true">ℹ️</span>
+            <span>Oyun</span>
+        </button>
     </div>
 
     <script type="module" src="scripts/pages/game.js"></script>
+    <script>
+        // Mobile tab switching
+        const tabCountry = document.getElementById('mob-tab-country');
+        const tabInfo = document.getElementById('mob-tab-info');
+        const gameArea = document.querySelector('.game-area');
+        const infoPanel = document.querySelector('.info-panel');
+
+        if (tabCountry && tabInfo && gameArea && infoPanel) {
+            tabCountry.addEventListener('click', () => {
+                tabCountry.classList.add('active');
+                tabCountry.setAttribute('aria-selected', 'true');
+                tabInfo.classList.remove('active');
+                tabInfo.setAttribute('aria-selected', 'false');
+                gameArea.classList.add('mobile-active');
+                infoPanel.classList.remove('mobile-active');
+            });
+
+            tabInfo.addEventListener('click', () => {
+                tabInfo.classList.add('active');
+                tabInfo.setAttribute('aria-selected', 'true');
+                tabCountry.classList.remove('active');
+                tabCountry.setAttribute('aria-selected', 'false');
+                infoPanel.classList.add('mobile-active');
+                gameArea.classList.remove('mobile-active');
+            });
+        }
+    </script>
 </body>
+
 </html>
