@@ -374,3 +374,93 @@
     color: #2563eb;
     font-weight: 700;
 }
+
+/* V-Dem Dashboard Responsive */
+@media (max-width: 1024px) {
+    .vdem-content-area {
+        flex-direction: column;
+    }
+
+    .vdem-sidebar {
+        width: 100%;
+        max-height: 200px;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .vdem-metadata-panel {
+        width: 100%;
+        max-height: 250px;
+        border-left: none;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .vdem-top-bar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .vdem-search-container input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .vdem-dashboard-container {
+        font-size: 13px;
+    }
+
+    .vdem-top-bar {
+        flex-direction: column;
+        height: auto;
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .vdem-search-container input {
+        width: 100%;
+    }
+
+    .vdem-sidebar {
+        max-height: 150px;
+    }
+
+    .vdem-visualization-area {
+        padding: 10px;
+    }
+
+    .vdem-metadata-panel {
+        padding: 12px;
+    }
+
+    .chart-header-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .chart-controls {
+        flex-wrap: wrap;
+    }
+
+    .country-selector {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .vdem-sidebar {
+        max-height: 120px;
+    }
+
+    .vdem-nav-header-row {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .vdem-nav-item.leaf {
+        font-size: 11px;
+        padding: 4px 10px 4px 25px;
+    }
+}

@@ -574,6 +574,133 @@ body {
     .info-panel {
         flex: 1 1 auto;
     }
+
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .game-area {
+        min-height: 50vh;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .game-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .game-area {
+        flex: none;
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .game-panel {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .corridor-position {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .info-panel {
+        flex: none;
+        padding: 20px;
+        box-shadow: none;
+        border-top: 3px solid #667eea;
+    }
+
+    .info-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .country-name {
+        font-size: 18px;
+    }
+
+    .country-header {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .country-flag-container {
+        width: 44px;
+        height: 44px;
+    }
+
+    .country-flag {
+        font-size: 28px;
+    }
+
+    .country-details {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .start-game-button {
+        margin-top: 20px;
+        padding: 16px;
+    }
+
+    .start-game-button .btn-icon {
+        font-size: 24px;
+    }
+
+    .start-game-button .btn-text {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-panel {
+        padding: 15px;
+    }
+
+    .info-title {
+        font-size: 20px;
+    }
+
+    .info-content p {
+        font-size: 14px;
+    }
+
+    .game-rules h3,
+    .game-warning h3,
+    .game-strategy h3,
+    .game-info-box h3,
+    .game-regions h3 {
+        font-size: 16px;
+    }
+
+    .game-rules ul li,
+    .game-warning ul li,
+    .game-strategy ul li {
+        font-size: 13px;
+    }
+
+    .region-name {
+        font-size: 14px;
+    }
+
+    .region-item p {
+        font-size: 12px;
+        padding-left: 28px;
+    }
 }
 
 /* Scrollbar Styling */

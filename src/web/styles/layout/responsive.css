@@ -1,21 +1,450 @@
 /* Genel Responsive Tasarım - ATLAS İnteraktif */
 
-@media (max-width: 768px) {
-    header h1 {
-        font-size: var(--font-size-xl);
+/* =============================================
+   TABLET (max-width: 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+
+    /* Header kontrollerini sarma ve küçültme */
+    #dataset-header {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 6px 10px;
+        max-width: 96vw;
     }
-    
-    header p {
-        font-size: var(--font-size-sm);
+
+    #dataset-header.dataset-active {
+        padding: 8px 12px;
+        border-radius: 18px;
     }
-    
-    #country-name {
-        font-size: 1.2rem;
+
+    #dataset-header .wgi-controls {
+        flex-wrap: wrap;
+        gap: 6px;
     }
-    
-    #country-info {
-        min-width: 200px;
-        padding: 10px 20px;
+
+    #dataset-header .vdem-controls {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .vdem-indicator-group {
+        max-width: 400px;
+    }
+
+    /* Renk seçici konumu */
+    .base-color-selector {
+        left: auto;
+        right: var(--spacing-md);
+        top: auto;
+        bottom: var(--spacing-lg);
+    }
+
+    /* Ülke paneli tablet */
+    .country-panel {
+        width: 50%;
+        right: -50%;
     }
 }
 
+/* =============================================
+   MOBİL (max-width: 768px)
+   ============================================= */
+@media (max-width: 768px) {
+
+    /* Body - mobilde scroll izni */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Header kontrolleri - mobil */
+    #dataset-header {
+        top: 10px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        padding: 8px 10px;
+        max-width: 96vw;
+        width: 96vw;
+    }
+
+    #dataset-header.dataset-active {
+        border-radius: 16px;
+        padding: 8px 10px;
+    }
+
+    .dataset-toggle-group {
+        justify-content: center;
+    }
+
+    .wgi-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    #dataset-header .wgi-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    #dataset-header .vdem-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .indicator-group {
+        width: 100%;
+    }
+
+    .indicator-group select {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .scale-group {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .projection-toggle {
+        align-self: center;
+    }
+
+    .wgi-controls .projection-toggle,
+    .vdem-controls .projection-toggle {
+        margin-left: 0;
+    }
+
+    /* V-Dem gösterge grubu */
+    .vdem-indicator-group {
+        max-width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+
+    .vdem-selected-path {
+        font-size: 0.85rem;
+        white-space: normal;
+    }
+
+    /* Teoriler butonu - mobil */
+    .theory-nav-button {
+        top: 10px;
+        left: 10px;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        z-index: var(--z-modal);
+    }
+
+    .theory-nav-button span {
+        font-size: 1rem;
+    }
+
+    /* Renk seçici mobil */
+    .base-color-selector {
+        position: fixed;
+        left: 10px;
+        right: auto;
+        top: auto;
+        bottom: 100px;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        z-index: var(--z-modal);
+    }
+
+    .base-color-selector label {
+        font-size: 0.85rem;
+    }
+
+    .base-color-selector select {
+        font-size: 0.85rem;
+        padding: 4px 8px;
+    }
+
+    /* Ülke bilgi kutusu */
+    #country-info {
+        top: auto;
+        bottom: 160px;
+        min-width: 200px;
+        padding: 10px 20px;
+    }
+
+    #country-name {
+        font-size: 1.2rem;
+    }
+
+    /* Ülke paneli - tam genişlik */
+    .country-panel {
+        width: 100%;
+        right: -100%;
+    }
+
+    /* Panel içerik */
+    .panel-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .panel-content {
+        padding: 15px;
+    }
+
+    .panel-section-title {
+        font-size: 1.2rem;
+    }
+
+    .country-flag {
+        width: 80px;
+        height: 55px;
+    }
+
+    /* Koridor grafik panelde */
+    .corridor-graphic {
+        padding: 25px 15px 20px 40px;
+    }
+
+    .corridor-info-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .corridor-info-bar .info-item {
+        font-size: 0.8rem;
+    }
+
+    .corridor-mode-selector {
+        flex-direction: column;
+        gap: 8px;
+        padding: 0 10px;
+    }
+
+    .corridor-mode-btn {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    .corridor-year-slider {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #corridor-year-input {
+        width: 90%;
+    }
+
+    /* AI Chat - mobil */
+    .ai-chat-box {
+        left: 10px;
+        bottom: 10px;
+    }
+
+    .chat-trigger {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+
+    .chat-area {
+        width: calc(100vw - 20px);
+        height: 60vh;
+        max-height: 500px;
+        left: 10px;
+        bottom: 10px;
+    }
+
+    .chat-header h3 {
+        font-size: 1rem;
+    }
+
+    /* Globe container */
+    #globe-container {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        /* dynamic viewport height for mobile */
+    }
+
+    /* Flatmap container */
+    #flatmap-container {
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    /* Blur overlay */
+    #blur-overlay {
+        height: 100vh;
+        height: 100dvh;
+    }
+}
+
+/* =============================================
+   KÜÇÜK MOBİL (max-width: 480px)
+   ============================================= */
+@media (max-width: 480px) {
+
+    /* Teori sayfası - küçük mobil */
+    .theory-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .book-card {
+        padding: 18px;
+    }
+
+    .book-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .book-card h3 {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .book-intro {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .theory-section h4 {
+        font-size: 1.1rem;
+    }
+
+    .theory-section p,
+    .theory-section li {
+        font-size: 0.88rem;
+    }
+
+    .key-insight {
+        padding: 12px;
+        font-size: 0.88rem;
+    }
+
+    .nav-button {
+        padding: 14px 24px;
+        font-size: 0.9rem;
+    }
+
+    .theory-nav-button {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+
+    /* Header daha kompakt */
+    #dataset-header {
+        top: 6px;
+        width: 98vw;
+    }
+
+    .wgi-btn {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Year slider - küçük mobil */
+    #year-slider-container,
+    #vdem-year-slider-container {
+        bottom: 10px;
+        padding: 12px 14px;
+        border-radius: 20px;
+        width: calc(100vw - 16px);
+    }
+
+    .year-readout strong {
+        font-size: 1.1rem;
+    }
+
+    /* Chat daha kompakt */
+    .chat-area {
+        height: 55vh;
+    }
+
+    .chat-trigger {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+}
+
+/* =============================================
+   TOUCH CİHAZLAR İÇİN İYİLEŞTİRMELER
+   ============================================= */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Daha büyük dokunma hedefleri */
+    .wgi-btn,
+    .proj-btn,
+    .mindmap-return-btn,
+    .mindmap-close-btn {
+        min-height: 40px;
+        min-width: 40px;
+    }
+
+    /* Slider thumb büyütme */
+    #year-slider::-webkit-slider-thumb,
+    #vdem-year-slider::-webkit-slider-thumb {
+        width: 30px;
+        height: 30px;
+    }
+
+    #historical-year-slider::-webkit-slider-thumb {
+        width: 22px;
+        height: 22px;
+    }
+
+    #corridor-year-input::-webkit-slider-thumb {
+        width: 22px;
+        height: 22px;
+    }
+
+    /* Tooltip'leri hover yerine dokunmada göstermek için */
+    .wgi-tooltip {
+        display: none !important;
+    }
+
+    /* Close butonlarını büyüt */
+    .close-panel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+    }
+
+    .close-chat-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 22px;
+    }
+}
+
+/* =============================================
+   LANDSCAPE MOBİL (yatay telefon)
+   ============================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+    .theory-container {
+        padding: var(--spacing-md);
+    }
+
+    .theory-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .chat-area {
+        height: 85vh;
+        max-height: none;
+    }
+
+    #year-slider-container,
+    #vdem-year-slider-container {
+        bottom: 5px;
+        padding: 10px 16px;
+    }
+
+    .historical-slider-compact {
+        bottom: 5px;
+        padding: 8px 14px;
+    }
+}

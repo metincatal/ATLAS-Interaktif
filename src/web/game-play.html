@@ -1590,6 +1590,12 @@
 
         /* Responsive */
         @media (max-width: 1200px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: auto;
+            }
+
             .game-container {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr auto;
@@ -1645,8 +1651,108 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 6px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: auto;
+            }
+
+            .game-container {
+                gap: 8px;
+                height: auto;
+            }
+
             .policy-grid {
                 grid-template-columns: 1fr;
+                max-height: none;
+                margin-top: 30px;
+            }
+
+            .center-panel {
+                min-height: auto;
+            }
+
+            .corridor-section {
+                max-height: 35vh;
+                min-height: 180px;
+            }
+
+            .left-sidebar {
+                padding: 12px;
+            }
+
+            .right-panel {
+                padding: 12px;
+            }
+
+            .panel-header {
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            .btn {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .ai-helper-sidebar {
+                min-height: 180px;
+            }
+
+            .events-feed-center {
+                min-height: 120px;
+                max-height: 200px;
+            }
+
+            .policy-detail-overlay {
+                padding: 14px;
+            }
+
+            .policy-detail-title {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 4px;
+            }
+
+            .game-container {
+                gap: 6px;
+            }
+
+            .sidebar-title {
+                font-size: 11px;
+            }
+
+            .stakeholder-header {
+                font-size: 11px;
+            }
+
+            .policy-card-title {
+                font-size: 11px;
+            }
+
+            .policy-card-desc {
+                font-size: 9px;
+            }
+
+            .policy-card-cost {
+                font-size: 10px;
+            }
+
+            .info-country-name {
+                font-size: 12px;
+            }
+
+            .capital-text {
+                font-size: 12px;
+            }
+
+            .preview-box {
+                font-size: 10px;
             }
         }
     </style>
