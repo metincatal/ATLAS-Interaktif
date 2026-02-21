@@ -5,33 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Özgürlük Dengesi - Oyun</title>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <!-- Styles -->
     <link rel="stylesheet" href="styles/base/reset.css">
     <link rel="stylesheet" href="styles/base/variables.css">
     <style>
         :root {
-            --bg-main: #f0f4f8;
-            --bg-card: #ffffff;
-            --bg-card-alt: #f8fafc;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --accent-primary: #3b82f6;
-            --accent-secondary: #8b5cf6;
-            --accent-success: #10b981;
-            --accent-warning: #f59e0b;
-            --accent-danger: #ef4444;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --bg-main: #0a0e1a;
+            --bg-card: rgba(15, 22, 45, 0.85);
+            --bg-card-alt: rgba(20, 29, 58, 0.7);
+            --text-primary: #e8ecff;
+            --text-secondary: #9ba8cc;
+            --text-muted: #606880;
+            --accent-primary: #6c7de8;
+            --accent-secondary: #a78be8;
+            --accent-success: #22d474;
+            --accent-warning: #ffb340;
+            --accent-danger: #ff4a6a;
+            --border-color: rgba(255, 255, 255, 0.09);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 32px rgba(0,0,0,0.4);
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.09);
+            --glass-hover: rgba(255, 255, 255, 0.07);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-main);
+            background: linear-gradient(150deg, #0a0e1a 0%, #0d1526 50%, #111a35 100%);
             min-height: 100vh;
             padding: 12px;
             margin: 0;
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
         }
 
         .game-container {
@@ -48,7 +58,10 @@
            =================== */
         .left-sidebar {
             background: var(--bg-card);
-            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             padding: 16px;
             overflow-y: auto;
             display: flex;
@@ -64,7 +77,7 @@
             letter-spacing: 0.5px;
             margin-bottom: 12px;
             padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -87,11 +100,16 @@
         }
 
         .stakeholder-item {
-            background: var(--bg-card-alt);
+            background: var(--glass-bg);
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 10px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
+            transition: border-color 0.2s ease;
+        }
+
+        .stakeholder-item:hover {
+            border-color: rgba(255,255,255,0.15);
         }
 
         .stakeholder-item:last-child {
@@ -127,28 +145,28 @@
         }
 
         .mood-status.status-excellent {
-            background: rgba(16, 185, 129, 0.15);
-            color: #059669;
+            background: rgba(34, 212, 116, 0.15);
+            color: var(--accent-success);
         }
 
         .mood-status.status-good {
-            background: rgba(34, 197, 94, 0.15);
-            color: #16a34a;
+            background: rgba(34, 212, 116, 0.12);
+            color: #4ade80;
         }
 
         .mood-status.status-normal {
-            background: rgba(245, 158, 11, 0.15);
-            color: #d97706;
+            background: rgba(255, 179, 64, 0.15);
+            color: var(--accent-warning);
         }
 
         .mood-status.status-bad {
-            background: rgba(239, 68, 68, 0.15);
-            color: #dc2626;
+            background: rgba(255, 74, 106, 0.15);
+            color: var(--accent-danger);
         }
 
         .mood-status.status-critical {
-            background: rgba(185, 28, 28, 0.2);
-            color: #b91c1c;
+            background: rgba(255, 74, 106, 0.25);
+            color: #ff6b88;
             font-weight: 700;
         }
 
@@ -174,7 +192,7 @@
         .progress-bar {
             flex: 1;
             height: 8px;
-            background: var(--border-color);
+            background: rgba(255,255,255,0.08);
             border-radius: 4px;
             overflow: hidden;
             position: relative;
@@ -221,12 +239,12 @@
         .crisis-warning {
             margin-top: 8px;
             padding: 6px 10px;
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(255, 74, 106, 0.12);
             border-radius: 6px;
             color: var(--accent-danger);
             font-size: 11px;
             font-weight: 600;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(255, 74, 106, 0.25);
         }
 
         /* ===================
@@ -234,7 +252,10 @@
            =================== */
         .center-panel {
             background: var(--bg-card);
-            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             padding: 16px;
             display: flex;
             flex-direction: column;
@@ -257,8 +278,9 @@
             align-items: center;
             justify-content: center;
             padding: 8px;
-            background: rgba(100, 116, 139, 0.05);
-            border-radius: 10px;
+            background: rgba(108, 125, 232, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             min-width: 0;
             overflow: hidden;
         }
@@ -366,8 +388,8 @@
             height: 16px;
             border-radius: 50%;
             background: var(--accent-primary);
-            border: 3px solid white;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.8);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4), 0 0 20px rgba(108, 125, 232, 0.3);
             cursor: pointer;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
@@ -398,11 +420,12 @@
             flex: 0 0 145px;
             display: flex;
             flex-direction: column;
-            background: white;
-            border-radius: 10px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             padding: 10px;
             gap: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: var(--shadow-sm);
         }
 
         /* Ülke Adı */
@@ -432,13 +455,13 @@
             gap: 6px;
             padding: 5px 6px;
             border-radius: 6px;
-            background: var(--bg-card-alt);
+            background: rgba(255,255,255,0.03);
             border-left: 2px solid var(--accent-primary);
             transition: all 0.2s ease;
         }
 
         .info-stat-row:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(108, 125, 232, 0.12);
             transform: translateX(2px);
         }
 
@@ -479,7 +502,7 @@
         }
 
         .info-stat-row.leviathan-row {
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(255, 74, 106, 0.1);
             border-left-color: var(--accent-danger);
         }
 
@@ -527,7 +550,8 @@
         .ai-helper-sidebar .ai-chat-container {
             flex: 1 1 auto;
             overflow-y: auto;
-            background: white;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
             border-radius: 8px;
             padding: 10px;
             min-height: 100px;
@@ -568,16 +592,21 @@
         .ai-helper-sidebar .ai-input {
             flex: 1;
             padding: 8px 10px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
             border-radius: 6px;
             font-size: 11px;
-            background: white;
+            background: rgba(0,0,0,0.3);
+            color: var(--text-primary);
         }
 
         .ai-helper-sidebar .ai-input:focus {
             outline: none;
             border-color: var(--accent-secondary);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(167, 139, 232, 0.15);
+        }
+
+        .ai-helper-sidebar .ai-input::placeholder {
+            color: var(--text-muted);
         }
 
         .ai-helper-sidebar .ai-send-btn {
@@ -600,11 +629,11 @@
 
         /* Son Olaylar - Orta Panel Alt (Yeni Konum) */
         .events-feed-center {
-            background: var(--bg-card-alt);
-            border-radius: 10px;
+            background: var(--glass-bg);
+            border-radius: 12px;
             padding: 12px;
             margin-top: 12px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -625,7 +654,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding-bottom: 8px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .events-feed-center .events-icon {
@@ -655,11 +684,11 @@
         }
 
         .events-feed-center .event-card {
-            background: white;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border);
             border-radius: 8px;
             padding: 12px;
             border-left: 4px solid var(--accent-primary);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             animation: slideIn 0.3s ease-out;
         }
 
@@ -698,7 +727,7 @@
         }
 
         .events-feed-center .event-category {
-            background: var(--bg-card-alt);
+            background: rgba(255,255,255,0.06);
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: 600;
@@ -735,7 +764,10 @@
            =================== */
         .right-panel {
             background: var(--bg-card);
-            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             padding: 16px;
             overflow-y: auto;
             display: flex;
@@ -758,11 +790,11 @@
 
         /* Politik Sermaye Göstergesi */
         .capital-indicator {
-            background: var(--bg-card-alt);
+            background: var(--glass-bg);
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 12px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
         }
 
         .capital-label {
@@ -790,7 +822,7 @@
             font-weight: 500;
             color: var(--accent-success);
             margin-left: auto;
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(34, 212, 116, 0.12);
             padding: 2px 6px;
             border-radius: 4px;
         }
@@ -804,7 +836,7 @@
         .capital-progress {
             flex: 1;
             height: 12px;
-            background: var(--border-color);
+            background: rgba(255,255,255,0.08);
             border-radius: 6px;
             overflow: hidden;
         }
@@ -848,8 +880,8 @@
         }
 
         .policy-card {
-            background: var(--bg-card-alt);
-            border: 2px solid var(--border-color);
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
             border-radius: 10px;
             padding: 10px;
             padding-bottom: 32px;
@@ -859,22 +891,23 @@
         }
 
         .policy-card:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+            border-color: rgba(108, 125, 232, 0.5);
+            box-shadow: 0 4px 16px rgba(108, 125, 232, 0.15);
+            background: var(--glass-hover);
         }
 
         .policy-card.selected {
             border-color: var(--accent-primary);
-            background: rgba(59, 130, 246, 0.08);
+            background: rgba(108, 125, 232, 0.12);
         }
 
         .policy-card.manual-card {
-            border-color: var(--accent-secondary);
-            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(167, 139, 232, 0.4);
+            background: rgba(167, 139, 232, 0.08);
         }
 
         .policy-card.manual-card.selected {
-            background: rgba(139, 92, 246, 0.15);
+            background: rgba(167, 139, 232, 0.18);
         }
 
         .policy-card.disabled {
@@ -921,8 +954,9 @@
             right: 4px;
             width: 32px;
             height: 32px;
-            border: 2px solid var(--accent-primary);
-            background: white;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
             border-radius: 8px;
             cursor: pointer;
             display: flex;
@@ -937,6 +971,7 @@
 
         .memory-toggle-btn:hover {
             background: var(--accent-primary);
+            border-color: var(--accent-primary);
             transform: scale(1.05);
         }
 
@@ -948,7 +983,7 @@
             display: block;
             width: 16px;
             height: 2px;
-            background: var(--accent-primary);
+            background: var(--text-secondary);
             border-radius: 1px;
             transition: background 0.2s ease;
         }
@@ -968,8 +1003,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 2px solid var(--bg-main);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .memory-overlay {
@@ -978,15 +1013,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: white;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
             border-radius: 8px;
             z-index: 30;
             display: none;
             flex-direction: column;
             padding: 16px;
             animation: fadeIn 0.2s ease;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--glass-border);
         }
 
         .memory-overlay.active {
@@ -1012,7 +1048,7 @@
             justify-content: space-between;
             margin-bottom: 12px;
             padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .memory-title {
@@ -1037,8 +1073,8 @@
         .memory-close-btn {
             width: 28px;
             height: 28px;
-            border: none;
-            background: var(--bg-card-alt);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
@@ -1063,17 +1099,17 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: var(--bg-card-alt);
+            background: var(--glass-bg);
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .memory-item:hover {
-            border-color: var(--accent-primary);
-            background: rgba(59, 130, 246, 0.05);
+            border-color: rgba(108, 125, 232, 0.4);
+            background: rgba(108, 125, 232, 0.08);
         }
 
         .memory-item-content {
@@ -1108,7 +1144,7 @@
             width: 24px;
             height: 24px;
             border: none;
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(255, 74, 106, 0.12);
             color: var(--accent-danger);
             border-radius: 4px;
             cursor: pointer;
@@ -1171,15 +1207,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: white;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
             border-radius: 8px;
             z-index: 35;
             display: none;
             flex-direction: column;
             padding: 20px;
             animation: fadeIn 0.2s ease;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--glass-border);
             overflow: hidden;
         }
 
@@ -1213,8 +1250,8 @@
         .policy-detail-close {
             width: 32px;
             height: 32px;
-            border: none;
-            background: var(--bg-card-alt);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
             border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
@@ -1232,7 +1269,6 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            background: white;
         }
 
         .policy-detail-section {
@@ -1257,7 +1293,8 @@
             display: flex;
             gap: 16px;
             padding: 12px;
-            background: var(--bg-card-alt);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             border-radius: 8px;
             margin-top: 12px;
         }
@@ -1284,7 +1321,7 @@
             gap: 10px;
             margin-top: 16px;
             padding-top: 16px;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--glass-border);
         }
 
         .policy-detail-actions .btn {
@@ -1298,9 +1335,9 @@
             right: 8px;
             width: 18px;
             height: 18px;
-            border: 2px solid var(--border-color);
+            border: 2px solid rgba(255,255,255,0.15);
             border-radius: 4px;
-            background: white;
+            background: rgba(255,255,255,0.05);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1361,8 +1398,8 @@
         .generate-more-btn {
             width: 100%;
             padding: 10px;
-            background: var(--bg-card-alt);
-            border: 2px dashed var(--border-color);
+            background: var(--glass-bg);
+            border: 2px dashed rgba(255,255,255,0.1);
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1378,7 +1415,7 @@
         .generate-more-btn:hover {
             border-color: var(--accent-primary);
             color: var(--accent-primary);
-            background: rgba(59, 130, 246, 0.05);
+            background: rgba(108, 125, 232, 0.08);
         }
 
         .generate-more-btn .tooltip-text {
@@ -1397,15 +1434,15 @@
 
         /* Önizleme Kutusu */
         .preview-box {
-            background: var(--bg-card-alt);
-            border-radius: 8px;
+            background: var(--glass-bg);
+            border-radius: 10px;
             padding: 12px;
             margin-bottom: 12px;
             min-height: 80px;
             font-size: 11px;
             line-height: 1.5;
             color: var(--text-secondary);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
         }
 
         .preview-title {
@@ -1417,11 +1454,11 @@
 
         /* AI Yardımcı Alanı */
         .ai-helper-section {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(167, 139, 232, 0.08) 0%, rgba(108, 125, 232, 0.08) 100%);
+            border-radius: 10px;
             padding: 12px;
             margin-bottom: 12px;
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(167, 139, 232, 0.18);
         }
 
         .ai-helper-header {
@@ -1449,9 +1486,9 @@
         }
 
         .ai-message.assistant {
-            background: white;
+            background: var(--glass-bg);
             color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
         }
 
         .ai-message.user {
@@ -1468,20 +1505,26 @@
         .ai-input {
             flex: 1;
             padding: 8px 12px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
             border-radius: 6px;
             font-size: 11px;
-            background: white;
+            background: rgba(0,0,0,0.2);
+            color: var(--text-primary);
         }
 
         .ai-input:focus {
             outline: none;
             border-color: var(--accent-secondary);
+            box-shadow: 0 0 0 3px rgba(167, 139, 232, 0.12);
+        }
+
+        .ai-input::placeholder {
+            color: var(--text-muted);
         }
 
         .ai-send-btn {
             padding: 8px 16px;
-            background: var(--accent-secondary);
+            background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
             color: white;
             border: none;
             border-radius: 6px;
@@ -1492,7 +1535,8 @@
         }
 
         .ai-send-btn:hover {
-            background: #7c3aed;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(167, 139, 232, 0.3);
         }
 
         /* Butonlar */
@@ -1530,21 +1574,22 @@
         }
 
         .btn-secondary {
-            background: white;
+            background: transparent;
             color: var(--accent-primary);
-            border: 2px solid var(--accent-primary);
+            border: 2px solid rgba(108, 125, 232, 0.4);
         }
 
         .btn-secondary:hover {
             background: var(--accent-primary);
             color: white;
+            border-color: var(--accent-primary);
         }
 
         /* Eski events-feed stili kaldırıldı - artık events-feed-center kullanılıyor */
 
         /* Loading */
         .loading-spinner {
-            border: 3px solid var(--border-color);
+            border: 3px solid rgba(255,255,255,0.08);
             border-top: 3px solid var(--accent-primary);
             border-radius: 50%;
             width: 32px;
@@ -1574,7 +1619,7 @@
         .policy-grid::-webkit-scrollbar-track,
         .stakeholders-panel::-webkit-scrollbar-track,
         .ai-chat-container::-webkit-scrollbar-track {
-            background: var(--border-color);
+            background: rgba(255,255,255,0.04);
             border-radius: 3px;
         }
 
@@ -1584,8 +1629,17 @@
         .policy-grid::-webkit-scrollbar-thumb,
         .stakeholders-panel::-webkit-scrollbar-thumb,
         .ai-chat-container::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
+            background: rgba(108, 125, 232, 0.4);
             border-radius: 3px;
+        }
+
+        .left-sidebar::-webkit-scrollbar-thumb:hover,
+        .right-panel::-webkit-scrollbar-thumb:hover,
+        .events-feed::-webkit-scrollbar-thumb:hover,
+        .policy-grid::-webkit-scrollbar-thumb:hover,
+        .stakeholders-panel::-webkit-scrollbar-thumb:hover,
+        .ai-chat-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(108, 125, 232, 0.6);
         }
 
         /* Responsive */

@@ -11,7 +11,6 @@ import {
     GLOBE_SETTINGS
 } from '../config/constants.js';
 import { setupInteractionListeners } from './interaction.js';
-import { setupWgiControls } from '../modules/wgi/wgi-manager.js';
 
 /**
  * Globe.gl objesini başlatır ve temel ayarları yapar
@@ -53,9 +52,6 @@ export function initializeGlobe() {
             currentGlobe.height(height);
         }
     });
-
-    // WGI Kontrollerini kur (UI)
-    setupWgiControls();
 
     console.log('✓ Globe başlatıldı');
 }

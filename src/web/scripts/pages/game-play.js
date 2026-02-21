@@ -249,12 +249,12 @@ function showError(message) {
     const container = document.querySelector('.center-panel');
     if (container) {
         container.innerHTML = `
-            <div style="background: #f8d7da; padding: 20px; border-radius: 12px; border-left: 4px solid #dc3545; margin: 20px;">
-                <strong>❌ Hata!</strong>
-                <p>${message}</p>
+            <div style="background: rgba(255, 74, 106, 0.1); padding: 20px; border-radius: 12px; border-left: 4px solid #ff4a6a; margin: 20px; border: 1px solid rgba(255, 74, 106, 0.25);">
+                <strong style="color: #ff6b88;">❌ Hata!</strong>
+                <p style="color: #9ba8cc; margin-top: 8px;">${message}</p>
                 <button onclick="window.location.href='index.html'"
-                        style="margin-top: 10px; padding: 10px 20px; background: #667eea; color: white;
-                               border: none; border-radius: 8px; cursor: pointer;">
+                        style="margin-top: 10px; padding: 10px 20px; background: linear-gradient(135deg, #6c7de8, #a78be8); color: white;
+                               border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
                     Ana Sayfaya Dön
                 </button>
             </div>

@@ -11,7 +11,7 @@ import { getPolygonLabelHtml } from '../../core/polygon-labels.js';
 import { toggleFlatMap } from '../../core/flatmap.js';
 import { openCountryPanel } from '../panel/panel-manager.js';
 import { resumeAutoRotate } from '../../core/interaction.js';
-import { ANIMATION_DURATIONS } from '../../config/constants.js';
+import { ANIMATION_DURATIONS, WGI_INDICATORS } from '../../config/constants.js';
 import { setupGlobeEventHandlers } from '../../core/globe-handlers.js';
 import { waitForD3 } from '../../utils/d3-loader.js';
 
@@ -193,6 +193,14 @@ export function setupWgiControls() {
         }
     });
     
+    const toastCloseBtn = document.getElementById('toast-close-btn');
+    if (toastCloseBtn) {
+        toastCloseBtn.addEventListener('click', () => {
+            hideMobileCountryToast();
+            lastTappedPolygon = null;
+        });
+    }
+
     console.log('✓ WGI kontrolleri hazır');
 }
 
@@ -436,15 +444,72 @@ function updateWgiLegend() {
     updateLegendSelectionStyles();
 }
 
+let mobileToastTimeout = null;
+let lastTappedPolygon = null;
+
 function handleWgiPolygonClick(polygon) {
     if (!polygon) return;
-    // Önce pause durumunu kaydet
-    const wasPaused = state.globePaused;
-    // WGI modunu kapat
+
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (isTouchDevice) {
+        showMobileCountryToast(polygon);
+        if (lastTappedPolygon === polygon) {
+            hideMobileCountryToast();
+            requestDisableWgiMode();
+            openPanelFromPolygon(polygon, { focusOnGlobe: true });
+            lastTappedPolygon = null;
+            return;
+        }
+        lastTappedPolygon = polygon;
+        return;
+    }
+
     requestDisableWgiMode();
-    // Eğer pause edilmemişse, buton zaten doğru durumda
-    // Pause edilmişse, panel açılırken globe-handlers.js'deki handleCountryClick resetleyecek
     openPanelFromPolygon(polygon, { focusOnGlobe: true });
+}
+
+function showMobileCountryToast(polygon) {
+    const toast = document.getElementById('mobile-country-toast');
+    const nameEl = document.getElementById('toast-country-name');
+    const valueEl = document.getElementById('toast-indicator-value');
+    if (!toast || !nameEl || !valueEl) return;
+
+    const d = polygon.properties || {};
+    const countryName = d.NAME || d.ADMIN || 'Bilinmeyen Ülke';
+    const iso3 = getIso3ForToast(polygon);
+    const indName = WGI_INDICATORS[state.currentIndicator] || state.currentIndicator?.toUpperCase() || '';
+    const year = state.currentYear || '';
+
+    let valueStr = 'Veri yok';
+    if (iso3 && state.wgiDataByIso3?.[state.currentIndicator]?.[String(year)]?.[iso3] != null) {
+        const v = state.wgiDataByIso3[state.currentIndicator][String(year)][iso3];
+        valueStr = v.toFixed(2);
+    }
+
+    nameEl.textContent = countryName;
+    valueEl.textContent = `${indName} (${year}): ${valueStr}`;
+    toast.style.display = 'flex';
+
+    if (mobileToastTimeout) clearTimeout(mobileToastTimeout);
+    mobileToastTimeout = setTimeout(() => {
+        hideMobileCountryToast();
+        lastTappedPolygon = null;
+    }, 4000);
+}
+
+function hideMobileCountryToast() {
+    const toast = document.getElementById('mobile-country-toast');
+    if (toast) toast.style.display = 'none';
+    if (mobileToastTimeout) {
+        clearTimeout(mobileToastTimeout);
+        mobileToastTimeout = null;
+    }
+}
+
+function getIso3ForToast(polygon) {
+    const p = polygon.properties || {};
+    return p.ISO_A3 || p.ADM0_A3 || p.ISO_A3_EH || null;
 }
 
 function openPanelFromPolygon(polygon, { focusOnGlobe = false } = {}) {
