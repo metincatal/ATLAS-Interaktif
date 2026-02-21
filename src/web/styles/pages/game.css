@@ -55,6 +55,7 @@
 html,
 body {
     height: 100%;
+    height: 100dvh;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: linear-gradient(150deg, var(--game-bg-start) 0%, var(--game-bg-mid) 50%, var(--game-bg-end) 100%);
     color: var(--game-text-primary);
@@ -269,7 +270,7 @@ body {
 .game-container {
     display: flex;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     padding-top: var(--navbar-h);
     position: relative;
     z-index: 1;
@@ -1350,13 +1351,12 @@ body {
         flex: 0;
     }
 
-    /* Game container */
+    /* Game container - mobil sekme düzeni */
     .game-container {
         flex-direction: column;
         height: auto;
-        min-height: calc(100vh - var(--navbar-h));
+        min-height: calc(100dvh - var(--navbar-h));
         padding-bottom: 60px;
-        /* space for mobile nav */
     }
 
     /* Show mobile nav */
@@ -1368,14 +1368,14 @@ body {
     .game-area {
         display: none;
         flex: none;
-        min-height: calc(100vh - var(--navbar-h) - 60px);
+        min-height: calc(100dvh - var(--navbar-h) - 60px);
         overflow: auto;
     }
 
     .info-panel {
         display: none;
         border-left: none;
-        min-height: calc(100vh - var(--navbar-h) - 60px);
+        min-height: calc(100dvh - var(--navbar-h) - 60px);
         overflow: auto;
     }
 

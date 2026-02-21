@@ -16,6 +16,9 @@ import { setupChat } from './modules/chat/chat-manager.js';
 import { loadDarKoridorData, loadHistoricalCorridorData } from './modules/corridor/corridor-data.js';
 import { setupVdemExperience } from './modules/vdem/vdem-manager.js';
 
+// WGI
+import { setupWgiControls } from './modules/wgi/wgi-manager.js';
+
 // Historical Maps
 import {
     loadHistoricalMapsData,
@@ -36,7 +39,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.log('- Fare ile döndürme');
     console.log('- Tekerlek ile zoom');
     console.log('- Ülkelere tıklama');
-    
+
     try {
         console.log('1️⃣ Sayfa navigasyonu kuruluyor...');
         setupNavigation();
@@ -49,7 +52,10 @@ window.addEventListener('DOMContentLoaded', async () => {
         setupPanelAndChat();
         setupChat();
 
-        console.log('4️⃣ V-Dem deneyimi hazırlanıyor...');
+        console.log('4️⃣ WGI kontrolleri kuruluyor...');
+        setupWgiControls();
+
+        console.log('5️⃣ V-Dem deneyimi hazırlanıyor...');
         setupVdemExperience();
 
         console.log('5️⃣ Historical Maps verileri yükleniyor...');

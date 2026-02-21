@@ -9,14 +9,16 @@ import { getVdemFlatFill, getVdemPolygonStrokeColor } from '../modules/vdem/vdem
 import { getPolygonLabelHtml } from './polygon-labels.js';
 import { openCountryPanel } from '../modules/panel/panel-manager.js';
 
-// D3 global olarak yüklenmiş
-const d3 = window.d3;
+// D3 global olarak yüklenmiş - window.d3'ten dinamik alıyoruz
+// (module yükleme anında d3 henüz hazır olmayabilir)
+function getD3() { return window.d3; }
 
 /**
  * 2D düzlem haritayı başlatır
  */
 export function initializeFlatMap() {
     // D3 kontrolü
+    const d3 = getD3();
     if (!d3 || !d3.select) {
         console.error('❌ D3 kütüphanesi yüklenmedi, flat map başlatılamıyor');
         alert('D3 kütüphanesi yükleniyor, lütfen birkaç saniye bekleyin ve tekrar deneyin.');
@@ -38,15 +40,15 @@ export function initializeFlatMap() {
         .append('svg')
         .attr('width', width)
         .attr('height', height);
-    
+
     // Projeksiyon oluştur
     const projection = d3.geoNaturalEarth1()
         .scale(Math.min(width, height) / 3.2)
         .translate([width / 2, height / 2 + 80])
         .precision(0.1);
-    
+
     const path = d3.geoPath().projection(projection);
-    
+
     // Path'leri çiz
     svg.selectAll('path.country')
         .data(state.countriesData.features)
@@ -84,7 +86,7 @@ export function initializeFlatMap() {
             }
             return 0.9;
         })
-        .on('mouseenter', function(event, d) {
+        .on('mouseenter', function (event, d) {
             const selectionActive = state.wgiEnabled && state.selectedLegendRange;
             const targetOpacity = selectionActive
                 ? (isPolygonInLegendSelection(d) ? 1 : 0.35)
@@ -95,7 +97,7 @@ export function initializeFlatMap() {
             d3.select(this).attr('opacity', targetOpacity).attr('stroke-width', targetStrokeWidth);
             showTooltip(event, d);
         })
-        .on('mouseleave', function(event, d) {
+        .on('mouseleave', function (event, d) {
             const selectionActive = state.wgiEnabled && state.selectedLegendRange;
             const baseOpacity = selectionActive
                 ? (isPolygonInLegendSelection(d) ? 1 : 0.45)
@@ -106,18 +108,18 @@ export function initializeFlatMap() {
             d3.select(this).attr('opacity', baseOpacity).attr('stroke-width', baseStrokeWidth);
             hideTooltip();
         })
-        .on('mousemove', function(event) {
+        .on('mousemove', function (event) {
             updateTooltipPosition(event);
         })
-        .on('click', function(event, d) {
+        .on('click', function (event, d) {
             handleFlatMapCountryClick(d);
         });
-    
+
     setState('flatSvg', svg);
     setState('flatProjection', projection);
     setState('flatPath', path);
     setState('flatMapInitialized', true);
-    
+
     console.log('✓ 2D Düzlem harita başlatıldı');
 }
 
@@ -126,9 +128,9 @@ export function initializeFlatMap() {
  */
 export function updateFlatMap() {
     if (!state.flatMapInitialized || !state.flatSvg) return;
-    
+
     const selectionActive = Boolean(state.wgiEnabled && state.selectedLegendRange);
-    
+
     state.flatSvg.selectAll('path.country')
         .attr('fill', (d) => {
             if (state.wgiEnabled) {
@@ -160,7 +162,7 @@ export function updateFlatMap() {
             }
             return 0.9;
         });
-    
+
     console.log('✓ Flat map güncellendi');
 }
 
@@ -176,21 +178,21 @@ export function toggleFlatMap(show, dataset = 'wgi') {
     const vdemFlatBtn = document.getElementById('vdem-btn-flat');
     const btnGlobe = dataset === 'vdem' ? vdemGlobeBtn : primaryGlobeBtn;
     const btnFlat = dataset === 'vdem' ? vdemFlatBtn : primaryFlatBtn;
-    
+
     if (show) {
         // Flat map göster
         if (globeContainer) globeContainer.style.display = 'none';
         if (flatContainer) flatContainer.style.display = 'block';
         if (btnGlobe) btnGlobe.classList.remove('active');
         if (btnFlat) btnFlat.classList.add('active');
-        
+
         // Eğer henüz başlatılmadıysa başlat
         if (!state.flatMapInitialized) {
             initializeFlatMap();
         } else {
             updateFlatMap();
         }
-        
+
         console.log('✓ Düzlem harita gösterildi');
     } else {
         // Globe göster
@@ -198,7 +200,7 @@ export function toggleFlatMap(show, dataset = 'wgi') {
         if (flatContainer) flatContainer.style.display = 'none';
         if (btnGlobe) btnGlobe.classList.add('active');
         if (btnFlat) btnFlat.classList.remove('active');
-        
+
         console.log('✓ Küre harita gösterildi');
     }
 }
@@ -209,7 +211,7 @@ export function toggleFlatMap(show, dataset = 'wgi') {
 function showTooltip(event, d) {
     const tooltip = document.getElementById('tooltip');
     if (!tooltip) return;
-    
+
     const countryName = d.properties.NAME || d.properties.ADM0 || 'Bilinmeyen Ülke';
     tooltip.innerHTML = getPolygonLabelHtml(d);
     tooltip.style.display = 'block';
@@ -230,53 +232,53 @@ function hideTooltip() {
 function updateTooltipPosition(event) {
     const tooltip = document.getElementById('tooltip');
     if (!tooltip) return;
-    
+
     const padding = 12;
     const tooltipWidth = tooltip.offsetWidth || 200;
     const tooltipHeight = tooltip.offsetHeight || 80;
-    
+
     let left = event.pageX + 12;
     let top = event.pageY - tooltipHeight - 8;
-    
+
     if (left + tooltipWidth + padding > window.pageXOffset + window.innerWidth) {
         left = window.pageXOffset + window.innerWidth - tooltipWidth - padding;
     }
-    
+
     if (left < window.pageXOffset + padding) {
         left = window.pageXOffset + padding;
     }
-    
+
     if (top < window.pageYOffset + padding) {
         top = event.pageY + 12;
     }
-    
+
     if (top + tooltipHeight + padding > window.pageYOffset + window.innerHeight) {
         top = window.pageYOffset + window.innerHeight - tooltipHeight - padding;
     }
-    
+
     tooltip.style.left = `${left}px`;
     tooltip.style.top = `${top}px`;
 }
 
 function handleFlatMapCountryClick(feature) {
     if (!feature) return;
-    
+
     const center = getFeatureCenterLatLng(feature);
     if (center) {
         setState('pendingCountryFocus', center);
     }
-    
+
     if (state.wgiEnabled) {
         document.dispatchEvent(new CustomEvent('wgi:disable', { detail: { reason: 'selection', nextMode: 'panel' } }));
     }
     if (state.vdemEnabled && window.vdemControls && typeof window.vdemControls.disable === 'function') {
         window.vdemControls.disable({ nextMode: 'panel' });
     }
-    
+
     const countryName = feature.properties.NAME || feature.properties.ADMIN || 'Bilinmeyen Ülke';
     const countryCode = feature.properties.ISO_A2 || 'XX';
     openCountryPanel(countryName, countryCode);
-    
+
     const blurOverlay = document.getElementById('blur-overlay');
     if (blurOverlay) {
         blurOverlay.classList.add('active');
