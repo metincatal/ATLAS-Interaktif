@@ -46,6 +46,27 @@ test('uzaklık ve yön hesapları', () => {
     assert.ok(g.similarity > 0 && g.similarity < 1);
 });
 
+test('harita yayı: hedef, ipucunun sekiz yönlü diliminde ve halkanın üzerinde', () => {
+    const ankara = { lat: 39.93, lng: 32.86 };
+    const moscow = { lat: 55.75, lng: 37.62 };
+    // destination, bearing ve distanceKm ile tutarlı
+    const p = H.destination(ankara, H.bearing(ankara, moscow), H.distanceKm(ankara, moscow));
+    assert.ok(H.distanceKm(p, moscow) < 1, 'hedefe varır');
+    assert.equal(H.compassBearing(350), 0);
+    assert.equal(H.compassBearing(112), 90);
+    assert.equal(H.compassBearing(113), 135);
+    // Her tahmin için hedefin başkenti yayın iki ucu arasında kalır
+    for (const [guess, target] of [['GRC', 'TUR'], ['BRA', 'JPN'], ['NZL', 'ISL'], ['USA', 'RUS']]) {
+        const e = H.evaluateGuess(guess, target);
+        const from = H.capitalOf(guess);
+        const arc = H.compassArc(from, e.bearing, e.km);
+        assert.ok(arc.length >= 30);
+        for (const [lng, lat] of arc) assert.ok(Math.abs(H.distanceKm(from, { lng, lat }) - e.km) < 1, 'yay halkanın üzerinde');
+        const off = ((e.bearing - H.compassBearing(e.bearing) + 540) % 360) - 180;
+        assert.ok(Math.abs(off) <= 22.5, `${guess}→${target} yön dilimin içinde`);
+    }
+});
+
 test('ipuçları yanlış tahminle açılır; ad maskesi yalnızca ilk harfi gösterir', () => {
     assert.equal(H.hints('TUR', 0).length, 0);
     assert.deepEqual(

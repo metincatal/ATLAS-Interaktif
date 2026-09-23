@@ -17,6 +17,7 @@ import { CorridorChart } from '../../components/corridor-chart.js';
 import { toast } from '../../components/toast.js';
 import { copyText, appURL } from '../../components/share.js';
 import { dayKey, dayLabel } from '../game/daily.js';
+import { HuntMap } from './map.js';
 import { MAX_GUESSES, NEAR_KM, huntPuzzle, practicePuzzle, evaluateGuess, hints, huntProgress, saveHunt, huntResults, huntStreak, shareHunt, compassWord } from './logic.js';
 
 export async function mount(root, params) {
@@ -37,6 +38,7 @@ class HuntPage {
         const saved = this.practice ? null : huntProgress(this.puzzle.key);
         this.guesses = saved?.guesses || [];
         this.chart = null;
+        this.map = null;
         this.world = null;
     }
 
@@ -73,7 +75,7 @@ class HuntPage {
                     <p class="lede" style="max-width:720px">Aşağıda adı gizlenmiş bir ülkenin ${first.year}–${last.year} arasındaki dar koridor rotası var. Her nokta bir dönemi, rengi o dönemdeki Leviathan tipini gösterir. ${MAX_GUESSES} tahminde ülkeyi bulun: her yanlış tahmin, başkentler arası uzaklığı, yönü ve iki rotanın benzerliğini söyler; yeni bir ipucu açar.</p>
                 </header>
                 <div class="hunt-grid">
-                    <section class="card card-pad stack" style="gap:12px" aria-labelledby="hunt-route">
+                    <section class="card card-pad stack hunt-route-card" style="gap:12px" aria-labelledby="hunt-route">
                         <div class="card-title"><span id="hunt-route">Gizli ülkenin rotası</span><span class="hint">${first.year}–${last.year} · ${series.length} yıllık veri</span></div>
                         <div class="hunt-chart" data-chart></div>
                         <div class="stack" style="gap:6px">
@@ -85,7 +87,15 @@ class HuntPage {
                             <span class="small muted">Son durum: ${typeChip(last.type, { small: true, label: `${TYPES[last.type].short} · ${last.year}` })}</span>
                         </div>
                     </section>
-                    <aside class="stack" style="gap:14px;min-width:0">
+                    <section class="card card-pad stack hunt-map-card" style="gap:12px" aria-labelledby="hunt-map">
+                        <div class="card-title"><span id="hunt-map" class="row" style="gap:8px">${icon('map', 'icon-sm')}Tahmin haritası</span><span class="hint">sürükleyin, yakınlaştırın; ülkeye dokunup seçin</span></div>
+                        <div class="hunt-map" data-map></div>
+                        <div class="hunt-map-legend tiny faint">
+                            <span class="row" style="gap:6px"><svg width="22" height="8" aria-hidden="true"><path d="M1 4h20" class="hm-legend-ring"/></svg>Gizli ülkenin başkenti bu uzaklıkta</span>
+                            <span class="row" style="gap:6px"><svg width="22" height="8" aria-hidden="true"><path d="M1 4h20" class="hm-legend-arc"/></svg>Yön ipucunun kapsadığı 45°'lik dilim</span>
+                        </div>
+                    </section>
+                    <aside class="stack hunt-side" style="gap:14px;min-width:0">
                         <section class="card card-pad stack" style="gap:12px" aria-labelledby="hunt-guess">
                             <div class="card-title"><span id="hunt-guess">Tahminler</span><span class="hint mono" data-count></span></div>
                             <form class="hunt-form" data-form autocomplete="off">
@@ -136,7 +146,9 @@ class HuntPage {
             this.guess(b.dataset.id);
         });
         input.addEventListener('blur', () => setTimeout(() => this.closeSuggest(), 120));
+        this.map = new HuntMap(this.root.querySelector('[data-map]'), { onPick: (id) => this.guess(id, { fromMap: true }) });
         this.render();
+        this.map.init();
     }
 
     suggest(query) {
@@ -157,7 +169,7 @@ class HuntPage {
         this.root.querySelector('[data-input]')?.setAttribute('aria-expanded', 'false');
     }
 
-    guess(id) {
+    guess(id, { fromMap = false } = {}) {
         if (this.done || this.guesses.includes(id)) return;
         this.guesses.push(id);
         this.persist();
@@ -165,7 +177,8 @@ class HuntPage {
         input.value = '';
         this.closeSuggest();
         this.render();
-        if (!this.done) input.focus();
+        // Haritadan tahminde odağı arama kutusuna taşıma: mobilde klavye açılıp haritayı kapatır
+        if (!this.done && !fromMap) input.focus();
     }
 
     render() {
@@ -206,6 +219,7 @@ class HuntPage {
             : '<p class="tiny faint">İlk yanlış tahminden sonra kıta açılır; sonra bölge, başkentin baş harfi, ülkenin adının baş harfi ve son olarak sınırlar.</p>';
         if (hs.some((h) => h.key === 'shape')) this.drawShape();
 
+        this.map?.update(evals, { target: this.puzzle.id, done: this.done });
         this.renderResult(evals);
     }
 
@@ -283,5 +297,6 @@ class HuntPage {
 
     unmount() {
         this.chart?.destroy();
+        this.map?.destroy();
     }
 }

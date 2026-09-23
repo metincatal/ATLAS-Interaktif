@@ -100,6 +100,34 @@ export function bearing(a, b) {
 
 const COMPASS = ['kuzey', 'kuzeydoğu', 'doğu', 'güneydoğu', 'güney', 'güneybatı', 'batı', 'kuzeybatı'];
 export const compassWord = (deg) => COMPASS[Math.round(deg / 45) % 8];
+/** Açıyı sekiz yönlü pusulanın en yakın yönüne yuvarlar (0, 45, …, 315) */
+export const compassBearing = (deg) => (Math.round(deg / 45) % 8) * 45;
+
+/** a noktasından bearing yönünde km kadar gidilince varılan nokta (büyük çember) */
+export function destination(a, deg, km) {
+    const d = km / 6371;
+    const t = rad(deg);
+    const la = rad(a.lat);
+    const lo = rad(a.lng);
+    const lat = Math.asin(Math.sin(la) * Math.cos(d) + Math.cos(la) * Math.sin(d) * Math.cos(t));
+    const lng = lo + Math.atan2(Math.sin(t) * Math.sin(d) * Math.cos(la), Math.cos(d) - Math.sin(la) * Math.sin(lat));
+    return { lat: (lat * 180) / Math.PI, lng: ((((lng * 180) / Math.PI + 540) % 360) - 180) };
+}
+
+/**
+ * Sekiz yönlü ipucunun kapsadığı yay: tahminin başkentinden km uzaklıkta,
+ * pusula yönünün ±22,5° çevresi. Harita tam açı yerine bu dilimi çizer;
+ * yoksa halka ile yön tek bir noktayı, yani cevabı ele verir. [lng, lat] listesi.
+ */
+export function compassArc(a, deg, km, step = 1.5) {
+    const mid = compassBearing(deg);
+    const out = [];
+    for (let t = mid - 22.5; t <= mid + 22.5 + 1e-9; t += step) {
+        const p = destination(a, t, km);
+        out.push([p.lng, p.lat]);
+    }
+    return out;
+}
 
 /**
  * İki ülkenin koridor rotalarının benzerliği (0–1): ortak yıllarda konumlar

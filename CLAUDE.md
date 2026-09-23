@@ -14,7 +14,7 @@ Acemoğlu & Robinson’un Dar Koridor kuramını 197 ülkenin 1789–2023 verisi
 - `src/web/scripts/pages/` home, theory, atlas (globe.gl 2.46.2, tembel yüklenir), corridor ve üç oyun:
   - `game/` Özgürlük Dengesi (`#/oyun` merkez, `#/oyun/denge` kurulum, `#/oyun/oyna`, `#/oyun/tekrar`); `engine.js` saf mantık, `daily.js` günün senaryosu, `replay-code.js` tekrar kodu
   - `duel/` Kızıl Kraliçe (`#/oyun/kizil-kralice`); `engine.js`, `ai.js` (pişmanlık eşleştirmeli Nash + iki adımlı arama), `cards.js`
-  - `hunt/` Leviathan Avı (`#/oyun/leviathan-avi`); `logic.js` saf mantık
+  - `hunt/` Leviathan Avı (`#/oyun/leviathan-avi`); `logic.js` saf mantık, `map.js` tahmin haritası (yön tam açıyla değil 45°'lik dilimle çizilir, yoksa halka + yön cevabı ele verir)
 - `core/random.js` tohumlu rastlantı: oyun motorları yalnızca bunu kullanır
 - Yayın: `.github/workflows/deploy.yml` yalnızca `src/web` + `data/web` kopyalar
 

@@ -11,9 +11,17 @@
 .hunt-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "route side"
+    "map side";
   gap: 20px;
   align-items: start;
 }
+
+.hunt-route-card { grid-area: route; }
+.hunt-map-card { grid-area: map; }
+.hunt-side { grid-area: side; }
 
 .hunt-chart {
   height: 460px;
@@ -184,9 +192,229 @@
   text-align: right;
 }
 
+/* Tahmin haritası */
+.hunt-map {
+  min-height: 260px;
+}
+
+.hunt-map-stage {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--ink-0);
+  overflow: hidden;
+}
+
+.hunt-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hunt-map-svg:active {
+  cursor: grabbing;
+}
+
+.hm-sphere {
+  fill: #0E131C;
+}
+
+.hm-graticule {
+  fill: none;
+  stroke: rgba(237, 232, 223, 0.05);
+  stroke-width: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.hm-country {
+  fill: #1A202B;
+  stroke: #0A0D12;
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  transition: fill 220ms var(--ease);
+}
+
+.hm-country.is-playable {
+  fill: var(--ink-4);
+  cursor: pointer;
+}
+
+.hm-country.is-playable.is-hover {
+  fill: #343D4E;
+}
+
+.hm-country.is-guessed {
+  fill: #515A6E;
+}
+
+.hm-country.is-near {
+  fill: #2F6B5E;
+}
+
+.hm-country.is-selected {
+  stroke: var(--text-1);
+  stroke-width: 1.6;
+}
+
+.hm-country.is-target,
+.hm-country.is-target.is-hover {
+  fill: var(--accent);
+  stroke: var(--accent-2);
+}
+
+.hm-country.is-locked {
+  cursor: default;
+}
+
+.hm-clues {
+  pointer-events: none;
+}
+
+.hm-wedge {
+  fill: var(--accent);
+  fill-opacity: 0.05;
+  stroke: none;
+}
+
+.hm-ring {
+  fill: none;
+  stroke: var(--accent-line);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.55;
+}
+
+.hm-arc {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.5;
+}
+
+.hm-clue.is-last .hm-ring {
+  opacity: 1;
+}
+
+.hm-clue.is-last .hm-arc {
+  opacity: 1;
+}
+
+.hm-clue.is-last .hm-wedge {
+  fill-opacity: 0.1;
+}
+
+.hm-capital {
+  fill: var(--text-3);
+  stroke: #0A0D12;
+  stroke-width: 0.8;
+  cursor: pointer;
+}
+
+.hm-capital.is-guessed,
+.hm-capital.is-selected,
+.hm-capital.is-hover {
+  fill: var(--text-1);
+}
+
+.hm-capital.is-target {
+  fill: var(--accent-2);
+}
+
+.hm-labels {
+  pointer-events: none;
+}
+
+.hm-label {
+  font-family: var(--font-sans);
+  paint-order: stroke;
+  stroke: rgba(10, 13, 18, 0.85);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.hm-lab-country {
+  fill: var(--text-2);
+  font-weight: 500;
+}
+
+.hm-lab-capital {
+  fill: var(--text-3);
+  font-style: italic;
+  cursor: default;
+}
+
+.hm-label.is-key {
+  fill: var(--text-1);
+}
+
+.hm-label.is-target {
+  fill: var(--accent-2);
+  font-weight: 600;
+}
+
+.hunt-map-tools {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.hunt-map-pick {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 8px 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-pop);
+  animation: page-in 200ms var(--ease);
+}
+
+.hunt-map-pick[hidden] {
+  display: none;
+}
+
+.hunt-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+
+.hm-legend-ring {
+  stroke: var(--accent-line);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.hm-legend-arc {
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
 @media (max-width: 1080px) {
   .hunt-grid {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-template-areas:
+      "route"
+      "side"
+      "map";
   }
 
   .hunt-chart {
