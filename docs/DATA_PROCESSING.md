@@ -1,5 +1,29 @@
 # Veri İşleme Dokümantasyonu
 
+## Web verisi: `scripts/build_web_data.py`
+
+Uygulamanın okuduğu her dosya bu betikle `data/web/` altına üretilir:
+
+| Dosya | İçerik | Boyut |
+|---|---|---|
+| `corridor.json` | 197 ülke × 1789–2023: `[yıl, toplumun gücü, devletin gücü, tip]`, küme merkezleri | ~500 KB |
+| `countries.json` | Türkçe/İngilizce ad, ISO kodu, bölge, etiket noktası, tarihî adlar (Türkçeleştirilmiş), başkentler | ~85 KB |
+| `world.geojson` | Natural Earth 1:110m, koordinatlar sadeleştirilmiş | ~170 KB |
+| `wgi.json` | 6 WGI göstergesi, 1996–2023 | ~180 KB |
+| `vdem/*.json` | 12 V-Dem göstergesi, 1789–2024 (gösterge başına bir dosya) | ~250 KB/adet |
+| `game/*.json` | Oyun başlangıcı için ülke başına güç odakları ve 17 V-Dem değişkeni | ~20 KB/adet |
+| `borders/*.json` | Tarihî sınırlar (Douglas–Peucker ile sadeleştirilmiş çizgiler) | ~200–330 KB/adet |
+| `meta.json` | Gösterge adları, açıklamalar, kaynaklar | ~4 KB |
+
+### Neden yeniden üretildi?
+
+- Eski modern analizde (1996–2023) WGI ile V-Dem **ülke adlarıyla** birleştiriliyordu. “Russian Federation / Russia”, “Egypt, Arab Rep. / Egypt” gibi eşleşmeyen adlar yüzünden Rusya, Mısır, İran, Venezuela, Yemen, Suudi Arabistan, Kuzey Kore vb. seriden düşüyordu. Birleştirme artık **ülke kodlarıyla** (V-Dem `country_text_id`) yapılıyor; yöntem defterdekiyle birebir aynı (yıllık z-puanı → 2 faktörlü varimax faktör analizi). Mevcut ülkelerde eski sonuçlarla korelasyon 0,9999.
+- 1789–1995 konumları tarihî analiz defterinin çıktısından alınır (V-Dem, yıllık faktör analizi).
+- Birleşik seri üzerinde tek bir K-ortalamalar (k = 4) modeli kurulur; böylece her yıl aynı sınıflandırmayla okunur ve grafikteki bölgeler (küme merkezlerinin Voronoi hücreleri) etiketlerle %99,9 tutarlıdır.
+- Canlı sitede hiç çalışmayan WGI ve V-Dem katmanları (ham dosyalar `.gitignore`’daydı) artık küçük, yayımlanabilir dosyalardan geliyor.
+
+---
+
 ## 📊 Veri Kaynakları
 
 ### 1. V-Dem Dataset (v15)

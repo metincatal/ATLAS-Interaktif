@@ -27,11 +27,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # Uygulama yalnızca data/web altındaki hafif dosyaları kullanır;
+      # ham ve ara veriler yayına alınmaz.
       - name: Prepare deploy directory
         run: |
-          mkdir -p _site
+          mkdir -p _site/data
           cp -r src/web/* _site/
-          cp -r data _site/data
+          cp -r data/web _site/data/web
+          touch _site/.nojekyll
+          du -sh _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

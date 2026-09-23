@@ -1,0 +1,217 @@
+/* Dar Koridor Gözlemevi */
+.corridor-page {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 16px;
+  height: calc(100vh - var(--nav-h) - var(--tabbar-h));
+  height: calc(100dvh - var(--nav-h) - var(--tabbar-h));
+  min-height: 620px;
+  padding: 18px var(--gutter) 18px;
+}
+
+.cp-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+}
+
+.cp-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cp-add {
+  width: 280px;
+  cursor: pointer;
+  font-size: 13.5px;
+  text-align: left;
+}
+
+.cp-add:hover {
+  border-color: var(--line-2);
+  color: var(--text-2);
+}
+
+.cp-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
+  min-height: 0;
+}
+
+.cp-chart-card {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  padding: 10px 10px 6px 4px;
+}
+
+.cp-chart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cp-watermark {
+  position: absolute;
+  right: 36px;
+  bottom: 52px;
+  font-size: clamp(64px, 10vw, 150px);
+  line-height: 1;
+  color: var(--text-1);
+  opacity: 0.05;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.cp-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.link-btn {
+  border: none;
+  background: none;
+  color: var(--accent);
+  padding: 0;
+  font-size: 12px;
+}
+
+.dist-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-1);
+  font-size: 13.5px;
+  text-align: left;
+  transition: background var(--dur) var(--ease), opacity var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.dist-row:hover {
+  background: var(--ink-2);
+}
+
+.dist-row[aria-pressed="true"] {
+  border-color: var(--t);
+}
+
+.dist-row .meter {
+  width: 100%;
+  height: 4px;
+}
+
+.cp-tracked {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cp-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 6px 7px 10px;
+  border-radius: 10px;
+  background: var(--ink-2);
+  border-left: 3px solid var(--t, var(--line-2));
+}
+
+.cp-track-name {
+  color: var(--text-1);
+  text-decoration: none;
+  font-size: 13.5px;
+}
+
+.cp-track-name:hover {
+  text-decoration: underline;
+  color: var(--text-1);
+}
+
+.cp-help {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: var(--text-3);
+}
+
+.cp-timeline {
+  border-radius: 16px;
+}
+
+@media (max-width: 1080px) {
+  .corridor-page {
+    height: auto;
+    grid-template-rows: auto auto auto;
+  }
+
+  .cp-main {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-chart-card {
+    height: clamp(380px, 70vh, 640px);
+  }
+
+  .cp-side {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .cp-help {
+    grid-column: 1 / -1;
+  }
+
+  .cp-timeline {
+    position: sticky;
+    bottom: calc(10px + var(--tabbar-h));
+    z-index: var(--z-float);
+    box-shadow: var(--shadow-float);
+  }
+}
+
+@media (max-width: 640px) {
+  .cp-add {
+    width: 100%;
+  }
+
+  .cp-tools {
+    width: 100%;
+  }
+
+  .cp-tools .segmented {
+    width: 100%;
+  }
+
+  .cp-chart-card {
+    height: 440px;
+  }
+
+  .cp-side {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-timeline .speed {
+    display: none;
+  }
+
+  .cp-timeline .timeline-year {
+    font-size: 24px;
+    min-width: 56px;
+  }
+}

@@ -1,87 +1,77 @@
 /**
- * ATLAS İnteraktif - Ana JavaScript Dosyası
- * Daron Acemoğlu Teorileri İnteraktif Görselleştirme
- * 
- * Tüm modülleri yükler ve uygulamayı başlatır
+ * ATLAS İnteraktif — giriş noktası
  */
 
-// Core modüller
-import { setupNavigation } from './core/navigation.js';
+import { startRouter, navigate, parseHash } from './core/router.js';
+import { icon, logoMark } from './core/icons.js';
+import { loadCore } from './core/data.js';
+import { openSearch, getSearchHandler } from './components/search.js';
+import { initAssistant } from './components/assistant.js';
+import { toast } from './components/toast.js';
 
-// Panel ve Chat
-import { setupPanelAndChat } from './modules/panel/panel-manager.js';
-import { setupChat } from './modules/chat/chat-manager.js';
+const NAV = [
+    { key: 'kuram', label: 'Kuram', icon: 'book', path: '/kuram' },
+    { key: 'atlas', label: 'Atlas', icon: 'globe', path: '/atlas' },
+    { key: 'koridor', label: 'Koridor', icon: 'corridor', path: '/koridor' },
+    { key: 'oyun', label: 'Oyun', icon: 'scale', path: '/oyun' },
+];
 
-// Dar Koridor
-import { loadDarKoridorData, loadHistoricalCorridorData } from './modules/corridor/corridor-data.js';
-import { setupVdemExperience } from './modules/vdem/vdem-manager.js';
+function renderShell() {
+    const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+    document.querySelector('.topnav').innerHTML = `
+        <a class="brand" href="#/" aria-label="ATLAS İnteraktif ana sayfa">${logoMark(28)}<span class="brand-word">ATLAS</span><span class="brand-sub">İnteraktif</span></a>
+        <nav class="mainnav" aria-label="Ana gezinme">
+            ${NAV.map((n) => `<a href="#${n.path}" data-nav="${n.key}">${icon(n.icon)}${n.label}</a>`).join('')}
+        </nav>
+        <div class="nav-actions">
+            <button type="button" class="search-trigger" data-search-trigger aria-label="Ülke ara">${icon('search', 'icon-sm')}<span class="label-text">Ülke ara</span><kbd>${isMac ? '⌘' : 'Ctrl'} K</kbd></button>
+            <button type="button" class="icon-btn" data-assistant-trigger aria-label="Asistanı aç" aria-expanded="false">${icon('chat')}</button>
+        </div>`;
+    document.querySelector('.tabbar').innerHTML = [{ key: 'home', label: 'Giriş', icon: 'home', path: '/' }, ...NAV]
+        .map((n) => `<a href="#${n.path}" data-nav="${n.key}">${icon(n.icon)}<span>${n.label}</span></a>`)
+        .join('');
+}
 
-// WGI
-import { setupWgiControls } from './modules/wgi/wgi-manager.js';
+function runSearch() {
+    openSearch({
+        onPick: (id) => {
+            const handler = getSearchHandler();
+            if (handler) handler(id);
+            else {
+                const { params } = parseHash();
+                navigate('/atlas', { c: id, y: params.y, l: params.l });
+            }
+        },
+    });
+}
 
-// Historical Maps
-import {
-    loadHistoricalMapsData,
-    enableHistoricalMaps,
-    disableHistoricalMaps,
-    renderTimelineMilestones
-} from './modules/historical/historical-maps.js';
+function bindShortcuts() {
+    document.querySelector('[data-search-trigger]').addEventListener('click', runSearch);
+    document.addEventListener('keydown', (e) => {
+        const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            runSearch();
+        } else if (e.key === '/' && !typing) {
+            e.preventDefault();
+            runSearch();
+        }
+    });
+}
 
-/**
- * Uygulama başlatma
- */
-window.addEventListener('DOMContentLoaded', async () => {
-    console.log('%cATLAS İnteraktif - Daron Acemoğlu', 'color: #4CAF50; font-size: 20px; font-weight: bold;');
-    console.log('Modüler Mimari ile Yeniden Yapılandırıldı');
-    console.log('Özellikler:');
-    console.log('- Teori sayfası ile 3D harita arasında geçiş');
-    console.log('- Otomatik dönüş (etkileşime kadar)');
-    console.log('- Fare ile döndürme');
-    console.log('- Tekerlek ile zoom');
-    console.log('- Ülkelere tıklama');
+function boot() {
+    renderShell();
+    bindShortcuts();
+    initAssistant(document.querySelector('[data-assistant-trigger]'));
 
-    try {
-        console.log('1️⃣ Sayfa navigasyonu kuruluyor...');
-        setupNavigation();
-
-        console.log('2️⃣ Dar Koridor verileri yükleniyor...');
-        await loadDarKoridorData();
-        await loadHistoricalCorridorData();
-
-        console.log('3️⃣ Panel ve Chat sistemi kuruluyor...');
-        setupPanelAndChat();
-        setupChat();
-
-        console.log('4️⃣ WGI kontrolleri kuruluyor...');
-        setupWgiControls();
-
-        console.log('5️⃣ V-Dem deneyimi hazırlanıyor...');
-        setupVdemExperience();
-
-        console.log('5️⃣ Historical Maps verileri yükleniyor...');
-        await loadHistoricalMapsData();
-
-        console.log('✓ ATLAS İnteraktif başlatıldı');
-        console.log('📜 Historical Maps: 1789-2024 arası tarihi sınırlar hazır');
-
-    } catch (error) {
-        console.error('❌ Başlatma hatası:', error);
-        console.error('Hata detayı:', error.message);
-        console.error('Stack trace:', error.stack);
-        alert('Uygulama başlatılırken bir hata oluştu:\n' + error.message + '\n\nKonsolda detayları görebilirsiniz.');
+    if (!window.d3) {
+        toast('Grafik kütüphanesi (D3) yüklenemedi. İnternet bağlantınızı kontrol edip sayfayı yenileyin.', { type: 'error', timeout: 10000 });
     }
-});
+    loadCore().catch((error) => {
+        console.error(error);
+        toast(`Veriler yüklenemedi: ${error.message}`, { type: 'error', timeout: 10000 });
+    });
+    startRouter(document.getElementById('app'));
+}
 
-/**
- * NOT: Bu modüler yapı kademeli olarak tamamlanacaktır.
- * Şu anda core fonksiyonlar çalışır durumda.
- * 
- * Tamamlanacak modüller:
- * - WGI (Worldwide Governance Indicators) tam implementasyonu
- * - Dar Koridor interaktif grafik özellikleri
- * - AI Chat tam implementasyonu
- * - Flat Map (2D harita) özellikleri
- * 
- * Geçici çözüm: Eski script.js dosyası yedek olarak saklanacak
- * ve eksik özellikler oradan çekilebilir.
- */
+boot();

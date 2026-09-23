@@ -1,0 +1,390 @@
+/* Kuram */
+.theory {
+  max-width: 1120px;
+  padding-top: 56px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.th-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.th-hero h1 {
+  max-width: 980px;
+}
+
+.th-hero .lede {
+  max-width: 780px;
+}
+
+.th-hero .lede strong {
+  color: var(--text-1);
+  font-weight: 500;
+}
+
+.th-books {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 980px;
+}
+
+.th-book {
+  display: flex;
+  gap: 18px;
+  padding: 18px;
+}
+
+.th-cover {
+  width: 64px;
+  height: 92px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  border-radius: 4px;
+  background: linear-gradient(160deg, #2A3242, #171C26);
+  border: 1px solid var(--line-2);
+  font-size: 10.5px;
+  line-height: 1.1;
+  color: var(--text-2);
+}
+
+.th-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.th-toc a {
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.th-toc a:hover {
+  background: var(--ink-2);
+  color: var(--text-1);
+}
+
+.th-section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+
+.th-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.th-rule {
+  width: 36px;
+  height: 1px;
+  background: var(--line-2);
+}
+
+.th-p {
+  max-width: 780px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.th-p em {
+  color: var(--text-1);
+}
+
+.th-p strong {
+  color: var(--text-1);
+  font-weight: 500;
+}
+
+.th-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.th-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 26px;
+}
+
+.th-col ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.th-col li {
+  display: flex;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.th-col li .icon {
+  color: var(--t);
+  margin-top: 2px;
+}
+
+.th-concepts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.th-concept {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 22px;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+}
+
+.th-concept-icon {
+  color: var(--accent);
+}
+
+.th-corridor {
+  display: grid;
+  grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+  gap: 44px;
+  align-items: start;
+}
+
+.th-diagram {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+}
+
+.th-diagram svg {
+  width: 100%;
+  height: auto;
+  font-family: var(--font-sans);
+}
+
+.th-diagram .dg-region {
+  transition: opacity 240ms var(--ease);
+}
+
+.th-diagram svg:not([data-active=""]) .dg-region {
+  opacity: 0.25;
+}
+
+.th-diagram svg[data-active="Shackled"] [data-region="Shackled"],
+.th-diagram svg[data-active="Despotic"] [data-region="Despotic"],
+.th-diagram svg[data-active="Paper"] [data-region="Paper"],
+.th-diagram svg[data-active="Absent"] [data-region="Absent"] {
+  opacity: 1;
+}
+
+.th-diagram svg[data-active="Despotic"] [data-region="Despotic"] path,
+.th-diagram svg[data-active="Absent"] [data-region="Absent"] path,
+.th-diagram svg[data-active="Paper"] [data-region="Paper"] ellipse {
+  fill-opacity: 0.22;
+}
+
+.th-types {
+  display: flex;
+  flex-direction: column;
+}
+
+.th-type {
+  display: flex;
+  gap: 16px;
+  padding: 18px 12px 18px 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 4px;
+  outline: none;
+  transition: background var(--dur) var(--ease);
+}
+
+.th-type:first-child {
+  padding-top: 4px;
+}
+
+.th-type.active,
+.th-type:focus-visible {
+  background: linear-gradient(90deg, var(--t-bg), transparent 70%);
+}
+
+.th-type-bar {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--t);
+  flex-shrink: 0;
+}
+
+.th-examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+
+.th-ex {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px 3px 4px;
+  border-radius: 999px;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  color: var(--text-1);
+  font-size: 12.5px;
+  text-decoration: none;
+}
+
+.th-ex:hover {
+  border-color: var(--line-2);
+  color: var(--text-1);
+}
+
+.th-ex .flag {
+  width: 20px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.th-redqueen {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 28px 32px;
+  background: linear-gradient(100deg, rgba(61, 190, 156, 0.09), var(--ink-1) 55%);
+}
+
+.rq-icon {
+  color: var(--shackled);
+  padding-top: 4px;
+}
+
+.th-steps {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.th-step {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.th-step h3 {
+  font-size: 15.5px;
+  font-weight: 600;
+}
+
+.th-step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+
+.th-caveat {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  max-width: 1000px;
+  padding: 18px 20px;
+  border-radius: var(--radius-l);
+  border: 1px solid rgba(226, 167, 62, 0.35);
+  background: rgba(226, 167, 62, 0.06);
+  color: var(--paper);
+}
+
+.th-caveat strong {
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+.th-cta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.th-sources ol {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.th-sources {
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 980px) {
+  .th-corridor {
+    grid-template-columns: 1fr;
+  }
+
+  .th-diagram {
+    position: static;
+    max-width: 560px;
+  }
+
+  .th-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .th-concepts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .theory {
+    padding-top: 32px;
+    gap: 64px;
+  }
+
+  .th-books,
+  .th-compare,
+  .th-steps,
+  .th-cta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .th-redqueen {
+    flex-direction: column;
+    padding: 22px;
+  }
+}

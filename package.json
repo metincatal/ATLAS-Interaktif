@@ -1,37 +1,32 @@
 {
   "name": "atlas-interaktif",
-  "version": "2.0.0",
-  "description": "Daron Acemoğlu Teorileri İnteraktif Görselleştirme Platformu",
-  "main": "src/web/index.html",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Daron Acemoğlu ve James A. Robinson'un Dar Koridor kuramını 197 ülkenin 1789–2023 verisiyle keşfeden interaktif atlas, gözlemevi ve strateji oyunu",
+  "type": "module",
   "scripts": {
-    "dev": "python3 -m http.server 8000",
-    "start": "python3 -m http.server 8000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "python3 scripts/serve.py 8000 --open",
+    "dev": "python3 scripts/serve.py 8000",
+    "data": "python3 scripts/build_web_data.py",
+    "test": "node --test tests/*.test.mjs"
   },
   "keywords": [
     "daron-acemoglu",
+    "narrow-corridor",
+    "why-nations-fail",
     "political-economy",
     "data-visualization",
-    "interactive",
-    "globe",
-    "narrow-corridor",
-    "why-nations-fail"
+    "v-dem",
+    "wgi"
   ],
-  "author": "ATLAS Team",
+  "author": "Metin Çatal",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kullanici_adi/ATLAS-Interaktif.git"
+    "url": "https://github.com/metincatal/ATLAS-Interaktif.git"
   },
-  "bugs": {
-    "url": "https://github.com/kullanici_adi/ATLAS-Interaktif/issues"
-  },
-  "homepage": "https://github.com/kullanici_adi/ATLAS-Interaktif#readme",
-  "dependencies": {},
-  "devDependencies": {},
+  "homepage": "https://metincatal.github.io/ATLAS-Interaktif/",
   "engines": {
-    "node": ">=14.0.0",
     "python": ">=3.8"
   }
 }
-

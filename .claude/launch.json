@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "atlas",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["scripts/serve.py", "8001"],
+      "port": 8001
+    }
+  ]
+}

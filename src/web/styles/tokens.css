@@ -1,0 +1,87 @@
+/* ATLAS İnteraktif — tasarım jetonları */
+:root {
+  color-scheme: dark;
+
+  /* Zemin: mürekkep tonları */
+  --ink-0: #0A0D12;
+  --ink-1: #10141B;
+  --ink-2: #161B24;
+  --ink-3: #1E2430;
+  --ink-4: #272E3B;
+  --glass: rgba(16, 20, 27, 0.86);
+
+  /* Çizgiler */
+  --line-soft: #1B212B;
+  --line: #262D3A;
+  --line-2: #333B4A;
+
+  /* Metin: sıcak fildişi */
+  --text-1: #EDE8DF;
+  --text-2: #B4AEA4;
+  --text-3: #8A847A;
+
+  /* Vurgu */
+  --accent: #86AEFF;
+  --accent-2: #B7CEFF;
+  --accent-soft: rgba(134, 174, 255, 0.10);
+  --accent-line: rgba(134, 174, 255, 0.55);
+
+  /* Leviathan tipleri */
+  --shackled: #3DBE9C;
+  --despotic: #E8604F;
+  --paper: #E2A73E;
+  --absent: #A08AF4;
+  --shackled-text: #72D8BB;
+  --despotic-text: #F4907F;
+  --paper-text: #EFC36F;
+  --absent-text: #BDAEF8;
+  --shackled-bg: rgba(61, 190, 156, 0.14);
+  --despotic-bg: rgba(232, 96, 79, 0.15);
+  --paper-bg: rgba(226, 167, 62, 0.15);
+  --absent-bg: rgba(160, 138, 244, 0.16);
+  --nodata: #2A303B;
+
+  --positive: #72D8BB;
+  --negative: #F4907F;
+  --warning: #EFC36F;
+
+  /* Yazı */
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Biçim */
+  --radius-xs: 6px;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+  --radius-xl: 22px;
+  --shadow-float: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --shadow-pop: 0 12px 32px rgba(0, 0, 0, 0.5);
+
+  --nav-h: 64px;
+  --tabbar-h: 0px;
+  --gutter: 24px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 220ms;
+
+  --z-float: 10;
+  --z-nav: 40;
+  --z-drawer: 50;
+  --z-overlay: 80;
+  --z-toast: 100;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --nav-h: 56px;
+    --tabbar-h: 64px;
+    --gutter: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+  }
+}

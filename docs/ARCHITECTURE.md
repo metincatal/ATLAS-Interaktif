@@ -1,240 +1,55 @@
-# ATLAS İnteraktif - Mimari Dokümantasyonu
+# ATLAS İnteraktif — Mimari
 
-## 📐 Genel Mimari
+Sürüm 3 ile uygulama baştan yazıldı. Bu belge yeni yapıyı ve temel kararları özetler.
 
-ATLAS İnteraktif, modüler ve ölçeklenebilir bir mimari ile tasarlanmıştır. Proje üç ana katmandan oluşur:
+## İlkeler
 
-1. **Presentation Layer** (Sunum Katmanı): Web UI
-2. **Business Logic Layer** (İş Mantığı Katmanı): JavaScript modülleri
-3. **Data Layer** (Veri Katmanı): JSON ve CSV dosyaları
+- **Derleme adımı yok.** Tarayıcıya doğrudan ES modülleri gider; GitHub Pages’e `src/web` ve `data/web` kopyalanır.
+- **Veri önce.** Uygulamanın gösterdiği her şey `data/web/` altındaki küçük JSON dosyalarından gelir. Eski sürümdeki 116 MB’lık V-Dem JSON’u ve 30 MB’lık oyun verisi, gösterge ve ülke başına küçük dosyalara bölündü; hepsi ihtiyaç anında yüklenir.
+- **Tek sınıflandırma.** Koridor grafiği, atlas, profil ve oyun aynı küme merkezlerini kullanır. Grafikteki bölgeler, küme merkezlerinin Voronoi hücreleridir; bu yüzden bir noktanın rengi ile içinde durduğu bölge her zaman tutarlıdır (eski sürümde nokta renkleri ile arka plandaki görsel çelişiyordu).
+- **Çevrimdışı çalışan oyun.** Oyun artık yerel bir yapay zekâya bağlı değildir; kuramla uyumlu, sınanmış bir kurallar motoruyla çalışır.
 
-## 🗂️ Klasör Yapısı
+## Katmanlar
 
-### `/src/web/` - Web Uygulaması
-
-#### `styles/` - CSS Modülleri
 ```
-styles/
-├── main.css                 # Ana CSS (tüm modülleri import eder)
-├── base/                    # Temel stiller
-│   ├── variables.css       # CSS değişkenleri
-│   ├── reset.css           # CSS reset
-│   └── typography.css      # Tipografi
-├── layout/                  # Sayfa layout'ları
-│   ├── page-navigation.css
-│   ├── header.css
-│   └── responsive.css
-├── components/              # Tekrar kullanılabilir bileşenler
-│   ├── globe.css
-│   ├── flatmap.css
-│   ├── legend.css
-│   └── ...
-├── pages/                   # Sayfa-özel stiller
-│   └── theory-page.css
-├── modules/                 # Büyük modüller
-│   ├── panel.css
-│   ├── corridor-graphic.css
-│   └── chat.css
-└── animations/              # Animasyonlar
-    └── keyframes.css
+index.html ─ main.js ─ core/router.js ──┬─ pages/home.js
+                                        ├─ pages/theory.js
+                                        ├─ pages/atlas.js ─ components/country-profile.js
+                                        ├─ pages/corridor.js
+                                        └─ pages/game/{setup,play}.js ─ engine.js, policies.js, events.js
 ```
 
-#### `scripts/` - JavaScript Modülleri
-```
-scripts/
-├── main.js                  # Ana entry point
-├── config/                  # Yapılandırma
-│   ├── constants.js        # Sabitler
-│   └── api-config.js       # API yapılandırması
-├── core/                    # Temel fonksiyonlar
-│   ├── state.js            # Global state yönetimi
-│   ├── globe.js            # Globe yönetimi
-│   ├── navigation.js       # Sayfa navigasyonu
-│   ├── interaction.js      # Kullanıcı etkileşimleri
-│   ├── globe-handlers.js   # Globe event handlers
-│   └── polygon-labels.js   # Tooltip'ler
-├── modules/                 # Özellik modülleri
-│   ├── wgi/                # WGI göstergeleri
-│   ├── corridor/           # Dar Koridor analizi
-│   ├── panel/              # Sağ panel
-│   └── chat/               # AI Chat
-└── utils/                   # Yardımcı fonksiyonlar
-    ├── color-utils.js
-    ├── data-helpers.js
-    └── geometry.js
-```
+### core/
+| Modül | Görev |
+|---|---|
+| `router.js` | Hash tabanlı yönlendirme (`#/atlas?c=TUR&y=2023`). Sayfalar `mount(root, params)` ile açılır, `unmount()` ile temizlenir; yalnızca parametre değişirse `update(params)` çağrılır. |
+| `data.js` | Veri yükleme ve önbellek; `corridorAt`, `corridorYear`, `typeCounts`, `corridorGap`, `wgiAt`, `vdemAt`, arama. Veri olmayan ara yıllarda (ör. 1997) en yakın önceki yıl kullanılır. |
+| `format.js` | Türkçe sayı biçimi ve ek uyumu (`2003’te`, `%64’ünden`, `Türkiye’nin`). |
+| `narrative.js` | Seçilen ülke ve yıl için veriden cümle üretir (eski sürümde yalnızca iki ülke için sabit metin vardı). |
+| `theory.js` | Dört Leviathan tipinin adları, renkleri, açıklamaları. |
+| `icons.js` | Tek tip çizgi ikon seti (24×24, 1,6 kalınlık). Arayüzde emoji kullanılmaz. |
+| `store.js` | Olay veriyolu, tarayıcı depolaması (hatalara dayanıklı), asistan bağlamı. |
 
-## 🔄 Veri Akışı
+### components/
+`corridor-chart.js` (D3; tam ve mini sürüm, izler, etiket çakışma önleme, Delaunay tabanlı yakın nokta seçimi), `timeline.js`, `country-profile.js`, `search.js` (⌘K paleti), `assistant.js`, `sparkline.js`, `tooltip.js`, `toast.js`.
 
-### 1. Uygulama Başlatma
-```
-DOMContentLoaded
-    ↓
-setupNavigation()
-    ↓
-loadDarKoridorData()
-    ↓
-setupPanelAndChat()
-    ↓
-Globe başlatma (ilk geçişte)
-```
+### Oyun motoru (`pages/game/engine.js`)
+Saf mantıktır; DOM’a dokunmaz, Node’da test edilir. Her yıl:
+1. Gündem olayı (varsa) seçilir, etkisi hemen uygulanır; riskli seçenekler olasılığa bağlıdır.
+2. En fazla üç politika uygulanır; değerler yükseldikçe azalan getiri vardır. Aynı yıl devleti ve toplumu birlikte güçlendirmek %12 “Kızıl Kraliçe primi” getirir.
+3. Denge koridor eksenine (Kâğıttan → Zincirlenmiş merkezleri) dik uzaklıkla ölçülür. Denge bozulursa geride kalan taraf daha da geriler; koridorda reform yapılmazsa ülke yavaşça dışarı kayar.
+4. Konum her yıl başlangıç noktasına doğru hafifçe çekilir (kurumsal süreklilik) ve küçük bir rastlantı eklenir.
+5. Güç odaklarının memnuniyeti zamanla ortalamaya döner; siyasi sermaye memnuniyete bağlı yenilenir.
+6. Etkili bir odak çok memnuniyetsizse ertesi yıl zorunlu kriz gelir (darbe, ayaklanma, sermaye kaçışı, yaptırım, dinî tepki). Devletin gücü −2,6’nın altına düşerse devlet çöker.
 
-### 2. Ülke Seçimi Akışı
-```
-Kullanıcı ülkeye tıklar
-    ↓
-handleCountryClick()
-    ↓
-getPolygonCenter() → Kamera odakla
-    ↓
-openCountryPanel() → Panel aç
-    ↓
-getCountryAnalysesText() → Analiz getir
-    ↓
-getCountryDataForYear() → Dar Koridor verisi getir
-    ↓
-updateDotPosition() → Grafik güncelle
-```
+Denge, geliştirme sırasında yüzlerce simüle oyunla ayarlandı ve `tests/engine.test.mjs` ile korunuyor: makul bir reform stratejisi zor başlangıçlardan (ör. Türkiye 2016, Rusya 2012) çoğunlukla B–C notu alır; baskı stratejisi her zaman en düşük notu alır.
 
-### 3. State Yönetimi
-Global state, merkezi bir `state.js` modülünde yönetilir:
+## Stil sistemi
 
-```javascript
-state = {
-    globe,              // Globe instance
-    countriesData,      // GeoJSON verileri
-    wgiEnabled,         // WGI aktif mi?
-    darKoridorData,     // Dar Koridor verileri
-    currentCountryName, // Seçili ülke
-    // ... diğer state'ler
-}
-```
+`styles/tokens.css` renk, yazı ve boşluk jetonlarını tanımlar. Yazı tipleri: Newsreader (başlıklar), IBM Plex Sans (arayüz), IBM Plex Mono (sayılar). Leviathan renkleri: Zincirlenmiş `#3DBE9C`, Despotik `#E8604F`, Kâğıttan `#E2A73E`, Namevcut `#A08AF4`.
 
-## 🎨 CSS Mimarisi
+## Erişilebilirlik ve mobil
 
-### CSS Değişkenleri Sistemi
-Tüm renkler, spacing ve diğer değerler `variables.css`'de tanımlı:
-
-```css
-:root {
-    --primary-blue: #1e3c72;
-    --spacing-md: 20px;
-    --radius-lg: 20px;
-    /* ... */
-}
-```
-
-### BEM Metodolojisi
-CSS sınıf isimlendirmelerinde BEM (Block Element Modifier) benzeri yaklaşım:
-
-```css
-.corridor-graphic           /* Block */
-.corridor-graphic__dot      /* Element */
-.corridor-graphic--active   /* Modifier */
-```
-
-### Modüler Import
-`main.css` tüm modülleri import eder:
-
-```css
-@import './base/variables.css';
-@import './components/globe.css';
-/* ... */
-```
-
-## 🔌 API Entegrasyonları
-
-### 1. External APIs
-- **Natural Earth GeoJSON**: Ülke sınırları
-- **Flagpedia**: Ülke bayrakları
-- **Ollama**: AI Chat (lokal)
-
-### 2. Data Files
-- **V-Dem CSV**: `data/raw/V-Dem-CY-Full+Others-v15.csv`
-- **WGI Dataset**: `data/raw/wgidataset.csv`
-- **Dar Koridor JSON**: `data/processed/v2_1/*.json`
-
-## 🧩 Modül Bağımlılıkları
-
-### Core Bağımlılıklar
-```
-main.js
-  ├── navigation.js
-  │     └── globe.js
-  │           ├── state.js
-  │           ├── interaction.js
-  │           └── globe-handlers.js
-  ├── panel-manager.js
-  │     ├── state.js
-  │     ├── country-analyses.js
-  │     └── data-helpers.js
-  └── corridor-data.js
-        └── state.js
-```
-
-### External Libraries
-- **Globe.gl**: 3D globe rendering
-- **D3.js**: Data visualization
-- **PapaParse**: CSV parsing
-
-## 🔐 Güvenlik
-
-- **XSS Protection**: User input sanitization
-- **CORS**: Appropriate CORS headers
-- **CSP**: Content Security Policy (önerilir)
-
-## 📊 Performans Optimizasyonu
-
-### 1. Code Splitting
-Modüler yapı sayesinde kod parçalama:
-- Core modüller her zaman yüklenir
-- Feature modüller lazy load edilebilir
-
-### 2. Asset Optimization
-- CSS: Modüler import sistemi
-- JS: ES6 modules
-- Images: Optimize edilmiş görseller
-
-### 3. Caching Strategy
-- Static assets: Long-term caching
-- API responses: Short-term caching
-
-## 🧪 Test Stratejisi
-
-### Unit Tests
-```javascript
-// utils/data-helpers.test.js
-test('getCountryDataForYear returns correct data', () => {
-    // ...
-});
-```
-
-### Integration Tests
-```javascript
-// core/globe.test.js
-test('globe initializes correctly', () => {
-    // ...
-});
-```
-
-## 🔮 Gelecek Geliştirmeler
-
-1. **TypeScript Migration**: Tip güvenliği için
-2. **Build System**: Vite veya Webpack ile
-3. **State Management**: Redux veya Zustand
-4. **Testing**: Jest + Testing Library
-5. **CI/CD**: GitHub Actions
-6. **PWA**: Progressive Web App özellikleri
-
-## 📚 Kaynaklar
-
-- [Globe.gl Documentation](https://github.com/vasturiano/globe.gl)
-- [D3.js Documentation](https://d3js.org/)
-- [ES6 Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-- [CSS Architecture](https://www.smashingmagazine.com/2018/05/guide-css-layout/)
-
----
-
-**Son Güncelleme**: 2025-11-15  
-**Versiyon**: 2.0.0 (Modüler Refactor)
-
+- Gerçek `button`, `a`, `input` öğeleri; odak halkaları; `aria` etiketleri; `prefers-reduced-motion` desteği.
+- 760 px altında üst gezinme yerini alt sekme çubuğuna bırakır; Atlas panelleri alttan açılan sayfalara dönüşür.
+- WebGL yoksa Atlas otomatik olarak düz haritaya geçer.
