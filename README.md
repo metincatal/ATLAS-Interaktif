@@ -14,11 +14,23 @@ Daron Acemoğlu ve James A. Robinson’un *Ulusların Düşüşü* (2012) ve *Da
 |---|---|
 | **Atlas** | 3B küre ya da düz harita. 21 katman: Leviathan tipi, devletin ve toplumun gücü, Dünya Bankası WGI’nın 6 yönetişim göstergesi, V-Dem’in 12 demokrasi göstergesi. Zaman çizelgesiyle 1789’dan bugüne oynatılabilir; istenirse tarihî sınırlar (1783–2019) üst üste bindirilir. Bir ülkeye tıklayınca veriden üretilen bir profil açılır. |
 | **Dar Koridor Gözlemevi** | Tüm ülkeler devlet–toplum düzleminde. Zamanı oynatın, en fazla 8 ülkenin rotasını izleyin, tiplere göre süzün. |
-| **Özgürlük Dengesi** | Tamamen tarayıcıda çalışan strateji oyunu. Bir ülkeyi seçin, her yıl politika kartları ve gündem olaylarıyla onu koridora taşımaya çalışın. Oyun sonunda kendi rotanız ülkenin gerçek tarihiyle karşılaştırılır. |
+| **Oyunlar** | Üç oyun, hepsi tamamen tarayıcıda (sunucu yok). Ayrıntılar aşağıda. |
 | **Kuram** | Kapsayıcı ve sömürücü kurumlar, dört Leviathan, Kızıl Kraliçe etkisi ve uygulamanın yöntemi. |
 | **Asistan** | Kuramı ve seçili ülkeyi açıklayan hazır yanıtlar; isteğe bağlı olarak yerel bir yapay zekâ modeli (Ollama ya da OpenAI uyumlu uç nokta) bağlanabilir. |
 
 Her görünümün adresi paylaşılabilir: ör. `#/atlas?c=TUR&y=1950&l=vdem:v2x_libdem` ya da `#/koridor?c=TUR,RUS,NOR&y=1990`.
+
+### Oyunlar (`#/oyun`)
+
+| Oyun | Ne yapar? |
+|---|---|
+| **Özgürlük Dengesi** (`#/oyun/denge`) | Tek oyunculu strateji. Gerçek bir ülkeyi gerçek bir yıldan devralın; her yıl politika kartları ve gündem olaylarıyla onu koridora taşıyın. Koridorda yerinde saymak aşınma demektir (Kızıl Kraliçe), aynı yıl çok reform yapmak kaybedenlerin tepkisini büyütür, memnuniyetsiz güç odakları olasılığa bağlı kriz çıkarır, bazı kararların etkisi yıllara yayılır. Puan, aynı yıllarda ülkenin **gerçek tarihinin** aynı formülle aldığı puanla karşılaştırılır. |
+| **Günün senaryosu** | Herkes aynı gün aynı ülke, yıl ve tohumla oynar (gün İstanbul saatine göre değişir); ilk deneme resmî sonuçtur. Sonuç, yıl yıl koridor şeridi ve **tekrar bağlantısıyla** paylaşılır. |
+| **Tekrar kodu** (`#/oyun/tekrar?k=…`) | Motor tohumlu olduğu için bir oyunun bütün hamleleri tek satırlık bir koda sığar. Kod açılınca oyun baştan oynatılır, puan yeniden hesaplanır ve doğrulanır; oyun yıl yıl izlenebilir. |
+| **Kızıl Kraliçe** (`#/oyun/kizil-kralice`) | İki oyunculu düello: biri Devlet, biri Toplum. Her tur iki taraf da gizlice bir duruş (İnşa / Baskı / Uzlaşı ya da Örgütlen / Direnç / Katıl) ve isterse bir özel kart seçer; hamleler birlikte açılır. Puan = o turun refahı × dengeden alınan pay; refah en çok koridorda birikir. Aynı cihazda iki kişi ya da üç seviyeli yapay zekâya karşı oynanır. |
+| **Leviathan Avı** (`#/oyun/leviathan-avi`) | Günlük bulmaca: adı gizli bir ülkenin koridor rotasından ülkeyi altı tahminde bulun. Her tahmin başkentler arası uzaklığı, yönü ve iki rotanın benzerliğini söyler; yanlış tahminler ipucu açar. |
+
+Kızıl Kraliçe'nin kuralları bot simülasyonlarıyla dengelendi: yapay zekâ rastgele oyuncuyu açık farkla yener, seçkin senaryolarda iki taraf da kazanabilir. Kurallar değişince senaryo dengeleri `node scripts/duel_balance.mjs` ile yeniden ölçülür.
 
 ---
 
@@ -40,7 +52,7 @@ Bu komut `python3 scripts/serve.py` ile yerel bir sunucu başlatır ve `http://l
 npm test
 ```
 
-Node’un yerleşik test çalıştırıcısıyla Türkçe dil eklerini, veri tutarlılığını ve oyun motorunu sınar.
+Node’un yerleşik test çalıştırıcısıyla Türkçe dil eklerini, veri tutarlılığını, üç oyunun motorunu, tekrar kodlarının birebir yeniden üretimini ve düellonun dengesini sınar.
 
 ### Yapay zekâ (isteğe bağlı)
 
@@ -93,11 +105,15 @@ src/web/                 Tek sayfalık uygulama (derleme yok, ES modülleri)
     main.js              Başlatma, gezinme, kısayollar
     core/                Yönlendirici, veri katmanı, biçimlendirme, ikonlar, kuram, anlatı
     components/          Koridor grafiği, zaman çizelgesi, ülke profili, arama, asistan…
-    pages/               home · theory · atlas · corridor · game/(setup, play, engine, policies, events)
+    pages/               home · theory · atlas · corridor
+      game/              Özgürlük Dengesi: hub, setup, play, report, replay, engine, policies, events, daily, replay-code
+      duel/              Kızıl Kraliçe: page, engine, ai, cards, scenarios
+      hunt/              Leviathan Avı: page, logic
 data/web/                Uygulamanın okuduğu hafif veri (≈ 8 MB)
 data/processed/          Analiz defterlerinin çıktıları (veri hattının girdisi)
 scripts/build_web_data.py  Veri hattı
 scripts/serve.py         Yerel geliştirme sunucusu
+scripts/duel_balance.mjs Kızıl Kraliçe senaryolarının dengesini ölçer
 src/analysis/notebooks/  Özgün analiz defterleri
 tests/                   Birim testleri
 ```

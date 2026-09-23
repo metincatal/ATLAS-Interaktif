@@ -25,7 +25,7 @@ export async function mount(root) {
         <div class="home-copy">
             <div class="row eyebrow-row"><span class="dot-accent"></span><span class="eyebrow">Acemoğlu &amp; Robinson · 2024 Nobel Ekonomi Ödülü</span></div>
             <h1 class="display-1">Özgürlük, devlet ile toplum arasındaki <em class="accent-em">dar bir koridorda</em> yaşar.</h1>
-            <p class="lede">ATLAS İnteraktif, <em>Ulusların Düşüşü</em> ve <em>Dar Koridor</em>’un fikirlerini ${nCountries} ülkenin ${db.lastYear - db.firstYear + 1} yıllık verisiyle keşfetmenizi sağlar. Haritada gezinin, ülkelerin koridordaki yolculuğunu izleyin, sonra bir ülkeyi kendiniz yönetin.</p>
+            <p class="lede">ATLAS İnteraktif, <em>Ulusların Düşüşü</em> ve <em>Dar Koridor</em>’un fikirlerini ${nCountries} ülkenin ${db.lastYear - db.firstYear + 1} yıllık verisiyle keşfetmenizi sağlar. Haritada gezinin, ülkelerin koridordaki yolculuğunu izleyin, sonra oyunlarda kuramı kendiniz deneyin.</p>
             <div class="row home-ctas">
                 <a class="btn btn-primary btn-lg" href="#/atlas">Atlası aç${icon('arrowR')}</a>
                 <a class="btn btn-secondary btn-lg" href="#/kuram">${icon('book')}Kuramı keşfet</a>
@@ -52,7 +52,7 @@ export async function mount(root) {
     <section class="container home-sections" aria-label="Bölümler">
         ${entry('globe', 'Harita', 'Atlas', 'Leviathan tiplerini, yönetişim ve demokrasi göstergelerini küre üzerinde yıl yıl izleyin.', '#/atlas')}
         ${entry('corridor', 'Grafik', 'Dar Koridor Gözlemevi', 'Zamanı oynatın; ülkelerin devlet–toplum düzlemindeki rotalarını karşılaştırın.', '#/koridor')}
-        ${entry('scale', 'Oyun', 'Özgürlük Dengesi', 'Bir ülkenin başına geçin; politikalar ve krizlerle onu koridorda tutun.', '#/oyun')}
+        ${entry('scale', 'Oyun', 'Üç oyun', 'Bir ülkeyi yönetip tarihi geçmeye çalışın, bir arkadaşınıza karşı Kızıl Kraliçe düellosu oynayın ya da günlük Leviathan Avı’nda ülkeyi rotasından bulun.', '#/oyun')}
         ${entry('book', 'Okuma', 'Kuram', 'Kapsayıcı ve sömürücü kurumlar, dört Leviathan ve Kızıl Kraliçe etkisi.', '#/kuram')}
     </section>
 

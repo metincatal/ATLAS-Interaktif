@@ -8,7 +8,7 @@
   // Eski adresler yeni tek sayfalık uygulamaya yönlendirilir (ör. game.html?country=Turkey&year=2002)
   (function () {
     var q = new URLSearchParams(location.search);
-    var target = 'index.html#/oyun';
+    var target = (q.get('c') || q.get('country')) ? 'index.html#/oyun/denge' : 'index.html#/oyun';
     var c = q.get('c') || q.get('country') || '';
     var y = q.get('y') || q.get('year') || '';
     var p = new URLSearchParams();

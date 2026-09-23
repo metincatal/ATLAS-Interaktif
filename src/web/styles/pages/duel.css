@@ -1,0 +1,719 @@
+/* Kızıl Kraliçe düellosu */
+
+/* ---------- Taraf renkleri ---------- */
+.side-state {
+  background: var(--side-state);
+}
+
+.side-society {
+  background: var(--side-society);
+}
+
+.side-state-text {
+  color: var(--side-state-text);
+}
+
+.side-society-text {
+  color: var(--side-society-text);
+}
+
+.side-state-bg {
+  background: var(--side-state-bg);
+}
+
+.side-society-bg {
+  background: var(--side-society-bg);
+}
+
+.side-state-border {
+  border-color: rgba(134, 174, 255, 0.45) !important;
+}
+
+.side-society-border {
+  border-color: rgba(239, 143, 184, 0.45) !important;
+}
+
+.effect.side-state {
+  background: var(--side-state-bg);
+  color: var(--side-state-text);
+}
+
+.effect.side-society {
+  background: var(--side-society-bg);
+  color: var(--side-society-text);
+}
+
+.duel-side-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-0);
+}
+
+/* ---------- Kurulum ---------- */
+.duel-setup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  gap: 44px;
+  padding-top: 40px;
+  padding-bottom: 56px;
+  align-items: start;
+}
+
+.duel-setup .segmented button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.duel-ai-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.duel-ai-opts .segmented {
+  flex: 1 1 260px;
+}
+
+.duel-scenarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+}
+
+.duel-sc {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-1);
+  text-align: left;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.duel-sc:hover {
+  background: var(--ink-2);
+}
+
+.duel-sc[aria-selected="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.duel-sc-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.duel-bal {
+  display: flex;
+  height: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--ink-3);
+}
+
+.duel-bal span {
+  display: block;
+  height: 100%;
+}
+
+.duel-bal-draw {
+  background: var(--line-2);
+}
+
+.duel-rules {
+  position: sticky;
+  top: calc(var(--nav-h) + 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.duel-rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 18px;
+}
+
+.duel-rule-list strong {
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+.duel-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.duel-grid-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+  font-size: 12.5px;
+}
+
+.duel-grid-table th {
+  font-weight: 600;
+  text-align: center;
+  padding: 2px 4px;
+}
+
+.duel-grid-table tbody th {
+  text-align: left;
+}
+
+.duel-grid-table td {
+  padding: 6px 4px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.duel-grid-table td span {
+  display: block;
+  line-height: 1.5;
+}
+
+/* ---------- Oynanış ---------- */
+.duel-page .gp-bar {
+  gap: 14px;
+}
+
+.duel-score {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  background: var(--ink-1);
+  border: 1px solid var(--line);
+}
+
+.duel-score-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 70px;
+}
+
+.duel-score-side .tiny {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.duel-score-side .mono {
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.duel-score-side.side-state {
+  background: none;
+  color: var(--side-state-text);
+}
+
+.duel-score-side.side-society {
+  background: none;
+  color: var(--side-society-text);
+  align-items: flex-end;
+}
+
+.duel-tug {
+  display: flex;
+  width: 140px;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--ink-3);
+}
+
+.duel-tug span {
+  display: block;
+  height: 100%;
+  transition: width 420ms var(--ease);
+}
+
+.duel-grid {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr) 320px;
+  gap: 20px;
+  padding: 20px var(--gutter) 32px;
+  align-items: start;
+}
+
+.duel-left,
+.duel-right {
+  position: sticky;
+  top: calc(var(--nav-h) + 76px);
+}
+
+.duel-center {
+  min-width: 0;
+}
+
+.duel-balance {
+  position: relative;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--side-society-bg), var(--ink-3) 50%, var(--side-state-bg));
+}
+
+.duel-balance-mid {
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  background: var(--line-2);
+}
+
+.duel-balance-dot {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-0);
+  background: var(--text-2);
+  transform: translate(-50%, -50%);
+  transition: left 420ms var(--ease);
+}
+
+.duel-help summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.duel-help summary::-webkit-details-marker {
+  display: none;
+}
+
+.duel-help[open] summary {
+  margin-bottom: 8px;
+}
+
+.duel-res {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.duel-res-row {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) 22px 44px;
+  align-items: center;
+  gap: 8px;
+  background: none !important;
+}
+
+.duel-res-row.side-state {
+  color: var(--side-state-text);
+}
+
+.duel-res-row.side-society {
+  color: var(--side-society-text);
+}
+
+.duel-pips {
+  display: flex;
+  gap: 3px;
+}
+
+.duel-pips span {
+  flex: 1;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--ink-3);
+}
+
+.duel-res-row.side-state .duel-pips .on {
+  background: var(--side-state);
+}
+
+.duel-res-row.side-society .duel-pips .on {
+  background: var(--side-society);
+}
+
+.duel-center-row {
+  display: grid;
+  grid-template-columns: 30px 96px minmax(0, 1fr) 46px;
+  align-items: center;
+  gap: 8px;
+}
+
+.duel-lean {
+  display: flex;
+  gap: 3px;
+}
+
+.duel-lean span {
+  flex: 1;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--ink-3);
+}
+
+.duel-lean span.ctl {
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+
+.duel-lean span.mid {
+  background: var(--ink-4);
+}
+
+.duel-lean span.on {
+  background: var(--text-2);
+}
+
+.duel-lean span.on.side-state {
+  background: var(--side-state);
+}
+
+.duel-lean span.on.side-society {
+  background: var(--side-society);
+}
+
+.duel-ctl {
+  text-align: right;
+}
+
+.duel-log li {
+  grid-template-columns: 24px minmax(0, 1fr);
+}
+
+.duel-event {
+  padding: 16px 20px;
+  gap: 6px;
+}
+
+/* Gizli seçim ekranı */
+.duel-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 44px 24px;
+  text-align: center;
+  border-width: 1.5px;
+}
+
+.duel-cover-icon .icon {
+  width: 34px;
+  height: 34px;
+}
+
+.duel-cover .muted {
+  max-width: 440px;
+}
+
+/* Hamle seçimi */
+.duel-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border-width: 1.5px;
+}
+
+.duel-picker-head {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.duel-stances,
+.duel-hand {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.duel-stance,
+.duel-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #252C38;
+  background: var(--ink-1);
+  color: var(--text-1);
+  text-align: left;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.duel-stance:hover:not(:disabled),
+.duel-card:hover:not([aria-disabled="true"]) {
+  border-color: var(--line-2);
+  background: var(--ink-2);
+  transform: translateY(-1px);
+}
+
+.duel-stance.selected,
+.duel-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.side-society-border .duel-stance.selected,
+.side-society-border .duel-card.selected {
+  border-color: var(--side-society);
+  background: var(--side-society-bg);
+}
+
+.duel-stance:disabled,
+.duel-card[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.duel-stance-icon .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.duel-card-title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.15;
+}
+
+.duel-if {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.duel-if > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  color: var(--text-2);
+}
+
+.duel-hand-head {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Açılış */
+.duel-reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 22px;
+  animation: page-in 380ms var(--ease);
+}
+
+.duel-reveal-moves {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 12px;
+}
+
+.duel-reveal-move {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: var(--ink-2);
+}
+
+.duel-reveal-stance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.duel-reveal-stance .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.duel-vs {
+  align-self: center;
+  font-style: italic;
+  color: var(--text-3);
+}
+
+.duel-reveal-text {
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.duel-reveal-score {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--ink-2);
+}
+
+/* ---------- Sonuç ---------- */
+.duel-crown .icon {
+  width: 72px;
+  height: 72px;
+  stroke-width: 1.2;
+}
+
+.duel-final {
+  display: flex;
+  gap: 22px;
+}
+
+.duel-final > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.duel-final .serif {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.duel-usage {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.duel-usage-row {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 10px;
+}
+
+.duel-usage .duel-side-badge {
+  margin-top: 6px;
+}
+
+.duel-table-wrap {
+  overflow-x: auto;
+}
+
+.duel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.duel-table th {
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.duel-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--line-soft);
+  white-space: nowrap;
+}
+
+/* ---------- Duyarlı ---------- */
+@media (max-width: 1280px) {
+  .duel-grid {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+
+  .duel-right {
+    grid-column: 1 / -1;
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+@media (max-width: 1080px) {
+  .duel-setup {
+    grid-template-columns: 1fr;
+  }
+
+  .duel-rules {
+    position: static;
+  }
+}
+
+@media (max-width: 900px) {
+  .duel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .duel-left {
+    position: static;
+  }
+
+  .duel-center {
+    order: -1;
+  }
+
+  .duel-right {
+    grid-template-columns: 1fr;
+  }
+
+  .duel-stances,
+  .duel-hand {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .duel-score {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .duel-tug {
+    flex: 1;
+    width: auto;
+  }
+
+  .duel-reveal-moves {
+    grid-template-columns: 1fr;
+  }
+
+  .duel-vs {
+    display: none;
+  }
+
+  .duel-final .serif {
+    font-size: 32px;
+  }
+
+  .duel-center-row {
+    grid-template-columns: 30px 84px minmax(0, 1fr) 44px;
+  }
+}

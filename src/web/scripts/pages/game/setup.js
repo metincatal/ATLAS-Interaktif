@@ -6,12 +6,13 @@ import { icon } from '../../core/icons.js';
 import { esc, debounce } from '../../core/dom.js';
 import { db, loadCore, loadGameCountry, corridorAt, corridorYear, typeChanges, countryName, flagHTML, searchCountries } from '../../core/data.js';
 import { TYPES, typeChip, STAKEHOLDERS } from '../../core/theory.js';
-import { navigate, replaceParams } from '../../core/router.js';
-import { load, save } from '../../core/store.js';
+import { replaceParams } from '../../core/router.js';
+import { load } from '../../core/store.js';
 import { CorridorChart } from '../../components/corridor-chart.js';
 import { toast } from '../../components/toast.js';
-import { suffix } from '../../core/format.js';
-import { createGame, DIFFICULTY, GROUPS } from './engine.js';
+import { suffix, num } from '../../core/format.js';
+import { DIFFICULTY, GROUPS, buildHistory } from './engine.js';
+import { startGame } from './start.js';
 
 const DURATIONS = [10, 20, 30];
 
@@ -42,11 +43,12 @@ class SetupPage {
             <div class="container game-setup">
                 <section class="gs-left">
                     <div class="stack" style="gap:12px">
-                        <span class="eyebrow">Strateji oyunu</span>
+                        <a class="gs-back small" href="#/oyun">${icon('chevronL', 'icon-sm')}Oyunlar</a>
+                        <span class="eyebrow">Tek oyunculu strateji</span>
                         <h1 class="display-2">Özgürlük Dengesi</h1>
-                        <p class="lede" style="max-width:600px">Bir ülkenin yönetimini devralın. Her yıl sınırlı siyasi sermayeyle politikalar seçin, krizlere yanıt verin; ülkeyi dar koridora taşıyın ve orada tutun.</p>
+                        <p class="lede" style="max-width:600px">Bir ülkenin yönetimini gerçek bir yıldan devralın. Her yıl sınırlı siyasi sermayeyle politikalar seçin, krizlere yanıt verin; ülkeyi dar koridora taşıyın ve orada tutun. Aynı yıllarda gerçekte olanı geçebilecek misiniz?</p>
                     </div>
-                    ${saved && saved.status === 'playing' ? `<div class="card gs-resume"><span class="faint">${icon('history')}</span><div class="grow"><div style="font-weight:600">Yarım kalan oyun</div><div class="small muted">${esc(countryName(saved.id))} · ${saved.year} · Tur ${saved.turn + 1} / ${saved.turns}</div></div><a class="btn btn-secondary btn-sm" href="#/oyun/oyna">Devam et${icon('arrowR', 'icon-sm')}</a></div>` : ''}
+                    ${saved && saved.v === 2 && saved.status === 'playing' ? `<div class="card gs-resume"><span class="faint">${icon('history')}</span><div class="grow"><div style="font-weight:600">Yarım kalan oyun</div><div class="small muted">${esc(countryName(saved.id))} · ${saved.year} · Tur ${saved.turn + 1} / ${saved.turns}</div></div><a class="btn btn-secondary btn-sm" href="#/oyun/oyna">Devam et${icon('arrowR', 'icon-sm')}</a></div>` : ''}
                     <div class="gs-step">
                         <div class="gs-label"><span class="gs-num mono">1</span>Ülke</div>
                         <label class="field"><span class="sr-only">Ülke ara</span>${icon('search', 'icon-sm')}<input type="search" placeholder="${Object.values(db.countries).filter((c) => c.game).length} ülke arasında ara…" data-q autocomplete="off"></label>
@@ -85,6 +87,7 @@ class SetupPage {
                         <div class="stack" style="gap:9px" data-stake></div>
                     </div>
                     <div class="gs-goal">${icon('target')}<p class="small muted" data-goal></p></div>
+                    <div class="gs-history" data-history></div>
                     <button class="btn btn-primary btn-lg btn-block" type="button" data-start>Göreve başla${icon('arrowR')}</button>
                     <details class="gs-rules">
                         <summary>Nasıl oynanır?</summary>
@@ -92,8 +95,11 @@ class SetupPage {
                             <li>Her tur bir yıldır. Elinize gelen beş karttan en fazla üçünü seçip siyasi sermayenizle uygulayın.</li>
                             <li>Kartlar devletin ve toplumun gücünü değiştirir; güç odaklarını memnun eder ya da kızdırır.</li>
                             <li>Aynı yıl hem devleti hem toplumu güçlendirirseniz <strong>Kızıl Kraliçe primi</strong> kazanırsınız.</li>
-                            <li>Denge bozulursa geride kalan taraf daha da geriler. Koridorda reform yapmayı bırakırsanız yavaşça dışarı kayarsınız.</li>
-                            <li>Etkili bir güç odağı çok memnuniyetsiz kalırsa kriz çıkar: darbe, ayaklanma, sermaye kaçışı…</li>
+                            <li><strong>Koridorda yerinde saymak geriye düşmektir:</strong> o yıl güçlendirmediğiniz taraf aşınır, puanınız düşer.</li>
+                            <li>Aynı yıl çok sayıda reform yapmak, kaybeden güç odaklarının <strong>tepkisini</strong> büyütür.</li>
+                            <li>Memnuniyetsiz ve etkili güç odakları her yıl belli bir olasılıkla kriz çıkarır: darbe, ayaklanma, sermaye kaçışı… Olasılıkları güç odakları panelinde görürsünüz.</li>
+                            <li>Bazı kararların etkisi yıllara yayılır ya da ileride yeni bir olay doğurur.</li>
+                            <li>Puanınız, aynı yıllarda ülkenin <strong>gerçek tarihinin</strong> aynı formülle aldığı puanla karşılaştırılır.</li>
                         </ul>
                     </details>
                 </aside>
@@ -228,27 +234,23 @@ class SetupPage {
                 ? `Ülke zaten Zincirlenmiş bölgede. Asıl sınav orada kalmak: ${this.turns} yıl boyunca devleti ve toplumu birlikte büyütün, güç odaklarını yönetin.`
                 : `${this.turns} yıl içinde Zincirlenmiş bölgeye ulaşın ve orada kalın. Koridorda geçen her yıl puan kazandırır; darbe, devlet çöküşü ya da halk ayaklanması oyunu erken bitirir.`;
         this.root.querySelector('[data-goal]').innerHTML = `<strong>Hedef:</strong> ${esc(goal)} <span class="faint">${T.long}: ${T.formula}.</span>`;
+
+        // Gerçek tarih: oyuncunun geçmeye çalışacağı ölçüt
+        const hist = buildHistory(this.id, this.year, this.turns, this.gameData);
+        const el = this.root.querySelector('[data-history]');
+        if (!hist.length) {
+            el.innerHTML = `<p class="tiny faint">${this.year} sonrası için gerçek veri yok; puanınız tarihle karşılaştırılmayacak.</p>`;
+            return;
+        }
+        const total = hist.reduce((a, h) => a + h.pts, 0);
+        const inC = hist.filter((h) => h.type === 'Shackled').length;
+        el.innerHTML = `<div class="row" style="justify-content:space-between"><span class="eyebrow">Geçmeniz gereken tarih</span><span class="tiny faint">${hist[0].year}–${hist[hist.length - 1].year}</span></div>
+            <div class="type-strip" role="img" aria-label="Gerçekte yıllara göre Leviathan tipi">${hist.map((h) => `<span class="t-${h.type}" title="${h.year}: ${TYPES[h.type].short}"></span>`).join('')}</div>
+            <p class="small muted">Gerçekte ${countryName(this.id)} bu ${hist.length} yılın ${inC === 0 ? 'hiçbirinde koridorda değildi' : inC === hist.length ? 'tamamında koridordaydı' : `${inC} yılında koridordaydı`} ve aynı formülle <strong>${Math.round(total)} puan</strong> (yılda ${num(total / hist.length, 1)}) aldı.${hist.length < this.turns ? ` Veri ${hist[hist.length - 1].year}’te bittiği için yalnızca bu yıllar karşılaştırılır.` : ''}</p>`;
     }
 
     start() {
-        const p = corridorAt(this.id, this.year, 0);
-        if (!p) {
-            toast('Bu yıl için koridor verisi yok; başka bir yıl seçin.');
-            return;
-        }
-        const game = createGame({
-            id: this.id,
-            name: countryName(this.id),
-            start: { x: p.x, y: p.y },
-            startYear: this.year,
-            turns: this.turns,
-            difficulty: this.difficulty,
-            gameData: this.gameData,
-            seed: Math.floor(Math.random() * 1e9),
-        });
-        save('game.current', game);
-        window.__atlasGame = game; // tarayıcı depolaması kapalıysa bellekte tut
-        navigate('/oyun/oyna');
+        startGame({ id: this.id, year: this.year, turns: this.turns, difficulty: this.difficulty });
     }
 
     unmount() {

@@ -11,8 +11,12 @@ const ROUTES = {
     '/kuram': { load: () => import('../pages/theory.js'), title: 'Kuram', nav: 'kuram' },
     '/atlas': { load: () => import('../pages/atlas.js'), title: 'Atlas', nav: 'atlas' },
     '/koridor': { load: () => import('../pages/corridor.js'), title: 'Dar Koridor Gözlemevi', nav: 'koridor' },
-    '/oyun': { load: () => import('../pages/game/setup.js'), title: 'Özgürlük Dengesi', nav: 'oyun' },
+    '/oyun': { load: () => import('../pages/game/hub.js'), title: 'Oyunlar', nav: 'oyun' },
+    '/oyun/denge': { load: () => import('../pages/game/setup.js'), title: 'Özgürlük Dengesi', nav: 'oyun' },
     '/oyun/oyna': { load: () => import('../pages/game/play.js'), title: 'Özgürlük Dengesi', nav: 'oyun' },
+    '/oyun/tekrar': { load: () => import('../pages/game/replay.js'), title: 'Oyun tekrarı', nav: 'oyun' },
+    '/oyun/kizil-kralice': { load: () => import('../pages/duel/page.js'), title: 'Kızıl Kraliçe', nav: 'oyun' },
+    '/oyun/leviathan-avi': { load: () => import('../pages/hunt/page.js'), title: 'Leviathan Avı', nav: 'oyun' },
 };
 
 let root = null;

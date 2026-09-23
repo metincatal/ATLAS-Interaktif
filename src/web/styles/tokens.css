@@ -45,6 +45,14 @@
   --negative: #F4907F;
   --warning: #EFC36F;
 
+  /* Kızıl Kraliçe düellosunun iki tarafı (Leviathan tip renklerinden ayrı) */
+  --side-state: #86AEFF;
+  --side-state-text: #B7CEFF;
+  --side-state-bg: rgba(134, 174, 255, 0.14);
+  --side-society: #EF8FB8;
+  --side-society-text: #F6B9D3;
+  --side-society-bg: rgba(239, 143, 184, 0.14);
+
   /* Yazı */
   --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
   --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;

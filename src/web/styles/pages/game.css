@@ -580,6 +580,10 @@
   border-top: none;
 }
 
+.gp-log li.gp-log-empty {
+  display: block;
+}
+
 .gp-report .gp-log li {
   grid-template-columns: 42px 1fr;
 }
@@ -703,6 +707,304 @@
   padding-top: 4px;
 }
 
+/* ---------- Oyun merkezi ---------- */
+.hub {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 40px;
+  padding-bottom: 56px;
+}
+
+.hub-daily {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 28px;
+  padding: 28px;
+  border-color: var(--accent-line);
+  background: linear-gradient(135deg, var(--accent-soft), var(--ink-1) 60%);
+}
+
+.hub-chip {
+  background: var(--accent-soft);
+  color: var(--accent-2);
+}
+
+.hub-daily .display-2 .flag-lg {
+  margin-top: 4px;
+}
+
+.hub-daily-chart {
+  min-height: 260px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line);
+  background: var(--ink-0);
+  overflow: hidden;
+}
+
+.hub-history {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 520px;
+}
+
+.hub-daily-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.hub-result {
+  display: flex;
+  gap: 32px;
+  padding: 12px 16px;
+  border-radius: var(--radius-m);
+  background: var(--ink-2);
+  width: fit-content;
+}
+
+.hub-result-val {
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+}
+
+.hub-card .muted {
+  flex: 1;
+}
+
+.hub-meta {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hub-meta span {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 11.5px;
+  color: var(--text-2);
+}
+
+.hub-actions {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hub-code {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.hub-code-form {
+  gap: 8px;
+}
+
+.gs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  color: var(--text-2);
+  text-decoration: none;
+}
+
+.gs-back:hover {
+  color: var(--text-1);
+}
+
+.gs-history {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.gs-history strong {
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+/* ---------- Oynanış eklemeleri ---------- */
+.gp-daily {
+  background: var(--accent-soft);
+  color: var(--accent-2);
+}
+
+.gp-ghost-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: -4px;
+}
+
+.ghost-line {
+  width: 22px;
+  height: 0;
+  border-top: 1.6px dashed var(--accent);
+  opacity: 0.8;
+}
+
+.stake-risk {
+  width: 34px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.effect.later {
+  color: var(--absent-text);
+  background: var(--absent-bg);
+}
+
+.effect.later .icon {
+  width: 13px;
+  height: 13px;
+}
+
+.gp-ongoing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.gp-real {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-2);
+}
+
+/* ---------- Rapor eklemeleri ---------- */
+.report-margin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 128px;
+  padding: 14px 18px;
+  border-radius: var(--radius-l);
+  border: 1px solid currentColor;
+  text-align: center;
+}
+
+.report-margin .serif {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.report-stat.is-pos .report-val {
+  color: var(--positive);
+}
+
+.report-stat.is-neg .report-val {
+  color: var(--negative);
+}
+
+.strip-rows {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.share-text {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--ink-0);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-2);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ---------- Tekrar ---------- */
+.replay-head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 28px;
+  max-width: 1180px;
+}
+
+.replay-head + div .gp-report {
+  padding-top: 16px;
+}
+
+.replay-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 16px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line-2);
+  background: var(--ink-1);
+  color: var(--text-2);
+}
+
+.replay-banner strong {
+  color: var(--text-1);
+}
+
+.replay-banner.good {
+  border-color: rgba(61, 190, 156, 0.45);
+  background: var(--shackled-bg);
+  color: var(--shackled-text);
+}
+
+.replay-banner.bad {
+  border-color: rgba(232, 96, 79, 0.45);
+  background: var(--despotic-bg);
+  color: var(--despotic-text);
+}
+
+.rv-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.rv-chart {
+  height: 280px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--ink-0);
+  overflow: hidden;
+}
+
+.rv-year {
+  min-width: 56px;
+  font-size: 26px;
+  text-align: right;
+}
+
+.rv-log {
+  max-height: 190px;
+}
+
 /* ---------- Duyarlı ---------- */
 @media (max-width: 1280px) {
   .gp-grid {
@@ -719,6 +1021,16 @@
 
 @media (max-width: 1080px) {
   .game-setup {
+    grid-template-columns: 1fr;
+  }
+
+  .hub-daily,
+  .hub-code,
+  .rv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hub-grid {
     grid-template-columns: 1fr;
   }
 
@@ -756,7 +1068,9 @@
 }
 
 @media (max-width: 640px) {
+  /* Telefonda başlık çubuğu birkaç satıra yayılır; yapışkan kalırsa ekranın çoğunu kaplar */
   .gp-bar {
+    position: static;
     gap: 10px 12px;
   }
 
@@ -794,5 +1108,15 @@
 
   .stake-name {
     width: 92px;
+  }
+
+  .hub-daily {
+    padding: 20px;
+  }
+
+  .report-margin {
+    align-items: flex-start;
+    min-width: 0;
+    text-align: left;
   }
 }

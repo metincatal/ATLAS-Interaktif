@@ -224,7 +224,7 @@ export class CountryProfile {
         const gameOk = c.game && p;
         this.el.querySelector('[data-actions]').innerHTML = `
             <a class="btn btn-secondary btn-sm" href="${href('/koridor', { c: id, y: p ? p.year : year })}">${icon('corridor')}Koridorda incele</a>
-            ${gameOk ? `<a class="btn btn-primary btn-sm" href="${href('/oyun', { c: id, y: p.year })}">${icon('scale')}Bu ülkeyle oyna</a>` : ''}
+            ${gameOk ? `<a class="btn btn-primary btn-sm" href="${href('/oyun/denge', { c: id, y: p.year })}">${icon('scale')}Bu ülkeyle oyna</a>` : ''}
             <button class="icon-btn" type="button" data-act="ask" aria-label="Asistana sor">${icon('chat')}</button>`;
     }
 

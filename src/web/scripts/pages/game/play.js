@@ -7,18 +7,23 @@ import { esc } from '../../core/dom.js';
 import { db, loadCore, corridorYear, corridorSeries, countryName, flagHTML } from '../../core/data.js';
 import { TYPES, typeChip, STAKEHOLDERS } from '../../core/theory.js';
 import { signed, num, pct } from '../../core/format.js';
-import { navigate, href } from '../../core/router.js';
+import { navigate } from '../../core/router.js';
 import { load, save, setContext } from '../../core/store.js';
 import { CorridorChart } from '../../components/corridor-chart.js';
 import { toast } from '../../components/toast.js';
 import { POLICY_BY_ID, CATEGORIES } from './policies.js';
-import { MAX_POLICIES, REDRAW_COST, GROUPS, DIFFICULTY, toggleSelect, redraw, preview, currentEvent, chooseEvent, canEndYear, endYear, advisor, finalReport, ENDINGS } from './engine.js';
+import { MAX_POLICIES, REDRAW_COST, GROUPS, toggleSelect, redraw, preview, currentEvent, chooseEvent, canEndYear, endYear, advisor, finalReport, crisisRisk, historyMargin } from './engine.js';
+import { renderReport } from './report.js';
+import { recordDaily, signedInt } from './daily.js';
+import { encodeGame } from './replay-code.js';
+import { restartSame } from './start.js';
 
 export async function mount(root) {
     await loadCore();
     const game = load('game.current') || window.__atlasGame;
-    if (!game) {
-        navigate('/oyun');
+    if (!game || game.v !== 2) {
+        if (game) toast('Kayıtlı oyun, oyunun eski bir sürümüne ait; yeni bir oyun başlatın.');
+        navigate('/oyun/denge');
         return { unmount() {} };
     }
     const page = new PlayPage(root, game);
@@ -49,6 +54,24 @@ function effectChips(eff = {}) {
     return chips.join('');
 }
 
+/** Gecikmeli etkinin yalnızca yönü gösterilir; büyüklüğü sürpriz kalır */
+function laterChip(later) {
+    const e = later.effects || {};
+    const dirs = [];
+    if (e.dState) dirs.push(`Devlet ${e.dState > 0 ? '▲' : '▼'}`);
+    if (e.dSociety) dirs.push(`Toplum ${e.dSociety > 0 ? '▲' : '▼'}`);
+    if (e.capital) dirs.push(`Sermaye ${e.capital > 0 ? '▲' : '▼'}`);
+    if (!dirs.length && e.stake) dirs.push('Güç odakları');
+    return `<span class="effect later">${icon('hourglass', 'icon-sm')}${later.turns} yıl: ${dirs.join(' · ')}</span>`;
+}
+
+/** Olaylardaki belirsiz seçenekler: kesin olasılık yerine nitel etiket */
+function chanceLabel(p) {
+    if (p >= 0.7) return 'yüksek';
+    if (p >= 0.45) return 'orta';
+    return 'düşük';
+}
+
 class PlayPage {
     constructor(root, game) {
         this.root = root;
@@ -75,11 +98,12 @@ class PlayPage {
     // ------------------------------------------------------------------ iskelet
     renderShell() {
         const s = this.s;
+        const daily = s.mode === 'gunluk' && s.daily;
         this.root.innerHTML = `
             <header class="gp-bar">
                 <a class="gp-exit" href="#/oyun">${icon('chevronL', 'icon-sm')}Çık</a>
                 <span class="gp-sep"></span>
-                <div class="row gp-title">${flagHTML(s.id)}<span class="serif">${esc(countryName(s.id))}</span><span class="serif faint" data-year></span></div>
+                <div class="row gp-title">${flagHTML(s.id)}<span class="serif">${esc(countryName(s.id))}</span><span class="serif faint" data-year></span>${daily ? `<span class="chip chip-sm gp-daily">${icon('calendar', 'icon-sm')}Günün senaryosu #${s.daily.number}</span>` : ''}</div>
                 <div class="row gp-turn"><span class="tiny faint">Tur</span><span class="mono small" data-turn></span><span class="meter" style="width:110px;--m:var(--text-2)"><span data-turn-bar></span></span></div>
                 <span class="grow"></span>
                 <div class="gp-stat" title="Siyasi sermaye: politikaların bedelini öder, güç odaklarının memnuniyetine göre yenilenir">
@@ -91,16 +115,25 @@ class PlayPage {
                     <span style="color:var(--shackled)">${icon('target')}</span>
                     <span class="stack" style="gap:1px"><span class="tiny faint">Koridor yılı · puan</span><span class="mono small" data-score></span></span>
                 </div>
+                ${
+                    s.hist.length
+                        ? `<div class="gp-stat" title="Aynı yıllarda gerçek tarihin aynı formülle aldığı puana göre farkınız">
+                    <span style="color:var(--accent)">${icon('history')}</span>
+                    <span class="stack" style="gap:1px"><span class="tiny faint">Tarihe karşı</span><span class="mono small" data-margin></span></span>
+                </div>`
+                        : ''
+                }
             </header>
             <div class="gp-grid">
                 <aside class="gp-left">
                     <section class="card card-pad stack" style="gap:12px" aria-labelledby="gp-pos">
                         <div class="card-title"><span id="gp-pos">Konum</span><span data-type></span></div>
                         <div class="gp-chart" data-chart></div>
+                        ${s.hist.length ? '<p class="tiny faint gp-ghost-note"><span class="ghost-line"></span>Kesikli çizgi: ülkenin gerçekte izlediği yol</p>' : ''}
                         <div class="gp-metrics" data-metrics></div>
                     </section>
                     <section class="card card-pad stack" style="gap:12px" aria-labelledby="gp-stake">
-                        <div class="card-title"><span id="gp-stake">Güç odakları</span><span class="hint">memnuniyet · etki</span></div>
+                        <div class="card-title"><span id="gp-stake">Güç odakları</span><span class="hint">memnuniyet · etki · kriz</span></div>
                         <div class="stack" style="gap:10px" data-stake></div>
                     </section>
                 </aside>
@@ -141,10 +174,11 @@ class PlayPage {
             const card = e.target.closest('[data-id]');
             if (!card) return;
             const res = toggleSelect(this.s, card.dataset.id);
-            if (!res.ok && res.reason) toast(res.reason);
+            if (res.reason) toast(res.reason);
             this.persist();
             this.renderCards();
             this.renderPreview();
+            this.renderAdvice();
         });
         this.root.querySelector('[data-redraw]').addEventListener('click', () => {
             const res = redraw(this.s);
@@ -186,6 +220,12 @@ class PlayPage {
         this.root.querySelector('[data-cap]').innerHTML = `${Math.round(s.capital.current)}<span class="faint"> / ${s.capital.max}</span>`;
         this.root.querySelector('[data-cap-bar]').style.width = `${(s.capital.current / s.capital.max) * 100}%`;
         this.root.querySelector('[data-score]').textContent = `${s.corridorYears} · ${Math.round(s.score)}`;
+        const m = this.root.querySelector('[data-margin]');
+        if (m) {
+            const { margin, years } = historyMargin(s);
+            m.textContent = years ? signedInt(margin) : '0';
+            m.className = `mono small ${years ? (margin >= 0 ? 'pos' : 'neg') : ''}`;
+        }
     }
 
     renderPosition() {
@@ -196,7 +236,11 @@ class PlayPage {
         this.chart.setPoints([...backdrop, me], { duration: 450 });
         this.chart.setEmphasis([s.id]);
         const trail = [...s.history.filter((h) => h.year < s.year).map((h) => ({ year: h.year, x: h.x, y: h.y, type: h.type })), me];
-        this.chart.setTrails(trail.length > 1 ? [{ id: 'player', points: trail, colorDots: true }] : []);
+        const trails = trail.length > 1 ? [{ id: 'player', points: trail, colorDots: true }] : [];
+        const real = corridorSeries(s.id).filter((p) => p.year >= s.startYear && p.year <= s.year);
+        if (real.length > 1) trails.unshift({ id: 'real', points: real, color: '#86AEFF', opacity: 0.55, showStart: false });
+        this.chart.setTrails(trails);
+        this.chart.svg.selectAll('g.trail-g').filter((d) => d.id === 'real').select('path').attr('stroke-dasharray', '4 4');
         this.root.querySelector('[data-type]').innerHTML = typeChip(s.type, { small: true, label: TYPES[s.type].short });
 
         const prev = s.history.length > 1 ? s.history[s.history.length - 2] : s.history[0];
@@ -218,14 +262,15 @@ class PlayPage {
         this.root.querySelector('[data-stake]').innerHTML = GROUPS.map((g) => {
             const { sat, inf } = s.stake[g];
             const color = sat < 0.3 ? 'var(--despotic)' : sat < 0.5 ? 'var(--paper)' : 'var(--shackled)';
-            const danger = sat < DIFFICULTY[s.difficulty].crisis + 0.08 && inf > 0.4;
+            const risk = crisisRisk(s, g);
+            const danger = risk >= 0.05;
             return `<div class="stake-row${danger ? ' danger' : ''}">
                 <span class="stake-icon">${icon(STAKEHOLDERS[g].icon, 'icon-sm')}</span>
                 <span class="stake-name">${STAKEHOLDERS[g].label}</span>
                 <span class="meter grow" style="--m:${color}"><span style="width:${Math.round(sat * 100)}%"></span></span>
                 <span class="mono tiny" style="width:34px;text-align:right">%${Math.round(sat * 100)}</span>
                 <span class="stake-inf" title="Etki gücü ${Math.round(inf * 100)}" style="--inf:${inf}"></span>
-                ${danger ? `<span class="neg" title="Kriz riski">${icon('warning', 'icon-sm')}</span>` : ''}
+                <span class="stake-risk mono tiny ${danger ? 'neg' : 'faint'}" title="Bu yıl kriz çıkarma olasılığı">${risk >= 0.01 ? pct(risk) : '—'}</span>
             </div>`;
         }).join('');
     }
@@ -237,6 +282,7 @@ class PlayPage {
             el.innerHTML = '';
             return;
         }
+        const real = r.real;
         el.innerHTML = `<div class="gp-summary card">
             <div class="row" style="gap:10px;flex-wrap:wrap"><span class="serif" style="font-size:20px">${r.year} tamamlandı</span>
                 <span class="effect ${r.dy >= 0 ? 'up' : 'down'}">Devlet <b>${signed(r.dy)}</b></span>
@@ -245,7 +291,8 @@ class PlayPage {
                 <span class="effect up">Puan <b>+${r.points}</b></span>
                 ${r.typeChange ? typeChip(r.typeChange.to, { small: true, label: `Yeni bölge: ${TYPES[r.typeChange.to].short}` }) : ''}
             </div>
-            ${r.notes.length ? `<ul class="gp-notes">${r.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
+            ${real ? `<p class="tiny muted gp-real">${icon('history', 'icon-sm')}<span>Gerçekte ${real.year}: ${TYPES[real.type].short} bölge, ${Math.round(real.pts)} puan. Siz: ${r.points} puan.</span></p>` : ''}
+            ${r.notes.length || r.later.length ? `<ul class="gp-notes">${r.notes.map((n) => `<li>${esc(n)}</li>`).join('')}${r.later.map((n) => `<li>Süren etki: ${esc(n)}</li>`).join('')}</ul>` : ''}
         </div>`;
     }
 
@@ -259,7 +306,7 @@ class PlayPage {
         }
         const chosen = s.event.choice;
         el.innerHTML = `<section class="gp-event${ev.crisis ? ' crisis' : ''}" aria-live="polite">
-            <div class="row" style="gap:8px">${icon(ev.crisis ? 'warning' : 'bolt')}<span class="eyebrow">${ev.crisis ? 'Kriz' : 'Gündem'} · ${s.year}</span></div>
+            <div class="row" style="gap:8px">${icon(ev.crisis ? 'warning' : 'bolt')}<span class="eyebrow">${ev.crisis ? 'Kriz' : ev.followOnly ? 'Geçmişten gelen' : 'Gündem'} · ${s.year}</span></div>
             <h2 class="title-1">${esc(ev.title)}</h2>
             <p class="small muted">${esc(ev.text)}</p>
             <div class="gp-choices">
@@ -268,10 +315,12 @@ class PlayPage {
                         const eff = typeof c.effects === 'function' ? c.effects(s) : c.effects;
                         const chance = c.risk ? c.risk.chance(s) : null;
                         const isChosen = chosen === i;
+                        const risky = chance !== null ? (ev.crisis ? `<span class="effect ${chance >= 0.5 ? 'up' : 'down'}">Başarı olasılığı <b>${pct(chance)}</b></span>` : `<span class="effect ${chance >= 0.6 ? 'up' : 'down'}">Riskli · başarı şansı <b>${chanceLabel(chance)}</b></span>`) : '';
                         return `<button type="button" class="gp-choice${isChosen ? ' chosen' : ''}" data-choice="${i}" ${chosen !== null ? 'disabled' : ''}>
                             <span class="gp-choice-label">${esc(c.label)}</span>
-                            <span class="row" style="gap:6px;flex-wrap:wrap">${chance !== null ? `<span class="effect ${chance >= 0.5 ? 'up' : 'down'}">Başarı olasılığı <b>${pct(chance)}</b></span>` : effectChips(eff)}</span>
+                            <span class="row" style="gap:6px;flex-wrap:wrap">${chance !== null ? risky : effectChips(eff)}${c.later ? laterChip(c.later) : ''}</span>
                             ${chance === null && eff?.stake ? `<span class="tiny">${stakeText(eff.stake)}</span>` : ''}
+                            ${c.followUp ? `<span class="tiny faint row" style="gap:6px">${icon('history', 'icon-sm')}Sonuçları ileride de görülebilir</span>` : ''}
                         </button>`;
                     })
                     .join('')}
@@ -319,16 +368,24 @@ class PlayPage {
         const pv = preview(s);
         const el = this.root.querySelector('[data-preview]');
         this.renderSelection();
+        const ongoing = s.delayed.length
+            ? `<div class="gp-ongoing">${s.delayed.map((d) => `<span class="effect later">${icon('hourglass', 'icon-sm')}${esc(d.label)} · ${d.turns} yıl</span>`).join('')}</div>`
+            : '';
+        const inCorridor = s.type === 'Shackled';
         if (!s.selected.length) {
-            el.innerHTML = '<p class="tiny faint">Kart seçtikçe burada tahmini etkiyi göreceksiniz.</p>';
+            el.innerHTML = `<p class="tiny faint">Kart seçtikçe burada tahmini etkiyi göreceksiniz.${inCorridor ? ' Koridorda politika seçmezseniz devlet de toplum da aşınır.' : ''}</p>${ongoing}`;
             return;
         }
+        const run = inCorridor ? (pv.dx >= 0.03 && pv.dy >= 0.03 ? '<p class="tiny pos" style="margin-top:6px">Kızıl Kraliçe: devlet ve toplum birlikte koşuyor; aşınma yok.</p>' : `<p class="tiny neg" style="margin-top:6px">Koridorda ${pv.dy < 0.03 && pv.dx < 0.03 ? 'iki taraf da' : pv.dy < 0.03 ? 'devlet' : 'toplum'} bu yıl güçlenmiyor; geride kalan taraf aşınır.</p>`) : '';
         el.innerHTML = `<div class="row" style="gap:6px;flex-wrap:wrap">
                 <span class="effect ${pv.dy >= 0 ? 'up' : 'down'}">Devlet <b>${signed(pv.dy)}</b></span>
                 <span class="effect ${pv.dx >= 0 ? 'up' : 'down'}">Toplum <b>${signed(pv.dx)}</b></span>
             </div>
             ${pv.synergy ? `<p class="tiny pos" style="margin-top:6px">Kızıl Kraliçe primi: devlet ve toplum birlikte güçleniyor (+%12).</p>` : ''}
+            ${run}
+            ${pv.pace > 1.01 ? `<p class="tiny neg" style="margin-top:6px">Hızlı reform: kaybeden güç odaklarının tepkisi ×${num(pv.pace, 1)}.</p>` : ''}
             <p class="tiny" style="margin-top:6px">${stakeText(pv.stake) || '<span class="faint">Güç odaklarına belirgin etki yok.</span>'}</p>
+            ${ongoing}
             <p class="tiny faint" style="margin-top:6px">Rastlantısal olaylar, denge dinamiği ve kurumsal süreklilik sonucu değiştirebilir.</p>`;
     }
 
@@ -364,79 +421,26 @@ class PlayPage {
     renderReport() {
         const s = this.s;
         const r = finalReport(s);
-        save('game.last', { id: s.id, year: s.startYear, grade: r.grade, score: r.score });
+        save('game.last', { id: s.id, year: s.startYear, grade: r.grade, score: r.score, margin: r.margin });
+        let note = '';
+        if (s.mode === 'gunluk' && s.daily) {
+            const first = recordDaily(s.daily.key, { id: s.id, year: s.startYear, score: r.score, margin: r.margin, grade: r.grade, corridorYears: r.corridorYears, years: r.years, code: encodeGame(s) });
+            note = first ? 'Bugünün resmî sonucu olarak kaydedildi. Günün senaryosunu yeniden oynayabilirsiniz ama resmî sonucunuz değişmez.' : 'Bugünün resmî sonucunuz daha önce kaydedilmişti; bu deneme sayılmaz.';
+        }
         this.chart?.destroy();
-        const ending = ENDINGS[r.ending];
-        const real = corridorSeries(s.id).filter((p) => p.year >= s.startYear && p.year <= s.year);
-        this.root.innerHTML = `
-            <div class="container gp-report">
-                <section class="card report-hero">
-                    <div class="grade grade-${r.grade}" aria-label="Not ${r.grade}">${r.grade}</div>
-                    <div class="stack" style="gap:8px">
-                        <span class="eyebrow">${esc(countryName(s.id))} · ${s.startYear}–${s.year} · ${DIFFICULTY[s.difficulty].label}</span>
-                        <h1 class="display-2">${esc(r.title)}</h1>
-                        <p class="lede" style="max-width:640px">${esc(r.ending === 'complete' ? r.text : ending.text)}</p>
-                        <div class="row" style="gap:8px;flex-wrap:wrap">${typeChip(r.startType, { small: true, label: `Başlangıç: ${TYPES[r.startType].short}` })}${icon('arrowR', 'icon-sm')}${typeChip(r.endType, { small: true, label: `Bitiş: ${TYPES[r.endType].short}` })}</div>
-                    </div>
-                </section>
-                <div class="report-stats">
-                    ${stat('Koridorda geçen yıl', `${r.corridorYears} / ${r.years}`)}
-                    ${stat('Puan', `${r.score}`, `yıllık ort. ${num(r.avg, 1)}`)}
-                    ${stat('Devletin gücü', signed(r.dy), 'değişim')}
-                    ${stat('Toplumun gücü', signed(r.dx), 'değişim')}
-                    ${stat('Özgürlük endeksi', `${num(r.liberty[0])} → ${num(r.liberty[1])}`)}
-                    ${stat('Kriz', `${r.crises}`)}
-                </div>
-                <div class="report-grid">
-                    <section class="card card-pad stack" style="gap:10px">
-                        <div class="card-title"><span>Sizin rotanız${real.length > 1 ? ' ve gerçek tarih' : ''}</span><span class="hint">${real.length > 1 ? 'kesikli çizgi: gerçekte olan' : ''}</span></div>
-                        <div class="report-chart" data-report-chart></div>
-                        ${real.length > 1 ? `<p class="tiny faint">${esc(realSentence(s.id, real))}</p>` : `<p class="tiny faint">Oyun ${db.lastYear} sonrasına uzandığı için gerçek veriyle karşılaştırma yok.</p>`}
-                    </section>
-                    <section class="card card-pad stack" style="gap:10px">
-                        <div class="card-title"><span>Yıl yıl</span></div>
-                        <div class="type-strip" role="img" aria-label="Yıllara göre Leviathan tipi">${s.history.map((h) => `<span class="t-${h.type}" title="${h.year}: ${TYPES[h.type].short}"></span>`).join('')}</div>
-                        <div class="row tiny faint" style="justify-content:space-between"><span>${s.startYear}</span><span>${s.year}</span></div>
-                        <ol class="gp-log" style="max-height:300px">${s.log
-                            .filter((l) => ['type', 'crisis', 'event'].includes(l.kind))
-                            .slice(0, 14)
-                            .map((l) => `<li><span class="mono tiny faint">${l.year}</span><span class="stack" style="gap:2px"><span class="small">${esc(l.title)}</span>${l.detail ? `<span class="tiny faint">${esc(l.detail)}</span>` : ''}</span></li>`)
-                            .join('') || '<li class="tiny faint">Kayda değer olay yok.</li>'}</ol>
-                    </section>
-                </div>
-                <div class="row report-actions">
-                    <button class="btn btn-primary" type="button" data-again>${icon('rotate')}Aynı ülkeyle yeniden</button>
-                    <a class="btn btn-secondary" href="#/oyun">${icon('flag')}Başka ülke seç</a>
-                    <a class="btn btn-ghost" href="${href('/koridor', { c: s.id, y: Math.min(s.startYear, db.lastYear) })}">${icon('corridor')}Gerçek rotayı Gözlemevi’nde incele</a>
-                </div>
-            </div>`;
-        const chart = new CorridorChart(this.root.querySelector('[data-report-chart]'), { variant: 'mini', pointRadius: 2.2, baseOpacity: 0.22, interactive: false });
-        this.chart = chart;
-        const worldYear = Math.min(s.year, db.lastYear);
-        chart.setPoints([...corridorYear(worldYear).filter((p) => p.id !== s.id), { id: s.id, x: s.x, y: s.y, type: s.type, year: s.year }], { duration: 0 });
-        chart.setEmphasis([s.id]);
-        const trails = [{ id: 'player', points: s.history.map((h) => ({ year: h.year, x: h.x, y: h.y, type: h.type })), colorDots: true }];
-        if (real.length > 1) trails.push({ id: 'real', points: real, color: '#86AEFF', opacity: 0.6, showStart: false });
-        chart.setTrails(trails);
-        chart.svg.selectAll('g.trail-g').filter((d) => d.id === 'real').select('path').attr('stroke-dasharray', '4 4');
-        this.root.querySelector('[data-again]').addEventListener('click', () => navigate('/oyun', { c: s.id, y: s.startYear }));
+        const out = renderReport(this.root, s, {
+            note,
+            actions: [
+                { label: s.mode === 'gunluk' ? 'Günün senaryosunu yeniden oyna' : 'Aynı senaryoyu aynı zarlarla yeniden', icon: 'rotate', primary: true, onClick: () => restartSame(s) },
+                { label: 'Başka ülke seç', icon: 'flag', onClick: () => navigate('/oyun/denge', { c: s.id, y: s.startYear }) },
+                { label: 'Gerçek rotayı Gözlemevi’nde incele', icon: 'corridor', ghost: true, href: `#/koridor?c=${s.id}&y=${Math.min(s.startYear, db.lastYear)}` },
+            ],
+        });
+        this.chart = out.chart;
     }
 
     unmount() {
         this.chart?.destroy();
         this.root.classList.remove('game-play');
     }
-}
-
-function realSentence(id, real) {
-    const a = real[0];
-    const b = real[real.length - 1];
-    const range = `${a.year}–${b.year}`;
-    const name = countryName(id);
-    if (a.type === b.type) return `Gerçekte ${name}, ${range} arasında ${TYPES[a.type].short} bölgede kaldı.`;
-    return `Gerçekte ${name}, ${range} arasında ${TYPES[a.type].short} bölgeden ${TYPES[b.type].short} bölgeye geçti.`;
-}
-
-function stat(label, value, sub = '') {
-    return `<div class="card report-stat"><span class="tiny faint">${label}</span><span class="serif report-val">${value}</span>${sub ? `<span class="tiny faint">${sub}</span>` : ''}</div>`;
 }

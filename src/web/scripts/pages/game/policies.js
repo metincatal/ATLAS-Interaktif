@@ -68,3 +68,6 @@ export const POLICIES = [
 ];
 
 export const POLICY_BY_ID = Object.fromEntries(POLICIES.map((p) => [p.id, p]));
+
+/** Reform sayılan kategoriler: aynı yıl çok sayıda uygulanırsa kaybedenlerin tepkisi büyür */
+export const REFORM_CATS = ['devlet', 'toplum', 'denetim', 'ekonomi', 'dis'];

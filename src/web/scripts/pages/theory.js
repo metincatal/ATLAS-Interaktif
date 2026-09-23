@@ -72,7 +72,7 @@ export async function mount(root) {
                 <div class="stack" style="gap:10px">
                     <h2 class="title-1" id="th-3-title">Kızıl Kraliçe etkisi</h2>
                     <p class="th-p" style="margin:0"><em>Alice Aynanın İçinde</em>’ki Kızıl Kraliçe’nin dediği gibi: “Olduğun yerde kalabilmek için olabildiğince hızlı koşman gerekir.” Koridordaki devlet ve toplum yerinde kalabilmek için durmadan koşar. Devlet kapasitesini artırdıkça toplum da örgütlenip denetimini güçlendirir; toplum güçlendikçe devlet yeni görevler üstlenir.</p>
-                    <p class="th-p" style="margin:0">Biri geride kalırsa ülke koridordan çıkar: toplum yetişemezse despotizme, devlet yetişemezse düzensizliğe kayılır. <a href="#/oyun">Özgürlük Dengesi</a> oyunu bu dinamiğin üzerine kuruludur.</p>
+                    <p class="th-p" style="margin:0">Biri geride kalırsa ülke koridordan çıkar: toplum yetişemezse despotizme, devlet yetişemezse düzensizliğe kayılır. <a href="#/oyun/denge">Özgürlük Dengesi</a> oyunu bu dinamiğin üzerine kuruludur; <a href="#/oyun/kizil-kralice">Kızıl Kraliçe</a> düellosunda ise yarışın iki tarafını iki oyuncu oynar.</p>
                 </div>
             </div>
         </section>
@@ -97,7 +97,7 @@ export async function mount(root) {
             <div class="th-cta-grid">
                 <a class="home-entry card" href="#/atlas"><span class="entry-icon">${icon('globe')}</span><span class="title-2">Atlas’ı aç</span><span class="small muted">Ülkeleri harita üzerinde yıl yıl inceleyin.</span></a>
                 <a class="home-entry card" href="#/koridor"><span class="entry-icon">${icon('corridor')}</span><span class="title-2">Gözlemevi</span><span class="small muted">Zamanı oynatıp ülkelerin rotasını izleyin.</span></a>
-                <a class="home-entry card" href="#/oyun"><span class="entry-icon">${icon('scale')}</span><span class="title-2">Özgürlük Dengesi</span><span class="small muted">Kızıl Kraliçe’yi kendiniz deneyimleyin.</span></a>
+                <a class="home-entry card" href="#/oyun"><span class="entry-icon">${icon('scale')}</span><span class="title-2">Oyunlar</span><span class="small muted">Kızıl Kraliçe’yi kendiniz deneyimleyin: tek başınıza, bir arkadaşınıza karşı ya da günlük bulmacada.</span></a>
             </div>
         </section>
 

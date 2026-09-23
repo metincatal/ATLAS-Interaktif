@@ -125,6 +125,18 @@ export function corridorGap(x, y) {
     return ((x - px) * -dy + (y - py) * dx) / n;
 }
 
+/**
+ * Koridor ekseni boyunca ilerleme: Kâğıttan küme merkezinde 0, Zincirlenmiş
+ * küme merkezinde 1. Devlet ile toplumun birlikte büyümesini ölçer.
+ */
+export function corridorProgress(x, y) {
+    const [px, py] = db.corridor.centroids.Paper;
+    const [sx, sy] = db.corridor.centroids.Shackled;
+    const dx = sx - px;
+    const dy = sy - py;
+    return ((x - px) * dx + (y - py) * dy) / (dx * dx + dy * dy || 1);
+}
+
 /** Bir ülkenin koridor verisinin kapsadığı yıllar */
 export function corridorRange(id) {
     const rows = db.corridor?.series[id];
